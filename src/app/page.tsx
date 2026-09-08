@@ -503,7 +503,7 @@ export default function HomePage() {
                           <Award className="w-3 h-3 text-amber-400" /> {getLocalizedGrade(item.quality_grade, language)}
                         </span>
                         <span className="text-[10px] text-emerald-700 font-medium mt-1">
-                          CV विश्वासांक: {item.cv_trust_score}%
+                          {language === 'hi' ? 'CV विश्वासांक: ' : 'CV Confidence: '}{item.cv_trust_score}%
                         </span>
                       </div>
                     </div>
@@ -526,11 +526,11 @@ export default function HomePage() {
 
                   <div className="pt-3 border-t border-emerald-900/10 flex items-center justify-between">
                     <div>
-                      <div className="text-xs text-emerald-800/70">Fair Price AI मूल्य</div>
+                      <div className="text-xs text-emerald-800/70">{language === 'hi' ? 'Fair Price AI मूल्य' : 'Fair Price AI Rate'}</div>
                       <div className="text-xl font-extrabold text-amber-800">
-                        ₹{priceRupees} <span className="text-xs font-normal text-emerald-900">/ किग्रा</span>
+                        ₹{priceRupees} <span className="text-xs font-normal text-emerald-900">/ {language === 'hi' ? 'किग्रा' : 'kg'}</span>
                       </div>
-                      <div className="text-[10px] font-mono text-emerald-700">({item.price_paise_per_kg} पैसे)</div>
+                      <div className="text-[10px] font-mono text-emerald-700">({item.price_paise_per_kg} {t.paiseSuffix})</div>
                     </div>
 
                     <button

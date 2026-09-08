@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { getLocalizedCropName, getLocalizedGrade } from '@/lib/i18n';
+import { getLocalizedCropName, getLocalizedGrade, getLocalizedLocation } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { Tractor, Plus, Sparkles, PhoneCall, CheckCircle2, TrendingUp, Volume2, ShieldCheck, X, Loader2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -262,16 +262,16 @@ export default function FarmerDashboardPage() {
                 </span>
                 <h4 className="font-extrabold text-emerald-950 text-base mt-1">{getLocalizedCropName(crop.crop, language)}</h4>
                 <p className="text-xs text-emerald-800/70 mt-0.5">
-                  मात्रा: {crop.qty} किग्रा • {crop.location}
+                  {language === 'hi' ? 'मात्रा: ' : 'Quantity: '}{crop.qty} {language === 'hi' ? 'किग्रा' : 'kg'} • {getLocalizedLocation(crop.location, language)}
                 </p>
               </div>
 
               <div className="text-right">
                 <div className="text-lg font-extrabold text-amber-800">
-                  ₹{crop.priceRupees} <span className="text-xs font-normal text-emerald-900">/ किग्रा</span>
+                  ₹{crop.priceRupees} <span className="text-xs font-normal text-emerald-900">/ {language === 'hi' ? 'किग्रा' : 'kg'}</span>
                 </div>
                 <span className="text-[10px] px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-full">
-                  {crop.status}
+                  {crop.status === 'सत्यापित फसल' ? (language === 'hi' ? 'सत्यापित फसल' : 'Verified Crop') : (language === 'hi' ? 'पूल में शामिल' : 'Pooled Lot')}
                 </span>
               </div>
             </div>

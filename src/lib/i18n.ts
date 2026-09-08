@@ -320,7 +320,137 @@ export const translations = {
 };
 
 export const cropTranslations: Record<string, { hi: string; en: string }> = {
-  // Landing Page Listings
+  // Grains & Cereals
+  'मक्का': { hi: 'मक्का (स्वीट कॉर्न)', en: 'Maize (Corn)' },
+  'मकई': { hi: 'मक्का', en: 'Corn / Maize' },
+  'Corn': { hi: 'मक्का (स्वीट कॉर्न)', en: 'Sweet Corn' },
+  'Maize': { hi: 'मक्का (स्वीट कॉर्न)', en: 'Fresh Maize (Corn)' },
+  'Sweet Corn': { hi: 'मक्का (स्वीट कॉर्न)', en: 'Sweet Corn' },
+  'makka': { hi: 'मक्का', en: 'Maize (Corn)' },
+  'makkai': { hi: 'मक्का', en: 'Maize (Corn)' },
+  'धान': { hi: 'धान', en: 'Paddy' },
+  'चावल': { hi: 'बासमती चावल', en: 'Basmati Rice' },
+  'Rice': { hi: 'चावल', en: 'Basmati Rice' },
+  'Basmati Rice': { hi: 'बासमती प्रीमियम चावल', en: 'Premium Basmati Rice' },
+  'गेहूं': { hi: 'शरबाती गेहूं', en: 'Sharbati Wheat' },
+  'गेहूँ': { hi: 'शरबाती गेहूं', en: 'Sharbati Wheat' },
+  'Wheat': { hi: 'गेहूं', en: 'Wheat' },
+  'Sharbati Wheat': { hi: 'शरबाती गेहूं', en: 'Sharbati Wheat' },
+  'ज्वार': { hi: 'ज्वार', en: 'Sorghum (Jowar)' },
+  'बाजरा': { hi: 'बाजरा', en: 'Pearl Millet (Bajra)' },
+  'जौ': { hi: 'जौ', en: 'Barley' },
+
+  // Vegetables
+  'टमाटर': { hi: 'ताज़ा टमाटर', en: 'Fresh Tomatoes' },
+  'Tomatoes': { hi: 'टमाटर', en: 'Tomatoes' },
+  'Fresh Tomatoes': { hi: 'ताज़ा टमाटर', en: 'Fresh Tomatoes' },
+  'tamatar': { hi: 'टमाटर', en: 'Fresh Tomatoes' },
+  'प्याज़': { hi: 'लाल प्याज', en: 'Red Onions' },
+  'प्याज': { hi: 'लाल प्याज', en: 'Red Onions' },
+  'Onions': { hi: 'प्याज', en: 'Red Onions' },
+  'pyaaz': { hi: 'प्याज', en: 'Red Onions' },
+  'आलू': { hi: 'ज्योति आलू', en: 'Jyoti Potatoes' },
+  'Potatoes': { hi: 'आलू', en: 'Potatoes' },
+  'aalu': { hi: 'आलू', en: 'Potatoes' },
+  'alu': { hi: 'आलू', en: 'Potatoes' },
+  'भिंडी': { hi: 'ताज़ा भिंडी', en: 'Fresh Okra (Ladyfinger)' },
+  'Okra': { hi: 'भिंडी', en: 'Okra (Ladyfinger)' },
+  'Ladyfinger': { hi: 'भिंडी', en: 'Ladyfinger' },
+  'bhindi': { hi: 'भिंडी', en: 'Fresh Okra' },
+  'बैंगन': { hi: 'देसी बैंगन', en: 'Fresh Eggplant (Brinjal)' },
+  'Brinjal': { hi: 'बैंगन', en: 'Eggplant (Brinjal)' },
+  'Eggplant': { hi: 'बैंगन', en: 'Eggplant (Brinjal)' },
+  'baingan': { hi: 'बैंगन', en: 'Eggplant' },
+  'फूलगोभी': { hi: 'ताज़ा फूलगोभी', en: 'Fresh Cauliflower' },
+  'Cauliflower': { hi: 'फूलगोभी', en: 'Cauliflower' },
+  'गोभी': { hi: 'फूलगोभी / पत्तागोभी', en: 'Cauliflower / Cabbage' },
+  'gobi': { hi: 'गोभी', en: 'Cauliflower' },
+  'पत्तागोभी': { hi: 'हरी पत्तागोभी', en: 'Fresh Cabbage' },
+  'Cabbage': { hi: 'पत्तागोभी', en: 'Cabbage' },
+  'मटर': { hi: 'हरी मटर', en: 'Green Peas' },
+  'Peas': { hi: 'हरी मटर', en: 'Green Peas' },
+  'matar': { hi: 'मटर', en: 'Green Peas' },
+  'गाजर': { hi: 'देसी जैविक गाजर', en: 'Desi Organic Carrots' },
+  'Carrot': { hi: 'गाजर', en: 'Carrots' },
+  'Carrots': { hi: 'गाजर', en: 'Carrots' },
+  'gajar': { hi: 'गाजर', en: 'Carrots' },
+  'मूली': { hi: 'सफ़ेद मूली', en: 'Fresh Radish' },
+  'Radish': { hi: 'मूली', en: 'Radish' },
+  'mooli': { hi: 'मूली', en: 'Radish' },
+  'लौकी': { hi: 'ताज़ा लौकी', en: 'Bottle Gourd' },
+  'Bottle Gourd': { hi: 'लौकी', en: 'Bottle Gourd' },
+  'lauki': { hi: 'लौकी', en: 'Bottle Gourd' },
+  'करेला': { hi: 'देसी करेला', en: 'Bitter Gourd' },
+  'Bitter Gourd': { hi: 'करेला', en: 'Bitter Gourd' },
+  'karela': { hi: 'करेला', en: 'Bitter Gourd' },
+  'पालक': { hi: 'जैविक पालक', en: 'Organic Spinach' },
+  'Spinach': { hi: 'पालक', en: 'Spinach' },
+  'palak': { hi: 'पालक', en: 'Spinach' },
+  'धनिया': { hi: 'ताज़ा हरी धनिया', en: 'Fresh Coriander' },
+  'Coriander': { hi: 'धनिया', en: 'Coriander' },
+  'dhaniya': { hi: 'धनिया', en: 'Coriander' },
+
+  // Spices & Condiments
+  'अदरक': { hi: 'देसी अदरक', en: 'Fresh Ginger' },
+  'Ginger': { hi: 'अदरक', en: 'Ginger' },
+  'adrak': { hi: 'अदरक', en: 'Ginger' },
+  'लहसुन': { hi: 'देसी लहसुन', en: 'Garlic' },
+  'Garlic': { hi: 'लहसुन', en: 'Garlic' },
+  'lahsun': { hi: 'लहसुन', en: 'Garlic' },
+  'हल्दी': { hi: 'जैविक कच्ची हल्दी', en: 'Organic Raw Turmeric' },
+  'Turmeric': { hi: 'हल्दी', en: 'Turmeric' },
+  'haldi': { hi: 'हल्दी', en: 'Turmeric' },
+  'मिर्च': { hi: 'तीखी हरी मिर्च', en: 'Green Chilli' },
+  'Chilli': { hi: 'मिर्च', en: 'Green Chilli' },
+  'Chili': { hi: 'मिर्च', en: 'Green Chilli' },
+  'mirch': { hi: 'मिर्च', en: 'Chilli' },
+  'शिमला मिर्च': { hi: 'हरी शिमला मिर्च', en: 'Fresh Capsicum' },
+  'Capsicum': { hi: 'शिमला मिर्च', en: 'Capsicum' },
+  'जीरा': { hi: 'उूंझा जीरा', en: 'Cumin Seeds' },
+  'Cumin': { hi: 'जीरा', en: 'Cumin' },
+
+  // Fruits
+  'सेब': { hi: 'हिमाचली सेब', en: 'Himachali Apples' },
+  'Apple': { hi: 'सेब', en: 'Apples' },
+  'Apples': { hi: 'सेब', en: 'Apples' },
+  'seb': { hi: 'सेब', en: 'Apples' },
+  'आम': { hi: 'अल्फांसो आम', en: 'Alphonso Mangoes' },
+  'Mango': { hi: 'आम', en: 'Mangoes' },
+  'Mangoes': { hi: 'आम', en: 'Mangoes' },
+  'aam': { hi: 'आम', en: 'Mangoes' },
+  'केला': { hi: 'भुसावल केला', en: 'Bhusawal Bananas' },
+  'Banana': { hi: 'केला', en: 'Bananas' },
+  'kela': { hi: 'केला', en: 'Bananas' },
+  'अंगूर': { hi: 'नासिक काले अंगूर', en: 'Nashik Black Grapes' },
+  'Grapes': { hi: 'अंगूर', en: 'Grapes' },
+  'angoor': { hi: 'अंगूर', en: 'Grapes' },
+  'अनार': { hi: 'सोलापुर भगवा अनार', en: 'Bhagwa Pomegranates' },
+  'Pomegranate': { hi: 'अनार', en: 'Pomegranates' },
+  'anar': { hi: 'अनार', en: 'Pomegranates' },
+  'पपीता': { hi: 'मीठा रेड लेडी पपीता', en: 'Red Lady Papaya' },
+  'Papaya': { hi: 'पपीता', en: 'Papaya' },
+  'papita': { hi: 'पपीता', en: 'Papaya' },
+  'तरबूज': { hi: 'मीठा तरबूज', en: 'Sweet Watermelon' },
+  'Watermelon': { hi: 'तरबूज', en: 'Watermelon' },
+
+  // Oilseeds & Cash Crops
+  'मूंगफली': { hi: 'गुजरात मूंगफली', en: 'Peanuts (Groundnuts)' },
+  'Peanuts': { hi: 'मूंगफली', en: 'Peanuts' },
+  'Groundnut': { hi: 'मूंगफली', en: 'Groundnuts' },
+  'mungfali': { hi: 'मूंगफली', en: 'Peanuts' },
+  'सोयाबीन': { hi: 'पीला मालवा सोयाबीन', en: 'Yellow Soybean' },
+  'Soybean': { hi: 'सोयाबीन', en: 'Soybean' },
+  'सरसों': { hi: 'पीली राजस्थान सरसों', en: 'Yellow Mustard' },
+  'Mustard': { hi: 'सरसों', en: 'Mustard' },
+  'sarson': { hi: 'सरसों', en: 'Mustard' },
+  'चना': { hi: 'काबोली चना', en: 'Kabuli Chickpeas' },
+  'Chickpeas': { hi: 'चना', en: 'Chickpeas' },
+  'chana': { hi: 'चना', en: 'Chickpeas' },
+  'मखाना': { hi: 'दरभंगा मखाना', en: 'Darbhanga Fox Nuts (Makhana)' },
+  'Makhana': { hi: 'मखाना', en: 'Fox Nuts (Makhana)' },
+  'Fox Nuts': { hi: 'मखाना', en: 'Fox Nuts (Makhana)' },
+
+  // Composite Names
   'ताज़ा हाइब्रिड टमाटर (Fresh Tomatoes)': { hi: 'ताज़ा हाइब्रिड टमाटर', en: 'Fresh Hybrid Tomatoes' },
   'नासिक हाइब्रिड टमाटर (ताज़ा टमाटर)': { hi: 'नासिक हाइब्रिड टमाटर', en: 'Nashik Hybrid Tomatoes' },
   'नासिक हाइब्रिड टमाटर (वर्चुअल पूल)': { hi: 'नासिक हाइब्रिड टमाटर (वर्चुअल पूल)', en: 'Nashik Hybrid Tomatoes (Virtual Pool)' },
@@ -330,27 +460,10 @@ export const cropTranslations: Record<string, { hi: string; en: string }> = {
   'हरी शिमला मिर्च (Fresh Capsicum)': { hi: 'हरी शिमला मिर्च', en: 'Fresh Capsicum' },
   'शरबाती प्रीमियम गेहूं (Sharbati Wheat)': { hi: 'शरबाती प्रीमियम गेहूं', en: 'Premium Sharbati Wheat' },
   'देसी जैविक गाजर (Organic Carrots)': { hi: 'देसी जैविक गाजर', en: 'Organic Desi Carrots' },
-
-  // English Key DB Listings
   'Fresh Nashik Tomatoes': { hi: 'ताज़ा नासिक टमाटर', en: 'Fresh Nashik Tomatoes' },
   'Red Onions (Nashik Quality)': { hi: 'लाल नासिक प्याज़ (उत्कृष्ट)', en: 'Red Onions (Nashik Quality)' },
   'Organic Sharbati Wheat': { hi: 'जैविक शरबती गेहूँ', en: 'Organic Sharbati Wheat' },
   'Farm Fresh Potatoes (Jyoti)': { hi: 'ताज़ा खेत के आलू (ज्योति)', en: 'Farm Fresh Potatoes (Jyoti)' },
-  'Nashik Tomatoes (FPO Bulk Pool)': { hi: 'नासिक टमाटर (एफपीओ थोक पूल)', en: 'Nashik Tomatoes (FPO Bulk Pool)' },
-  'Fresh Nashik Tomatoes (IVR Voice Listed)': { hi: 'नासिक टमाटर (IVR वॉयस सूचीबद्ध)', en: 'Fresh Nashik Tomatoes (IVR Voice Listed)' },
-  'Nashik Tomatoes (IVR Voice Listed)': { hi: 'नासिक टमाटर (IVR वॉयस सूचीबद्ध)', en: 'Nashik Tomatoes (IVR Voice Listed)' },
-  'Tomatoes': { hi: 'टमाटर', en: 'Tomatoes' },
-  'Onions': { hi: 'प्याज़', en: 'Onions' },
-  'Wheat': { hi: 'गेहूँ', en: 'Wheat' },
-  'Potatoes': { hi: 'आलू', en: 'Potatoes' },
-  'Tomato Grade A+': { hi: 'टमाटर (ग्रेड A+)', en: 'Tomato (Grade A+)' },
-  'Onion Red Nashik': { hi: 'प्याज (लाल नासिक)', en: 'Onion (Red Nashik)' },
-  'Sharbati Wheat': { hi: 'शरबती गेहूं', en: 'Sharbati Wheat' },
-  'टमाटर': { hi: 'टमाटर', en: 'Tomatoes' },
-  'शरबाती गेहूं': { hi: 'शरबाती गेहूं', en: 'Sharbati Wheat' },
-  'लाल प्याज (नासिक)': { hi: 'लाल प्याज (नासिक)', en: 'Red Onion (Nashik)' },
-  'शरबाती ऑर्गेनिक गेहूं': { hi: 'शरबाती ऑर्गेनिक गेहूं', en: 'Sharbati Organic Wheat' },
-  'ज्योति आलू': { hi: 'ज्योति आलू', en: 'Jyoti Potatoes' },
 };
 
 export const locationTranslations: Record<string, { hi: string; en: string }> = {
@@ -368,6 +481,7 @@ export const locationTranslations: Record<string, { hi: string; en: string }> = 
   'पुणे स्वॉरगेट वितरण हब': { hi: 'पुणे स्वॉरगेट वितरण हब', en: 'Pune Swargate Distribution Hub' },
   'मुंबई सेन्ट्रल कोल्ड स्टोर': { hi: 'मुंबई सेन्ट्रल कोल्ड स्टोर', en: 'Mumbai Central Cold Storage' },
   'अन्नपूर्णा पुणे संकलन हब': { hi: 'अन्नपूर्णा पुणे संकलन हब', en: 'Annapurna Pune Collection Hub' },
+  'नासिक मंडी संकलन हब': { hi: 'नासिक मंडी संकलन हब', en: 'Nashik Mandi Collection Hub' },
 };
 
 export const farmerTranslations: Record<string, { hi: string; en: string }> = {
@@ -402,6 +516,8 @@ export const categoryTranslations: Record<string, { hi: string; en: string }> = 
 };
 
 export const gradeTranslations: Record<string, { hi: string; en: string }> = {
+  'उच्चतम श्रेणी A+': { hi: 'उच्चतम श्रेणी A+', en: 'Grade A+ Premium' },
+  'श्रेणी A': { hi: 'श्रेणी A', en: 'Grade A' },
   'ग्रेड A+': { hi: 'ग्रेड A+', en: 'Grade A+' },
   'ग्रेड A': { hi: 'ग्रेड A', en: 'Grade A' },
   'निर्यात श्रेणी': { hi: 'निर्यात श्रेणी', en: 'Export Grade' },
@@ -412,11 +528,176 @@ export const gradeTranslations: Record<string, { hi: string; en: string }> = {
   'Grade A+': { hi: 'ग्रेड A+', en: 'Grade A+' },
 };
 
+// AI Token Map for Word-by-Word Substring & Transliteration Translation
+const tokenMap: Record<string, { hi: string; en: string }> = {
+  'मक्का': { hi: 'मक्का', en: 'Maize (Corn)' },
+  'मकई': { hi: 'मक्का', en: 'Corn / Maize' },
+  'corn': { hi: 'मक्का', en: 'Corn' },
+  'maize': { hi: 'मक्का', en: 'Maize' },
+  'sweetcorn': { hi: 'स्वीट कॉर्न', en: 'Sweet Corn' },
+  'makka': { hi: 'मक्का', en: 'Maize (Corn)' },
+  'makkai': { hi: 'मक्का', en: 'Maize (Corn)' },
+  'धान': { hi: 'धान', en: 'Paddy' },
+  'चावल': { hi: 'चावल', en: 'Rice' },
+  'paddy': { hi: 'धान', en: 'Paddy' },
+  'rice': { hi: 'चावल', en: 'Rice' },
+  'गेहूं': { hi: 'गेहूं', en: 'Wheat' },
+  'गेहूँ': { hi: 'गेहूं', en: 'Wheat' },
+  'wheat': { hi: 'गेहूं', en: 'Wheat' },
+  'gehun': { hi: 'गेहूं', en: 'Wheat' },
+  'टमाटर': { hi: 'टमाटर', en: 'Tomatoes' },
+  'tomato': { hi: 'टमाटर', en: 'Tomato' },
+  'tomatoes': { hi: 'टमाटर', en: 'Tomatoes' },
+  'tamatar': { hi: 'टमाटर', en: 'Tomatoes' },
+  'प्याज': { hi: 'प्याज', en: 'Onions' },
+  'प्याज़': { hi: 'प्याज', en: 'Onions' },
+  'onion': { hi: 'प्याज', en: 'Onion' },
+  'onions': { hi: 'प्याज', en: 'Onions' },
+  'pyaaz': { hi: 'प्याज', en: 'Onions' },
+  'आलू': { hi: 'आलू', en: 'Potatoes' },
+  'potato': { hi: 'आलू', en: 'Potato' },
+  'potatoes': { hi: 'आलू', en: 'Potatoes' },
+  'aalu': { hi: 'आलू', en: 'Potatoes' },
+  'भिंडी': { hi: 'भिंडी', en: 'Okra (Ladyfinger)' },
+  'okra': { hi: 'भिंडी', en: 'Okra' },
+  'ladyfinger': { hi: 'भिंडी', en: 'Ladyfinger' },
+  'bhindi': { hi: 'भिंडी', en: 'Okra' },
+  'बैंगन': { hi: 'बैंगन', en: 'Eggplant (Brinjal)' },
+  'brinjal': { hi: 'बैंगन', en: 'Brinjal' },
+  'eggplant': { hi: 'बैंगन', en: 'Eggplant' },
+  'baingan': { hi: 'बैंगन', en: 'Eggplant' },
+  'गोभी': { hi: 'गोभी', en: 'Cauliflower' },
+  'फूलगोभी': { hi: 'फूलगोभी', en: 'Cauliflower' },
+  'cauliflower': { hi: 'फूलगोभी', en: 'Cauliflower' },
+  'पत्तागोभी': { hi: 'पत्तागोभी', en: 'Cabbage' },
+  'cabbage': { hi: 'पत्तागोभी', en: 'Cabbage' },
+  'मटर': { hi: 'मटर', en: 'Peas' },
+  'peas': { hi: 'मटर', en: 'Peas' },
+  'matar': { hi: 'मटर', en: 'Peas' },
+  'गाजर': { hi: 'गाजर', en: 'Carrot' },
+  'carrot': { hi: 'गाजर', en: 'Carrot' },
+  'carrots': { hi: 'गाजर', en: 'Carrots' },
+  'gajar': { hi: 'गाजर', en: 'Carrot' },
+  'मूली': { hi: 'मूली', en: 'Radish' },
+  'radish': { hi: 'मूली', en: 'Radish' },
+  'mooli': { hi: 'मूली', en: 'Radish' },
+  'लौकी': { hi: 'लौकी', en: 'Bottle Gourd' },
+  'lauki': { hi: 'लौकी', en: 'Bottle Gourd' },
+  'करेला': { hi: 'करेला', en: 'Bitter Gourd' },
+  'karela': { hi: 'करेला', en: 'Bitter Gourd' },
+  'पालक': { hi: 'पालक', en: 'Spinach' },
+  'spinach': { hi: 'पालक', en: 'Spinach' },
+  'palak': { hi: 'पालक', en: 'Spinach' },
+  'धनिया': { hi: 'धनिया', en: 'Coriander' },
+  'coriander': { hi: 'धनिया', en: 'Coriander' },
+  'dhaniya': { hi: 'धनिया', en: 'Coriander' },
+  'अदरक': { hi: 'अदरक', en: 'Ginger' },
+  'ginger': { hi: 'अदरक', en: 'Ginger' },
+  'adrak': { hi: 'अदरक', en: 'Ginger' },
+  'लहसुन': { hi: 'लहसुन', en: 'Garlic' },
+  'garlic': { hi: 'लहसुन', en: 'Garlic' },
+  'lahsun': { hi: 'लहसुन', en: 'Garlic' },
+  'हल्दी': { hi: 'हल्दी', en: 'Turmeric' },
+  'turmeric': { hi: 'हल्दी', en: 'Turmeric' },
+  'haldi': { hi: 'हल्दी', en: 'Turmeric' },
+  'मिर्च': { hi: 'मिर्च', en: 'Chilli' },
+  'chilli': { hi: 'मिर्च', en: 'Chilli' },
+  'chili': { hi: 'मिर्च', en: 'Chili' },
+  'mirch': { hi: 'मिर्च', en: 'Chilli' },
+  'शिमला': { hi: 'शिमला मिर्च', en: 'Capsicum' },
+  'capsicum': { hi: 'शिमला मिर्च', en: 'Capsicum' },
+  'सेब': { hi: 'सेब', en: 'Apples' },
+  'apple': { hi: 'सेब', en: 'Apple' },
+  'apples': { hi: 'सेब', en: 'Apples' },
+  'seb': { hi: 'सेब', en: 'Apples' },
+  'आम': { hi: 'आम', en: 'Mangoes' },
+  'mango': { hi: 'आम', en: 'Mango' },
+  'mangoes': { hi: 'आम', en: 'Mangoes' },
+  'aam': { hi: 'आम', en: 'Mangoes' },
+  'केला': { hi: 'केला', en: 'Bananas' },
+  'banana': { hi: 'केला', en: 'Banana' },
+  'bananas': { hi: 'केला', en: 'Bananas' },
+  'kela': { hi: 'केला', en: 'Bananas' },
+  'अंगूर': { hi: 'अंगूर', en: 'Grapes' },
+  'grapes': { hi: 'अंगूर', en: 'Grapes' },
+  'angoor': { hi: 'अंगूर', en: 'Grapes' },
+  'अनार': { hi: 'अनार', en: 'Pomegranate' },
+  'pomegranate': { hi: 'अनार', en: 'Pomegranate' },
+  'anar': { hi: 'अनार', en: 'Pomegranate' },
+  'पपीता': { hi: 'पपीता', en: 'Papaya' },
+  'papaya': { hi: 'पपीता', en: 'Papaya' },
+  'papita': { hi: 'पपीता', en: 'Papaya' },
+  'सोयाबीन': { hi: 'सोयाबीन', en: 'Soybean' },
+  'soybean': { hi: 'सोयाबीन', en: 'Soybean' },
+  'सरसों': { hi: 'सरसों', en: 'Mustard' },
+  'mustard': { hi: 'सरसों', en: 'Mustard' },
+  'sarson': { hi: 'सरसों', en: 'Mustard' },
+  'चना': { hi: 'चना', en: 'Chickpeas' },
+  'chickpeas': { hi: 'चना', en: 'Chickpeas' },
+  'chana': { hi: 'चना', en: 'Chickpeas' },
+  'मूंगफली': { hi: 'मूंगफली', en: 'Peanuts' },
+  'peanuts': { hi: 'मूंगफली', en: 'Peanuts' },
+  'mungfali': { hi: 'मूंगफली', en: 'Peanuts' },
+  'मखाना': { hi: 'मखाना', en: 'Fox Nuts (Makhana)' },
+  'makhana': { hi: 'मखाना', en: 'Fox Nuts (Makhana)' },
+  'ताज़ा': { hi: 'ताज़ा', en: 'Fresh' },
+  'fresh': { hi: 'ताज़ा', en: 'Fresh' },
+  'जैविक': { hi: 'जैविक', en: 'Organic' },
+  'organic': { hi: 'जैविक', en: 'Organic' },
+  'देसी': { hi: 'देसी', en: 'Desi' },
+  'desi': { hi: 'देसी', en: 'Desi' },
+  'हाइब्रिड': { hi: 'हाइब्रिड', en: 'Hybrid' },
+  'hybrid': { hi: 'हाइब्रिड', en: 'Hybrid' },
+};
+
 export function getLocalizedCropName(name: string, lang: Language): string {
-  if (cropTranslations[name]) {
-    return cropTranslations[name][lang];
+  if (!name) return name;
+  const trimmed = name.trim();
+
+  // 1. Direct exact match in dictionary
+  if (cropTranslations[trimmed]) {
+    return cropTranslations[trimmed][lang];
   }
-  // Automatic AI fallback cleaner for bracketed names e.g. "ताज़ा हाइब्रिड टमाटर (Fresh Tomatoes)"
+
+  // 2. Case-insensitive exact match
+  const lower = trimmed.toLowerCase();
+  for (const key of Object.keys(cropTranslations)) {
+    if (key.toLowerCase() === lower) {
+      return cropTranslations[key][lang];
+    }
+  }
+
+  // 3. Substring match for multi-word crop names (e.g., "नासिक मक्का", "ताज़ा मक्का")
+  for (const [key, val] of Object.entries(cropTranslations)) {
+    if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) {
+      if (lang === 'en' && /[\u0900-\u097F]/.test(trimmed)) {
+        // If text is in Hindi Devanagari script and target language is English
+        return val.en;
+      }
+      if (lang === 'hi' && !/[\u0900-\u097F]/.test(trimmed)) {
+        // If text is in English script and target language is Hindi
+        return val.hi;
+      }
+    }
+  }
+
+  // 4. Token-by-token AI translation / Transliteration
+  const words = trimmed.split(/\s+/);
+  let hasTranslatedToken = false;
+  const translatedTokens = words.map((w) => {
+    const cleanWord = w.replace(/[^a-zA-Z\u0900-\u097F]/g, '').toLowerCase();
+    if (tokenMap[cleanWord]) {
+      hasTranslatedToken = true;
+      return tokenMap[cleanWord][lang];
+    }
+    return w;
+  });
+
+  if (hasTranslatedToken) {
+    return translatedTokens.join(' ');
+  }
+
+  // 5. Automatic AI Fallback Cleaner for bracketed names e.g. "ताज़ा हाइब्रिड टमाटर (Fresh Tomatoes)"
   if (lang === 'en') {
     const bracketMatch = name.match(/\(([^)]+)\)/);
     if (bracketMatch && bracketMatch[1]) {
@@ -426,10 +707,12 @@ export function getLocalizedCropName(name: string, lang: Language): string {
     const cleaned = name.replace(/\([^)]*\)/g, '').trim();
     if (cleaned.length > 0) return cleaned;
   }
+
   return name;
 }
 
 export function getLocalizedLocation(loc: string, lang: Language): string {
+  if (!loc) return loc;
   if (locationTranslations[loc]) {
     return locationTranslations[loc][lang];
   }
@@ -437,6 +720,7 @@ export function getLocalizedLocation(loc: string, lang: Language): string {
 }
 
 export function getLocalizedFarmer(farmer: string, lang: Language): string {
+  if (!farmer) return farmer;
   if (farmerTranslations[farmer]) {
     return farmerTranslations[farmer][lang];
   }
@@ -444,6 +728,7 @@ export function getLocalizedFarmer(farmer: string, lang: Language): string {
 }
 
 export function getLocalizedCategory(cat: string, lang: Language): string {
+  if (!cat) return cat;
   if (categoryTranslations[cat]) {
     return categoryTranslations[cat][lang];
   }
@@ -451,8 +736,10 @@ export function getLocalizedCategory(cat: string, lang: Language): string {
 }
 
 export function getLocalizedGrade(grade: string, lang: Language): string {
+  if (!grade) return grade;
   if (gradeTranslations[grade]) {
     return gradeTranslations[grade][lang];
   }
   return grade;
 }
+
