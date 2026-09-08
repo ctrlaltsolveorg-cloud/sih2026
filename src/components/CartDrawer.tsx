@@ -5,7 +5,6 @@ import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCropName, getLocalizedGrade } from '@/lib/i18n';
 import { X, ShoppingBag, Trash2, ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 export default function CartDrawer() {
   const {
@@ -31,16 +30,6 @@ export default function CartDrawer() {
     const hash = 'KF-CONTRACT-' + Math.random().toString(36).substring(2, 9).toUpperCase();
     setContractId(hash);
     setOrderPlaced(true);
-
-    try {
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
-    } catch (e) {
-      // ignore
-    }
   };
 
   const handleCloseSuccess = () => {

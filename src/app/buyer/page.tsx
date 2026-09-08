@@ -5,11 +5,11 @@ import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedFarmer, getLocalizedLocation, getLocalizedCropName } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { ShoppingBag, Plus, Clock, CheckCircle2, FileText, Sparkles, MapPin, X } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 export default function BuyerDashboardPage() {
   const { t, language } = useLanguage();
   const { userName } = useRole();
+  const [successSignal, setSuccessSignal] = useState<string | null>(null);
 
   const [showAddReqModal, setShowAddReqModal] = useState(false);
   const [cropName, setCropName] = useState('टमाटर');
@@ -37,7 +37,8 @@ export default function BuyerDashboardPage() {
   const handlePostRequirement = (e: React.FormEvent) => {
     e.preventDefault();
     setShowAddReqModal(false);
-    confetti({ particleCount: 70, spread: 60 });
+    setSuccessSignal(language === 'hi' ? 'थोक मांग प्रस्ताव सफलतापूर्वक दर्ज किया गया!' : 'Bulk Requirement Offer Posted Successfully!');
+    setTimeout(() => setSuccessSignal(null), 4000);
   };
 
   return (
@@ -270,6 +271,21 @@ export default function BuyerDashboardPage() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Green Pulse Success Signal Toast */}
+      {successSignal && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#0F3826] text-amber-50 px-5 py-3.5 rounded-2xl shadow-2xl border border-emerald-500/40 flex items-center gap-3 animate-bounce">
+          <div className="p-1.5 bg-emerald-500/20 text-emerald-400 rounded-full animate-pulse">
+            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+          </div>
+          <div>
+            <p className="text-xs font-extrabold text-emerald-300">
+              {language === 'hi' ? 'सफलतापूर्वक पुष्टित ✓' : 'Confirmed Successfully ✓'}
+            </p>
+            <p className="text-xs font-medium text-amber-100/90">{successSignal}</p>
           </div>
         </div>
       )}

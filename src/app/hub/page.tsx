@@ -5,11 +5,11 @@ import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCropName } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { Warehouse, Camera, QrCode, CheckCircle2, ShieldCheck, Sparkles, Award } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 export default function HubOperatorPage() {
   const { t, language } = useLanguage();
   const { userName } = useRole();
+  const [successSignal, setSuccessSignal] = useState<string | null>(null);
 
   const [selectedCrop, setSelectedCrop] = useState('नासिक हाइब्रिड टमाटर (ताज़ा टमाटर)');
   const [lotQuantity, setLotQuantity] = useState('500');
@@ -29,7 +29,8 @@ export default function HubOperatorPage() {
       const data = await res.json();
       if (data.success) {
         setCvResult(data.inspectionResult);
-        confetti({ particleCount: 70, spread: 60 });
+        setSuccessSignal(language === 'hi' ? 'AI गुणवत्ता परीक्षण सफलतापूर्वक पूर्ण!' : 'AI Quality Inspection Passed Successfully!');
+        setTimeout(() => setSuccessSignal(null), 4000);
       }
     } catch (e) {
       setCvResult({
@@ -43,7 +44,8 @@ export default function HubOperatorPage() {
         shelfLifeEstDays: 12,
         qrHash: 'QR-HUB-NAS-9842109',
       });
-      confetti({ particleCount: 70, spread: 60 });
+      setSuccessSignal(language === 'hi' ? 'AI गुणवत्ता परीक्षण सफलतापूर्वक पूर्ण!' : 'AI Quality Inspection Passed Successfully!');
+      setTimeout(() => setSuccessSignal(null), 4000);
     } finally {
       setIsAnalyzing(false);
     }
@@ -208,6 +210,21 @@ export default function HubOperatorPage() {
           </div>
         </div>
       </div>
+
+      {/* Green Pulse Success Signal Toast */}
+      {successSignal && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#0F3826] text-amber-50 px-5 py-3.5 rounded-2xl shadow-2xl border border-emerald-500/40 flex items-center gap-3 animate-bounce">
+          <div className="p-1.5 bg-emerald-500/20 text-emerald-400 rounded-full animate-pulse">
+            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+          </div>
+          <div>
+            <p className="text-xs font-extrabold text-emerald-300">
+              {language === 'hi' ? 'सफलतापूर्वक पुष्टित ✓' : 'Confirmed Successfully ✓'}
+            </p>
+            <p className="text-xs font-medium text-amber-100/90">{successSignal}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

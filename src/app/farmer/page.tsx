@@ -5,7 +5,6 @@ import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCropName, getLocalizedGrade, getLocalizedLocation } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { Tractor, Plus, Sparkles, PhoneCall, CheckCircle2, TrendingUp, Volume2, ShieldCheck, X, Loader2 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 export default function FarmerDashboardPage() {
   const { t, language } = useLanguage();
@@ -15,6 +14,7 @@ export default function FarmerDashboardPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [ivrResponse, setIvrResponse] = useState<string | null>(null);
   const [selectedKeypad, setSelectedKeypad] = useState('1');
+  const [successSignal, setSuccessSignal] = useState<string | null>(null);
 
   // Form State
   const [cropName, setCropName] = useState('');
@@ -88,6 +88,13 @@ export default function FarmerDashboardPage() {
     loadCrops();
   }, []);
 
+  const triggerSuccessSignal = (msg: string) => {
+    setSuccessSignal(msg);
+    setTimeout(() => {
+      setSuccessSignal(null);
+    }, 4000);
+  };
+
   const handleSimulateIvr = async () => {
     try {
       const res = await fetch('/api/v1/ivr/simulate', {
@@ -98,7 +105,7 @@ export default function FarmerDashboardPage() {
       const data = await res.json();
       if (data.success) {
         setIvrResponse(data.simulatedAudioResponseHindi);
-        confetti({ particleCount: 50, spread: 60 });
+        triggerSuccessSignal(language === 'hi' ? 'IVR वॉयस प्रविष्टि सफलतापूर्वक दर्ज की गई!' : 'IVR Voice Entry Registered Successfully!');
       }
     } catch (e) {
       setIvrResponse('IVR वॉयस सेवा: "1 बटन दबाया गया — 500 किग्रा टमाटर सफलतापूर्वक दर्ज हो गए हैं।"');
@@ -153,7 +160,11 @@ export default function FarmerDashboardPage() {
       setIsSubmitting(false);
       setShowAddModal(false);
       setCropName('');
-      confetti({ particleCount: 80, spread: 70 });
+      triggerSuccessSignal(
+        language === 'hi'
+          ? `फसल "${cropName}" सफलता से पंजीकृत की गई!`
+          : `Crop "${cropName}" registered successfully!`
+      );
     }
   };
 
@@ -279,12 +290,29 @@ export default function FarmerDashboardPage() {
         </div>
       </div>
 
+      {/* Green Pulse Success Signal Toast */}
+      {successSignal && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#0F3826] text-amber-50 px-5 py-3.5 rounded-2xl shadow-2xl border border-emerald-500/40 flex items-center gap-3 animate-bounce">
+          <div className="p-1.5 bg-emerald-500/20 text-emerald-400 rounded-full animate-pulse">
+            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+          </div>
+          <div>
+            <p className="text-xs font-extrabold text-emerald-300">
+              {language === 'hi' ? 'सफलतापूर्वक पुष्टित ✓' : 'Confirmed Successfully ✓'}
+            </p>
+            <p className="text-xs font-medium text-amber-100/90">{successSignal}</p>
+          </div>
+        </div>
+      )}
+
       {/* Modal for Adding New Produce */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
           <div className="bg-[#FAF5EB] rounded-3xl p-6 w-full max-w-lg shadow-2xl border border-emerald-900/20 space-y-4">
             <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
-              <h3 className="font-extrabold text-lg text-emerald-950">नयी फसल बाज़ार में जोड़ें</h3>
+              <h3 className="font-extrabold text-lg text-emerald-950">
+                {language === 'hi' ? 'नयी फसल बाज़ार में जोड़ें' : 'Register New Crop to Marketplace'}
+              </h3>
               <button onClick={() => setShowAddModal(false)} className="p-1 hover:bg-emerald-100 rounded-full text-emerald-800">
                 <X className="w-5 h-5" />
               </button>
@@ -292,11 +320,13 @@ export default function FarmerDashboardPage() {
 
             <form onSubmit={handleAddProduce} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-emerald-950 mb-1">फसल का नाम</label>
+                <label className="block text-xs font-bold text-emerald-950 mb-1">
+                  {language === 'hi' ? 'फसल का नाम' : 'Crop Name'}
+                </label>
                 <input
                   type="text"
                   required
-                  placeholder="उदा. नासिक हाइब्रिड टमाटर"
+                  placeholder={language === 'hi' ? 'उदा. नासिक हाइब्रिड टमाटर या Turnip' : 'e.g. Fresh Tomatoes or Turnip'}
                   value={cropName}
                   onChange={(e) => setCropName(e.target.value)}
                   className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
@@ -305,7 +335,9 @@ export default function FarmerDashboardPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-emerald-950 mb-1">मात्रा (किग्रा)</label>
+                  <label className="block text-xs font-bold text-emerald-950 mb-1">
+                    {language === 'hi' ? 'मात्रा (किग्रा)' : 'Quantity (kg)'}
+                  </label>
                   <input
                     type="number"
                     required
@@ -316,7 +348,9 @@ export default function FarmerDashboardPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-emerald-950 mb-1">वांछित मूल्य (₹/किग्रा)</label>
+                  <label className="block text-xs font-bold text-emerald-950 mb-1">
+                    {language === 'hi' ? 'वांछित मूल्य (₹/किग्रा)' : 'Expected Price (₹/kg)'}
+                  </label>
                   <input
                     type="number"
                     step="0.5"
@@ -329,7 +363,9 @@ export default function FarmerDashboardPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-emerald-950 mb-1">संकलन हब स्थान</label>
+                <label className="block text-xs font-bold text-emerald-950 mb-1">
+                  {language === 'hi' ? 'संकलन हब स्थान' : 'Collection Hub Location'}
+                </label>
                 <input
                   type="text"
                   required
@@ -345,7 +381,7 @@ export default function FarmerDashboardPage() {
                   onClick={() => setShowAddModal(false)}
                   className="flex-1 py-3 bg-emerald-100 hover:bg-emerald-200 text-emerald-950 font-bold rounded-xl text-xs transition"
                 >
-                  रद्द करें
+                  {language === 'hi' ? 'रद्द करें' : 'Cancel'}
                 </button>
                 <button
                   type="submit"

@@ -5,7 +5,6 @@ import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedFarmer, getLocalizedLocation } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { Truck, Navigation, Key, CheckCircle2, ShieldCheck } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 export default function TransporterDashboardPage() {
   const { t, language } = useLanguage();
@@ -50,7 +49,6 @@ export default function TransporterDashboardPage() {
           : `OTP ${inputOtp} Verified! Farm transport dispatch (Escrow Handshake) authorized.`
       );
       setInputOtp('');
-      confetti({ particleCount: 70, spread: 60 });
     } else {
       setOtpSuccessMsg(
         language === 'hi'

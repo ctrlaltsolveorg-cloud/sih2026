@@ -5,11 +5,11 @@ import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCropName, getLocalizedFarmer } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { Users, Layers, TrendingUp, CheckCircle2, Building2, Sparkles } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 export default function FpoDashboardPage() {
   const { t, language } = useLanguage();
   const { userName } = useRole();
+  const [successSignal, setSuccessSignal] = useState<string | null>(null);
 
   const [pooledLots, setPooledLots] = useState([
     { id: 'pool_101', crop_name: 'नासिक हाइब्रिड टमाटर (वर्चुअल पूल)', total_quantity_kg: 5500, target_price_rs: '27.50', members: 34, status: 'पूल एकत्र जारी' },
@@ -23,7 +23,8 @@ export default function FpoDashboardPage() {
 
   const handleLockLot = (id: string) => {
     setPooledLots(pooledLots.map(lot => lot.id === id ? { ...lot, status: 'लॉट लॉक किया गया' } : lot));
-    confetti({ particleCount: 60, spread: 60 });
+    setSuccessSignal(language === 'hi' ? 'FPO लॉट सफलतापूर्वक सुरक्षित किया गया!' : 'FPO Lot Secured Successfully!');
+    setTimeout(() => setSuccessSignal(null), 4000);
   };
 
   return (
@@ -153,6 +154,21 @@ export default function FpoDashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* Green Pulse Success Signal Toast */}
+      {successSignal && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#0F3826] text-amber-50 px-5 py-3.5 rounded-2xl shadow-2xl border border-emerald-500/40 flex items-center gap-3 animate-bounce">
+          <div className="p-1.5 bg-emerald-500/20 text-emerald-400 rounded-full animate-pulse">
+            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+          </div>
+          <div>
+            <p className="text-xs font-extrabold text-emerald-300">
+              {language === 'hi' ? 'सफलतापूर्वक पुष्टित ✓' : 'Confirmed Successfully ✓'}
+            </p>
+            <p className="text-xs font-medium text-amber-100/90">{successSignal}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
