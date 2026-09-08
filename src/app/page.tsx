@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { getLocalizedCropName, getLocalizedCategory, getLocalizedGrade } from '@/lib/i18n';
+import { getLocalizedCropName, getLocalizedCategory, getLocalizedGrade, getLocalizedLocation, getLocalizedFarmer } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { useCart } from '@/context/CartContext';
 import {
@@ -174,8 +174,8 @@ export default function HomePage() {
           <div className="animate-marquee whitespace-nowrap flex gap-8 text-xs">
             {tickerItems.concat(tickerItems).map((item, idx) => (
               <span key={idx} className="inline-flex items-center gap-2 font-medium">
-                <span className="text-amber-50">{item.crop}</span>
-                <span className="font-mono text-amber-300">{item.price}</span>
+                <span className="text-amber-50">{getLocalizedCropName(item.crop, language)}</span>
+                <span className="font-mono text-amber-300">{language === 'hi' ? item.price : item.price.replace('/किग्रा', '/kg')}</span>
                 <span className="text-emerald-400 text-[11px] font-bold">{item.trend}</span>
               </span>
             ))}
@@ -458,13 +458,13 @@ export default function HomePage() {
                     <div className="p-3 bg-emerald-50/60 rounded-xl border border-emerald-900/5 text-xs space-y-1.5">
                       <div className="flex items-center gap-1.5 text-emerald-900">
                         <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                        <span className="truncate font-medium">{item.location}</span>
+                        <span className="truncate font-medium">{getLocalizedLocation(item.location, language)}</span>
                       </div>
                       <div className="flex items-center justify-between text-emerald-800/80 text-[11px]">
-                        <span>उत्पादक: {item.farmer_name}</span>
+                        <span>{language === 'hi' ? 'उत्पादक: ' : 'Producer: '}{getLocalizedFarmer(item.farmer_name, language)}</span>
                         {item.is_organic === 1 && (
                           <span className="text-emerald-700 font-bold flex items-center gap-0.5">
-                            <CheckCircle className="w-3 h-3" /> 100% जैविक
+                            <CheckCircle className="w-3 h-3" /> {language === 'hi' ? '100% जैविक' : '100% Organic'}
                           </span>
                         )}
                       </div>

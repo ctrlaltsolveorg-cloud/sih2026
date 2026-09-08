@@ -7,7 +7,7 @@ import { ShoppingBag, Plus, Clock, CheckCircle2, FileText, Sparkles, MapPin, X }
 import confetti from 'canvas-confetti';
 
 export default function BuyerDashboardPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { userName } = useRole();
 
   const [showAddReqModal, setShowAddReqModal] = useState(false);
@@ -139,31 +139,39 @@ export default function BuyerDashboardPage() {
           <div className="space-y-4">
             <div className="glass-card p-5 rounded-2xl space-y-3 border border-emerald-900/10">
               <div className="flex items-center justify-between">
-                <h3 className="font-extrabold text-sm text-emerald-950">साप्ताहिक टमाटर आपूर्ति अनुबंध</h3>
+                <h3 className="font-extrabold text-sm text-emerald-950">
+                  {language === 'hi' ? 'साप्ताहिक टमाटर आपूर्ति अनुबंध' : 'Weekly Fresh Tomato Supply Contract'}
+                </h3>
                 <span className="text-[10px] px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-full">
-                  सक्रिय
+                  {language === 'hi' ? 'सक्रिय' : 'Active'}
                 </span>
               </div>
               <p className="text-xs text-emerald-800/80">
-                100 किग्रा ताज़ा टमाटर प्रत्येक सोमवार और गुरुवार नासिक FPO हब से सीधा वितरण।
+                {language === 'hi'
+                  ? '100 किग्रा ताज़ा टमाटर प्रत्येक सोमवार और गुरुवार नासिक FPO हब से सीधा वितरण।'
+                  : '100 kg Fresh Tomatoes dispatched every Monday & Thursday directly from Nashik FPO Hub.'}
               </p>
               <button className="w-full py-2 bg-emerald-900/10 hover:bg-emerald-900/20 text-emerald-950 font-bold rounded-xl text-xs transition">
-                अनुबंध की शर्तें देखें (एस्क्रौ सुरक्षा)
+                {language === 'hi' ? 'अनुबंध की शर्तें देखें (एस्क्रौ सुरक्षा)' : 'View Contract Terms (Escrow Protection)'}
               </button>
             </div>
 
             <div className="glass-card p-5 rounded-2xl space-y-3 border border-emerald-900/10">
               <div className="flex items-center justify-between">
-                <h3 className="font-extrabold text-sm text-emerald-950">मासिक शरबाती गेहूं आपूर्ति अनुबंध</h3>
+                <h3 className="font-extrabold text-sm text-emerald-950">
+                  {language === 'hi' ? 'मासिक शरबाती गेहूं आपूर्ति अनुबंध' : 'Monthly Sharbati Wheat Supply Contract'}
+                </h3>
                 <span className="text-[10px] px-2.5 py-0.5 bg-amber-100 text-amber-800 font-bold rounded-full">
-                  नवीनीकरण हेतु तैयार
+                  {language === 'hi' ? 'नवीनीकरण हेतु तैयार' : 'Ready for Renewal'}
                 </span>
               </div>
               <p className="text-xs text-emerald-800/80">
-                500 किग्रा शरबाती गेहूं उज्जैन साइलो हब से प्रत्यक्ष मासिक प्रेषण।
+                {language === 'hi'
+                  ? '500 किग्रा शरबाती गेहूं उज्जैन साइलो हब से प्रत्यक्ष मासिक प्रेषण।'
+                  : '500 kg Sharbati Wheat monthly dispatch directly from Ujjain Silo Hub.'}
               </p>
               <button className="w-full py-2 bg-[#0F3826] text-amber-50 hover:bg-emerald-900 font-bold rounded-xl text-xs shadow transition">
-                अनुबंध नवीनीकृत करें
+                {language === 'hi' ? 'अनुबंध नवीनीकृत करें' : 'Renew Contract'}
               </button>
             </div>
           </div>

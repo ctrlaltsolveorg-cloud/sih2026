@@ -160,6 +160,15 @@ export const translations = {
 };
 
 export const cropTranslations: Record<string, { hi: string; en: string }> = {
+  // Landing Page Listings
+  'ताज़ा हाइब्रिड टमाटर (Fresh Tomatoes)': { hi: 'ताज़ा हाइब्रिड टमाटर', en: 'Fresh Hybrid Tomatoes' },
+  'लाल प्याज (Lasalgaon Red Onion)': { hi: 'लासलगांव लाल प्याज', en: 'Lasalgaon Red Onion' },
+  'जैविक ज्योति आलू (Organic Potatoes)': { hi: 'जैविक ज्योति आलू', en: 'Organic Jyoti Potatoes' },
+  'हरी शिमला मिर्च (Fresh Capsicum)': { hi: 'हरी शिमला मिर्च', en: 'Fresh Capsicum' },
+  'शरबाती प्रीमियम गेहूं (Sharbati Wheat)': { hi: 'शरबाती प्रीमियम गेहूं', en: 'Premium Sharbati Wheat' },
+  'देसी जैविक गाजर (Organic Carrots)': { hi: 'देसी जैविक गाजर', en: 'Organic Desi Carrots' },
+
+  // English Key DB Listings
   'Fresh Nashik Tomatoes': { hi: 'ताज़ा नासिक टमाटर', en: 'Fresh Nashik Tomatoes' },
   'Red Onions (Nashik Quality)': { hi: 'लाल नासिक प्याज़ (उत्कृष्ट)', en: 'Red Onions (Nashik Quality)' },
   'Organic Sharbati Wheat': { hi: 'जैविक शरबती गेहूँ', en: 'Organic Sharbati Wheat' },
@@ -176,7 +185,34 @@ export const cropTranslations: Record<string, { hi: string; en: string }> = {
   'Sharbati Wheat': { hi: 'शरबती गेहूं', en: 'Sharbati Wheat' },
 };
 
+export const locationTranslations: Record<string, { hi: string; en: string }> = {
+  'नासिक मंडी हब (महाराष्ट्र)': { hi: 'नासिक मंडी हब (महाराष्ट्र)', en: 'Nashik Mandi Hub (Maharashtra)' },
+  'लासलगांव संकलन केंद्र': { hi: 'लासलगांव संकलन केंद्र', en: 'Lasalgaon Collection Center' },
+  'इन्दौर (मध्य प्रदेश)': { hi: 'इन्दौर (मध्य प्रदेश)', en: 'Indore (Madhya Pradesh)' },
+  'पुणे ग्रामीण हब': { hi: 'पुणे ग्रामीण हब', en: 'Pune Rural Hub' },
+  'उज्जैन (मध्य प्रदेश)': { hi: 'उज्जैन (मध्य प्रदेश)', en: 'Ujjain (Madhya Pradesh)' },
+  'जयपुर (राजस्थान)': { hi: 'जयपुर (राजस्थान)', en: 'Jaipur (Rajasthan)' },
+  'Pimplgaon Mandi Hub': { hi: 'पिंपलगांव मंडी हब', en: 'Pimplgaon Mandi Hub' },
+  'Lasalgaon Cold Storage': { hi: 'लासलगांव कोल्ड स्टोरेज', en: 'Lasalgaon Cold Storage' },
+  'Khanna Grain Mandi': { hi: 'खन्ना अनाज मंडी', en: 'Khanna Grain Mandi' },
+  'Nashik Central Hub': { hi: 'नासिक सेंट्रल हब', en: 'Nashik Central Hub' },
+};
+
+export const farmerTranslations: Record<string, { hi: string; en: string }> = {
+  'रामेश्वर यादव': { hi: 'रामेश्वर यादव', en: 'Rameshwar Yadav' },
+  'सहयाद्री किसान FPO समूह': { hi: 'सहयाद्री किसान FPO समूह', en: 'Sahyadri Farmers FPO Group' },
+  'सुरेश पाटिल': { hi: 'सुरेश पाटिल', en: 'Suresh Patil' },
+  'कविता चौधरी': { hi: 'कविता चौधरी', en: 'Kavita Choudhary' },
+  'मालवा कृषक FPO': { hi: 'मालवा कृषक FPO', en: 'Malwa Krishak FPO' },
+  'हनुमान सहाय': { hi: 'हनुमान सहाय', en: 'Hanuman Sahay' },
+  'Ramesh Patil': { hi: 'रामेश पाटिल', en: 'Ramesh Patil' },
+  'Harpreet Singh': { hi: 'हरप्रीत सिंह', en: 'Harpreet Singh' },
+};
+
 export const categoryTranslations: Record<string, { hi: string; en: string }> = {
+  'सब्जियाँ': { hi: 'सब्जियाँ', en: 'Vegetables' },
+  'कंदमूल': { hi: 'कंदमूल', en: 'Root Crops' },
+  'अनाज': { hi: 'अनाज', en: 'Grains' },
   'Vegetables': { hi: 'सब्जियाँ', en: 'Vegetables' },
   'Fruits': { hi: 'फल', en: 'Fruits' },
   'Grains': { hi: 'अनाज', en: 'Grains' },
@@ -186,6 +222,9 @@ export const categoryTranslations: Record<string, { hi: string; en: string }> = 
 };
 
 export const gradeTranslations: Record<string, { hi: string; en: string }> = {
+  'ग्रेड A+': { hi: 'ग्रेड A+', en: 'Grade A+' },
+  'ग्रेड A': { hi: 'ग्रेड A', en: 'Grade A' },
+  'निर्यात श्रेणी': { hi: 'निर्यात श्रेणी', en: 'Export Grade' },
   'Grade A Premium': { hi: 'ग्रेड A प्रीमियम', en: 'Grade A Premium' },
   'Grade A': { hi: 'ग्रेड A', en: 'Grade A' },
   'Grade A+ Export Quality': { hi: 'ग्रेड A+ निर्यात गुणवत्ता', en: 'Grade A+ Export Quality' },
@@ -197,7 +236,31 @@ export function getLocalizedCropName(name: string, lang: Language): string {
   if (cropTranslations[name]) {
     return cropTranslations[name][lang];
   }
+  // Automatic AI fallback cleaner for bracketed names e.g. "ताज़ा हाइब्रिड टमाटर (Fresh Tomatoes)"
+  if (lang === 'en') {
+    const bracketMatch = name.match(/\(([^)]+)\)/);
+    if (bracketMatch && bracketMatch[1]) {
+      return bracketMatch[1].trim();
+    }
+  } else if (lang === 'hi') {
+    const cleaned = name.replace(/\([^)]*\)/g, '').trim();
+    if (cleaned.length > 0) return cleaned;
+  }
   return name;
+}
+
+export function getLocalizedLocation(loc: string, lang: Language): string {
+  if (locationTranslations[loc]) {
+    return locationTranslations[loc][lang];
+  }
+  return loc;
+}
+
+export function getLocalizedFarmer(farmer: string, lang: Language): string {
+  if (farmerTranslations[farmer]) {
+    return farmerTranslations[farmer][lang];
+  }
+  return farmer;
 }
 
 export function getLocalizedCategory(cat: string, lang: Language): string {
