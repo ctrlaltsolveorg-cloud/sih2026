@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { getLocalizedCropName } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { Users, Layers, TrendingUp, CheckCircle2, Building2, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function FpoDashboardPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { userName } = useRole();
 
   const [pooledLots, setPooledLots] = useState([
@@ -87,7 +88,7 @@ export default function FpoDashboardPage() {
                   </span>
                 </div>
 
-                <h3 className="font-extrabold text-base text-emerald-950">{lot.crop_name}</h3>
+                <h3 className="font-extrabold text-base text-emerald-950">{getLocalizedCropName(lot.crop_name, language)}</h3>
                 <div className="text-xs text-emerald-800/80">
                   कुल मात्रा: <strong className="text-emerald-950">{lot.total_quantity_kg} किग्रा</strong> • लक्षित दर: <strong className="text-amber-800">₹{lot.target_price_rs}/किग्रा</strong>
                 </div>

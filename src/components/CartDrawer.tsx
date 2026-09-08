@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
+import { getLocalizedCropName, getLocalizedGrade } from '@/lib/i18n';
 import { X, ShoppingBag, Trash2, ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -18,7 +19,7 @@ export default function CartDrawer() {
     totalPaise,
     clearCart,
   } = useCart();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [contractId, setContractId] = useState<string | null>(null);
@@ -110,9 +111,9 @@ export default function CartDrawer() {
                     >
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-bold text-emerald-950">{item.cropName}</span>
+                          <span className="font-bold text-emerald-950">{getLocalizedCropName(item.cropName, language)}</span>
                           <span className="text-[10px] px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full font-medium">
-                            {item.grade}
+                            {getLocalizedGrade(item.grade, language)}
                           </span>
                         </div>
                         <p className="text-xs text-emerald-800/70 mb-2">

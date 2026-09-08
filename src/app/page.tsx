@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { getLocalizedCropName, getLocalizedCategory, getLocalizedGrade } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { useCart } from '@/context/CartContext';
 import {
@@ -36,7 +37,7 @@ interface Listing {
 }
 
 export default function HomePage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { role, setRole } = useRole();
   const { addToCart } = useCart();
 
@@ -437,16 +438,16 @@ export default function HomePage() {
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">
-                          {item.category}
+                          {getLocalizedCategory(item.category, language)}
                         </span>
                         <h3 className="font-extrabold text-lg text-emerald-950 mt-1 leading-tight">
-                          {item.crop_name}
+                          {getLocalizedCropName(item.crop_name, language)}
                         </h3>
                       </div>
 
                       <div className="flex flex-col items-end">
                         <span className="px-2.5 py-1 bg-emerald-900 text-amber-200 font-extrabold text-xs rounded-xl shadow-sm flex items-center gap-1">
-                          <Award className="w-3 h-3 text-amber-400" /> {item.quality_grade}
+                          <Award className="w-3 h-3 text-amber-400" /> {getLocalizedGrade(item.quality_grade, language)}
                         </span>
                         <span className="text-[10px] text-emerald-700 font-medium mt-1">
                           CV विश्वासांक: {item.cv_trust_score}%

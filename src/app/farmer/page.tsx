@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { getLocalizedCropName, getLocalizedGrade } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { Tractor, Plus, Sparkles, PhoneCall, CheckCircle2, TrendingUp, Volume2, ShieldCheck, X } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function FarmerDashboardPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { userName } = useRole();
 
   const [showAddModal, setShowAddModal] = useState(false);
@@ -177,9 +178,9 @@ export default function FarmerDashboardPage() {
             <div key={crop.id} className="p-4 bg-white/90 rounded-2xl border border-emerald-900/10 shadow-sm flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded-md">
-                  {crop.grade}
+                  {getLocalizedGrade(crop.grade, language)}
                 </span>
-                <h4 className="font-extrabold text-emerald-950 text-base mt-1">{crop.crop}</h4>
+                <h4 className="font-extrabold text-emerald-950 text-base mt-1">{getLocalizedCropName(crop.crop, language)}</h4>
                 <p className="text-xs text-emerald-800/70 mt-0.5">
                   मात्रा: {crop.qty} किग्रा • {crop.location}
                 </p>

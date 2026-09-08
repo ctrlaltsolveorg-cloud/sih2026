@@ -158,3 +158,58 @@ export const translations = {
     statusDelivered: "Delivered",
   }
 };
+
+export const cropTranslations: Record<string, { hi: string; en: string }> = {
+  'Fresh Nashik Tomatoes': { hi: 'ताज़ा नासिक टमाटर', en: 'Fresh Nashik Tomatoes' },
+  'Red Onions (Nashik Quality)': { hi: 'लाल नासिक प्याज़ (उत्कृष्ट)', en: 'Red Onions (Nashik Quality)' },
+  'Organic Sharbati Wheat': { hi: 'जैविक शरबती गेहूँ', en: 'Organic Sharbati Wheat' },
+  'Farm Fresh Potatoes (Jyoti)': { hi: 'ताज़ा खेत के आलू (ज्योति)', en: 'Farm Fresh Potatoes (Jyoti)' },
+  'Nashik Tomatoes (FPO Bulk Pool)': { hi: 'नासिक टमाटर (एफपीओ थोक पूल)', en: 'Nashik Tomatoes (FPO Bulk Pool)' },
+  'Fresh Nashik Tomatoes (IVR Voice Listed)': { hi: 'नासिक टमाटर (IVR वॉयस सूचीबद्ध)', en: 'Fresh Nashik Tomatoes (IVR Voice Listed)' },
+  'Nashik Tomatoes (IVR Voice Listed)': { hi: 'नासिक टमाटर (IVR वॉयस सूचीबद्ध)', en: 'Nashik Tomatoes (IVR Voice Listed)' },
+  'Tomatoes': { hi: 'टमाटर', en: 'Tomatoes' },
+  'Onions': { hi: 'प्याज़', en: 'Onions' },
+  'Wheat': { hi: 'गेहूँ', en: 'Wheat' },
+  'Potatoes': { hi: 'आलू', en: 'Potatoes' },
+  'Tomato Grade A+': { hi: 'टमाटर (ग्रेड A+)', en: 'Tomato (Grade A+)' },
+  'Onion Red Nashik': { hi: 'प्याज (लाल नासिक)', en: 'Onion (Red Nashik)' },
+  'Sharbati Wheat': { hi: 'शरबती गेहूं', en: 'Sharbati Wheat' },
+};
+
+export const categoryTranslations: Record<string, { hi: string; en: string }> = {
+  'Vegetables': { hi: 'सब्जियाँ', en: 'Vegetables' },
+  'Fruits': { hi: 'फल', en: 'Fruits' },
+  'Grains': { hi: 'अनाज', en: 'Grains' },
+  'Pulses': { hi: 'दालें', en: 'Pulses' },
+  'Spices': { hi: 'मसाले', en: 'Spices' },
+  'All': { hi: 'सभी', en: 'All' },
+};
+
+export const gradeTranslations: Record<string, { hi: string; en: string }> = {
+  'Grade A Premium': { hi: 'ग्रेड A प्रीमियम', en: 'Grade A Premium' },
+  'Grade A': { hi: 'ग्रेड A', en: 'Grade A' },
+  'Grade A+ Export Quality': { hi: 'ग्रेड A+ निर्यात गुणवत्ता', en: 'Grade A+ Export Quality' },
+  'Grade A Ultra': { hi: 'ग्रेड A अल्ट्रा', en: 'Grade A Ultra' },
+  'Grade A+': { hi: 'ग्रेड A+', en: 'Grade A+' },
+};
+
+export function getLocalizedCropName(name: string, lang: Language): string {
+  if (cropTranslations[name]) {
+    return cropTranslations[name][lang];
+  }
+  return name;
+}
+
+export function getLocalizedCategory(cat: string, lang: Language): string {
+  if (categoryTranslations[cat]) {
+    return categoryTranslations[cat][lang];
+  }
+  return cat;
+}
+
+export function getLocalizedGrade(grade: string, lang: Language): string {
+  if (gradeTranslations[grade]) {
+    return gradeTranslations[grade][lang];
+  }
+  return grade;
+}
