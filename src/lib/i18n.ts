@@ -802,38 +802,93 @@ const tokenMap: Record<string, { hi: string; en: string }> = {
   'hybrid': { hi: 'हाइब्रिड', en: 'Hybrid' },
 };
 
+// Dynamic AI Translation Cache (Populated from SQLite DB & Live Google Translate API)
+export const dynamicCropCache: Record<string, { hi: string; en: string }> = {};
+const pendingTranslateRequests = new Set<string>();
+
+export async function loadDynamicTranslations() {
+  if (typeof window === 'undefined') return;
+  try {
+    const res = await fetch('/api/v1/translate');
+    const data = await res.json();
+    if (data?.success && data?.translations) {
+      Object.assign(dynamicCropCache, data.translations);
+    }
+  } catch (err) {
+    // Ignore fetch error on SSR or initial load
+  }
+}
+
+export async function fetchCropTranslationAI(cropName: string): Promise<{ hi: string; en: string } | null> {
+  if (!cropName) return null;
+  const trimmed = cropName.trim();
+  const lower = trimmed.toLowerCase();
+
+  if (cropTranslations[trimmed]) return cropTranslations[trimmed];
+  if (dynamicCropCache[lower]) return dynamicCropCache[lower];
+
+  try {
+    const res = await fetch('/api/v1/translate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: trimmed }),
+    });
+    const data = await res.json();
+    if (data?.success && data?.hi && data?.en) {
+      const result = { hi: data.hi, en: data.en };
+      dynamicCropCache[lower] = result;
+      dynamicCropCache[trimmed] = result;
+      return result;
+    }
+  } catch (err) {
+    console.error('fetchCropTranslationAI error:', err);
+  }
+  return null;
+}
+
+// Auto load cached DB translations when browser initializes
+if (typeof window !== 'undefined') {
+  loadDynamicTranslations();
+}
+
 export function getLocalizedCropName(name: string, lang: Language): string {
   if (!name) return name;
   const trimmed = name.trim();
+  const lower = trimmed.toLowerCase();
 
-  // 1. Direct exact match in dictionary
+  // 1. Direct exact match in static dictionary
   if (cropTranslations[trimmed]) {
     return cropTranslations[trimmed][lang];
   }
 
-  // 2. Case-insensitive exact match
-  const lower = trimmed.toLowerCase();
+  // 2. Direct match in Dynamic AI Cache (populated from DB or live AI)
+  if (dynamicCropCache[lower]) {
+    return dynamicCropCache[lower][lang];
+  }
+  if (dynamicCropCache[trimmed]) {
+    return dynamicCropCache[trimmed][lang];
+  }
+
+  // 3. Case-insensitive exact match in static dictionary
   for (const key of Object.keys(cropTranslations)) {
     if (key.toLowerCase() === lower) {
       return cropTranslations[key][lang];
     }
   }
 
-  // 3. Substring match for multi-word crop names (e.g., "नासिक मक्का", "ताज़ा मक्का")
+  // 4. Substring match for multi-word crop names (e.g., "नासिक मक्का", "ताज़ा मक्का")
   for (const [key, val] of Object.entries(cropTranslations)) {
     if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) {
       if (lang === 'en' && /[\u0900-\u097F]/.test(trimmed)) {
-        // If text is in Hindi Devanagari script and target language is English
         return val.en;
       }
       if (lang === 'hi' && !/[\u0900-\u097F]/.test(trimmed)) {
-        // If text is in English script and target language is Hindi
         return val.hi;
       }
     }
   }
 
-  // 4. Token-by-token AI translation / Transliteration
+  // 5. Token-by-token AI translation / Transliteration
   const words = trimmed.split(/\s+/);
   let hasTranslatedToken = false;
   const translatedTokens = words.map((w) => {
@@ -849,7 +904,7 @@ export function getLocalizedCropName(name: string, lang: Language): string {
     return translatedTokens.join(' ');
   }
 
-  // 5. Automatic AI Fallback Cleaner for bracketed names e.g. "ताज़ा हाइब्रिड टमाटर (Fresh Tomatoes)"
+  // 6. Automatic AI Fallback Cleaner for bracketed names e.g. "ताज़ा हाइब्रिड टमाटर (Fresh Tomatoes)"
   if (lang === 'en') {
     const bracketMatch = name.match(/\(([^)]+)\)/);
     if (bracketMatch && bracketMatch[1]) {
@@ -857,7 +912,15 @@ export function getLocalizedCropName(name: string, lang: Language): string {
     }
   } else if (lang === 'hi') {
     const cleaned = name.replace(/\([^)]*\)/g, '').trim();
-    if (cleaned.length > 0) return cleaned;
+    if (cleaned.length > 0 && cleaned !== trimmed) return cleaned;
+  }
+
+  // 7. Background Trigger AI Online Translator for missing crops
+  if (typeof window !== 'undefined' && !pendingTranslateRequests.has(lower)) {
+    pendingTranslateRequests.add(lower);
+    fetchCropTranslationAI(trimmed).then(() => {
+      pendingTranslateRequests.delete(lower);
+    });
   }
 
   return name;

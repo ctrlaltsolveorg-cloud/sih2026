@@ -176,6 +176,13 @@ function initTables(db: Database.Database) {
       details TEXT,
       timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS crop_translations_cache (
+      crop_key TEXT PRIMARY KEY,
+      hi_name TEXT NOT NULL,
+      en_name TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
   `);
 
   const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get() as { count: number };

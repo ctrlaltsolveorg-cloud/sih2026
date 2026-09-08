@@ -42,6 +42,42 @@ export async function POST(request: Request) {
     const loc = location || 'नासिक एग्रो-हब #04';
     const gradeVal = grade || 'उच्चतम श्रेणी A+';
     const harvestDate = new Date().toISOString().split('T')[0];
+    // Auto-trigger AI translation for newly registered crop name
+    const db = getDb();
+    try {
+      const trimmedCrop = cropName.trim();
+      const lowerCrop = trimmedCrop.toLowerCase();
+
+      // Check if already in cache
+      const cached = db.prepare('SELECT hi_name, en_name FROM crop_translations_cache WHERE LOWER(crop_key) = ?').get(lowerCrop);
+      if (!cached) {
+        let hi = trimmedCrop;
+        let en = trimmedCrop;
+        const isDevanagari = /[\u0900-\u097F]/.test(trimmedCrop);
+
+        if (isDevanagari) {
+          const resEn = await fetch(
+            `https://translate.googleapis.com/translate_a/single?client=gtx&sl=hi&tl=en&dt=t&q=${encodeURIComponent(trimmedCrop)}`
+          );
+          const dataEn = await resEn.json();
+          if (dataEn?.[0]?.[0]?.[0]) en = dataEn[0][0][0].trim();
+        } else {
+          const resHi = await fetch(
+            `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURIComponent(trimmedCrop)}`
+          );
+          const dataHi = await resHi.json();
+          if (dataHi?.[0]?.[0]?.[0]) hi = dataHi[0][0][0].trim();
+        }
+
+        db.prepare(`
+          INSERT OR REPLACE INTO crop_translations_cache (crop_key, hi_name, en_name)
+          VALUES (?, ?, ?)
+        `).run(lowerCrop, hi, en);
+      }
+    } catch (err) {
+      console.error('Auto crop translation error:', err);
+    }
+
     const defaultImage = 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80';
 
     const newListing = {
@@ -64,7 +100,6 @@ export async function POST(request: Request) {
     };
 
     // 1. Insert into SQLite DB
-    const db = getDb();
     db.prepare(`
       INSERT INTO product_listings (id, farmer_id, fpo_id, crop_name, category, quantity_available, unit, price_paise, mandi_retail_price_paise, grade, harvest_date, organic_certified, image_url, location, district, status)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
