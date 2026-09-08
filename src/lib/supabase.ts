@@ -1,9 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qtldwcgzzroapkepttti.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0bGR3Y2d6enJvYXBrZXB0dHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNjg4MTMsImV4cCI6MjA1NTc0NDgxM30.default_placeholder';
+const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qtldwcgzzroapkepttti.supabase.co';
+const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0bGR3Y2d6enJvYXBrZXB0dHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNjg4MTMsImV4cCI6MjA1NTc0NDgxM30.default_placeholder';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Sanitize placeholder suffix if user hasn't set valid JWT
+const sanitizedKey = rawKey.replace(/\.default_placeholder$/, '');
+
+export const supabase = createClient(rawUrl, sanitizedKey);
 
 /**
  * Generate semantic vector embedding for crop description / query
