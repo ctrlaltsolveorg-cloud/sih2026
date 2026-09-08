@@ -224,26 +224,26 @@ export default function HomePage() {
           <div className="lg:col-span-5 grid grid-cols-2 gap-4">
             <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
               <div className="text-3xl font-extrabold text-amber-400">0%</div>
-              <div className="text-xs text-amber-200/80 font-medium">बिचौलिया कमीशन</div>
-              <p className="text-[10px] text-amber-300/60">प्रत्यक्ष किसान एस्क्रौ</p>
+              <div className="text-xs text-amber-200/80 font-medium">{t.statMiddlemen}</div>
+              <p className="text-[10px] text-amber-300/60">{t.statMiddlemenDesc}</p>
             </div>
 
             <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
               <div className="text-3xl font-extrabold text-emerald-400">99.4%</div>
-              <div className="text-xs text-amber-200/80 font-medium">कंप्यूटर विज़न ग्रेडिंग</div>
-              <p className="text-[10px] text-amber-300/60">FSSAI प्रमाणीकरण</p>
+              <div className="text-xs text-amber-200/80 font-medium">{t.statCVGrading}</div>
+              <p className="text-[10px] text-amber-300/60">{t.statCVGradingDesc}</p>
             </div>
 
             <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
               <div className="text-3xl font-extrabold text-amber-400">6 AI</div>
-              <div className="text-xs text-amber-200/80 font-medium">स्मार्ट कृषि इंजन</div>
-              <p className="text-[10px] text-amber-300/60">न्यायसंगत मूल्य + रसद</p>
+              <div className="text-xs text-amber-200/80 font-medium">{t.statAIEngines}</div>
+              <p className="text-[10px] text-amber-300/60">{t.statAIEnginesDesc}</p>
             </div>
 
             <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
               <div className="text-3xl font-extrabold text-emerald-400">IVR/SMS</div>
-              <div className="text-xs text-amber-200/80 font-medium">बिना इंटरनेट सहायता</div>
-              <p className="text-[10px] text-amber-300/60">कीपैड फोन सेवा</p>
+              <div className="text-xs text-amber-200/80 font-medium">{t.statNoInternet}</div>
+              <p className="text-[10px] text-amber-300/60">{t.statNoInternetDesc}</p>
             </div>
           </div>
         </div>
@@ -254,9 +254,9 @@ export default function HomePage() {
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-emerald-950 flex items-center gap-2">
             <Layers className="w-5 h-5 text-amber-600" />
-            <span>उपयोगकर्ता डैशबोर्ड का चयन करें (Select Dashboard)</span>
+            <span>{t.selectDashboardTitle}</span>
           </h2>
-          <span className="text-xs text-emerald-800/60">6 एकीकृत भूमिकाएँ</span>
+          <span className="text-xs text-emerald-800/60">{t.integratedRolesCount}</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -274,7 +274,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="font-bold text-xs leading-tight">{t.roleFarmer}</p>
-              <p className="text-[10px] opacity-80">Fair Price & IVR</p>
+              <p className="text-[10px] opacity-80">{t.roleFarmerSub}</p>
             </div>
           </Link>
 
@@ -292,7 +292,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="font-bold text-xs leading-tight">{t.roleFPO}</p>
-              <p className="text-[10px] opacity-80">वर्चुअल लॉट एकत्रीकरण</p>
+              <p className="text-[10px] opacity-80">{t.roleFPOSub}</p>
             </div>
           </Link>
 
@@ -310,7 +310,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="font-bold text-xs leading-tight">{t.roleBuyer}</p>
-              <p className="text-[10px] opacity-80">थोक मांग एवं अनुबंध</p>
+              <p className="text-[10px] opacity-80">{t.roleBuyerSub}</p>
             </div>
           </Link>
 
@@ -328,7 +328,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="font-bold text-xs leading-tight">{t.roleHub}</p>
-              <p className="text-[10px] opacity-80">CV ग्रेडिंग एवं QR</p>
+              <p className="text-[10px] opacity-80">{t.roleHubSub}</p>
             </div>
           </Link>
 
@@ -346,7 +346,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="font-bold text-xs leading-tight">{t.roleTransporter}</p>
-              <p className="text-[10px] opacity-80">मार्ग अनुकूलन एवं OTP</p>
+              <p className="text-[10px] opacity-80">{t.roleTransporterSub}</p>
             </div>
           </Link>
 
@@ -364,7 +364,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="font-bold text-xs leading-tight">{t.roleAdmin}</p>
-              <p className="text-[10px] opacity-80">राष्ट्रीय मंडी शासन</p>
+              <p className="text-[10px] opacity-80">{t.roleAdminSub}</p>
             </div>
           </Link>
         </div>

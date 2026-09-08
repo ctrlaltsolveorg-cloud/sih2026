@@ -78,6 +78,86 @@ export const translations = {
     statusPooled: "पूल किया गया",
     statusInTransit: "परिवहन में",
     statusDelivered: "सफलतापूर्वक हस्तांतरित",
+
+    // Stat Cards
+    statMiddlemen: "बिचौलिया कमीशन",
+    statMiddlemenDesc: "प्रत्यक्ष किसान एस्क्रौ",
+    statCVGrading: "कंप्यूटर विज़न ग्रेडिंग",
+    statCVGradingDesc: "FSSAI प्रमाणीकरण",
+    statAIEngines: "स्मार्ट कृषि इंजन",
+    statAIEnginesDesc: "न्यायसंगत मूल्य + रसद",
+    statNoInternet: "बिना इंटरनेट सहायता",
+    statNoInternetDesc: "कीपैड फोन सेवा",
+
+    // Role Selector Header
+    selectDashboardTitle: "उपयोगकर्ता डैशबोर्ड का चयन करें",
+    integratedRolesCount: "6 एकीकृत भूमिकाएँ",
+
+    // Role Subtitles
+    roleFarmerSub: "न्यायसंगत मूल्य और IVR",
+    roleFPOSub: "वर्चुअल लॉट एकत्रीकरण",
+    roleBuyerSub: "थोक मांग एवं अनुबंध",
+    roleHubSub: "CV ग्रेडिंग एवं QR",
+    roleTransporterSub: "मार्ग अनुकूलन एवं OTP",
+    roleAdminSub: "राष्ट्रीय मंडी शासन",
+
+    // Helpline
+    helplineText: "टोल-फ्री IVR वॉयस हेल्पलाइन: 1800-KISAN-AI (कीपैड फोन फसल पंजीकरण)",
+
+    // Farmer Dashboard
+    farmerWelcome: "नमस्ते",
+    farmerSubtitle: "आपकी फसल सीधे सत्यापित खरीदारों को न्यायसंगत मूल्य पर बेची जाती है",
+    farmerBadge: "प्रत्यक्ष किसान पोर्टल • 0% मध्यस्थ कमीशन",
+    farmerAddNewCrop: "नयी फसल दर्ज करें",
+    statEarnedIncome: "कुल प्रत्यक्ष अर्जित आय",
+    statZeroCommission: "शून्य कमीशन",
+    statActiveListings: "सक्रिय बाज़ार फसलें",
+    statVerifiedByAI: "Fair Price AI द्वारा सत्यापित",
+    statSmartContracts: "प्राप्त स्मार्ट अनुबंध",
+    statEscrowProtected: "सुरक्षित एस्क्रौ भुगतान",
+    ivrGuideHeader: "टोल-फ्री IVR वॉयस सेवा निर्देशिका (1800-KISAN-AI)",
+    ivrGuideSub: "बिना इंटरनेट वाले साधारण कीपैड फोन से फसल दर्ज करने हेतु निःशुल्क हेल्पलाइन निर्देश",
+    keypad1Title: "कीपैड बटन 1",
+    keypad1Sub: "फसल बिक्री पंजीकरण",
+    keypad1Desc: "टोल-फ्री नंबर पर 1 दबाकर अपनी फसल और मात्रा वॉयस मैसेज द्वारा दर्ज करें।",
+    keypad2Title: "कीपैड बटन 2",
+    keypad2Sub: "सद्य मंडी भाव (Agmarknet)",
+    keypad2Desc: "टोल-फ्री नंबर पर 2 दबाकर अपने निकटतम मंडी का रीयल-टाइम AI न्यूनतम समर्थन मूल्य सुनें।",
+    keypad3Title: "कीपैड बटन 3",
+    keypad3Sub: "खाता शेष एवं एस्क्रौ स्टेटस",
+    keypad3Desc: "टोल-फ्री नंबर पर 3 दबाकर अपने बैंक खाते और लंबित प्रत्यक्ष भुगतान की स्थिति जानें।",
+    myRegisteredCrops: "आपकी पंजीकृत फसलें",
+    agmarknetConnected: "एगमार्कनेट AI मंडी से जुड़ा",
+
+    // FPO Dashboard
+    fpoHeaderBadge: "एफपीओ वर्चुअल लॉट एकत्रीकरण केंद्र",
+    fpoHeaderSub: "प्रबंधक: Sanjay Deshmukh • 142 सदस्य किसान एकत्रित (सामूहिक सौदेबाजी क्षमता)",
+    fpoStatTotalSupply: "कुल एफपीओ एकत्रित आपूर्ति",
+    fpoStatBargaining: "+42% बेहतर मूल्य सौदेबाज़ी",
+    fpoStatVirtualLots: "सक्रिय वर्चुअल लॉट",
+    fpoStatMembersIncluded: "86 सदस्य किसान शामिल हैं",
+    fpoStatBuyerReqs: "संस्थागत मांग प्रस्ताव",
+    fpoStatReadySupply: "प्रत्यक्ष आपूर्ति हेतु तैयार",
+    fpoSectionVirtualLots: "वर्चुअल एकत्रित फसल लॉट",
+    fpoSectionBuyerReqs: "थोक खरीदार मांग प्रस्ताव",
+    fpoLockLotBtn: "लॉट सुरक्षित करें एवं मांग प्रस्ताव भेजें",
+    fpoLotLockedStatus: "लॉट सुरक्षित एवं प्रेषित",
+    fpoFulfilledPercent: "पूर्ति की गई मात्रा",
+    fpoAcceptCommitmentBtn: "आपूर्ति प्रतिबद्धता स्वीकार करें",
+
+    // Buyer Dashboard
+    buyerHeaderBadge: "प्रत्यक्ष खरीदार पोर्टल",
+    buyerWelcome: "नमस्ते",
+    buyerHeaderSub: "कंप्यूटर विज़न प्रमाणित ताज़ी फसलें — बिचौलियों के बिना प्रत्यक्ष खरीद",
+    buyerPostReqBtn: "+ थोक आवश्यकता प्रस्ताव भेजें",
+    buyerStatTotalPurchase: "कुल खरीद मूल्य",
+    buyerStatMandiSavings: "38% मंडी लागत बचत",
+    buyerStatActiveOrders: "सक्रिय ऑर्डर",
+    buyerStatGPSLogistics: "GPS लाइव रसद ट्रैकिंग",
+    buyerStatRecurringContracts: "आवर्ती फार्म आपूर्ति अनुबंध",
+    buyerStatFPOGuarantee: "सहयाद्री FPO गारंटीकृत",
+    buyerActiveOrdersHeader: "आपके सक्रिय ऑर्डर एवं लाइव ट्रैकिंग",
+    buyerRecurringContractsHeader: "आवर्ती फार्म आपूर्ति अनुबंध (स्मार्ट अनुबंध)",
   },
   en: {
     // Navigation & General
@@ -156,12 +236,95 @@ export const translations = {
     statusPooled: "Pooled Lot",
     statusInTransit: "In Transit",
     statusDelivered: "Delivered",
+
+    // Stat Cards
+    statMiddlemen: "Middleman Commission",
+    statMiddlemenDesc: "Direct Farmer Escrow",
+    statCVGrading: "Computer Vision Grading",
+    statCVGradingDesc: "FSSAI Certification",
+    statAIEngines: "Smart Agri Engines",
+    statAIEnginesDesc: "Fair Price + Logistics",
+    statNoInternet: "No Internet Assistance",
+    statNoInternetDesc: "Keypad Phone Service",
+
+    // Role Selector Header
+    selectDashboardTitle: "Select User Dashboard Persona",
+    integratedRolesCount: "6 Integrated Roles",
+
+    // Role Subtitles
+    roleFarmerSub: "Fair Price & IVR",
+    roleFPOSub: "Virtual Lot Aggregation",
+    roleBuyerSub: "Bulk Demand & Contracts",
+    roleHubSub: "CV Grading & QR",
+    roleTransporterSub: "Route Optimization & OTP",
+    roleAdminSub: "National Mandi Governance",
+
+    // Helpline
+    helplineText: "Toll-Free IVR Voice Helpline: 1800-KISAN-AI (Keypad Phone Crop Registration)",
+
+    // Farmer Dashboard
+    farmerWelcome: "Welcome",
+    farmerSubtitle: "Your produce is listed directly to verified institutional buyers at fair prices.",
+    farmerBadge: "Direct Farmer Portal • 0% Middleman Commission",
+    farmerAddNewCrop: "+ Register New Crop",
+    statEarnedIncome: "Total Direct Earned Income",
+    statZeroCommission: "Zero Commission",
+    statActiveListings: "Active Market Listings",
+    statVerifiedByAI: "Verified by Fair Price AI",
+    statSmartContracts: "Smart Contracts Executed",
+    statEscrowProtected: "Protected Escrow Payment",
+    ivrGuideHeader: "Toll-Free IVR Voice Service Directory (1800-KISAN-AI)",
+    ivrGuideSub: "Helpline instructions for registering crops using standard keypad feature phones without internet",
+    keypad1Title: "Keypad Button 1",
+    keypad1Sub: "Crop Sale Registration",
+    keypad1Desc: "Press 1 on toll-free call to record your crop type and quantity via voice message.",
+    keypad2Title: "Keypad Button 2",
+    keypad2Sub: "Live Mandi Rates (Agmarknet)",
+    keypad2Desc: "Press 2 on toll-free call to hear real-time AI minimum support price for your nearest mandi.",
+    keypad3Title: "Keypad Button 3",
+    keypad3Sub: "Account Balance & Escrow Status",
+    keypad3Desc: "Press 3 on toll-free call to check your bank account balance and pending payout status.",
+    myRegisteredCrops: "Your Registered Crops",
+    agmarknetConnected: "Agmarknet AI Mandi Connected",
+
+    // FPO Dashboard
+    fpoHeaderBadge: "FPO Virtual Lot Aggregation Center",
+    fpoHeaderSub: "Manager: Sanjay Deshmukh • 142 Member Farmers Pooled (Collective Bargaining Power)",
+    fpoStatTotalSupply: "Total FPO Aggregated Supply",
+    fpoStatBargaining: "+42% Better Price Bargaining",
+    fpoStatVirtualLots: "Active Virtual Lots",
+    fpoStatMembersIncluded: "86 Member Farmers Included",
+    fpoStatBuyerReqs: "Institutional Buyer Requests",
+    fpoStatReadySupply: "Ready for Direct Supply",
+    fpoSectionVirtualLots: "Virtual Aggregated Crop Lots",
+    fpoSectionBuyerReqs: "Bulk Buyer Demand Requests",
+    fpoLockLotBtn: "Lock Lot & Send Demand Offer",
+    fpoLotLockedStatus: "Lot Secured & Dispatched",
+    fpoFulfilledPercent: "Fulfilled Quantity",
+    fpoAcceptCommitmentBtn: "Accept Supply Commitment",
+
+    // Buyer Dashboard
+    buyerHeaderBadge: "Direct Buyer Portal",
+    buyerWelcome: "Welcome",
+    buyerHeaderSub: "Computer Vision Certified Fresh Crops — Direct Purchase Without Middlemen",
+    buyerPostReqBtn: "+ Post Bulk Demand Request",
+    buyerStatTotalPurchase: "Total Purchase Value",
+    buyerStatMandiSavings: "38% Mandi Cost Savings",
+    buyerStatActiveOrders: "Active Orders",
+    buyerStatGPSLogistics: "GPS Live Logistics Tracking",
+    buyerStatRecurringContracts: "Recurring Farm Supply Contracts",
+    buyerStatFPOGuarantee: "Sahyadri FPO Guaranteed",
+    buyerActiveOrdersHeader: "Your Active Orders & Live Tracking",
+    buyerRecurringContractsHeader: "Recurring Farm Supply Contracts (Smart Contracts)",
   }
 };
 
 export const cropTranslations: Record<string, { hi: string; en: string }> = {
   // Landing Page Listings
   'ताज़ा हाइब्रिड टमाटर (Fresh Tomatoes)': { hi: 'ताज़ा हाइब्रिड टमाटर', en: 'Fresh Hybrid Tomatoes' },
+  'नासिक हाइब्रिड टमाटर (ताज़ा टमाटर)': { hi: 'नासिक हाइब्रिड टमाटर', en: 'Nashik Hybrid Tomatoes' },
+  'नासिक हाइब्रिड टमाटर (वर्चुअल पूल)': { hi: 'नासिक हाइब्रिड टमाटर (वर्चुअल पूल)', en: 'Nashik Hybrid Tomatoes (Virtual Pool)' },
+  'लासलगांव लाल प्याज (थोक एकत्रीकरण)': { hi: 'लासलगांव लाल प्याज (थोक एकत्रीकरण)', en: 'Lasalgaon Red Onion (Bulk Aggregation)' },
   'लाल प्याज (Lasalgaon Red Onion)': { hi: 'लासलगांव लाल प्याज', en: 'Lasalgaon Red Onion' },
   'जैविक ज्योति आलू (Organic Potatoes)': { hi: 'जैविक ज्योति आलू', en: 'Organic Jyoti Potatoes' },
   'हरी शिमला मिर्च (Fresh Capsicum)': { hi: 'हरी शिमला मिर्च', en: 'Fresh Capsicum' },
@@ -183,6 +346,11 @@ export const cropTranslations: Record<string, { hi: string; en: string }> = {
   'Tomato Grade A+': { hi: 'टमाटर (ग्रेड A+)', en: 'Tomato (Grade A+)' },
   'Onion Red Nashik': { hi: 'प्याज (लाल नासिक)', en: 'Onion (Red Nashik)' },
   'Sharbati Wheat': { hi: 'शरबती गेहूं', en: 'Sharbati Wheat' },
+  'टमाटर': { hi: 'टमाटर', en: 'Tomatoes' },
+  'शरबाती गेहूं': { hi: 'शरबाती गेहूं', en: 'Sharbati Wheat' },
+  'लाल प्याज (नासिक)': { hi: 'लाल प्याज (नासिक)', en: 'Red Onion (Nashik)' },
+  'शरबाती ऑर्गेनिक गेहूं': { hi: 'शरबाती ऑर्गेनिक गेहूं', en: 'Sharbati Organic Wheat' },
+  'ज्योति आलू': { hi: 'ज्योति आलू', en: 'Jyoti Potatoes' },
 };
 
 export const locationTranslations: Record<string, { hi: string; en: string }> = {
@@ -196,17 +364,29 @@ export const locationTranslations: Record<string, { hi: string; en: string }> = 
   'Lasalgaon Cold Storage': { hi: 'लासलगांव कोल्ड स्टोरेज', en: 'Lasalgaon Cold Storage' },
   'Khanna Grain Mandi': { hi: 'खन्ना अनाज मंडी', en: 'Khanna Grain Mandi' },
   'Nashik Central Hub': { hi: 'नासिक सेंट्रल हब', en: 'Nashik Central Hub' },
+  'नासिक एग्रो-हब #04': { hi: 'नासिक एग्रो-हब #04', en: 'Nashik Agro-Hub #04' },
+  'पुणे स्वॉरगेट वितरण हब': { hi: 'पुणे स्वॉरगेट वितरण हब', en: 'Pune Swargate Distribution Hub' },
+  'मुंबई सेन्ट्रल कोल्ड स्टोर': { hi: 'मुंबई सेन्ट्रल कोल्ड स्टोर', en: 'Mumbai Central Cold Storage' },
+  'अन्नपूर्णा पुणे संकलन हब': { hi: 'अन्नपूर्णा पुणे संकलन हब', en: 'Annapurna Pune Collection Hub' },
 };
 
 export const farmerTranslations: Record<string, { hi: string; en: string }> = {
   'रामेश्वर यादव': { hi: 'रामेश्वर यादव', en: 'Rameshwar Yadav' },
   'सहयाद्री किसान FPO समूह': { hi: 'सहयाद्री किसान FPO समूह', en: 'Sahyadri Farmers FPO Group' },
+  'सहयाद्री किसान FPO': { hi: 'सहयाद्री किसान FPO', en: 'Sahyadri Farmers FPO' },
   'सुरेश पाटिल': { hi: 'सुरेश पाटिल', en: 'Suresh Patil' },
   'कविता चौधरी': { hi: 'कविता चौधरी', en: 'Kavita Choudhary' },
   'मालवा कृषक FPO': { hi: 'मालवा कृषक FPO', en: 'Malwa Krishak FPO' },
   'हनुमान सहाय': { hi: 'हनुमान सहाय', en: 'Hanuman Sahay' },
   'Ramesh Patil': { hi: 'रामेश पाटिल', en: 'Ramesh Patil' },
   'Harpreet Singh': { hi: 'हरप्रीत सिंह', en: 'Harpreet Singh' },
+  'अन्नपूर्णा होटल एवं कैटरिंग सेवा': { hi: 'अन्नपूर्णा होटल एवं कैटरिंग सेवा', en: 'Annapurna Hotel & Catering Services' },
+  'अन्नपूर्णा पुणे (खरीदार)': { hi: 'अन्नपूर्णा पुणे (खरीदार)', en: 'Annapurna Pune (Buyer)' },
+  'मदर डेयरी एग्री': { hi: 'मदर डेयरी एग्री', en: 'Mother Dairy Agri' },
+  'मदर डेयरी फ्रेश': { hi: 'मदर डेयरी फ्रेश', en: 'Mother Dairy Fresh' },
+  'रिलायंस रिटेल एग्री': { hi: 'रिलायंस रिटेल एग्री', en: 'Reliance Retail Agri' },
+  'रिलायंस रिटेल फूड्स': { hi: 'रिलायंस रिटेल फूड्स', en: 'Reliance Retail Foods' },
+  'बिगबास्केट थोक खरीद': { hi: 'बिगबास्केट थोक खरीद', en: 'BigBasket Wholesale' },
 };
 
 export const categoryTranslations: Record<string, { hi: string; en: string }> = {

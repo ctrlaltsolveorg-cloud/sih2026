@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { getLocalizedFarmer, getLocalizedLocation, getLocalizedCropName } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { ShoppingBag, Plus, Clock, CheckCircle2, FileText, Sparkles, MapPin, X } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -49,13 +50,13 @@ export default function BuyerDashboardPage() {
           </div>
           <div>
             <span className="text-[10px] font-extrabold tracking-widest text-amber-400 uppercase bg-emerald-950 px-2.5 py-0.5 rounded-full border border-amber-400/20">
-              प्रत्यक्ष खरीदार पोर्टल
+              {t.buyerHeaderBadge}
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
-              नमस्ते, {userName}
+              {t.buyerWelcome}, {userName}
             </h1>
             <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
-              कंप्यूटर विज़न प्रमाणित ताज़ी फसलें — बिचौलियों के बिना प्रत्यक्ष खरीद
+              {t.buyerHeaderSub}
             </p>
           </div>
         </div>
@@ -65,28 +66,28 @@ export default function BuyerDashboardPage() {
           className="px-5 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 font-extrabold rounded-xl shadow-lg hover:from-amber-400 hover:to-amber-500 transition flex items-center gap-2 text-sm shrink-0"
         >
           <Plus className="w-4 h-4" />
-          <span>थोक आवश्यकता प्रस्ताव भेजें</span>
+          <span>{t.buyerPostReqBtn}</span>
         </button>
       </div>
 
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-emerald-700">
-          <span className="text-xs font-bold text-emerald-800">कुल खरीद मूल्य</span>
+          <span className="text-xs font-bold text-emerald-800">{t.buyerStatTotalPurchase}</span>
           <div className="text-2xl font-extrabold text-emerald-950">₹63,900.00</div>
-          <span className="text-[11px] text-emerald-700 font-bold">38% मंडी लागत बचत</span>
+          <span className="text-[11px] text-emerald-700 font-bold">{t.buyerStatMandiSavings}</span>
         </div>
 
         <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-amber-600">
-          <span className="text-xs font-bold text-emerald-800">सक्रिय ऑर्डर</span>
-          <div className="text-2xl font-extrabold text-amber-800">{buyerOrders.length} ऑर्डर</div>
-          <span className="text-[11px] text-amber-700 font-medium">GPS लाइव रसद ट्रैकिंग</span>
+          <span className="text-xs font-bold text-emerald-800">{t.buyerStatActiveOrders}</span>
+          <div className="text-2xl font-extrabold text-amber-800">{buyerOrders.length} {language === 'hi' ? 'ऑर्डर' : 'Orders'}</div>
+          <span className="text-[11px] text-amber-700 font-medium">{t.buyerStatGPSLogistics}</span>
         </div>
 
         <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-blue-600">
-          <span className="text-xs font-bold text-emerald-800">आवर्ती फार्म आपूर्ति अनुबंध</span>
-          <div className="text-2xl font-extrabold text-blue-700">2 अनुबंध सक्रिय</div>
-          <span className="text-[11px] text-blue-600 font-medium">सहयाद्री FPO गारंटीकृत</span>
+          <span className="text-xs font-bold text-emerald-800">{t.buyerStatRecurringContracts}</span>
+          <div className="text-2xl font-extrabold text-blue-700">2 {language === 'hi' ? 'अनुबंध सक्रिय' : 'Active Contracts'}</div>
+          <span className="text-[11px] text-blue-600 font-medium">{t.buyerStatFPOGuarantee}</span>
         </div>
       </div>
 
@@ -96,32 +97,38 @@ export default function BuyerDashboardPage() {
         <div className="space-y-4">
           <h2 className="text-xl font-extrabold text-emerald-950 flex items-center gap-2">
             <ShoppingBag className="w-5 h-5 text-amber-600" />
-            <span>आपके सक्रिय ऑर्डर एवं लाइव ट्रैकिंग</span>
+            <span>{t.buyerActiveOrdersHeader}</span>
           </h2>
 
           <div className="space-y-4">
             {buyerOrders.map((ord) => (
               <div key={ord.id} className="glass-card p-5 rounded-2xl space-y-3 border border-emerald-900/10">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold text-emerald-800">ऑर्डर #{ord.id}</span>
+                  <span className="text-xs font-mono font-bold text-emerald-800">{language === 'hi' ? 'ऑर्डर #' : 'Order #'}{ord.id}</span>
                   <span className="text-[10px] px-2.5 py-0.5 bg-emerald-900 text-amber-200 font-bold rounded-full">
-                    {ord.status}
+                    {ord.status === 'परिवहन में' ? (language === 'hi' ? 'परिवहन में' : 'In Transit') : (language === 'hi' ? 'सफलतापूर्वक हस्तांतरित' : 'Successfully Delivered')}
                   </span>
                 </div>
 
-                <h3 className="font-extrabold text-base text-emerald-950">किसान: {ord.farmer_name}</h3>
+                <h3 className="font-extrabold text-base text-emerald-950">
+                  {language === 'hi' ? 'किसान: ' : 'Farmer: '}{getLocalizedFarmer(ord.farmer_name, language)}
+                </h3>
                 <p className="text-xs text-emerald-800/80 flex items-center gap-1">
                   <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span>{ord.delivery_address}</span>
+                  <span>
+                    {ord.delivery_address === 'नासिक हब से पुणे प्रेषित'
+                      ? (language === 'hi' ? 'नासिक हब से पुणे प्रेषित' : 'Dispatched from Nashik Hub to Pune')
+                      : (language === 'hi' ? 'इन्दौर हब से सीधा पिकअप' : 'Direct Pickup from Indore Hub')}
+                  </span>
                 </p>
 
                 <div className="pt-3 border-t border-emerald-900/10 flex items-center justify-between">
                   <div className="text-base font-extrabold text-amber-800">
                     ₹{(ord.total_amount_paise / 100).toFixed(2)}{' '}
-                    <span className="text-[10px] text-emerald-700 font-normal">({ord.total_amount_paise} पैसे)</span>
+                    <span className="text-[10px] text-emerald-700 font-normal">({ord.total_amount_paise} {t.paiseSuffix})</span>
                   </div>
                   <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">
-                    GPS लाइव ट्रैकिंग
+                    {language === 'hi' ? 'GPS लाइव ट्रैकिंग' : 'GPS Live Tracking'}
                   </span>
                 </div>
               </div>
@@ -133,7 +140,7 @@ export default function BuyerDashboardPage() {
         <div className="space-y-4">
           <h2 className="text-xl font-extrabold text-emerald-950 flex items-center gap-2">
             <FileText className="w-5 h-5 text-amber-600" />
-            <span>आवर्ती फार्म आपूर्ति अनुबंध (स्मार्ट अनुबंध)</span>
+            <span>{t.buyerRecurringContractsHeader}</span>
           </h2>
 
           <div className="space-y-4">
@@ -183,7 +190,9 @@ export default function BuyerDashboardPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
           <div className="bg-[#FAF5EB] rounded-3xl p-6 w-full max-w-lg shadow-2xl border border-emerald-900/20 space-y-4">
             <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
-              <h3 className="font-extrabold text-lg text-emerald-950">थोक आवश्यकता प्रस्ताव भेजें</h3>
+              <h3 className="font-extrabold text-lg text-emerald-950">
+                {language === 'hi' ? 'थोक आवश्यकता प्रस्ताव भेजें' : 'Post Bulk Demand Requirement'}
+              </h3>
               <button onClick={() => setShowAddReqModal(false)} className="p-1 hover:bg-emerald-100 rounded-full text-emerald-800">
                 <X className="w-5 h-5" />
               </button>
@@ -191,7 +200,9 @@ export default function BuyerDashboardPage() {
 
             <form onSubmit={handlePostRequirement} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-emerald-950 mb-1">फसल का नाम</label>
+                <label className="block text-xs font-bold text-emerald-950 mb-1">
+                  {language === 'hi' ? 'फसल का नाम' : 'Crop Name'}
+                </label>
                 <input
                   type="text"
                   required
@@ -203,7 +214,9 @@ export default function BuyerDashboardPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-emerald-950 mb-1">आवश्यक मात्रा (किग्रा)</label>
+                  <label className="block text-xs font-bold text-emerald-950 mb-1">
+                    {language === 'hi' ? 'आवश्यक मात्रा (किग्रा)' : 'Required Quantity (kg)'}
+                  </label>
                   <input
                     type="number"
                     required
@@ -214,7 +227,9 @@ export default function BuyerDashboardPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-emerald-950 mb-1">अधिकतम दर (₹/किग्रा)</label>
+                  <label className="block text-xs font-bold text-emerald-950 mb-1">
+                    {language === 'hi' ? 'अधिकतम दर (₹/किग्रा)' : 'Max Price Rate (₹/kg)'}
+                  </label>
                   <input
                     type="number"
                     step="0.5"
@@ -227,7 +242,9 @@ export default function BuyerDashboardPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-emerald-950 mb-1">डिलीवरी हब स्थान</label>
+                <label className="block text-xs font-bold text-emerald-950 mb-1">
+                  {language === 'hi' ? 'डिलीवरी हब स्थान' : 'Delivery Hub Location'}
+                </label>
                 <input
                   type="text"
                   required
@@ -243,13 +260,13 @@ export default function BuyerDashboardPage() {
                   onClick={() => setShowAddReqModal(false)}
                   className="flex-1 py-3 bg-emerald-100 hover:bg-emerald-200 text-emerald-950 font-bold rounded-xl text-xs transition"
                 >
-                  रद्द करें
+                  {language === 'hi' ? 'रद्द करें' : 'Cancel'}
                 </button>
                 <button
                   type="submit"
                   className="flex-1 py-3 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow transition"
                 >
-                  प्रस्ताव जारी करें
+                  {language === 'hi' ? 'प्रस्ताव जारी करें' : 'Submit Requirement'}
                 </button>
               </div>
             </form>

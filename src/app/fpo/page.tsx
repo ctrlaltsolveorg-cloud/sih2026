@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { getLocalizedCropName } from '@/lib/i18n';
+import { getLocalizedCropName, getLocalizedFarmer } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { Users, Layers, TrendingUp, CheckCircle2, Building2, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -35,13 +35,13 @@ export default function FpoDashboardPage() {
         </div>
         <div>
           <span className="text-[10px] font-extrabold tracking-widest text-amber-400 uppercase bg-emerald-950 px-2.5 py-0.5 rounded-full border border-amber-400/20">
-            एफपीओ वर्चुअल लॉट एकत्रीकरण केंद्र
+            {t.fpoHeaderBadge}
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
-            सहयाद्री किसान उत्पादक FPO समूह
+            {language === 'hi' ? 'सहयाद्री किसान उत्पादक FPO समूह' : 'Sahyadri Farmers Producer FPO Group'}
           </h1>
           <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
-            प्रबंधक: {userName} • 142 सदस्य किसान एकत्रित (सामूहिक सौदेबाज़ी क्षमता)
+            {language === 'hi' ? `प्रबंधक: ${userName} • 142 सदस्य किसान एकत्रित (सामूहिक सौदेबाज़ी क्षमता)` : `Manager: ${userName} • 142 Member Farmers Pooled (Collective Bargaining)`}
           </p>
         </div>
       </div>
@@ -49,21 +49,21 @@ export default function FpoDashboardPage() {
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-emerald-700">
-          <span className="text-xs font-bold text-emerald-800">कुल एफपीओ एकत्रित आपूर्ति</span>
-          <div className="text-2xl font-extrabold text-emerald-950">17.5 टन</div>
-          <span className="text-[11px] text-emerald-700 font-bold">+42% बेहतर मूल्य सौदेबाज़ी</span>
+          <span className="text-xs font-bold text-emerald-800">{t.fpoStatTotalSupply}</span>
+          <div className="text-2xl font-extrabold text-emerald-950">{language === 'hi' ? '17.5 टन' : '17.5 Tons'}</div>
+          <span className="text-[11px] text-emerald-700 font-bold">{t.fpoStatBargaining}</span>
         </div>
 
         <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-amber-600">
-          <span className="text-xs font-bold text-emerald-800">सक्रिय वर्चुअल लॉट</span>
-          <div className="text-2xl font-extrabold text-amber-800">{pooledLots.length} समूह</div>
-          <span className="text-[11px] text-amber-700 font-medium">86 सदस्य किसान शामिल हैं</span>
+          <span className="text-xs font-bold text-emerald-800">{t.fpoStatVirtualLots}</span>
+          <div className="text-2xl font-extrabold text-amber-800">{pooledLots.length} {language === 'hi' ? 'समूह' : 'Lots'}</div>
+          <span className="text-[11px] text-amber-700 font-medium">{t.fpoStatMembersIncluded}</span>
         </div>
 
         <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-blue-600">
-          <span className="text-xs font-bold text-emerald-800">संस्थागत मांग प्रस्ताव</span>
-          <div className="text-2xl font-extrabold text-blue-700">{bulkReqs.length} मांग प्रस्ताव</div>
-          <span className="text-[11px] text-blue-600 font-medium">प्रत्यक्ष आपूर्ति हेतु तैयार</span>
+          <span className="text-xs font-bold text-emerald-800">{t.fpoStatBuyerReqs}</span>
+          <div className="text-2xl font-extrabold text-blue-700">{bulkReqs.length} {language === 'hi' ? 'मांग प्रस्ताव' : 'Offers'}</div>
+          <span className="text-[11px] text-blue-600 font-medium">{t.fpoStatReadySupply}</span>
         </div>
       </div>
 
@@ -73,38 +73,38 @@ export default function FpoDashboardPage() {
         <div className="space-y-4">
           <h2 className="text-xl font-extrabold text-emerald-950 flex items-center gap-2">
             <Layers className="w-5 h-5 text-amber-600" />
-            <span>वर्चुअल एकत्रित फसल लॉट</span>
+            <span>{t.fpoSectionVirtualLots}</span>
           </h2>
 
           <div className="space-y-4">
             {pooledLots.map((lot) => (
               <div key={lot.id} className="glass-card p-5 rounded-2xl space-y-3 border border-emerald-900/10">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold text-emerald-800">लॉट #{lot.id}</span>
+                  <span className="text-xs font-mono font-bold text-emerald-800">{language === 'hi' ? 'लॉट #' : 'Lot #'}{lot.id}</span>
                   <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold ${
                     lot.status === 'लॉट लॉक किया गया' ? 'bg-emerald-900 text-amber-200' : 'bg-amber-100 text-amber-800'
                   }`}>
-                    {lot.status}
+                    {lot.status === 'लॉट लॉक किया गया' ? (language === 'hi' ? 'लॉट लॉक किया गया' : 'Lot Locked & Secured') : (language === 'hi' ? 'पूल एकत्र जारी' : 'Pooling Active')}
                   </span>
                 </div>
 
                 <h3 className="font-extrabold text-base text-emerald-950">{getLocalizedCropName(lot.crop_name, language)}</h3>
                 <div className="text-xs text-emerald-800/80">
-                  कुल मात्रा: <strong className="text-emerald-950">{lot.total_quantity_kg} किग्रा</strong> • लक्षित दर: <strong className="text-amber-800">₹{lot.target_price_rs}/किग्रा</strong>
+                  {language === 'hi' ? 'कुल मात्रा: ' : 'Total Quantity: '}<strong className="text-emerald-950">{lot.total_quantity_kg} {language === 'hi' ? 'किग्रा' : 'kg'}</strong> • {language === 'hi' ? 'लक्षित दर: ' : 'Target Rate: '}<strong className="text-amber-800">₹{lot.target_price_rs}/{language === 'hi' ? 'किग्रा' : 'kg'}</strong>
                 </div>
 
                 <div className="pt-3 border-t border-emerald-900/10 flex items-center justify-between">
-                  <span className="text-xs text-emerald-900 font-medium">{lot.members} किसान शामिल हैं</span>
+                  <span className="text-xs text-emerald-900 font-medium">{lot.members} {language === 'hi' ? 'किसान शामिल हैं' : 'Farmers Included'}</span>
                   {lot.status !== 'लॉट लॉक किया गया' ? (
                     <button
                       onClick={() => handleLockLot(lot.id)}
                       className="px-4 py-2 bg-[#0F3826] text-amber-50 hover:bg-emerald-900 font-bold rounded-xl text-xs shadow transition"
                     >
-                      लॉट सुरक्षित करें एवं मांग प्रस्ताव भेजें
+                      {t.fpoLockLotBtn}
                     </button>
                   ) : (
                     <span className="text-xs text-emerald-700 font-bold flex items-center gap-1">
-                      <CheckCircle2 className="w-4 h-4" /> लॉट सुरक्षित एवं प्रेषित
+                      <CheckCircle2 className="w-4 h-4" /> {t.fpoLotLockedStatus}
                     </span>
                   )}
                 </div>
@@ -117,27 +117,27 @@ export default function FpoDashboardPage() {
         <div className="space-y-4">
           <h2 className="text-xl font-extrabold text-emerald-950 flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-amber-600" />
-            <span>थोक खरीदार मांग प्रस्ताव</span>
+            <span>{t.fpoSectionBuyerReqs}</span>
           </h2>
 
           <div className="space-y-4">
             {bulkReqs.map((req) => (
               <div key={req.id} className="glass-card p-5 rounded-2xl space-y-3 border border-emerald-900/10">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-extrabold text-sm text-emerald-950">{req.buyer}</h3>
+                  <h3 className="font-extrabold text-sm text-emerald-950">{getLocalizedFarmer(req.buyer, language)}</h3>
                   <span className="text-[10px] px-2.5 py-0.5 bg-blue-100 text-blue-800 font-bold rounded-full">
-                    सक्रिय मांग प्रस्ताव
+                    {language === 'hi' ? 'सक्रिय मांग प्रस्ताव' : 'Active Demand Offer'}
                   </span>
                 </div>
 
                 <p className="text-xs text-emerald-800/80">
-                  आवश्यकता: <strong>{req.qty_kg} किग्रा {req.crop_name}</strong> @ अधिकतम ₹{req.max_price_rs}/किग्रा
+                  {language === 'hi' ? 'आवश्यकता: ' : 'Requirement: '}<strong>{req.qty_kg} {language === 'hi' ? 'किग्रा' : 'kg'} {getLocalizedCropName(req.crop_name, language)}</strong> @ {language === 'hi' ? 'अधिकतम' : 'Max'} ₹{req.max_price_rs}/{language === 'hi' ? 'किग्रा' : 'kg'}
                 </p>
 
                 {/* Progress Bar */}
                 <div className="space-y-1">
                   <div className="flex justify-between text-[11px] font-bold text-emerald-950">
-                    <span>पूर्ति की गई मात्रा</span>
+                    <span>{t.fpoFulfilledPercent}</span>
                     <span className="text-amber-800">{req.fill_percent}%</span>
                   </div>
                   <div className="w-full h-2.5 bg-emerald-900/10 rounded-full overflow-hidden">
@@ -146,7 +146,7 @@ export default function FpoDashboardPage() {
                 </div>
 
                 <button className="w-full py-2.5 bg-[#0F3826] text-amber-50 hover:bg-emerald-900 font-bold rounded-xl text-xs shadow transition">
-                  आपूर्ति प्रतिबद्धता स्वीकार करें
+                  {t.fpoAcceptCommitmentBtn}
                 </button>
               </div>
             ))}
