@@ -18,7 +18,7 @@ export async function POST(request: Request) {
           id, farmer_id, fpo_id, crop_name, category, quantity_available, unit,
           price_paise, mandi_retail_price_paise, grade, harvest_date,
           organic_certified, image_url, location, district, status
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `).run(
         listingId,
         'u_farmer_1',
