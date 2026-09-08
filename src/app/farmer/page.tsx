@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCropName, getLocalizedGrade } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
-import { Tractor, Plus, Sparkles, PhoneCall, CheckCircle2, TrendingUp, Volume2, ShieldCheck, X } from 'lucide-react';
+import { Tractor, Plus, Sparkles, PhoneCall, CheckCircle2, TrendingUp, Volume2, ShieldCheck, X, Loader2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function FarmerDashboardPage() {
@@ -12,6 +12,7 @@ export default function FarmerDashboardPage() {
   const { userName } = useRole();
 
   const [showAddModal, setShowAddModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [ivrResponse, setIvrResponse] = useState<string | null>(null);
   const [selectedKeypad, setSelectedKeypad] = useState('1');
 
@@ -25,7 +26,7 @@ export default function FarmerDashboardPage() {
   // Demo active listings
   const [myListings, setMyListings] = useState([
     {
-      id: 201,
+      id: '201',
       crop: 'ताज़ा हाइब्रिड टमाटर',
       qty: 1200,
       priceRupees: '34.50',
@@ -34,7 +35,7 @@ export default function FarmerDashboardPage() {
       status: 'सत्यापित फसल',
     },
     {
-      id: 202,
+      id: '202',
       crop: 'नासिक लाल प्याज',
       qty: 2500,
       priceRupees: '28.00',
@@ -43,6 +44,49 @@ export default function FarmerDashboardPage() {
       status: 'पूल में शामिल',
     },
   ]);
+
+  useEffect(() => {
+    async function loadCrops() {
+      try {
+        const res = await fetch('/api/v1/crops');
+        const data = await res.json();
+        let apiCrops: any[] = [];
+        if (data.success && data.crops && data.crops.length > 0) {
+          apiCrops = data.crops.map((c: any) => ({
+            id: String(c.id),
+            crop: c.crop_name,
+            qty: c.quantity_available,
+            priceRupees: (c.price_paise / 100).toFixed(2),
+            grade: c.grade || 'उच्चतम श्रेणी A+',
+            location: c.location || 'नासिक मंडी संकलन हब',
+            status: 'सत्यापित फसल',
+          }));
+        }
+
+        // Get local storage crops
+        let localCrops: any[] = [];
+        try {
+          localCrops = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
+        } catch (e) {}
+
+        const combined = [...localCrops, ...apiCrops];
+        // Deduplicate by ID
+        const seen = new Set();
+        const uniqueCrops = combined.filter((item) => {
+          if (seen.has(item.id)) return false;
+          seen.add(item.id);
+          return true;
+        });
+
+        if (uniqueCrops.length > 0) {
+          setMyListings(uniqueCrops);
+        }
+      } catch (e) {
+        console.error('Error fetching crops from backend:', e);
+      }
+    }
+    loadCrops();
+  }, []);
 
   const handleSimulateIvr = async () => {
     try {
@@ -61,10 +105,12 @@ export default function FarmerDashboardPage() {
     }
   };
 
-  const handleAddProduce = (e: React.FormEvent) => {
+  const handleAddProduce = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newProduce = {
-      id: Date.now(),
+    setIsSubmitting(true);
+
+    const fallbackCrop = {
+      id: String(Date.now()),
       crop: cropName || 'नयी फसल',
       qty: parseInt(quantityKg) || 500,
       priceRupees: basePriceRupees || '30.00',
@@ -72,9 +118,43 @@ export default function FarmerDashboardPage() {
       location: location,
       status: 'सत्यापित फसल',
     };
-    setMyListings([newProduce, ...myListings]);
-    setShowAddModal(false);
-    confetti({ particleCount: 80, spread: 70 });
+
+    let cropToAdd = fallbackCrop;
+
+    try {
+      const res = await fetch('/api/v1/crops', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cropName: cropName || 'नयी फसल',
+          quantityKg: quantityKg || '500',
+          priceRupees: basePriceRupees || '30.00',
+          grade: grade,
+          location: location,
+          farmerName: userName,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success && data.crop) {
+        cropToAdd = data.crop;
+      }
+    } catch (err) {
+      console.log('Backend insert fallback to local storage:', err);
+    } finally {
+      setMyListings((prev) => [cropToAdd, ...prev]);
+
+      // Save to localStorage as persistent fallback sync
+      try {
+        const stored = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
+        localStorage.setItem('kb_custom_crops', JSON.stringify([cropToAdd, ...stored]));
+      } catch (e) {}
+
+      setIsSubmitting(false);
+      setShowAddModal(false);
+      setCropName('');
+      confetti({ particleCount: 80, spread: 70 });
+    }
   };
 
   return (
@@ -269,9 +349,11 @@ export default function FarmerDashboardPage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-3 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow transition"
+                  disabled={isSubmitting}
+                  className="flex-1 py-3 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow transition flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  फसल दर्ज करें
+                  {isSubmitting && <Loader2 className="w-4 h-4 animate-spin text-amber-400" />}
+                  <span>{isSubmitting ? (language === 'hi' ? 'फसल दर्ज हो रही है...' : 'Registering Crop...') : (language === 'hi' ? 'फसल दर्ज करें' : 'Register Crop')}</span>
                 </button>
               </div>
             </form>

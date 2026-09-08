@@ -145,7 +145,60 @@ export default function HomePage() {
             hub_location: 'जयपुर मंडी संकलन',
           }
         ];
-        setListings(initialProduce);
+
+        // Check local storage custom crops
+        let localProduce: Listing[] = [];
+        try {
+          const stored = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
+          localProduce = stored.map((item: any, idx: number) => ({
+            id: typeof item.id === 'number' ? item.id : 5000 + idx,
+            crop_name: item.crop || 'नयी फसल',
+            category: 'सब्जियाँ',
+            quantity_kg: parseInt(item.qty) || 500,
+            price_paise_per_kg: Math.round((parseFloat(item.priceRupees) || 30) * 100),
+            quality_grade: item.grade || 'ग्रेड A+',
+            cv_trust_score: 98,
+            harvest_date: '2026-09-08',
+            is_organic: 1,
+            farmer_name: item.farmer_name || 'रामेश्वर यादव',
+            location: item.location || 'नासिक मंडी हब (महाराष्ट्र)',
+            hub_location: 'नासिक एग्रो-हब #04',
+          }));
+        } catch (e) {}
+
+        try {
+          const res = await fetch('/api/v1/crops');
+          const data = await res.json();
+          let apiProduce: Listing[] = [];
+          if (data.success && data.crops && data.crops.length > 0) {
+            apiProduce = data.crops.map((c: any, index: number) => ({
+              id: typeof c.id === 'number' ? c.id : 1000 + index,
+              crop_name: c.crop_name,
+              category: c.category || 'सब्जियाँ',
+              quantity_kg: c.quantity_available || 500,
+              price_paise_per_kg: c.price_paise || 3000,
+              quality_grade: c.grade || 'ग्रेड A+',
+              cv_trust_score: 97,
+              harvest_date: c.harvest_date || '2026-09-08',
+              is_organic: c.organic_certified || 0,
+              farmer_name: c.farmer_name || 'रामेश्वर यादव',
+              location: c.location || 'नासिक मंडी हब (महाराष्ट्र)',
+              hub_location: c.district ? `${c.district} एग्रो-हब` : 'नासिक एग्रो-हब #04',
+            }));
+          }
+
+          const combinedAll = [...localProduce, ...apiProduce, ...initialProduce];
+          const seen = new Set();
+          const uniqueListings = combinedAll.filter((item) => {
+            if (seen.has(item.id)) return false;
+            seen.add(item.id);
+            return true;
+          });
+          setListings(uniqueListings);
+        } catch (e) {
+          const combinedAll = [...localProduce, ...initialProduce];
+          setListings(combinedAll);
+        }
       } catch (err) {
         console.error(err);
       } finally {
