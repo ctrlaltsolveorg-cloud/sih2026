@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { useAuth } from './AuthContext';
 
 export interface CartItem {
   listingId: number;
@@ -30,10 +31,16 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const { isAuthenticated, openAuthModal } = useAuth();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
 
   const addToCart = (newItem: CartItem) => {
+    if (!isAuthenticated) {
+      openAuthModal('login');
+      return;
+    }
+
     setCart((prevCart) => {
       const existingIndex = prevCart.findIndex((i) => i.listingId === newItem.listingId);
       if (existingIndex > -1) {

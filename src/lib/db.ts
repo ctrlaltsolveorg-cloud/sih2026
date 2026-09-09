@@ -27,7 +27,8 @@ function initTables(db: Database.Database) {
     CREATE TABLE IF NOT EXISTS users (
       id TEXT PRIMARY KEY,
       name TEXT NOT NULL,
-      phone TEXT UNIQUE NOT NULL,
+      phone TEXT NOT NULL,
+      email TEXT UNIQUE,
       role TEXT NOT NULL CHECK(role IN ('FARMER', 'FPO', 'BUYER', 'HUB_OPERATOR', 'TRANSPORTER', 'ADMIN')),
       village TEXT,
       district TEXT NOT NULL,
@@ -176,7 +177,20 @@ function initTables(db: Database.Database) {
       details TEXT,
       timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS crop_translations_cache (
+      crop_key TEXT PRIMARY KEY,
+      hi_name TEXT NOT NULL,
+      en_name TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
   `);
+
+  try {
+    db.exec('ALTER TABLE users ADD COLUMN email TEXT;');
+  } catch (e) {
+    // Ignore error if column already exists
+  }
 
   const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get() as { count: number };
   if (userCount.count === 0) {
@@ -186,8 +200,8 @@ function initTables(db: Database.Database) {
 
 function seedData(db: Database.Database) {
   const insertUser = db.prepare(`
-    INSERT INTO users (id, name, phone, role, village, district, state, address)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO users (id, name, phone, email, role, village, district, state, address)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
 
   const insertFpo = db.prepare(`
@@ -243,27 +257,27 @@ function seedData(db: Database.Database) {
   db.transaction(() => {
     // 1. Users for 6 Personas
     // Farmer
-    insertUser.run('u_farmer_1', 'Ramesh Patil', '9876543210', 'FARMER', 'Pimplgaon', 'Nashik', 'Maharashtra', 'Pimplgaon Baswant, Nashik, MH 422209');
+    insertUser.run('u_farmer_1', 'Ramesh Patil', '9876543210', 'ramesh.patil@kisanbandhan.ai', 'FARMER', 'Pimplgaon', 'Nashik', 'Maharashtra', 'Pimplgaon Baswant, Nashik, MH 422209');
     // FPO Manager
-    insertUser.run('u_fpo_1', 'Sanjay Deshmukh (FPO Lead)', '9876543219', 'FPO', 'Lasalgaon Hub', 'Nashik', 'Maharashtra', 'Sahyadri Farmers Producer Co., Nashik');
+    insertUser.run('u_fpo_1', 'Sanjay Deshmukh (FPO Lead)', '9876543219', 'sanjay.fpo@kisanbandhan.ai', 'FPO', 'Lasalgaon Hub', 'Nashik', 'Maharashtra', 'Sahyadri Farmers Producer Co., Nashik');
     insertFpo.run('fpo_nashik_1', 'Sahyadri Farmers Producer Co.', 'Nashik', 'Maharashtra', 142, 'u_fpo_1');
     insertFarmer.run('u_farmer_1', 'Patil Organic Farms', 'fpo_nashik_1', 8.5, 'VERIFIED', 'SBIN0001234', 'SBIN0001234');
 
-    insertUser.run('u_farmer_2', 'Harpreet Singh', '9876543211', 'FARMER', 'Khanna', 'Ludhiana', 'Punjab', 'G.T. Road, Khanna, Ludhiana, PB 141401');
+    insertUser.run('u_farmer_2', 'Harpreet Singh', '9876543211', 'harpreet@kisanbandhan.ai', 'FARMER', 'Khanna', 'Ludhiana', 'Punjab', 'G.T. Road, Khanna, Ludhiana, PB 141401');
     insertFarmer.run('u_farmer_2', 'Green Field Farms', null, 15.0, 'VERIFIED', 'HDFC0005678', 'HDFC0005678');
 
     // Buyer
-    insertUser.run('u_buyer_1', 'Priya Sharma (Consumer)', '9811122233', 'BUYER', '', 'Pune', 'Maharashtra', 'Flat 402, Green Acres, Viman Nagar, Pune 411014');
-    insertUser.run('u_buyer_2', 'Annapurna Hotel & Catering', '9822233344', 'BUYER', '', 'Pune', 'Maharashtra', 'Sector 17, Swargate, Pune 411002');
+    insertUser.run('u_buyer_1', 'Priya Sharma (Consumer)', '9811122233', 'priya@kisanbandhan.ai', 'BUYER', '', 'Pune', 'Maharashtra', 'Flat 402, Green Acres, Viman Nagar, Pune 411014');
+    insertUser.run('u_buyer_2', 'Annapurna Hotel & Catering', '9822233344', 'annapurna@kisanbandhan.ai', 'BUYER', '', 'Pune', 'Maharashtra', 'Sector 17, Swargate, Pune 411002');
 
     // Hub Operator
-    insertUser.run('u_hub_1', 'Rajesh Kulkarni (Hub Supervisor)', '9900088877', 'HUB_OPERATOR', 'Hadapsar Mandi', 'Pune', 'Maharashtra', 'KisanBandhan Hub 4, Hadapsar, Pune');
+    insertUser.run('u_hub_1', 'Rajesh Kulkarni (Hub Supervisor)', '9900088877', 'rajesh.hub@kisanbandhan.ai', 'HUB_OPERATOR', 'Hadapsar Mandi', 'Pune', 'Maharashtra', 'KisanBandhan Hub 4, Hadapsar, Pune');
 
     // Transporter
-    insertUser.run('u_partner_1', 'Vikram Shinde Fleet', '9900011122', 'TRANSPORTER', 'Hadapsar', 'Pune', 'Maharashtra', 'Kisan Express Logistics Hub, Pune');
+    insertUser.run('u_partner_1', 'Vikram Shinde Fleet', '9900011122', 'vikram.logistics@kisanbandhan.ai', 'TRANSPORTER', 'Hadapsar', 'Pune', 'Maharashtra', 'Kisan Express Logistics Hub, Pune');
 
     // Admin
-    insertUser.run('u_admin_1', 'Ministry Governance Admin', '9000000000', 'ADMIN', '', 'New Delhi', 'Delhi', 'Dept of Consumer Affairs, Krishi Bhawan, New Delhi');
+    insertUser.run('u_admin_1', 'Ministry Governance Admin', '9000000000', 'admin@kisanbandhan.ai', 'ADMIN', '', 'New Delhi', 'Delhi', 'Dept of Consumer Affairs, Krishi Bhawan, New Delhi');
 
     // 2. Product Listings (Paise: ₹28 = 2800 paise)
     insertListing.run('lst_101', 'u_farmer_1', 'fpo_nashik_1', 'Fresh Nashik Tomatoes', 'Vegetables', 450, 'kg', 2800, 4500, 'Grade A Premium', '2026-09-07', 1, 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80', 'Pimplgaon Mandi Hub', 'Nashik', 'ACTIVE');
