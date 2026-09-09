@@ -37,7 +37,7 @@ export default function CartDrawer() {
         spread: 70,
         origin: { y: 0.6 },
       });
-    } catch (e) {
+    } catch {
       // ignore
     }
   };
@@ -59,12 +59,13 @@ export default function CartDrawer() {
             </div>
             <div>
               <h2 className="font-bold text-lg leading-tight">{t.cartTitle}</h2>
-              <p className="text-xs text-amber-200/80">स्मार्ट अनुबंध और प्रत्यक्ष प्रेषण</p>
+              <p className="text-xs text-amber-200/80">{t.escrowLockedText}</p>
             </div>
           </div>
           <button
             onClick={() => setIsCartOpen(false)}
             className="p-2 hover:bg-emerald-800 rounded-full transition"
+            aria-label="Close"
           >
             <X className="w-5 h-5 text-amber-100" />
           </button>
@@ -76,20 +77,20 @@ export default function CartDrawer() {
             <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4 text-emerald-700 animate-bounce">
               <CheckCircle2 className="w-10 h-10" />
             </div>
-            <h3 className="text-2xl font-bold text-emerald-950 mb-2">ऑर्डर अनुबंध सफलतापूर्वक निष्पादित!</h3>
+            <h3 className="text-2xl font-bold text-emerald-950 mb-2">{t.orderSuccessTitle}</h3>
             <p className="text-sm text-emerald-800/80 mb-4">
-              किसान और हब ऑपरेटर को स्वचालित प्रेषण आदेश भेज दिया गया है।
+              {t.orderSuccessDesc}
             </p>
             <div className="p-4 bg-emerald-900/5 rounded-2xl border border-emerald-900/10 w-full mb-6 text-left text-xs space-y-2 font-mono">
-              <p className="text-emerald-900 font-bold">स्मार्ट कॉन्ट्रैक्ट आईडी: {contractId}</p>
-              <p className="text-emerald-700">कुल भुगतान: ₹{(totalPaise / 100).toFixed(2)} ({totalPaise} पैसे)</p>
-              <p className="text-emerald-700">एस्क्रौ स्थिति: निष्पादित (Locked in Escrow)</p>
+              <p className="text-emerald-900 font-bold">{t.smartContractIdLabel}: {contractId}</p>
+              <p className="text-emerald-700">{t.totalAmount}: {t.currencySymbol}{(totalPaise / 100).toFixed(2)} ({totalPaise} {t.paiseSuffix})</p>
+              <p className="text-emerald-700">{t.escrowStatusLabel}: {t.escrowLockedText}</p>
             </div>
             <button
               onClick={handleCloseSuccess}
               className="w-full py-3.5 bg-[#0F3826] text-amber-50 font-bold rounded-xl shadow-lg hover:bg-emerald-900 transition flex items-center justify-center gap-2"
             >
-              पूर्ण करें (Close) <ArrowRight className="w-4 h-4" />
+              {t.closeBtn} <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         ) : (
@@ -116,14 +117,14 @@ export default function CartDrawer() {
                           </span>
                         </div>
                         <p className="text-xs text-emerald-800/70 mb-2">
-                          किसान: {item.farmerName} • {item.location}
+                          {t.farmerLabel}: {item.farmerName} • {item.location}
                         </p>
                         <div className="flex items-center justify-between text-xs font-semibold text-emerald-900">
                           <span>
-                            ₹{(item.pricePaisePerKg / 100).toFixed(2)} / kg ({item.pricePaisePerKg} पैसे)
+                            {t.currencySymbol}{(item.pricePaisePerKg / 100).toFixed(2)} / {t.pricePerKg}
                           </span>
                           <span className="text-amber-800">
-                            कुल: ₹{(itemTotalPaise / 100).toFixed(2)}
+                            {t.totalAmount}: {t.currencySymbol}{(itemTotalPaise / 100).toFixed(2)}
                           </span>
                         </div>
                       </div>
@@ -165,27 +166,27 @@ export default function CartDrawer() {
                 <div className="space-y-1.5 text-xs text-emerald-900">
                   <div className="flex justify-between">
                     <span className="text-emerald-800/80">{t.cartSubtotal}:</span>
-                    <span className="font-semibold">₹{(subtotalPaise / 100).toFixed(2)} ({subtotalPaise} पैसे)</span>
+                    <span className="font-semibold">{t.currencySymbol}{(subtotalPaise / 100).toFixed(2)} ({subtotalPaise} {t.paiseSuffix})</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-emerald-800/80">{t.logisticsFee} (4%):</span>
-                    <span className="font-semibold">₹{(logisticsFeePaise / 100).toFixed(2)}</span>
+                    <span className="text-emerald-800/80">{t.logisticsFee}:</span>
+                    <span className="font-semibold">{t.currencySymbol}{(logisticsFeePaise / 100).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-emerald-800/80">{t.gstTax}:</span>
-                    <span className="font-semibold text-emerald-700">₹0.00 (exempt)</span>
+                    <span className="font-semibold text-emerald-700">{t.currencySymbol}0.00 (Exempt)</span>
                   </div>
                   <div className="pt-2 border-t border-dashed border-emerald-900/20 flex justify-between text-base font-bold text-emerald-950">
                     <span>{t.totalAmount}:</span>
                     <span className="text-amber-800">
-                      ₹{(totalPaise / 100).toFixed(2)} <span className="text-xs text-emerald-700 font-normal">({totalPaise} पैसे)</span>
+                      {t.currencySymbol}{(totalPaise / 100).toFixed(2)} <span className="text-xs text-emerald-700 font-normal">({totalPaise} {t.paiseSuffix})</span>
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-1.5 text-[11px] text-emerald-700/80 bg-emerald-50 p-2 rounded-lg">
                   <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>किसान एस्क्रौ सुरक्षा — भुगतान केवल गुणवत्ता प्रमाणन के बाद।</span>
+                  <span>{t.escrowLockedText} — {t.statCvGradingSub}</span>
                 </div>
 
                 <button

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useRole } from '@/context/RoleContext';
-import { Warehouse, Camera, QrCode, CheckCircle2, ShieldCheck, Sparkles, Award } from 'lucide-react';
+import { Warehouse, Camera, QrCode, Sparkles, Award } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function HubOperatorPage() {
@@ -33,12 +33,12 @@ export default function HubOperatorPage() {
     } catch (e) {
       setCvResult({
         cropName: selectedCrop,
-        grade: 'उच्चतम ग्रेड A+ (निर्यात गुणवत्ता)',
+        grade: t.gradeA,
         confidenceScore: 98.4,
         colorRipenessPercent: 94,
         defectScorePercent: 1.2,
-        fssaiCompliance: 'उत्कृष्ट प्रमाणीकरण (उत्तीर्ण)',
-        suggestedHubStorageTemp: '12°C - 14°C कोल्ड स्टोरेज',
+        fssaiCompliance: 'PASS (FSSAI Certified)',
+        suggestedHubStorageTemp: '12°C - 14°C Cold Storage',
         shelfLifeEstDays: 12,
         qrHash: 'QR-HUB-NAS-9842109',
       });
@@ -57,13 +57,13 @@ export default function HubOperatorPage() {
         </div>
         <div>
           <span className="text-[10px] font-extrabold tracking-widest text-amber-400 uppercase bg-emerald-950 px-2.5 py-0.5 rounded-full border border-amber-400/20">
-            माइक्रो-हब कंप्यूटर विज़न ग्रेडिंग केंद्र
+            {t.hubName}
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
-            नासिक संकलन हब #04
+            {t.hubTitle}
           </h1>
           <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
-            हब अधिकारी: {userName} • गुणवत्ता जांच, QR टैगिंग एवं कोल्ड-स्टोरेज प्रबंधन
+            {userName} • {t.hubSubtitle}
           </p>
         </div>
       </div>
@@ -76,10 +76,10 @@ export default function HubOperatorPage() {
           </div>
           <div>
             <h2 className="font-extrabold text-lg text-emerald-950">
-              AI कंप्यूटर विज़न फसल गुणवत्ता परीक्षण (ऑटो-ग्रेडिंग)
+              {t.cvResultsTitle}
             </h2>
             <p className="text-xs text-emerald-800/70">
-              कैमरा दृश्य विश्लेषण, रंग परिपक्वता, FSSAI मानक और शेल्फ-लाइफ ऑटो-कैलकुलेटर
+              {t.statCvGradingSub}
             </p>
           </div>
         </div>
@@ -88,21 +88,21 @@ export default function HubOperatorPage() {
           {/* Intake Controls */}
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-emerald-950 mb-1">आवक फसल लॉट चुनें</label>
+              <label className="block text-xs font-bold text-emerald-950 mb-1">{t.hubCropSelect}</label>
               <select
                 value={selectedCrop}
                 onChange={(e) => setSelectedCrop(e.target.value)}
                 className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold"
               >
-                <option value="नासिक हाइब्रिड टमाटर (ताज़ा टमाटर)">नासिक हाइब्रिड टमाटर (लॉट #101)</option>
-                <option value="लाल प्याज (नासिक)">लाल प्याज (लॉट #102)</option>
-                <option value="शरबाती ऑर्गेनिक गेहूं">शरबाती ऑर्गेनिक गेहूं (लॉट #103)</option>
-                <option value="ज्योति आलू">ज्योति आलू (लॉट #104)</option>
+                <option value="नासिक हाइब्रिड टमाटर (ताज़ा टमाटर)">{t.tickerCrop1} (Lot #101)</option>
+                <option value="लाल प्याज (नासिक)">{t.tickerCrop2} (Lot #102)</option>
+                <option value="शरबाती ऑर्गेनिक गेहूं">{t.tickerCrop4} (Lot #103)</option>
+                <option value="ज्योति आलू">{t.tickerCrop3} (Lot #104)</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-emerald-950 mb-1">आवक मात्रा (किग्रा)</label>
+              <label className="block text-xs font-bold text-emerald-950 mb-1">{t.hubLotSize}</label>
               <input
                 type="number"
                 value={lotQuantity}
@@ -117,7 +117,7 @@ export default function HubOperatorPage() {
               className="w-full py-3.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-xs"
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>{isAnalyzing ? 'AI कैमरा फसल विश्लेषण जारी है...' : 'कंप्यूटर विज़न ऑटो-ग्रेडिंग चलाएं'}</span>
+              <span>{isAnalyzing ? t.analyzingCv : t.btnRunCv}</span>
             </button>
           </div>
 
@@ -130,28 +130,28 @@ export default function HubOperatorPage() {
                     {cvResult.grade}
                   </span>
                   <span className="text-xs font-extrabold text-emerald-950">
-                    CV विश्वासांक: {cvResult.confidenceScore}%
+                    {t.confidenceScore}: {cvResult.confidenceScore}%
                   </span>
                 </div>
 
-                <h3 className="font-extrabold text-lg text-emerald-950">{cvResult.cropName} — गुणवत्ता स्वीकृत</h3>
+                <h3 className="font-extrabold text-lg text-emerald-950">{cvResult.cropName} — {t.statusVerified}</h3>
 
                 <div className="space-y-1.5 text-xs text-emerald-900 bg-white/80 p-3 rounded-xl border border-emerald-900/10">
                   <div className="flex justify-between">
-                    <span>• रंग परिपक्वता (Ripeness):</span>
-                    <strong className="text-emerald-950">{cvResult.colorRipenessPercent}% उत्कृष्ट</strong>
+                    <span>• {t.ripenessScore}:</span>
+                    <strong className="text-emerald-950">{cvResult.colorRipenessPercent}%</strong>
                   </div>
                   <div className="flex justify-between">
-                    <span>• क्षति दर (Defect Score):</span>
-                    <strong className="text-emerald-950">{cvResult.defectScorePercent}% (न्यूनतम)</strong>
+                    <span>• {t.defectScore}:</span>
+                    <strong className="text-emerald-950">{cvResult.defectScorePercent}%</strong>
                   </div>
                   <div className="flex justify-between">
-                    <span>• FSSAI प्रमाणीकरण:</span>
-                    <strong className="text-emerald-700 font-bold">उत्तीर्ण (PASS)</strong>
+                    <span>• {t.fssaiStatus}:</span>
+                    <strong className="text-emerald-700 font-bold">FSSAI Certified (PASS)</strong>
                   </div>
                   <div className="flex justify-between">
-                    <span>• अनुमानित शेल्फ लाइफ:</span>
-                    <strong className="text-amber-800">{cvResult.shelfLifeEstDays} दिन ({cvResult.suggestedHubStorageTemp})</strong>
+                    <span>• {t.shelfLife}:</span>
+                    <strong className="text-amber-800">{cvResult.shelfLifeEstDays} days ({cvResult.suggestedHubStorageTemp})</strong>
                   </div>
                 </div>
 
@@ -159,12 +159,12 @@ export default function HubOperatorPage() {
                   <div className="flex items-center gap-2">
                     <QrCode className="w-6 h-6 text-emerald-950" />
                     <div>
-                      <p className="text-[11px] font-bold text-emerald-950">हब QR बारकोड तैयार</p>
+                      <p className="text-[11px] font-bold text-emerald-950">{t.qrGeneratedLabel}</p>
                       <p className="text-[9px] font-mono text-emerald-700">{cvResult.qrHash}</p>
                     </div>
                   </div>
                   <button className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold rounded-lg text-xs shadow transition">
-                    QR लेबल प्रिंट करें
+                    {t.printQrBtn}
                   </button>
                 </div>
               </div>
@@ -172,7 +172,7 @@ export default function HubOperatorPage() {
               <div className="h-full flex flex-col items-center justify-center text-center text-emerald-800/60 py-8">
                 <Camera className="w-12 h-12 mb-2 stroke-[1.5]" />
                 <p className="text-xs font-semibold">
-                  गुणवत्ता परीक्षण चलाने के लिए बाईं ओर बटन दबाएं। AI स्वतः फसल ग्रेड और QR लेबल तैयार करेगा।
+                  {t.analyzingCv}
                 </p>
               </div>
             )}

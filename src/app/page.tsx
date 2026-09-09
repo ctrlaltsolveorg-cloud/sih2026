@@ -45,14 +45,14 @@ export default function HomePage() {
   const [filter, setFilter] = useState<'all' | 'gradeA' | 'organic'>('all');
   const [selectedCropCategory] = useState<string>('All');
 
-  // Mandi live ticker items in authentic Hindi
+  // Mandi live ticker items localized using current language dictionary
   const tickerItems = [
-    { crop: 'टमाटर (उच्चतम श्रेणी A+)', price: '₹34.50/किग्रा', trend: '+4.2%' },
-    { crop: 'नाशिक लाल प्याज', price: '₹28.00/किग्रा', trend: '+1.8%' },
-    { crop: 'इन्दौर ज्योति आलू', price: '₹22.00/किग्रा', trend: '-0.5%' },
-    { crop: 'शरबाती प्रीमियम गेहूं', price: '₹38.00/किग्रा', trend: '+2.1%' },
-    { crop: 'पीला सोयाबीन', price: '₹46.50/किग्रा', trend: '+0.9%' },
-    { crop: 'देसी लहसुन', price: '₹140.00/किग्रा', trend: '+5.0%' },
+    { crop: t.tickerCrop1, price: `₹34.50/${t.pricePerKg}`, trend: '+4.2%' },
+    { crop: t.tickerCrop2, price: `₹28.00/${t.pricePerKg}`, trend: '+1.8%' },
+    { crop: t.tickerCrop3, price: `₹22.00/${t.pricePerKg}`, trend: '-0.5%' },
+    { crop: t.tickerCrop4, price: `₹38.00/${t.pricePerKg}`, trend: '+2.1%' },
+    { crop: t.tickerCrop5, price: `₹46.50/${t.pricePerKg}`, trend: '+0.9%' },
+    { crop: t.tickerCrop6, price: `₹140.00/${t.pricePerKg}`, trend: '+5.0%' },
   ];
 
   useEffect(() => {
@@ -161,6 +161,13 @@ export default function HomePage() {
     return true;
   });
 
+  const getCategoryLabel = (category: string) => {
+    if (category === 'सब्जियाँ') return t.categoryVeg;
+    if (category === 'कंदमूल') return t.categoryTubers;
+    if (category === 'अनाज') return t.categoryGrains;
+    return category;
+  };
+
   return (
     <div className="space-y-10">
       {/* Live Mandi Agmarknet Ticker */}
@@ -191,7 +198,7 @@ export default function HomePage() {
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-semibold">
               <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>SIH 2026 PS 26033 • किसान दिवस समर्पित प्रत्यक्ष कृषि मंच</span>
+              <span>{t.heroBadge}</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-extrabold text-amber-50 leading-tight">
@@ -213,36 +220,30 @@ export default function HomePage() {
 
               <div className="px-4 py-3 bg-emerald-950/80 border border-amber-500/30 rounded-xl text-xs text-amber-200 flex items-center gap-2.5 shadow-inner">
                 <PhoneCall className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>
-                  <strong className="text-amber-300">टोल-फ्री IVR वॉयस हेल्पलाइन: 1800-KISAN-AI</strong> (कीपैड फोन फसल पंजीकरण)
-                </span>
+                <span>{t.tollFreeNotice}</span>
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-5 grid grid-cols-2 gap-4">
             <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
-              <div className="text-3xl font-extrabold text-amber-400">0%</div>
-              <div className="text-xs text-amber-200/80 font-medium">बिचौलिया कमीशन</div>
-              <p className="text-[10px] text-amber-300/60">प्रत्यक्ष किसान एस्क्रौ</p>
+              <div className="text-3xl font-extrabold text-amber-400">{t.statMiddlemen}</div>
+              <div className="text-xs text-amber-200/80 font-medium">{t.statMiddlemenSub}</div>
             </div>
 
             <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
-              <div className="text-3xl font-extrabold text-emerald-400">99.4%</div>
-              <div className="text-xs text-amber-200/80 font-medium">कंप्यूटर विज़न ग्रेडिंग</div>
-              <p className="text-[10px] text-amber-300/60">FSSAI प्रमाणीकरण</p>
+              <div className="text-3xl font-extrabold text-emerald-400">{t.statCvGrading}</div>
+              <div className="text-xs text-amber-200/80 font-medium">{t.statCvGradingSub}</div>
             </div>
 
             <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
-              <div className="text-3xl font-extrabold text-amber-400">6 AI</div>
-              <div className="text-xs text-amber-200/80 font-medium">स्मार्ट कृषि इंजन</div>
-              <p className="text-[10px] text-amber-300/60">न्यायसंगत मूल्य + रसद</p>
+              <div className="text-3xl font-extrabold text-amber-400">{t.statAiEngines}</div>
+              <div className="text-xs text-amber-200/80 font-medium">{t.statAiEnginesSub}</div>
             </div>
 
             <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
-              <div className="text-3xl font-extrabold text-emerald-400">IVR/SMS</div>
-              <div className="text-xs text-amber-200/80 font-medium">बिना इंटरनेट सहायता</div>
-              <p className="text-[10px] text-amber-300/60">कीपैड फोन सेवा</p>
+              <div className="text-3xl font-extrabold text-emerald-400">{t.statIvrPhone}</div>
+              <div className="text-xs text-amber-200/80 font-medium">{t.statIvrPhoneSub}</div>
             </div>
           </div>
         </div>
@@ -253,9 +254,9 @@ export default function HomePage() {
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-emerald-950 flex items-center gap-2">
             <Layers className="w-5 h-5 text-amber-600" />
-            <span>उपयोगकर्ता डैशबोर्ड का चयन करें (Select Dashboard)</span>
+            <span>{t.selectDashboard}</span>
           </h2>
-          <span className="text-xs text-emerald-800/60">6 एकीकृत भूमिकाएँ</span>
+          <span className="text-xs text-emerald-800/60">{t.integratedRolesCount}</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -273,7 +274,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="font-bold text-xs leading-tight">{t.roleFarmer}</p>
-              <p className="text-[10px] opacity-80">Fair Price & IVR</p>
+              <p className="text-[10px] opacity-80">{t.roleFarmerSub}</p>
             </div>
           </Link>
 
@@ -291,7 +292,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="font-bold text-xs leading-tight">{t.roleFPO}</p>
-              <p className="text-[10px] opacity-80">वर्चुअल लॉट एकत्रीकरण</p>
+              <p className="text-[10px] opacity-80">{t.roleFPOSub}</p>
             </div>
           </Link>
 
@@ -309,7 +310,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="font-bold text-xs leading-tight">{t.roleBuyer}</p>
-              <p className="text-[10px] opacity-80">थोक मांग एवं अनुबंध</p>
+              <p className="text-[10px] opacity-80">{t.roleBuyerSub}</p>
             </div>
           </Link>
 
@@ -327,7 +328,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="font-bold text-xs leading-tight">{t.roleHub}</p>
-              <p className="text-[10px] opacity-80">CV ग्रेडिंग एवं QR</p>
+              <p className="text-[10px] opacity-80">{t.roleHubSub}</p>
             </div>
           </Link>
 
@@ -345,7 +346,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="font-bold text-xs leading-tight">{t.roleTransporter}</p>
-              <p className="text-[10px] opacity-80">मार्ग अनुकूलन एवं OTP</p>
+              <p className="text-[10px] opacity-80">{t.roleTransporterSub}</p>
             </div>
           </Link>
 
@@ -363,7 +364,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="font-bold text-xs leading-tight">{t.roleAdmin}</p>
-              <p className="text-[10px] opacity-80">राष्ट्रीय मंडी शासन</p>
+              <p className="text-[10px] opacity-80">{t.roleAdminSub}</p>
             </div>
           </Link>
         </div>
@@ -378,7 +379,7 @@ export default function HomePage() {
               <span>{t.marketplaceTitle}</span>
             </h2>
             <p className="text-xs text-emerald-800/70">
-              सत्यापित कंप्यूटर विज़न ग्रेडिंग और पारदर्शी एस्क्रौ के साथ ताज़ी फसल खरीदें
+              {t.marketplaceSubtitle}
             </p>
           </div>
 
@@ -437,7 +438,7 @@ export default function HomePage() {
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">
-                          {item.category}
+                          {getCategoryLabel(item.category)}
                         </span>
                         <h3 className="font-extrabold text-lg text-emerald-950 mt-1 leading-tight">
                           {item.crop_name}
@@ -449,7 +450,7 @@ export default function HomePage() {
                           <Award className="w-3 h-3 text-amber-400" /> {item.quality_grade}
                         </span>
                         <span className="text-[10px] text-emerald-700 font-medium mt-1">
-                          CV विश्वासांक: {item.cv_trust_score}%
+                          {t.cvTrustScore}: {item.cv_trust_score}%
                         </span>
                       </div>
                     </div>
@@ -460,10 +461,10 @@ export default function HomePage() {
                         <span className="truncate font-medium">{item.location}</span>
                       </div>
                       <div className="flex items-center justify-between text-emerald-800/80 text-[11px]">
-                        <span>उत्पादक: {item.farmer_name}</span>
+                        <span>{t.farmerLabel}: {item.farmer_name}</span>
                         {item.is_organic === 1 && (
                           <span className="text-emerald-700 font-bold flex items-center gap-0.5">
-                            <CheckCircle className="w-3 h-3" /> 100% जैविक
+                            <CheckCircle className="w-3 h-3" /> {t.organicBadge}
                           </span>
                         )}
                       </div>
@@ -472,11 +473,11 @@ export default function HomePage() {
 
                   <div className="pt-3 border-t border-emerald-900/10 flex items-center justify-between">
                     <div>
-                      <div className="text-xs text-emerald-800/70">Fair Price AI मूल्य</div>
+                      <div className="text-xs text-emerald-800/70">{t.fairPriceAiTag}</div>
                       <div className="text-xl font-extrabold text-amber-800">
-                        ₹{priceRupees} <span className="text-xs font-normal text-emerald-900">/ किग्रा</span>
+                        {t.currencySymbol}{priceRupees} <span className="text-xs font-normal text-emerald-900">/ {t.pricePerKg}</span>
                       </div>
-                      <div className="text-[10px] font-mono text-emerald-700">({item.price_paise_per_kg} पैसे)</div>
+                      <div className="text-[10px] font-mono text-emerald-700">({item.price_paise_per_kg} {t.paiseSuffix})</div>
                     </div>
 
                     <button

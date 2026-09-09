@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useRole } from '@/context/RoleContext';
-import { Tractor, Plus, Sparkles, PhoneCall, CheckCircle2, TrendingUp, Volume2, ShieldCheck, X } from 'lucide-react';
+import { Tractor, Plus, PhoneCall, TrendingUp, X } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function FarmerDashboardPage() {
@@ -11,14 +11,12 @@ export default function FarmerDashboardPage() {
   const { userName } = useRole();
 
   const [showAddModal, setShowAddModal] = useState(false);
-  const [ivrResponse, setIvrResponse] = useState<string | null>(null);
-  const [selectedKeypad, setSelectedKeypad] = useState('1');
 
   // Form State
   const [cropName, setCropName] = useState('');
   const [quantityKg, setQuantityKg] = useState('500');
   const [basePriceRupees, setBasePriceRupees] = useState('32');
-  const [grade, setGrade] = useState('उच्चतम श्रेणी A+');
+  const [grade] = useState('उच्चतम श्रेणी A+');
   const [location, setLocation] = useState('नासिक मंडी संकलन हब');
 
   // Demo active listings
@@ -43,33 +41,16 @@ export default function FarmerDashboardPage() {
     },
   ]);
 
-  const handleSimulateIvr = async () => {
-    try {
-      const res = await fetch('/api/v1/ivr/simulate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ dtmfInput: selectedKeypad }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setIvrResponse(data.simulatedAudioResponseHindi);
-        confetti({ particleCount: 50, spread: 60 });
-      }
-    } catch (e) {
-      setIvrResponse('IVR वॉयस सेवा: "1 बटन दबाया गया — 500 किग्रा टमाटर सफलतापूर्वक दर्ज हो गए हैं।"');
-    }
-  };
-
   const handleAddProduce = (e: React.FormEvent) => {
     e.preventDefault();
     const newProduce = {
       id: Date.now(),
-      crop: cropName || 'नयी फसल',
+      crop: cropName || t.tickerCrop1,
       qty: parseInt(quantityKg) || 500,
       priceRupees: basePriceRupees || '30.00',
       grade: grade,
       location: location,
-      status: 'सत्यापित फसल',
+      status: t.statusVerified,
     };
     setMyListings([newProduce, ...myListings]);
     setShowAddModal(false);
@@ -86,13 +67,13 @@ export default function FarmerDashboardPage() {
           </div>
           <div>
             <span className="text-[10px] font-extrabold tracking-widest text-amber-400 uppercase bg-emerald-950 px-2.5 py-0.5 rounded-full border border-amber-400/20">
-              प्रत्यक्ष किसान पोर्टल • 0% मध्यस्थ कमीशन
+              {t.farmerPortalTitle}
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
-              नमस्ते, {userName}
+              {t.farmerWelcome}, {userName}
             </h1>
             <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
-              आपकी फसल सीधे सत्यापित खरीदारों को न्यायसंगत मूल्य पर बेची जाती है
+              {t.farmerSubtitle}
             </p>
           </div>
         </div>
@@ -102,28 +83,28 @@ export default function FarmerDashboardPage() {
           className="px-5 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 font-extrabold rounded-xl shadow-lg hover:from-amber-400 hover:to-amber-500 transition flex items-center gap-2 text-sm shrink-0"
         >
           <Plus className="w-4 h-4" />
-          <span>नयी फसल दर्ज करें</span>
+          <span>{t.btnListProduce}</span>
         </button>
       </div>
 
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-emerald-700">
-          <span className="text-xs font-bold text-emerald-800">कुल प्रत्यक्ष अर्जित आय</span>
-          <div className="text-2xl font-extrabold text-emerald-950">₹1,11,400.00</div>
-          <span className="text-[11px] text-emerald-700 font-mono">11,14,0000 पैसे • शून्य कमीशन</span>
+          <span className="text-xs font-bold text-emerald-800">{t.farmerStatPriceGain}</span>
+          <div className="text-2xl font-extrabold text-emerald-950">+18.5%</div>
+          <span className="text-[11px] text-emerald-700 font-mono">0% {t.statMiddlemenSub}</span>
         </div>
 
         <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-amber-600">
-          <span className="text-xs font-bold text-emerald-800">सक्रिय बाज़ार फसलें</span>
-          <div className="text-2xl font-extrabold text-amber-800">{myListings.length} फसल सूची</div>
-          <span className="text-[11px] text-amber-700 font-medium">Fair Price AI द्वारा सत्यापित</span>
+          <span className="text-xs font-bold text-emerald-800">{t.farmerStatActive}</span>
+          <div className="text-2xl font-extrabold text-amber-800">{myListings.length} {t.categoryVeg}</div>
+          <span className="text-[11px] text-amber-700 font-medium">{t.fairPriceAiTag}</span>
         </div>
 
         <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-blue-600">
-          <span className="text-xs font-bold text-emerald-800">प्राप्त स्मार्ट अनुबंध</span>
-          <div className="text-2xl font-extrabold text-blue-700">3 अनुबंध निष्पादित</div>
-          <span className="text-[11px] text-blue-600 font-medium">सुरक्षित एस्क्रौ भुगतान</span>
+          <span className="text-xs font-bold text-emerald-800">{t.farmerStatEscrow}</span>
+          <div className="text-2xl font-extrabold text-blue-700">₹1,11,400.00</div>
+          <span className="text-[11px] text-blue-600 font-medium">100% {t.escrowLockedText}</span>
         </div>
       </div>
 
@@ -135,29 +116,29 @@ export default function FarmerDashboardPage() {
           </div>
           <div>
             <h3 className="font-extrabold text-emerald-950 text-base">
-              टोल-फ्री IVR वॉयस सेवा निर्देशिका (1800-KISAN-AI)
+              {t.ivrHeader}
             </h3>
             <p className="text-xs text-emerald-800/70">
-              बिना इंटरनेट वाले साधारण कीपैड फोन से फसल दर्ज करने हेतु निःशुल्क हेल्पलाइन निर्देश
+              {t.ivrSubtitle}
             </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs pt-1">
           <div className="p-3 bg-white/70 rounded-xl border border-emerald-900/10 space-y-1">
-            <span className="font-bold text-amber-800 bg-amber-500/20 px-2 py-0.5 rounded text-[10px]">कीपैड बटन 1</span>
-            <p className="font-bold text-emerald-950">फसल बिक्री पंजीकरण</p>
-            <p className="text-[11px] text-emerald-800/70">टोल-फ्री नंबर पर 1 दबाकर अपनी फसल और मात्रा वॉयस मैसेज द्वारा दर्ज करें।</p>
+            <span className="font-bold text-amber-800 bg-amber-500/20 px-2 py-0.5 rounded text-[10px]">1</span>
+            <p className="font-bold text-emerald-950">{t.press1}</p>
+            <p className="text-[11px] text-emerald-800/70">1800-KISAN-AI</p>
           </div>
           <div className="p-3 bg-white/70 rounded-xl border border-emerald-900/10 space-y-1">
-            <span className="font-bold text-amber-800 bg-amber-500/20 px-2 py-0.5 rounded text-[10px]">कीपैड बटन 2</span>
-            <p className="font-bold text-emerald-950">सद्य मंडी भाव (Agmarknet)</p>
-            <p className="text-[11px] text-emerald-800/70">टोल-फ्री नंबर पर 2 दबाकर अपने निकटतम मंडी का रीयल-टाइम AI न्यूनतम समर्थन मूल्य सुनें।</p>
+            <span className="font-bold text-amber-800 bg-amber-500/20 px-2 py-0.5 rounded text-[10px]">2</span>
+            <p className="font-bold text-emerald-950">{t.press2}</p>
+            <p className="text-[11px] text-emerald-800/70">{t.liveMandiTicker}</p>
           </div>
           <div className="p-3 bg-white/70 rounded-xl border border-emerald-900/10 space-y-1">
-            <span className="font-bold text-amber-800 bg-amber-500/20 px-2 py-0.5 rounded text-[10px]">कीपैड बटन 3</span>
-            <p className="font-bold text-emerald-950">खाता शेष एवं एस्क्रौ स्टेटस</p>
-            <p className="text-[11px] text-emerald-800/70">टोल-फ्री नंबर पर 3 दबाकर अपने बैंक खाते और लंबित प्रत्यक्ष भुगतान की स्थिति जानें।</p>
+            <span className="font-bold text-amber-800 bg-amber-500/20 px-2 py-0.5 rounded text-[10px]">3</span>
+            <p className="font-bold text-emerald-950">{t.press3}</p>
+            <p className="text-[11px] text-emerald-800/70">{t.farmerStatEscrow}</p>
           </div>
         </div>
       </div>
@@ -167,9 +148,9 @@ export default function FarmerDashboardPage() {
         <div className="flex items-center justify-between">
           <h3 className="font-extrabold text-lg text-emerald-950 flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-amber-600" />
-            <span>आपकी पंजीकृत फसलें</span>
+            <span>{t.myListingsTitle}</span>
           </h3>
-          <span className="text-xs font-bold text-emerald-800">एगमार्कनेट AI मंडी से जुड़ा</span>
+          <span className="text-xs font-bold text-emerald-800">{t.liveMandiTicker}</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -181,16 +162,16 @@ export default function FarmerDashboardPage() {
                 </span>
                 <h4 className="font-extrabold text-emerald-950 text-base mt-1">{crop.crop}</h4>
                 <p className="text-xs text-emerald-800/70 mt-0.5">
-                  मात्रा: {crop.qty} किग्रा • {crop.location}
+                  {t.colQty}: {crop.qty} {t.availableQty.toLowerCase().includes('kg') ? '' : 'kg'} • {crop.location}
                 </p>
               </div>
 
               <div className="text-right">
                 <div className="text-lg font-extrabold text-amber-800">
-                  ₹{crop.priceRupees} <span className="text-xs font-normal text-emerald-900">/ किग्रा</span>
+                  {t.currencySymbol}{crop.priceRupees} <span className="text-xs font-normal text-emerald-900">/ {t.pricePerKg}</span>
                 </div>
                 <span className="text-[10px] px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-full">
-                  {crop.status}
+                  {t.statusVerified}
                 </span>
               </div>
             </div>
@@ -203,7 +184,7 @@ export default function FarmerDashboardPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
           <div className="bg-[#FAF5EB] rounded-3xl p-6 w-full max-w-lg shadow-2xl border border-emerald-900/20 space-y-4">
             <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
-              <h3 className="font-extrabold text-lg text-emerald-950">नयी फसल बाज़ार में जोड़ें</h3>
+              <h3 className="font-extrabold text-lg text-emerald-950">{t.addModalTitle}</h3>
               <button onClick={() => setShowAddModal(false)} className="p-1 hover:bg-emerald-100 rounded-full text-emerald-800">
                 <X className="w-5 h-5" />
               </button>
@@ -211,11 +192,11 @@ export default function FarmerDashboardPage() {
 
             <form onSubmit={handleAddProduce} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-emerald-950 mb-1">फसल का नाम</label>
+                <label className="block text-xs font-bold text-emerald-950 mb-1">{t.colCrop}</label>
                 <input
                   type="text"
                   required
-                  placeholder="उदा. नासिक हाइब्रिड टमाटर"
+                  placeholder={t.cropNamePlaceholder}
                   value={cropName}
                   onChange={(e) => setCropName(e.target.value)}
                   className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
@@ -224,7 +205,7 @@ export default function FarmerDashboardPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-emerald-950 mb-1">मात्रा (किग्रा)</label>
+                  <label className="block text-xs font-bold text-emerald-950 mb-1">{t.colQty}</label>
                   <input
                     type="number"
                     required
@@ -235,7 +216,7 @@ export default function FarmerDashboardPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-emerald-950 mb-1">वांछित मूल्य (₹/किग्रा)</label>
+                  <label className="block text-xs font-bold text-emerald-950 mb-1">{t.colPrice} ({t.currencySymbol})</label>
                   <input
                     type="number"
                     step="0.5"
@@ -248,7 +229,7 @@ export default function FarmerDashboardPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-emerald-950 mb-1">संकलन हब स्थान</label>
+                <label className="block text-xs font-bold text-emerald-950 mb-1">{t.colLocation}</label>
                 <input
                   type="text"
                   required
@@ -264,13 +245,13 @@ export default function FarmerDashboardPage() {
                   onClick={() => setShowAddModal(false)}
                   className="flex-1 py-3 bg-emerald-100 hover:bg-emerald-200 text-emerald-950 font-bold rounded-xl text-xs transition"
                 >
-                  रद्द करें
+                  {t.cancelBtn}
                 </button>
                 <button
                   type="submit"
                   className="flex-1 py-3 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow transition"
                 >
-                  फसल दर्ज करें
+                  {t.saveProduceBtn}
                 </button>
               </div>
             </form>

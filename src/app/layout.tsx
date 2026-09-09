@@ -6,6 +6,7 @@ import { CartProvider } from '@/context/CartContext';
 import Navbar from '@/components/Navbar';
 import CartDrawer from '@/components/CartDrawer';
 import Footer from '@/components/Footer';
+import IndiaTranslatorModal from '@/components/IndiaTranslatorModal';
 
 export const metadata: Metadata = {
   title: 'KisanBandhan AI — Kisan Diwas Direct Farm-to-Buyer Platform (SIH 2026)',
@@ -29,6 +30,7 @@ export default function RootLayout({
                   {children}
                 </main>
                 <CartDrawer />
+                <IndiaTranslatorModal />
                 <Footer />
               </div>
             </CartProvider>
