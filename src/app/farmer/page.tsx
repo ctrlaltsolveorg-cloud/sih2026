@@ -4,17 +4,27 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCropName, getLocalizedGrade, getLocalizedLocation } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
-import { Tractor, Plus, Sparkles, PhoneCall, CheckCircle2, TrendingUp, Volume2, ShieldCheck, X, Loader2, Trash2 } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { Tractor, Plus, Sparkles, PhoneCall, CheckCircle2, TrendingUp, Volume2, ShieldCheck, X, Loader2, Trash2, Lock, Mail, Eye, EyeOff, AlertCircle } from 'lucide-react';
 
 export default function FarmerDashboardPage() {
   const { t, language } = useLanguage();
   const { userName } = useRole();
+  const { user, verifyCredentials } = useAuth();
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [ivrResponse, setIvrResponse] = useState<string | null>(null);
   const [selectedKeypad, setSelectedKeypad] = useState('1');
   const [successSignal, setSuccessSignal] = useState<string | null>(null);
+
+  // Security Verification Delete Modal State
+  const [cropToDelete, setCropToDelete] = useState<{ id: string; name: string } | null>(null);
+  const [verifyEmail, setVerifyEmail] = useState('');
+  const [verifyPassword, setVerifyPassword] = useState('');
+  const [showVerifyPass, setShowVerifyPass] = useState(false);
+  const [isVerifyingDelete, setIsVerifyingDelete] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   // Form State
   const [cropName, setCropName] = useState('');
@@ -168,28 +178,66 @@ export default function FarmerDashboardPage() {
     }
   };
 
-  const handleDeleteCrop = async (id: string, cropNameStr: string) => {
-    setMyListings((prev) => prev.filter((item) => item.id !== id));
+  const openDeleteModal = (id: string, cropNameStr: string) => {
+    setCropToDelete({ id, name: cropNameStr });
+    setVerifyEmail(user?.email || '');
+    setVerifyPassword('');
+    setDeleteError(null);
+  };
+
+  const handleConfirmDelete = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!cropToDelete) return;
+
+    setIsVerifyingDelete(true);
+    setDeleteError(null);
 
     try {
-      const stored = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
-      const filtered = stored.filter((item: any) => item.id !== id);
-      localStorage.setItem('kb_custom_crops', JSON.stringify(filtered));
-    } catch (e) {}
+      // 1. Verify credentials (email & password)
+      const verifyRes = await verifyCredentials(verifyEmail, verifyPassword);
 
-    try {
-      await fetch(`/api/v1/crops?id=${id}`, {
-        method: 'DELETE',
-      });
-    } catch (err) {
-      console.error('Delete crop API error:', err);
+      if (!verifyRes.success) {
+        setDeleteError(
+          verifyRes.error ||
+            (language === 'hi' ? 'सत्यापन विफल! ईमेल या पासवर्ड गलत है।' : 'Verification failed! Invalid Email or Password.')
+        );
+        setIsVerifyingDelete(false);
+        return;
+      }
+
+      // 2. Verified! Proceed with crop deletion
+      const id = cropToDelete.id;
+      const cropNameStr = cropToDelete.name;
+
+      setMyListings((prev) => prev.filter((item) => item.id !== id));
+
+      try {
+        const stored = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
+        const filtered = stored.filter((item: any) => item.id !== id);
+        localStorage.setItem('kb_custom_crops', JSON.stringify(filtered));
+      } catch (e) {}
+
+      try {
+        await fetch(`/api/v1/crops?id=${id}`, {
+          method: 'DELETE',
+        });
+      } catch (err) {
+        console.error('Delete crop API error:', err);
+      }
+
+      setCropToDelete(null);
+      setVerifyPassword('');
+      setIsVerifyingDelete(false);
+
+      triggerSuccessSignal(
+        language === 'hi'
+          ? `सुरक्षा सत्यापन सफल! फसल "${cropNameStr}" को सूची से हटा दिया गया!`
+          : `Security Verification Passed! Crop "${cropNameStr}" deleted successfully!`
+      );
+    } catch (err: any) {
+      setDeleteError(err.message || 'सत्यापन में त्रुटि हुई!');
+      setIsVerifyingDelete(false);
     }
-
-    triggerSuccessSignal(
-      language === 'hi'
-        ? `फसल "${cropNameStr}" को सूची से सफलतापूर्वक हटा दिया गया!`
-        : `Crop "${cropNameStr}" deleted successfully!`
-    );
   };
 
   return (
@@ -313,7 +361,7 @@ export default function FarmerDashboardPage() {
 
                 <button
                   type="button"
-                  onClick={() => handleDeleteCrop(crop.id, crop.crop)}
+                  onClick={() => openDeleteModal(crop.id, crop.crop)}
                   className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-xl transition border border-transparent hover:border-red-200"
                   title={language === 'hi' ? 'हटाएं (Delete)' : 'Delete Crop Listing'}
                 >
@@ -336,6 +384,120 @@ export default function FarmerDashboardPage() {
               {language === 'hi' ? 'सफलतापूर्वक पुष्टित ✓' : 'Confirmed Successfully ✓'}
             </p>
             <p className="text-xs font-medium text-amber-100/90">{successSignal}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Modal for Security Verification before Crop Deletion */}
+      {cropToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fadeIn">
+          <div className="bg-[#FAF5EB] rounded-3xl p-6 w-full max-w-md shadow-2xl border border-red-900/20 space-y-4">
+            <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
+              <div className="flex items-center gap-2 text-red-700">
+                <ShieldCheck className="w-5 h-5 text-red-600" />
+                <h3 className="font-extrabold text-base text-emerald-950">
+                  {language === 'hi' ? 'सुरक्षा सत्यापन - फसल हटाएं' : 'Security Verification - Delete Crop'}
+                </h3>
+              </div>
+              <button
+                onClick={() => setCropToDelete(null)}
+                className="p-1 hover:bg-emerald-100 rounded-full text-emerald-800"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-3 bg-red-100/70 rounded-2xl border border-red-200 text-xs space-y-1">
+              <p className="font-extrabold text-red-900">
+                {language === 'hi' ? 'क्या आप इस फसल को हटाना चाहते हैं?' : 'Are you sure you want to delete this crop listing?'}
+              </p>
+              <p className="text-emerald-950 font-bold">
+                🌾 {getLocalizedCropName(cropToDelete.name, language)}
+              </p>
+              <p className="text-[11px] text-red-800">
+                {language === 'hi'
+                  ? 'सुरक्षा कारणों से फसल हटाने के लिए यूज़र ID और पासवर्ड सत्यापन अनिवार्य है।'
+                  : 'For security reasons, please verify your User ID & Password to proceed.'}
+              </p>
+            </div>
+
+            {deleteError && (
+              <div className="p-3 bg-red-500/10 border border-red-500/30 text-red-800 text-xs font-bold rounded-xl flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                <span>{deleteError}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleConfirmDelete} className="space-y-3.5">
+              <div>
+                <label className="block text-xs font-bold text-emerald-950 mb-1">
+                  {language === 'hi' ? 'यूज़र ID / ईमेल (User ID / Email)' : 'User ID / Email'}
+                </label>
+                <div className="relative">
+                  <Mail className="w-4 h-4 absolute left-3.5 top-3 text-emerald-800/60" />
+                  <input
+                    type="email"
+                    required
+                    placeholder="ramesh.patil@kisanbandhan.ai"
+                    value={verifyEmail}
+                    onChange={(e) => setVerifyEmail(e.target.value)}
+                    className="w-full pl-10 pr-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-emerald-950 mb-1">
+                  {language === 'hi' ? 'पासवर्ड दर्ज करें (Account Password)' : 'Account Password'}
+                </label>
+                <div className="relative">
+                  <Lock className="w-4 h-4 absolute left-3.5 top-3 text-emerald-800/60" />
+                  <input
+                    type={showVerifyPass ? 'text' : 'password'}
+                    required
+                    placeholder="••••••••••••"
+                    value={verifyPassword}
+                    onChange={(e) => setVerifyPassword(e.target.value)}
+                    className="w-full pl-10 pr-10 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowVerifyPass(!showVerifyPass)}
+                    className="absolute right-3 top-3 text-emerald-800/60 hover:text-emerald-950"
+                  >
+                    {showVerifyPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="pt-2 flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setCropToDelete(null)}
+                  className="flex-1 py-3 bg-emerald-100 hover:bg-emerald-200 text-emerald-950 font-bold rounded-xl text-xs transition"
+                >
+                  {language === 'hi' ? 'रद्द करें' : 'Cancel'}
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={isVerifyingDelete}
+                  className="flex-1 py-3 bg-red-700 hover:bg-red-800 text-white font-extrabold rounded-xl text-xs shadow-md transition flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {isVerifyingDelete ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-white" />
+                      <span>{language === 'hi' ? 'सत्यापित हो रहा है...' : 'Verifying...'}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Trash2 className="w-4 h-4" />
+                      <span>{language === 'hi' ? 'सत्यापित करके हटाएं' : 'Verify & Delete'}</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
