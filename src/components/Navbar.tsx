@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/context/LanguageContext';
 import { useRole } from '@/context/RoleContext';
+import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
-import { Leaf, ShoppingBag, Globe, Sparkles, UserCheck, Building2, Award, Truck, ShieldCheck } from 'lucide-react';
+import UserAvatar from './UserAvatar';
+import { Leaf, ShoppingBag, Globe, LogIn, LogOut, UserCheck, ShieldCheck } from 'lucide-react';
 
 interface NavbarProps {
   onOpenCart?: () => void;
@@ -16,7 +18,9 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
   const pathname = usePathname();
   const { language, setLanguage, t } = useLanguage();
   const { role, setRole, userName } = useRole();
+  const { user, isAuthenticated, openAuthModal, logout } = useAuth();
   const { itemCount, setIsCartOpen } = useCart();
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   useEffect(() => {
     if (pathname === '/farmer') setRole('FARMER');
@@ -141,8 +145,57 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
           </Link>
         </nav>
 
-        {/* Right Buttons: Language Switch + Cart */}
+        {/* Right Buttons: Auth Profile + Language Switch + Cart */}
         <div className="flex items-center gap-2.5">
+          {/* User Profile Avatar / Login Button */}
+          {isAuthenticated && user ? (
+            <div className="relative">
+              <button
+                onClick={() => setShowProfileMenu(!showProfileMenu)}
+                className="flex items-center gap-2 p-1.5 bg-white/80 hover:bg-white border border-emerald-900/15 rounded-2xl shadow-sm transition"
+              >
+                <UserAvatar name={user.name} size="sm" />
+                <span className="text-xs font-extrabold text-emerald-950 max-w-[100px] truncate hidden md:inline">
+                  {user.name}
+                </span>
+              </button>
+
+              {showProfileMenu && (
+                <div className="absolute right-0 mt-2 w-56 bg-[#FAF5EB] rounded-2xl shadow-2xl border border-emerald-900/20 p-3 z-50 animate-fadeIn space-y-2">
+                  <div className="flex items-center gap-3 p-2 bg-emerald-900/5 rounded-xl border border-emerald-900/10">
+                    <UserAvatar name={user.name} size="md" />
+                    <div className="overflow-hidden">
+                      <p className="text-xs font-extrabold text-emerald-950 truncate">{user.name}</p>
+                      <p className="text-[10px] text-emerald-800/70 truncate">{user.email}</p>
+                      <span className="inline-block mt-0.5 text-[9px] font-bold px-2 py-0.5 bg-amber-500/20 text-amber-900 rounded-md border border-amber-500/30">
+                        {user.role}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      logout();
+                      setShowProfileMenu(false);
+                    }}
+                    className="w-full py-2 px-3 bg-red-100 hover:bg-red-200 text-red-900 font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>{language === 'hi' ? 'लॉगआउट (Log Out)' : 'Log Out'}</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={() => openAuthModal('login')}
+              className="px-3.5 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl text-xs flex items-center gap-1.5 shadow-md transition"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>{language === 'hi' ? 'लॉगिन / साइनअप' : 'Log In / Sign Up'}</span>
+            </button>
+          )}
+
           {/* Language Toggle */}
           <button
             onClick={() => setLanguage(language === 'hi' ? 'en' : 'hi')}
