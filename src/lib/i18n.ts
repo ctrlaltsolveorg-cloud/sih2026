@@ -2840,6 +2840,25 @@ export const translations: Record<Language, TranslationSchema> = {
   },
 };
 
+export const cropTranslations: Record<string, { hi: string; en: string }> = {
+  Tomato: { hi: 'टमाटर', en: 'Tomato' },
+  Tomatoes: { hi: 'टमाटर', en: 'Tomatoes' },
+  Onion: { hi: 'प्याज', en: 'Onion' },
+  Onions: { hi: 'प्याज', en: 'Onions' },
+  Potato: { hi: 'आलू', en: 'Potato' },
+  Potatoes: { hi: 'आलू', en: 'Potatoes' },
+  Wheat: { hi: 'गेहूं', en: 'Wheat' },
+  Rice: { hi: 'चावल', en: 'Rice' },
+  Paddy: { hi: 'धान', en: 'Paddy' },
+  Maize: { hi: 'मक्का', en: 'Maize' },
+  Corn: { hi: 'मक्का', en: 'Corn' },
+  Carrot: { hi: 'गाजर', en: 'Carrot' },
+  Spinach: { hi: 'पालक', en: 'Spinach' },
+  Capsicum: { hi: 'शिमला मिर्च', en: 'Capsicum' },
+  Cabbage: { hi: 'पत्तागोभी', en: 'Cabbage' },
+  Cauliflower: { hi: 'फूलगोभी', en: 'Cauliflower' },
+};
+
 // Common agricultural phrase translations dictionary for dynamic real-time translation helper
 export const AGRI_PHRASE_DICTIONARY: Record<string, Record<Language, string>> = {
   "what is today's wholesale mandi price for tomatoes?": {
