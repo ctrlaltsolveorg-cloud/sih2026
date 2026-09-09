@@ -128,8 +128,28 @@ export async function createCropListing(input: CropListingInput) {
     priceRupees: (newListing.price_paise / 100).toFixed(2),
     grade: newListing.grade,
     location: newListing.location,
-    farmer_name: farmerName || 'Ramesh Patil',
+    farmer_name: farmerName || 'Kisan Member',
     status: 'सत्यापित फसल',
     supabaseStatus,
   };
+}
+
+/**
+ * Delete a crop listing by ID from SQLite and Supabase
+ */
+export async function deleteCropListing(id: string) {
+  const db = getDb();
+  // 1. Delete from SQLite
+  try {
+    db.prepare(`DELETE FROM product_listings WHERE id = ?`).run(id);
+  } catch (e) {}
+
+  // 2. Delete from Supabase
+  try {
+    await supabase.from('product_listings').delete().eq('id', id);
+  } catch (e) {
+    console.error('Supabase delete crop error:', e);
+  }
+
+  return { success: true, id };
 }

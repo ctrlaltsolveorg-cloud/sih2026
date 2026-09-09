@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCropName, getLocalizedGrade, getLocalizedLocation } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
-import { Tractor, Plus, Sparkles, PhoneCall, CheckCircle2, TrendingUp, Volume2, ShieldCheck, X, Loader2 } from 'lucide-react';
+import { Tractor, Plus, Sparkles, PhoneCall, CheckCircle2, TrendingUp, Volume2, ShieldCheck, X, Loader2, Trash2 } from 'lucide-react';
 
 export default function FarmerDashboardPage() {
   const { t, language } = useLanguage();
@@ -168,6 +168,30 @@ export default function FarmerDashboardPage() {
     }
   };
 
+  const handleDeleteCrop = async (id: string, cropNameStr: string) => {
+    setMyListings((prev) => prev.filter((item) => item.id !== id));
+
+    try {
+      const stored = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
+      const filtered = stored.filter((item: any) => item.id !== id);
+      localStorage.setItem('kb_custom_crops', JSON.stringify(filtered));
+    } catch (e) {}
+
+    try {
+      await fetch(`/api/v1/crops?id=${id}`, {
+        method: 'DELETE',
+      });
+    } catch (err) {
+      console.error('Delete crop API error:', err);
+    }
+
+    triggerSuccessSignal(
+      language === 'hi'
+        ? `फसल "${cropNameStr}" को सूची से सफलतापूर्वक हटा दिया गया!`
+        : `Crop "${cropNameStr}" deleted successfully!`
+    );
+  };
+
   return (
     <div className="space-y-8">
       {/* Top Welcome Banner */}
@@ -181,7 +205,7 @@ export default function FarmerDashboardPage() {
               {t.farmerBadge}
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
-              {t.farmerWelcome}, {userName}
+              {t.farmerWelcome}{userName ? `, ${userName}` : ''}
             </h1>
             <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
               {t.farmerSubtitle}
@@ -266,24 +290,35 @@ export default function FarmerDashboardPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {myListings.map((crop) => (
-            <div key={crop.id} className="p-4 bg-white/90 rounded-2xl border border-emerald-900/10 shadow-sm flex items-center justify-between">
-              <div>
+            <div key={crop.id} className="p-4 bg-white/90 rounded-2xl border border-emerald-900/10 shadow-sm flex items-center justify-between gap-3 group hover:border-emerald-900/20 transition">
+              <div className="flex-1 min-w-0">
                 <span className="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded-md">
                   {getLocalizedGrade(crop.grade, language)}
                 </span>
-                <h4 className="font-extrabold text-emerald-950 text-base mt-1">{getLocalizedCropName(crop.crop, language)}</h4>
-                <p className="text-xs text-emerald-800/70 mt-0.5">
+                <h4 className="font-extrabold text-emerald-950 text-base mt-1 truncate">{getLocalizedCropName(crop.crop, language)}</h4>
+                <p className="text-xs text-emerald-800/70 mt-0.5 truncate">
                   {language === 'hi' ? 'मात्रा: ' : 'Quantity: '}{crop.qty} {language === 'hi' ? 'किग्रा' : 'kg'} • {getLocalizedLocation(crop.location, language)}
                 </p>
               </div>
 
-              <div className="text-right">
-                <div className="text-lg font-extrabold text-amber-800">
-                  ₹{crop.priceRupees} <span className="text-xs font-normal text-emerald-900">/ {language === 'hi' ? 'किग्रा' : 'kg'}</span>
+              <div className="flex items-center gap-3 shrink-0">
+                <div className="text-right">
+                  <div className="text-lg font-extrabold text-amber-800">
+                    ₹{crop.priceRupees} <span className="text-xs font-normal text-emerald-900">/ {language === 'hi' ? 'किग्रा' : 'kg'}</span>
+                  </div>
+                  <span className="text-[10px] px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-full">
+                    {crop.status === 'सत्यापित फसल' ? (language === 'hi' ? 'सत्यापित फसल' : 'Verified Crop') : (language === 'hi' ? 'पूल में शामिल' : 'Pooled Lot')}
+                  </span>
                 </div>
-                <span className="text-[10px] px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-full">
-                  {crop.status === 'सत्यापित फसल' ? (language === 'hi' ? 'सत्यापित फसल' : 'Verified Crop') : (language === 'hi' ? 'पूल में शामिल' : 'Pooled Lot')}
-                </span>
+
+                <button
+                  type="button"
+                  onClick={() => handleDeleteCrop(crop.id, crop.crop)}
+                  className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-xl transition border border-transparent hover:border-red-200"
+                  title={language === 'hi' ? 'हटाएं (Delete)' : 'Delete Crop Listing'}
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
               </div>
             </div>
           ))}

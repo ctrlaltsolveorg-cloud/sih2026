@@ -45,25 +45,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authModalTab, setAuthModalTab] = useState<'login' | 'signup' | 'forgot'>('login');
 
   useEffect(() => {
-    // 1. Restore local session if stored
+    // 1. Restore local session ONLY if explicitly logged in by user
     try {
       const stored = localStorage.getItem('kisanbandhan_auth_user');
-      if (stored) {
+      const isManual = localStorage.getItem('kisanbandhan_manual_login');
+      if (stored && isManual === 'true') {
         setUser(JSON.parse(stored));
       } else {
-        // Default initial session for seamless demo (Ramesh Patil)
-        const defaultUser: AuthUser = {
-          id: 'u_farmer_1',
-          email: 'ramesh.patil@kisanbandhan.ai',
-          name: 'Ramesh Patil',
-          role: 'FARMER',
-          phone: '9876543210',
-        };
-        setUser(defaultUser);
-        localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(defaultUser));
+        setUser(null);
+        localStorage.removeItem('kisanbandhan_auth_user');
+        localStorage.removeItem('kisanbandhan_manual_login');
       }
     } catch (e) {
       console.error('Error restoring session:', e);
+      setUser(null);
     }
 
     // 2. Listen to Supabase Auth state changes if live Supabase is connected
@@ -80,6 +75,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           role,
         };
         setUser(updatedUser);
+        localStorage.setItem('kisanbandhan_manual_login', 'true');
         localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(updatedUser));
       }
     });
@@ -133,6 +129,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           role,
         };
         setUser(loggedUser);
+        localStorage.setItem('kisanbandhan_manual_login', 'true');
         localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(loggedUser));
         closeAuthModal();
         syncUserToBackendDB(loggedUser);
@@ -156,6 +153,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           phone: match.phone,
         };
         setUser(loggedUser);
+        localStorage.setItem('kisanbandhan_manual_login', 'true');
         localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(loggedUser));
         closeAuthModal();
         syncUserToBackendDB(loggedUser);
@@ -182,6 +180,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           phone: acc.phone,
         };
         setUser(seedUser);
+        localStorage.setItem('kisanbandhan_manual_login', 'true');
         localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(seedUser));
         closeAuthModal();
         syncUserToBackendDB(seedUser);
@@ -278,6 +277,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } catch (e) {}
 
       setUser(newUser);
+      localStorage.setItem('kisanbandhan_manual_login', 'true');
       localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(newUser));
       closeAuthModal();
 
@@ -293,6 +293,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch (e) {}
     setUser(null);
     localStorage.removeItem('kisanbandhan_auth_user');
+    localStorage.removeItem('kisanbandhan_manual_login');
   };
 
   const resetPassword = async (email: string): Promise<{ success: boolean; message?: string; error?: string }> => {
