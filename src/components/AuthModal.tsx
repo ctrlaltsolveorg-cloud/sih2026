@@ -251,8 +251,58 @@ export default function AuthModal() {
               </button>
 
               <div className="relative my-4 text-center text-xs text-emerald-900/40 font-bold">
-                <span className="bg-[#FAF5EB] px-3 relative z-10">{language === 'hi' ? 'अथवा' : 'OR'}</span>
+                <span className="bg-[#FAF5EB] px-3 relative z-10">{language === 'hi' ? 'अथवा 1-क्लिक क्विक लॉगिन' : 'OR 1-CLICK QUICK LOGIN'}</span>
                 <div className="absolute inset-0 top-1/2 border-t border-emerald-900/10" />
+              </div>
+
+              {/* Quick Demo Login Preset Buttons */}
+              <div className="p-3 bg-emerald-900/5 rounded-2xl border border-emerald-900/10 space-y-2">
+                <p className="text-[10px] font-bold text-amber-900 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-amber-600" />
+                  <span>{language === 'hi' ? 'त्वरित डेमो खातों से लॉगिन करें:' : 'Instant Quick Demo Login Accounts:'}</span>
+                </p>
+                <div className="grid grid-cols-2 gap-1.5 text-[11px] font-extrabold">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEmail('ramesh.patil@kisanbandhan.ai');
+                      setPassword('Kisan#9824!Agri');
+                    }}
+                    className="p-2 bg-white hover:bg-amber-100/60 border border-emerald-900/10 rounded-xl text-left truncate text-emerald-950 transition"
+                  >
+                    🚜 Ramesh Patil (Farmer)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEmail('annapurna@kisanbandhan.ai');
+                      setPassword('Kisan#9824!Agri');
+                    }}
+                    className="p-2 bg-white hover:bg-amber-100/60 border border-emerald-900/10 rounded-xl text-left truncate text-emerald-950 transition"
+                  >
+                    🛒 Annapurna (Buyer)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEmail('sanjay.fpo@kisanbandhan.ai');
+                      setPassword('Kisan#9824!Agri');
+                    }}
+                    className="p-2 bg-white hover:bg-amber-100/60 border border-emerald-900/10 rounded-xl text-left truncate text-emerald-950 transition"
+                  >
+                    🏢 Sanjay Lead (FPO)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEmail('rajesh.hub@kisanbandhan.ai');
+                      setPassword('Kisan#9824!Agri');
+                    }}
+                    className="p-2 bg-white hover:bg-amber-100/60 border border-emerald-900/10 rounded-xl text-left truncate text-emerald-950 transition"
+                  >
+                    🔬 Rajesh (Hub inspector)
+                  </button>
+                </div>
               </div>
 
               {/* Google OAuth Button */}

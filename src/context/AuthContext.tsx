@@ -118,48 +118,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, pass: string): Promise<{ success: boolean; error?: string }> => {
     const cleanEmail = email.toLowerCase().trim();
+
     try {
       // 1. Supabase Authentication
       const { data, error } = await supabase.auth.signInWithPassword({ email: cleanEmail, password: pass });
-
-      if (error) {
-        // Fallback demo auth matching
-        const stored = localStorage.getItem('kisanbandhan_registered_users');
-        const usersList: AuthUser[] = stored ? JSON.parse(stored) : [];
-        const match = usersList.find((u) => u.email.toLowerCase() === cleanEmail);
-
-        if (match) {
-          setUser(match);
-          localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(match));
-          closeAuthModal();
-          syncUserToBackendDB(match);
-          return { success: true };
-        }
-
-        // Demo seed user auto match
-        if (cleanEmail === 'ramesh.patil@kisanbandhan.ai') {
-          const ramesh: AuthUser = {
-            id: 'u_farmer_1',
-            email: cleanEmail,
-            name: 'Ramesh Patil',
-            role: 'FARMER',
-            phone: '9876543210',
-          };
-          setUser(ramesh);
-          localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(ramesh));
-          closeAuthModal();
-          syncUserToBackendDB(ramesh);
-          return { success: true };
-        }
-
-        return {
-          success: false,
-          error:
-            error.message.includes('Invalid login credentials')
-              ? 'गलत ईमेल या पासवर्ड! कृपया सही विवरण दर्ज करें या नया खाता बनाएँ।'
-              : error.message,
-        };
-      }
 
       if (data?.user) {
         const metaName = data.user.user_metadata?.name || cleanEmail.split('@')[0];
@@ -176,7 +138,60 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         syncUserToBackendDB(loggedUser);
         return { success: true };
       }
-      return { success: false, error: 'Login failed. Please check credentials.' };
+
+      // 2. Local Storage & Seed Users Authentication Fallback
+      const stored = localStorage.getItem('kisanbandhan_registered_users');
+      const usersList: Array<AuthUser & { password?: string }> = stored ? JSON.parse(stored) : [];
+      const match = usersList.find((u) => u.email.toLowerCase() === cleanEmail);
+
+      if (match) {
+        if (match.password && match.password !== pass) {
+          return { success: false, error: 'गलत पासवर्ड! (Incorrect password. Please try again.)' };
+        }
+        const loggedUser: AuthUser = {
+          id: match.id,
+          email: match.email,
+          name: match.name,
+          role: match.role,
+          phone: match.phone,
+        };
+        setUser(loggedUser);
+        localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(loggedUser));
+        closeAuthModal();
+        syncUserToBackendDB(loggedUser);
+        return { success: true };
+      }
+
+      // Demo Seed Users Matching
+      const seedAccounts: Record<string, { id: string; name: string; role: UserRole; phone: string }> = {
+        'ramesh.patil@kisanbandhan.ai': { id: 'u_farmer_1', name: 'Ramesh Patil', role: 'FARMER', phone: '9876543210' },
+        'sanjay.fpo@kisanbandhan.ai': { id: 'u_fpo_1', name: 'Sanjay Deshmukh', role: 'FPO', phone: '9876543219' },
+        'annapurna@kisanbandhan.ai': { id: 'u_buyer_2', name: 'Annapurna Hotel & Catering', role: 'BUYER', phone: '9822233344' },
+        'rajesh.hub@kisanbandhan.ai': { id: 'u_hub_1', name: 'Rajesh Kulkarni', role: 'HUB_OPERATOR', phone: '9900088877' },
+        'vikram.logistics@kisanbandhan.ai': { id: 'u_partner_1', name: 'Vikram Shinde Fleet', role: 'TRANSPORTER', phone: '9900011122' },
+        'admin@kisanbandhan.ai': { id: 'u_admin_1', name: 'Ministry Governance Admin', role: 'ADMIN', phone: '9000000000' },
+      };
+
+      if (seedAccounts[cleanEmail]) {
+        const acc = seedAccounts[cleanEmail];
+        const seedUser: AuthUser = {
+          id: acc.id,
+          email: cleanEmail,
+          name: acc.name,
+          role: acc.role,
+          phone: acc.phone,
+        };
+        setUser(seedUser);
+        localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(seedUser));
+        closeAuthModal();
+        syncUserToBackendDB(seedUser);
+        return { success: true };
+      }
+
+      return {
+        success: false,
+        error: 'खाता नहीं मिला! कृपया साइनअप (Sign Up) करके नया खाता बनाएँ।',
+      };
     } catch (err: any) {
       return { success: false, error: err.message };
     }
@@ -194,12 +209,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // 1. Check existing users in local storage registry
     try {
       const stored = localStorage.getItem('kisanbandhan_registered_users');
-      const usersList: AuthUser[] = stored ? JSON.parse(stored) : [];
+      const usersList: Array<AuthUser & { password?: string }> = stored ? JSON.parse(stored) : [];
       const duplicate = usersList.find((u) => u.email.toLowerCase() === cleanEmail);
       if (duplicate) {
         return {
           success: false,
-          error: 'यह ईमेल खाता पहले से पंजीकृत है! कृपया इस ईमेल से लॉगिन करें। (Account already exists with this email. Please log in.)',
+          error: 'यह ईमेल खाता पहले से पंजीकृत है! कृपया इस ईमेल से लॉगिन करें।',
         };
       }
     } catch (e) {}
@@ -215,7 +230,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (checkData?.exists) {
         return {
           success: false,
-          error: 'यह ईमेल खाता पहले से पंजीकृत है! कृपया इस ईमेल से लॉगिन करें। (Account already exists with this email. Please log in.)',
+          error: 'यह ईमेल खाता पहले से पंजीकृत है! कृपया इस ईमेल से लॉगिन करें।',
         };
       }
     } catch (e) {}
@@ -232,11 +247,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (error && error.message.includes('User already registered')) {
         return {
           success: false,
-          error: 'यह ईमेल खाता सुपाबेस ऑथ में पहले से दर्ज है! कृपया लॉगिन पर जाएँ। (User already registered in Supabase.)',
+          error: 'यह ईमेल खाता सुपाबेस ऑथ में पहले से दर्ज है! कृपया लॉगिन पर जाएँ।',
         };
       }
 
       const userId = data?.user?.id || `user_${Date.now()}`;
+      const newUserRecord = {
+        id: userId,
+        email: cleanEmail,
+        password: pass,
+        name: formattedName,
+        role,
+      };
+
       const newUser: AuthUser = {
         id: userId,
         email: cleanEmail,
@@ -247,11 +270,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // 3. Register user row in backend SQLite DB & Supabase `users` table
       await syncUserToBackendDB(newUser);
 
-      // Save to local registry backup
+      // Save to local registry backup WITH password
       try {
         const existingStr = localStorage.getItem('kisanbandhan_registered_users');
-        const existing: AuthUser[] = existingStr ? JSON.parse(existingStr) : [];
-        localStorage.setItem('kisanbandhan_registered_users', JSON.stringify([...existing, newUser]));
+        const existing: Array<AuthUser & { password?: string }> = existingStr ? JSON.parse(existingStr) : [];
+        localStorage.setItem('kisanbandhan_registered_users', JSON.stringify([...existing, newUserRecord]));
       } catch (e) {}
 
       setUser(newUser);
