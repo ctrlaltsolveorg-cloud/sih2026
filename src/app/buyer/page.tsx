@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedFarmer, getLocalizedLocation, getLocalizedCropName } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
+import PortalGuard from '@/components/PortalGuard';
 import { ShoppingBag, Plus, Clock, CheckCircle2, FileText, Sparkles, MapPin, X } from 'lucide-react';
 
 export default function BuyerDashboardPage() {
@@ -42,7 +43,16 @@ export default function BuyerDashboardPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <PortalGuard
+      requiredRole="BUYER"
+      portalName={language === 'hi' ? 'प्रत्यक्ष खरीदार पोर्टल (Buyer Desk)' : 'Buyer Desk'}
+      portalDescription={
+        language === 'hi'
+          ? 'यह पोर्टल केवल सत्यापित थोक एवं खुदरा खरीदारों के लिए है जहाँ वे थोक मांग प्रस्ताव और अनुबंध प्रबंधित कर सकते हैं।'
+          : 'This portal is restricted to verified Bulk and Retail Buyers to post procurement demand and manage supply contracts.'
+      }
+    >
+      <div className="space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#0F3826] text-amber-50 p-6 rounded-3xl shadow-xl border border-amber-500/20">
         <div className="flex items-center gap-4">
@@ -289,6 +299,7 @@ export default function BuyerDashboardPage() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </PortalGuard>
   );
 }

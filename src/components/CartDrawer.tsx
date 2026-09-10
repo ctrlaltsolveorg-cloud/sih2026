@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
+import { useAuth } from '@/context/AuthContext';
 import { getLocalizedCropName, getLocalizedGrade } from '@/lib/i18n';
-import { X, ShoppingBag, Trash2, ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { X, ShoppingBag, Trash2, ArrowRight, CheckCircle2, ShieldCheck, Lock, LogIn } from 'lucide-react';
 
 export default function CartDrawer() {
   const {
@@ -19,6 +20,7 @@ export default function CartDrawer() {
     clearCart,
   } = useCart();
   const { t, language } = useLanguage();
+  const { isAuthenticated, user, openAuthModal } = useAuth();
 
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [contractId, setContractId] = useState<string | null>(null);
@@ -26,6 +28,11 @@ export default function CartDrawer() {
   if (!isCartOpen) return null;
 
   const handleCheckout = () => {
+    if (!isAuthenticated || !user) {
+      openAuthModal('login');
+      return;
+    }
+
     // Generate simulated smart contract hash
     const hash = 'KF-CONTRACT-' + Math.random().toString(36).substring(2, 9).toUpperCase();
     setContractId(hash);
@@ -175,14 +182,34 @@ export default function CartDrawer() {
 
                 <div className="flex items-center gap-1.5 text-[11px] text-emerald-700/80 bg-emerald-50 p-2 rounded-lg">
                   <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>किसान एस्क्रौ सुरक्षा — भुगतान केवल गुणवत्ता प्रमाणन के बाद।</span>
+                  <span>{language === 'hi' ? 'किसान एस्क्रौ सुरक्षा — भुगतान केवल गुणवत्ता प्रमाणन के बाद।' : 'Escrow Security — Funds released only post quality verification.'}</span>
                 </div>
+
+                {!isAuthenticated && (
+                  <div className="p-2.5 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-950 flex items-center gap-2">
+                    <Lock className="w-4 h-4 text-amber-700 shrink-0" />
+                    <span>
+                      {language === 'hi'
+                        ? 'ऑर्डर पूरा करने और सुरक्षित एस्क्रौ भुगतान के लिए लॉगिन आवश्यक है।'
+                        : 'Login is required to place an order and execute smart contract payment.'}
+                    </span>
+                  </div>
+                )}
 
                 <button
                   onClick={handleCheckout}
                   className="w-full py-3.5 bg-[#0F3826] text-amber-50 font-bold rounded-xl shadow-lg hover:bg-emerald-900 transition flex items-center justify-center gap-2 text-sm"
                 >
-                  {t.proceedOrder} <ArrowRight className="w-4 h-4" />
+                  {isAuthenticated ? (
+                    <>
+                      {t.proceedOrder} <ArrowRight className="w-4 h-4" />
+                    </>
+                  ) : (
+                    <>
+                      <LogIn className="w-4 h-4 text-amber-400" />
+                      <span>{language === 'hi' ? 'लॉगिन करें और ऑर्डर दें' : 'Log In to Place Order'}</span>
+                    </>
+                  )}
                 </button>
               </div>
             )}

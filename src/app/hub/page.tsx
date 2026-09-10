@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCropName } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
+import PortalGuard from '@/components/PortalGuard';
 import { Warehouse, Camera, QrCode, CheckCircle2, ShieldCheck, Sparkles, Award } from 'lucide-react';
 
 export default function HubOperatorPage() {
@@ -52,7 +53,16 @@ export default function HubOperatorPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <PortalGuard
+      requiredRole="HUB_OPERATOR"
+      portalName={language === 'hi' ? 'गुणवत्ता जाँच केंद्र ऑपरेटर (Hub Inspector)' : 'Hub Inspector'}
+      portalDescription={
+        language === 'hi'
+          ? 'यह पोर्टल केवल माइक्रोहब गुणवत्ता अधिकारियों के लिए सुरक्षित है जहाँ कंप्यूटर विज़न AI से ग्रेडिंग व QR टैगिंग की जाती है।'
+          : 'This portal is restricted to authorized Hub Quality Inspectors to run Computer Vision quality grading and QR tracking.'
+      }
+    >
+      <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center gap-4 bg-[#0F3826] text-amber-50 p-6 rounded-3xl shadow-xl border border-amber-500/20">
         <div className="p-3 bg-amber-500/20 rounded-2xl">
@@ -225,6 +235,7 @@ export default function HubOperatorPage() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </PortalGuard>
   );
 }

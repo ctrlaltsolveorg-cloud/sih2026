@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server';
-import { createCropListing, getAllCrops, deleteCropListing } from '@/lib/crops';
+import { createCropListing, getAllCrops, getCropsByFarmer, deleteCropListing } from '@/lib/crops';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const listings = getAllCrops();
+    const { searchParams } = new URL(request.url);
+    const farmerId = searchParams.get('farmerId');
+
+    const listings = farmerId ? getCropsByFarmer(farmerId) : getAllCrops();
     return NextResponse.json({
       success: true,
       source: 'database',

@@ -9,11 +9,13 @@ export interface CropListingInput {
   grade?: string;
   location?: string;
   category?: string;
+  farmerId?: string;
   farmerName?: string;
+  imageUrl?: string;
 }
 
 /**
- * Fetch all active crop listings from SQLite
+ * Fetch all active crop listings from SQLite (for public marketplace)
  */
 export function getAllCrops() {
   const db = getDb();
@@ -30,10 +32,28 @@ export function getAllCrops() {
 }
 
 /**
+ * Fetch crops owned by a specific farmer (user-isolated data)
+ */
+export function getCropsByFarmer(farmerId: string) {
+  const db = getDb();
+  return db
+    .prepare(
+      `
+    SELECT l.*, u.name as farmer_name 
+    FROM product_listings l
+    LEFT JOIN users u ON l.farmer_id = u.id
+    WHERE l.farmer_id = ?
+    ORDER BY l.created_at DESC
+  `
+    )
+    .all(farmerId);
+}
+
+/**
  * Create a new crop listing with auto-AI translation & Supabase sync
  */
 export async function createCropListing(input: CropListingInput) {
-  const { cropName, quantityKg, priceRupees, grade, location, category, farmerName } = input;
+  const { cropName, quantityKg, priceRupees, grade, location, category, farmerId, farmerName, imageUrl } = input;
 
   if (!cropName) {
     throw new Error('Crop name is required');
@@ -47,14 +67,16 @@ export async function createCropListing(input: CropListingInput) {
   const loc = location || 'नासिक एग्रो-हब #04';
   const gradeVal = grade || 'उच्चतम श्रेणी A+';
   const harvestDate = new Date().toISOString().split('T')[0];
+  const actualFarmerId = farmerId || 'u_farmer_1';
   const defaultImage = 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80';
+  const cropImage = imageUrl && imageUrl.trim().length > 0 ? imageUrl.trim() : defaultImage;
 
   // 1. Auto AI Translation & Cache
   await getOrFetchCropTranslation(cropName);
 
   const newListing = {
     id,
-    farmer_id: 'u_farmer_1',
+    farmer_id: actualFarmerId,
     fpo_id: 'fpo_nashik_1',
     crop_name: cropName,
     category: cat,
@@ -65,7 +87,7 @@ export async function createCropListing(input: CropListingInput) {
     grade: gradeVal,
     harvest_date: harvestDate,
     organic_certified: gradeVal.includes('ऑर्गेनिक') || gradeVal.includes('Organic') ? 1 : 0,
-    image_url: defaultImage,
+    image_url: cropImage,
     location: loc,
     district: 'Nashik',
     status: 'ACTIVE',

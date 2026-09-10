@@ -22,7 +22,7 @@ import {
 import Link from 'next/link';
 
 interface Listing {
-  id: number;
+  id: number | string;
   crop_name: string;
   category: string;
   quantity_kg: number;
@@ -34,6 +34,7 @@ interface Listing {
   farmer_name: string;
   location: string;
   hub_location: string;
+  image_url?: string;
 }
 
 export default function HomePage() {
@@ -59,99 +60,15 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchProduce() {
       try {
-        const initialProduce: Listing[] = [
-          {
-            id: 101,
-            crop_name: 'ताज़ा हाइब्रिड टमाटर (Fresh Tomatoes)',
-            category: 'सब्जियाँ',
-            quantity_kg: 1200,
-            price_paise_per_kg: 3450, // ₹34.50
-            quality_grade: 'ग्रेड A+',
-            cv_trust_score: 98,
-            harvest_date: '2026-09-07',
-            is_organic: 1,
-            farmer_name: 'रामेश्वर यादव',
-            location: 'नासिक मंडी हब (महाराष्ट्र)',
-            hub_location: 'नासिक एग्रो-हब #04',
-          },
-          {
-            id: 102,
-            crop_name: 'लाल प्याज (Lasalgaon Red Onion)',
-            category: 'सब्जियाँ',
-            quantity_kg: 3500,
-            price_paise_per_kg: 2800, // ₹28.00
-            quality_grade: 'ग्रेड A',
-            cv_trust_score: 95,
-            harvest_date: '2026-09-06',
-            is_organic: 0,
-            farmer_name: 'सहयाद्री किसान FPO समूह',
-            location: 'लासलगांव संकलन केंद्र',
-            hub_location: 'लासलगांव हब',
-          },
-          {
-            id: 103,
-            crop_name: 'जैविक ज्योति आलू (Organic Potatoes)',
-            category: 'कंदमूल',
-            quantity_kg: 2800,
-            price_paise_per_kg: 2250, // ₹22.50
-            quality_grade: 'ग्रेड A+',
-            cv_trust_score: 99,
-            harvest_date: '2026-09-05',
-            is_organic: 1,
-            farmer_name: 'सुरेश पाटिल',
-            location: 'इन्दौर (मध्य प्रदेश)',
-            hub_location: 'इन्दौर लॉजिस्टिक्स हब',
-          },
-          {
-            id: 104,
-            crop_name: 'हरी शिमला मिर्च (Fresh Capsicum)',
-            category: 'सब्जियाँ',
-            quantity_kg: 800,
-            price_paise_per_kg: 4800, // ₹48.00
-            quality_grade: 'ग्रेड A',
-            cv_trust_score: 94,
-            harvest_date: '2026-09-07',
-            is_organic: 0,
-            farmer_name: 'कविता चौधरी',
-            location: 'पुणे ग्रामीण हब',
-            hub_location: 'पुणे हब',
-          },
-          {
-            id: 105,
-            crop_name: 'शरबाती प्रीमियम गेहूं (Sharbati Wheat)',
-            category: 'अनाज',
-            quantity_kg: 5000,
-            price_paise_per_kg: 3800, // ₹38.00
-            quality_grade: 'निर्यात श्रेणी',
-            cv_trust_score: 99,
-            harvest_date: '2026-09-04',
-            is_organic: 1,
-            farmer_name: 'मालवा कृषक FPO',
-            location: 'उज्जैन (मध्य प्रदेश)',
-            hub_location: 'उज्जैन साइलो हब',
-          },
-          {
-            id: 106,
-            crop_name: 'देसी जैविक गाजर (Organic Carrots)',
-            category: 'सब्जियाँ',
-            quantity_kg: 1500,
-            price_paise_per_kg: 2600, // ₹26.00
-            quality_grade: 'ग्रेड A',
-            cv_trust_score: 96,
-            harvest_date: '2026-09-07',
-            is_organic: 1,
-            farmer_name: 'हनुमान सहाय',
-            location: 'जयपुर (राजस्थान)',
-            hub_location: 'जयपुर मंडी संकलन',
-          }
-        ];
+        // Clean start - no mock seed listings
+        const initialProduce: Listing[] = [];
 
         // Check local storage custom crops
         let localProduce: Listing[] = [];
         try {
           const stored = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
           localProduce = stored.map((item: any, idx: number) => ({
-            id: typeof item.id === 'number' ? item.id : 5000 + idx,
+            id: item.id || `local_${idx}`,
             crop_name: item.crop || 'नयी फसल',
             category: 'सब्जियाँ',
             quantity_kg: parseInt(item.qty) || 500,
@@ -160,9 +77,10 @@ export default function HomePage() {
             cv_trust_score: 98,
             harvest_date: '2026-09-08',
             is_organic: 1,
-            farmer_name: item.farmer_name || 'रामेश्वर यादव',
+            farmer_name: item.farmer_name || 'किसान (Farmer)',
             location: item.location || 'नासिक मंडी हब (महाराष्ट्र)',
             hub_location: 'नासिक एग्रो-हब #04',
+            image_url: item.imageUrl,
           }));
         } catch (e) {}
 
@@ -171,8 +89,8 @@ export default function HomePage() {
           const data = await res.json();
           let apiProduce: Listing[] = [];
           if (data.success && data.crops && data.crops.length > 0) {
-            apiProduce = data.crops.map((c: any, index: number) => ({
-              id: typeof c.id === 'number' ? c.id : 1000 + index,
+            apiProduce = data.crops.map((c: any) => ({
+              id: c.id,
               crop_name: c.crop_name,
               category: c.category || 'सब्जियाँ',
               quantity_kg: c.quantity_available || 500,
@@ -181,13 +99,14 @@ export default function HomePage() {
               cv_trust_score: 97,
               harvest_date: c.harvest_date || '2026-09-08',
               is_organic: c.organic_certified || 0,
-              farmer_name: c.farmer_name || 'रामेश्वर यादव',
+              farmer_name: c.farmer_name || 'किसान (Farmer)',
               location: c.location || 'नासिक मंडी हब (महाराष्ट्र)',
               hub_location: c.district ? `${c.district} एग्रो-हब` : 'नासिक एग्रो-हब #04',
+              image_url: c.image_url,
             }));
           }
 
-          const combinedAll = [...localProduce, ...apiProduce, ...initialProduce];
+          const combinedAll = [...apiProduce, ...localProduce];
           const seen = new Set();
           const uniqueListings = combinedAll.filter((item) => {
             if (seen.has(item.id)) return false;
@@ -196,8 +115,7 @@ export default function HomePage() {
           });
           setListings(uniqueListings);
         } catch (e) {
-          const combinedAll = [...localProduce, ...initialProduce];
-          setListings(combinedAll);
+          setListings(localProduce);
         }
       } catch (err) {
         console.error(err);
@@ -478,6 +396,28 @@ export default function HomePage() {
               <div key={n} className="h-64 bg-emerald-900/5 animate-pulse rounded-2xl border border-emerald-900/10" />
             ))}
           </div>
+        ) : filteredListings.length === 0 ? (
+          <div className="py-16 px-4 text-center bg-white/60 border-2 border-dashed border-emerald-900/15 rounded-3xl space-y-4">
+            <div className="w-16 h-16 mx-auto bg-amber-500/10 text-amber-700 rounded-2xl flex items-center justify-center">
+              <ShoppingBag className="w-8 h-8" />
+            </div>
+            <div>
+              <h3 className="text-xl font-extrabold text-emerald-950">
+                {language === 'hi' ? 'वर्तमान में बाज़ार में कोई फसल उपलब्ध नहीं है' : 'No produce currently listed'}
+              </h3>
+              <p className="text-xs text-emerald-800/70 max-w-md mx-auto mt-1">
+                {language === 'hi'
+                  ? 'पंजीकृत किसान अपने किसान पोर्टल (Farmer Desk) में जाकर अपनी ताज़ा फसलें पंजीकृत कर सकते हैं।'
+                  : 'Registered farmers can log in to the Farmer Desk and list their fresh harvest to appear in the marketplace.'}
+              </p>
+            </div>
+            <Link
+              href="/farmer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow-md transition"
+            >
+              <span>{language === 'hi' ? 'किसान पोर्टल पर जाएँ' : 'Go to Farmer Desk'}</span>
+            </Link>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredListings.map((item) => {
@@ -485,9 +425,19 @@ export default function HomePage() {
               return (
                 <div
                   key={item.id}
-                  className="glass-card rounded-2xl p-5 space-y-4 hover:shadow-xl transition-all duration-300 border border-emerald-900/10 flex flex-col justify-between"
+                  className="glass-card rounded-2xl p-5 space-y-4 hover:shadow-xl transition-all duration-300 border border-emerald-900/10 flex flex-col justify-between group"
                 >
                   <div className="space-y-3">
+                    {item.image_url && (
+                      <div className="relative w-full h-44 rounded-xl overflow-hidden border border-emerald-900/10 shadow-inner bg-emerald-950/5">
+                        <img
+                          src={item.image_url}
+                          alt={item.crop_name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
+
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">
@@ -543,6 +493,7 @@ export default function HomePage() {
                           grade: item.quality_grade,
                           farmerName: item.farmer_name,
                           location: item.location,
+                          imageUrl: item.image_url,
                         })
                       }
                       className="px-4 py-2.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl shadow-md transition flex items-center gap-1.5 text-xs"

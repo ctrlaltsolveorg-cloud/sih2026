@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedFarmer, getLocalizedLocation } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
+import PortalGuard from '@/components/PortalGuard';
 import { Truck, Navigation, Key, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 export default function TransporterDashboardPage() {
@@ -59,7 +60,16 @@ export default function TransporterDashboardPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <PortalGuard
+      requiredRole="TRANSPORTER"
+      portalName={language === 'hi' ? 'परिवहन एवं रसद फ्लीट (Transporter Fleet)' : 'Transporter Fleet'}
+      portalDescription={
+        language === 'hi'
+          ? 'यह पोर्टल केवल रसद एवं वाहन चालकों के लिए सुरक्षित है जहाँ रूट अनुकूलन और OTP हैंडशेक डिलीवरी होती है।'
+          : 'This portal is restricted to Transporters and Logistics Partners for cold-chain routing and OTP verification.'
+      }
+    >
+      <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center gap-4 bg-[#0F3826] text-amber-50 p-6 rounded-3xl shadow-xl border border-amber-500/20">
         <div className="p-3 bg-amber-500/20 rounded-2xl">
@@ -163,6 +173,7 @@ export default function TransporterDashboardPage() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </PortalGuard>
   );
 }

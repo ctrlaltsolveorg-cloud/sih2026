@@ -5,7 +5,8 @@ import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCropName, getLocalizedGrade, getLocalizedLocation } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { useAuth } from '@/context/AuthContext';
-import { Tractor, Plus, Sparkles, PhoneCall, CheckCircle2, TrendingUp, Volume2, ShieldCheck, X, Loader2, Trash2, Lock, Mail, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import PortalGuard from '@/components/PortalGuard';
+import { Tractor, Plus, Sparkles, PhoneCall, CheckCircle2, TrendingUp, Volume2, ShieldCheck, X, Loader2, Trash2, Lock, Mail, Eye, EyeOff, AlertCircle, Camera, Image as ImageIcon } from 'lucide-react';
 
 export default function FarmerDashboardPage() {
   const { t, language } = useLanguage();
@@ -26,39 +27,27 @@ export default function FarmerDashboardPage() {
   const [isVerifyingDelete, setIsVerifyingDelete] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
-  // Form State
+  // Form states for adding produce
   const [cropName, setCropName] = useState('');
   const [quantityKg, setQuantityKg] = useState('500');
   const [basePriceRupees, setBasePriceRupees] = useState('32');
   const [grade, setGrade] = useState('उच्चतम श्रेणी A+');
   const [location, setLocation] = useState('नासिक मंडी संकलन हब');
+  const [cropPhoto, setCropPhoto] = useState<string>('');
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
-  // Demo active listings
-  const [myListings, setMyListings] = useState([
-    {
-      id: '201',
-      crop: 'ताज़ा हाइब्रिड टमाटर',
-      qty: 1200,
-      priceRupees: '34.50',
-      grade: 'उच्चतम श्रेणी A+',
-      location: 'नासिक एग्रो-हब #04',
-      status: 'सत्यापित फसल',
-    },
-    {
-      id: '202',
-      crop: 'नासिक लाल प्याज',
-      qty: 2500,
-      priceRupees: '28.00',
-      grade: 'श्रेणी A',
-      location: 'लासलगांव संकलन केंद्र',
-      status: 'पूल में शामिल',
-    },
-  ]);
+  // User-isolated active listings (starts empty, populated only with this farmer's crops)
+  const [myListings, setMyListings] = useState<any[]>([]);
 
   useEffect(() => {
     async function loadCrops() {
+      if (!user?.id) {
+        setMyListings([]);
+        return;
+      }
+
       try {
-        const res = await fetch('/api/v1/crops');
+        const res = await fetch(`/api/v1/crops?farmerId=${encodeURIComponent(user.id)}`);
         const data = await res.json();
         let apiCrops: any[] = [];
         if (data.success && data.crops && data.crops.length > 0) {
@@ -70,13 +59,16 @@ export default function FarmerDashboardPage() {
             grade: c.grade || 'उच्चतम श्रेणी A+',
             location: c.location || 'नासिक मंडी संकलन हब',
             status: 'सत्यापित फसल',
+            imageUrl: c.image_url,
+            farmerId: c.farmer_id,
           }));
         }
 
-        // Get local storage crops
+        // Get local storage crops specifically belonging to this logged-in farmer
         let localCrops: any[] = [];
         try {
-          localCrops = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
+          const stored = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
+          localCrops = stored.filter((item: any) => item.farmerId === user.id);
         } catch (e) {}
 
         const combined = [...localCrops, ...apiCrops];
@@ -88,9 +80,7 @@ export default function FarmerDashboardPage() {
           return true;
         });
 
-        if (uniqueCrops.length > 0) {
-          setMyListings(uniqueCrops);
-        }
+        setMyListings(uniqueCrops);
       } catch (e) {
         console.error('Error fetching crops from backend:', e);
       }
@@ -122,6 +112,23 @@ export default function FarmerDashboardPage() {
     }
   };
 
+  const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert(language === 'hi' ? 'फोटो का साइज़ 5MB से कम होना चाहिए' : 'Photo size must be less than 5MB');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        setCropPhoto(result);
+        setPhotoPreview(result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleAddProduce = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -134,6 +141,8 @@ export default function FarmerDashboardPage() {
       grade: grade,
       location: location,
       status: 'सत्यापित फसल',
+      imageUrl: cropPhoto.trim() || undefined,
+      farmerId: user?.id,
     };
 
     let cropToAdd = fallbackCrop;
@@ -148,13 +157,25 @@ export default function FarmerDashboardPage() {
           priceRupees: basePriceRupees || '30.00',
           grade: grade,
           location: location,
-          farmerName: userName,
+          farmerId: user?.id || 'u_farmer_1',
+          farmerName: user?.name || userName,
+          imageUrl: cropPhoto.trim() || undefined,
         }),
       });
 
       const data = await res.json();
       if (data.success && data.crop) {
-        cropToAdd = data.crop;
+        cropToAdd = {
+          id: String(data.crop.id),
+          crop: data.crop.crop_name,
+          qty: data.crop.quantity_available,
+          priceRupees: (data.crop.price_paise / 100).toFixed(2),
+          grade: data.crop.grade,
+          location: data.crop.location,
+          status: 'सत्यापित फसल',
+          imageUrl: data.crop.image_url,
+          farmerId: data.crop.farmer_id,
+        };
       }
     } catch (err) {
       console.log('Backend insert fallback to local storage:', err);
@@ -170,6 +191,8 @@ export default function FarmerDashboardPage() {
       setIsSubmitting(false);
       setShowAddModal(false);
       setCropName('');
+      setCropPhoto('');
+      setPhotoPreview(null);
       triggerSuccessSignal(
         language === 'hi'
           ? `फसल "${cropName}" सफलता से पंजीकृत की गई!`
@@ -241,7 +264,16 @@ export default function FarmerDashboardPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <PortalGuard
+      requiredRole="FARMER"
+      portalName={language === 'hi' ? 'किसान पोर्टल (Farmer Desk)' : 'Farmer Desk'}
+      portalDescription={
+        language === 'hi'
+          ? 'यह पोर्टल केवल पंजीकृत किसानों के लिए सुरक्षित है जहाँ वे अपनी फसलों को पंजीकृत, प्रबंधित और सीधे बाज़ार में बेच सकते हैं।'
+          : 'This portal is restricted to registered Farmers to list, manage, and sell their crop produce directly.'
+      }
+    >
+      <div className="space-y-8">
       {/* Top Welcome Banner */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#0F3826] text-amber-50 p-6 rounded-3xl shadow-xl border border-amber-500/20">
         <div className="flex items-center gap-4">
@@ -337,17 +369,49 @@ export default function FarmerDashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {myListings.map((crop) => (
-            <div key={crop.id} className="p-4 bg-white/90 rounded-2xl border border-emerald-900/10 shadow-sm flex items-center justify-between gap-3 group hover:border-emerald-900/20 transition">
-              <div className="flex-1 min-w-0">
-                <span className="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded-md">
-                  {getLocalizedGrade(crop.grade, language)}
-                </span>
-                <h4 className="font-extrabold text-emerald-950 text-base mt-1 truncate">{getLocalizedCropName(crop.crop, language)}</h4>
-                <p className="text-xs text-emerald-800/70 mt-0.5 truncate">
-                  {language === 'hi' ? 'मात्रा: ' : 'Quantity: '}{crop.qty} {language === 'hi' ? 'किग्रा' : 'kg'} • {getLocalizedLocation(crop.location, language)}
+          {myListings.length === 0 ? (
+            <div className="col-span-full py-12 px-4 text-center bg-white/50 border-2 border-dashed border-emerald-900/15 rounded-3xl space-y-3">
+              <div className="w-14 h-14 mx-auto bg-amber-500/10 text-amber-700 rounded-2xl flex items-center justify-center">
+                <Tractor className="w-7 h-7" />
+              </div>
+              <div>
+                <h4 className="font-extrabold text-emerald-950 text-base">
+                  {language === 'hi' ? 'अभी आपकी कोई फसल पंजीकृत नहीं है' : 'No crops registered yet'}
+                </h4>
+                <p className="text-xs text-emerald-800/70 max-w-sm mx-auto mt-1">
+                  {language === 'hi'
+                    ? 'ऊपर दिए गए "नयी फसल जोड़ें" बटन पर क्लिक करके अपनी पहली फसल दर्ज करें और सीधे खरीदारों से जुड़ें।'
+                    : 'Click the "Register New Produce" button above to list your produce and reach direct verified buyers.'}
                 </p>
               </div>
+              <button
+                type="button"
+                onClick={() => setShowAddModal(true)}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow-md transition"
+              >
+                <Plus className="w-4 h-4 text-amber-400" />
+                <span>{t.farmerAddNewCrop}</span>
+              </button>
+            </div>
+          ) : (
+            myListings.map((crop) => (
+              <div key={crop.id} className="p-4 bg-white/90 rounded-2xl border border-emerald-900/10 shadow-sm flex items-center justify-between gap-3 group hover:border-emerald-900/20 transition">
+                {crop.imageUrl && (
+                  <img
+                    src={crop.imageUrl}
+                    alt={crop.crop}
+                    className="w-14 h-14 object-cover rounded-xl border border-emerald-900/10 shrink-0 shadow-sm"
+                  />
+                )}
+                <div className="flex-1 min-w-0">
+                  <span className="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded-md">
+                    {getLocalizedGrade(crop.grade, language)}
+                  </span>
+                  <h4 className="font-extrabold text-emerald-950 text-base mt-1 truncate">{getLocalizedCropName(crop.crop, language)}</h4>
+                  <p className="text-xs text-emerald-800/70 mt-0.5 truncate">
+                    {language === 'hi' ? 'मात्रा: ' : 'Quantity: '}{crop.qty} {language === 'hi' ? 'किग्रा' : 'kg'} • {getLocalizedLocation(crop.location, language)}
+                  </p>
+                </div>
 
               <div className="flex items-center gap-3 shrink-0">
                 <div className="text-right">
@@ -369,7 +433,8 @@ export default function FarmerDashboardPage() {
                 </button>
               </div>
             </div>
-          ))}
+          ))
+        )}
         </div>
       </div>
 
@@ -572,6 +637,78 @@ export default function FarmerDashboardPage() {
                 />
               </div>
 
+              {/* Optional Crop Photo Upload */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-bold text-emerald-950">
+                    {language === 'hi' ? 'फसल की फोटो (ऐच्छिक)' : 'Crop Photo (Optional)'}
+                  </label>
+                  <span className="text-[10px] text-emerald-800/60 font-semibold">
+                    JPG, PNG, WebP (Max 5MB)
+                  </span>
+                </div>
+
+                {photoPreview ? (
+                  <div className="p-2.5 bg-white border border-emerald-900/20 rounded-2xl flex items-center justify-between gap-3 shadow-sm">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <img
+                        src={photoPreview}
+                        alt="Crop Preview"
+                        className="w-14 h-14 object-cover rounded-xl border border-emerald-900/10 shadow-sm shrink-0"
+                      />
+                      <div className="min-w-0">
+                        <p className="text-xs font-extrabold text-emerald-950 truncate">
+                          {language === 'hi' ? 'फोटो संलग्न की गई ✓' : 'Photo Attached ✓'}
+                        </p>
+                        <p className="text-[10px] text-emerald-800/70 truncate">
+                          {language === 'hi' ? 'खरीदारों को आपकी असली फसल दिखेगी' : 'Buyers will see your actual produce'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCropPhoto('');
+                        setPhotoPreview(null);
+                      }}
+                      className="p-1.5 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-full transition shrink-0"
+                      title={language === 'hi' ? 'फोटो हटाएं' : 'Remove Photo'}
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <label className="flex items-center justify-center gap-2 py-3 px-4 border-2 border-dashed border-emerald-900/20 hover:border-amber-500 rounded-2xl cursor-pointer bg-white/70 hover:bg-white text-xs font-bold text-emerald-950 transition">
+                      <Camera className="w-4 h-4 text-amber-700" />
+                      <span>
+                        {language === 'hi'
+                          ? 'फोटो चुनें (कैमरा / गैलरी से अपलोड करें)'
+                          : 'Choose Photo (Upload from Camera / File)'}
+                      </span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoSelect}
+                        className="hidden"
+                      />
+                    </label>
+
+                    <input
+                      type="url"
+                      placeholder={language === 'hi' ? 'अथवा फोटो का लिंक (Image URL) पेस्ट करें (ऐच्छिक)' : 'Or paste online Image URL (Optional)'}
+                      value={cropPhoto}
+                      onChange={(e) => {
+                        setCropPhoto(e.target.value);
+                        setPhotoPreview(e.target.value.trim() ? e.target.value.trim() : null);
+                      }}
+                      className="w-full px-3.5 py-2 bg-white/80 border border-emerald-900/15 rounded-xl text-xs text-emerald-950 placeholder:text-emerald-900/40 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                  </div>
+                )}
+              </div>
+
               <div className="pt-2 flex gap-3">
                 <button
                   type="button"
@@ -594,5 +731,6 @@ export default function FarmerDashboardPage() {
         </div>
       )}
     </div>
+  </PortalGuard>
   );
 }
