@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="hi">
+    <html lang="en">
       <body className="antialiased selection:bg-amber-200 selection:text-emerald-950">
         <LanguageProvider>
           <AuthProvider>
