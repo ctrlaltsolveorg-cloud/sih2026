@@ -7,6 +7,7 @@ import { CartProvider } from '@/context/CartContext';
 import Navbar from '@/components/Navbar';
 import CartDrawer from '@/components/CartDrawer';
 import AuthModal from '@/components/AuthModal';
+import IndiaTranslatorModal from '@/components/IndiaTranslatorModal';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function RootLayout({
                   </main>
                   <CartDrawer />
                   <AuthModal />
+                  <IndiaTranslatorModal />
                   <Footer />
                 </div>
               </CartProvider>

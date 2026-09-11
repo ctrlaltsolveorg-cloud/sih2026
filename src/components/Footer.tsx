@@ -18,13 +18,13 @@ export default function Footer() {
             <span>{t.appName}</span>
           </div>
           <p className="text-xs text-amber-200/70 leading-relaxed">
-            {t.subTitle}. Smart India Hackathon 2026 Problem Statement 26033 (Ministry of Consumer Affairs, Food & Public Distribution).
+            {t.footerMission || `${t.subTitle}. Smart India Hackathon 2026 Problem Statement 26033 (Ministry of Consumer Affairs, Food & Public Distribution).`}
           </p>
         </div>
 
         <div>
           <h4 className="font-bold text-amber-50 mb-3 text-sm flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-amber-400" /> AI इंजन कोर (6 AI Engines)
+            <Cpu className="w-4 h-4 text-amber-400" /> {t.aiEnginesCore || 'AI इंजन कोर (6 AI Engines)'}
           </h4>
           <ul className="space-y-1.5 text-xs text-amber-200/70">
             <li>• Fair Price AI (Mandi MSP + Quality)</li>
@@ -38,36 +38,36 @@ export default function Footer() {
 
         <div>
           <h4 className="font-bold text-amber-50 mb-3 text-sm flex items-center gap-2">
-            <Shield className="w-4 h-4 text-emerald-400" /> उपयोगकर्ता भूमिकाएं (6 Personas)
+            <Shield className="w-4 h-4 text-emerald-400" /> {t.userRolesFooter || 'उपयोगकर्ता भूमिकाएं (6 Personas)'}
           </h4>
           <ul className="space-y-1.5 text-xs text-amber-200/70">
-            <li>• {t.roleFarmer} (IVR/SMS + Fair Price)</li>
-            <li>• {t.roleFPO} (Virtual Lot Aggregation)</li>
-            <li>• {t.roleBuyer} (Bulk Procurement Contracts)</li>
-            <li>• {t.roleHub} (CV Inspection & QR Tagging)</li>
-            <li>• {t.roleTransporter} (OTP Dispatch Verification)</li>
-            <li>• {t.roleAdmin} (National Mandi Governance)</li>
+            <li>• {t.roleFarmer} ({t.roleFarmerSub || 'IVR/SMS + Fair Price'})</li>
+            <li>• {t.roleFPO} ({t.roleFPOSub || 'Virtual Lot Aggregation'})</li>
+            <li>• {t.roleBuyer} ({t.roleBuyerSub || 'Bulk Procurement Contracts'})</li>
+            <li>• {t.roleHub} ({t.roleHubSub || 'CV Inspection & QR Tagging'})</li>
+            <li>• {t.roleTransporter} ({t.roleTransporterSub || 'OTP Dispatch Verification'})</li>
+            <li>• {t.roleAdmin} ({t.roleAdminSub || 'National Mandi Governance'})</li>
           </ul>
         </div>
 
         <div>
           <h4 className="font-bold text-amber-50 mb-3 text-sm flex items-center gap-2">
-            <Activity className="w-4 h-4 text-amber-400" /> हेल्पलाइन एवं सहायता
+            <Activity className="w-4 h-4 text-amber-400" /> {t.helplineTitle || 'हेल्पलाइन एवं सहायता'}
           </h4>
           <div className="p-3 bg-emerald-900/40 rounded-xl border border-emerald-800/40 text-xs space-y-1">
-            <p className="font-bold text-amber-300">किसान टोल-फ्री IVR हेल्पलाइन:</p>
+            <p className="font-bold text-amber-300">{t.helplineDesc || 'किसान टोल-फ्री IVR हेल्पलाइन'}:</p>
             <p className="text-sm font-mono text-amber-100 font-extrabold">1800-KISAN-AI (1800-54726-24)</p>
-            <p className="text-[11px] text-emerald-300/80">24x7 हिंदी एवं क्षेत्रीय भाषाओं में उपलब्ध</p>
+            <p className="text-[11px] text-emerald-300/80">{t.allIndiaLangs247 || '24x7 हिंदी एवं क्षेत्रीय भाषाओं में उपलब्ध'}</p>
           </div>
         </div>
       </div>
 
       <div className="w-full px-4 sm:px-8 lg:px-12 pt-6 border-t border-emerald-900/40 flex flex-col sm:flex-row items-center justify-between text-xs text-amber-200/50 gap-4">
-        <p>© 2026 KisanBandhan AI — Built for SIH 2026 PS 26033. All rights reserved.</p>
+        <p>© 2026 KisanBandhan AI — SIH 2026 PS 26033. All rights reserved.</p>
         <div className="flex gap-4">
-          <span className="hover:text-amber-200 cursor-pointer">नियम एवं शर्तें</span>
-          <span className="hover:text-amber-200 cursor-pointer">गोपनीयता नीति</span>
-          <span className="hover:text-amber-200 cursor-pointer">एग्रमार्कनेट एपीआई</span>
+          <span className="hover:text-amber-200 cursor-pointer">{t.appName}</span>
+          <span className="hover:text-amber-200 cursor-pointer">{t.translatorTitle || 'AI Translator'}</span>
+          <span className="hover:text-amber-200 cursor-pointer">Agmarknet API</span>
         </div>
       </div>
     </footer>
