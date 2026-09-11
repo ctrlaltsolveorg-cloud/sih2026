@@ -29,6 +29,8 @@ export async function POST(request: Request) {
         hi: result.hi,
         en: result.en,
         source: result.source,
+        confidence: result.confidence ?? 1.0,
+        matchedKey: result.matchedKey ?? text.trim(),
       });
     }
 
