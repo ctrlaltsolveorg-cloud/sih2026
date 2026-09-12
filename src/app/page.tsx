@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { getLocalizedCropName, getLocalizedCategory, getLocalizedGrade, getLocalizedLocation, getLocalizedFarmer } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { useCart } from '@/context/CartContext';
 import {
@@ -44,7 +45,7 @@ interface Listing {
 }
 
 export default function HomePage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { role, setRole } = useRole();
   const { addToCart } = useCart();
 
@@ -54,14 +55,14 @@ export default function HomePage() {
   const [selectedCropCategory, setSelectedCropCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Mandi live ticker items localized using current language dictionary
+  // Mandi live ticker items in authentic Hindi
   const tickerItems = [
-    { crop: t.tickerCrop1, price: `₹34.50/${t.pricePerKg}`, trend: '+4.2%' },
-    { crop: t.tickerCrop2, price: `₹28.00/${t.pricePerKg}`, trend: '+1.8%' },
-    { crop: t.tickerCrop3, price: `₹22.00/${t.pricePerKg}`, trend: '-0.5%' },
-    { crop: t.tickerCrop4, price: `₹38.00/${t.pricePerKg}`, trend: '+2.1%' },
-    { crop: t.tickerCrop5, price: `₹46.50/${t.pricePerKg}`, trend: '+0.9%' },
-    { crop: t.tickerCrop6, price: `₹140.00/${t.pricePerKg}`, trend: '+5.0%' },
+    { crop: 'टमाटर (उच्चतम श्रेणी A+)', price: '₹34.50/किग्रा', trend: '+4.2%' },
+    { crop: 'नाशिक लाल प्याज', price: '₹28.00/किग्रा', trend: '+1.8%' },
+    { crop: 'इन्दौर ज्योति आलू', price: '₹22.00/किग्रा', trend: '-0.5%' },
+    { crop: 'शरबाती प्रीमियम गेहूं', price: '₹38.00/किग्रा', trend: '+2.1%' },
+    { crop: 'पीला सोयाबीन', price: '₹46.50/किग्रा', trend: '+0.9%' },
+    { crop: 'देसी लहसुन', price: '₹140.00/किग्रा', trend: '+5.0%' },
   ];
 
   useEffect(() => {
@@ -195,13 +196,6 @@ export default function HomePage() {
     return true;
   });
 
-  const getCategoryLabel = (category: string) => {
-    if (category === 'सब्जियाँ') return t.categoryVeg;
-    if (category === 'कंदमूल') return t.categoryTubers;
-    if (category === 'अनाज') return t.categoryGrains;
-    return category;
-  };
-
   return (
     <div className="space-y-10">
       {/* Live Mandi Agmarknet Ticker */}
@@ -214,8 +208,8 @@ export default function HomePage() {
           <div className="animate-marquee whitespace-nowrap flex gap-8 text-xs">
             {tickerItems.concat(tickerItems).map((item, idx) => (
               <span key={idx} className="inline-flex items-center gap-2 font-medium">
-                <span className="text-amber-50">{item.crop}</span>
-                <span className="font-mono text-amber-300">{item.price}</span>
+                <span className="text-amber-50">{getLocalizedCropName(item.crop, language)}</span>
+                <span className="font-mono text-amber-300">{language === 'hi' ? item.price : item.price.replace('/किग्रा', '/kg')}</span>
                 <span className="text-emerald-400 text-[11px] font-bold">{item.trend}</span>
               </span>
             ))}
@@ -232,7 +226,7 @@ export default function HomePage() {
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-semibold">
               <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>{t.heroBadge}</span>
+              <span>SIH 2026 PS 26033 • किसान दिवस समर्पित प्रत्यक्ष कृषि मंच</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-extrabold text-amber-50 leading-tight">
@@ -254,30 +248,36 @@ export default function HomePage() {
 
               <div className="px-4 py-3 bg-emerald-950/80 border border-amber-500/30 rounded-xl text-xs text-amber-200 flex items-center gap-2.5 shadow-inner">
                 <PhoneCall className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>{t.tollFreeNotice}</span>
+                <span>
+                  <strong className="text-amber-300">टोल-फ्री IVR वॉयस हेल्पलाइन: 1800-KISAN-AI</strong> (कीपैड फोन फसल पंजीकरण)
+                </span>
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-5 grid grid-cols-2 gap-4">
             <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
-              <div className="text-3xl font-extrabold text-amber-400">{t.statMiddlemen}</div>
-              <div className="text-xs text-amber-200/80 font-medium">{t.statMiddlemenSub}</div>
+              <div className="text-3xl font-extrabold text-amber-400">0%</div>
+              <div className="text-xs text-amber-200/80 font-medium">{t.statMiddlemen}</div>
+              <p className="text-[10px] text-amber-300/60">{t.statMiddlemenDesc}</p>
             </div>
 
             <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
-              <div className="text-3xl font-extrabold text-emerald-400">{t.statCvGrading}</div>
-              <div className="text-xs text-amber-200/80 font-medium">{t.statCvGradingSub}</div>
+              <div className="text-3xl font-extrabold text-emerald-400">99.4%</div>
+              <div className="text-xs text-amber-200/80 font-medium">{t.statCVGrading}</div>
+              <p className="text-[10px] text-amber-300/60">{t.statCVGradingDesc}</p>
             </div>
 
             <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
-              <div className="text-3xl font-extrabold text-amber-400">{t.statAiEngines}</div>
-              <div className="text-xs text-amber-200/80 font-medium">{t.statAiEnginesSub}</div>
+              <div className="text-3xl font-extrabold text-amber-400">6 AI</div>
+              <div className="text-xs text-amber-200/80 font-medium">{t.statAIEngines}</div>
+              <p className="text-[10px] text-amber-300/60">{t.statAIEnginesDesc}</p>
             </div>
 
             <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
-              <div className="text-3xl font-extrabold text-emerald-400">{t.statIvrPhone}</div>
-              <div className="text-xs text-amber-200/80 font-medium">{t.statIvrPhoneSub}</div>
+              <div className="text-3xl font-extrabold text-emerald-400">IVR/SMS</div>
+              <div className="text-xs text-amber-200/80 font-medium">{t.statNoInternet}</div>
+              <p className="text-[10px] text-amber-300/60">{t.statNoInternetDesc}</p>
             </div>
           </div>
         </div>
@@ -288,7 +288,7 @@ export default function HomePage() {
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-emerald-950 flex items-center gap-2">
             <Layers className="w-5 h-5 text-amber-600" />
-            <span>{t.selectDashboard}</span>
+            <span>{t.selectDashboardTitle}</span>
           </h2>
           <span className="text-xs text-emerald-800/60">{t.integratedRolesCount}</span>
         </div>

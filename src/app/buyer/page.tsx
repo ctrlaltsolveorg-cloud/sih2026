@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import { getLocalizedFarmer, getLocalizedLocation, getLocalizedCropName } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { useCart } from '@/context/CartContext';
 import PortalGuard from '@/components/PortalGuard';
@@ -57,14 +58,14 @@ export default function BuyerDashboardPage() {
       farmer_name: 'रामेश्वर यादव',
       delivery_address: 'नासिक हब से पुणे प्रेषित',
       total_amount_paise: 4140000, // ₹41,400.00
-      status: 'in_transit',
+      status: 'परिवहन में',
     },
     {
       id: 302,
       farmer_name: 'सुरेश पाटिल',
       delivery_address: 'इन्दौर हब से सीधा पिकअप',
       total_amount_paise: 2250000, // ₹22,500.00
-      status: 'delivered',
+      status: 'सफलतापूर्वक हस्तांतरित',
     },
   ]);
 

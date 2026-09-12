@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import { getLocalizedCropName, getLocalizedGrade, getLocalizedLocation } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { useAuth } from '@/context/AuthContext';
 import PortalGuard from '@/components/PortalGuard';
@@ -52,7 +53,7 @@ import {
 } from 'lucide-react';
 
 export default function FarmerDashboardPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { userName } = useRole();
   const { user, verifyCredentials } = useAuth();
 

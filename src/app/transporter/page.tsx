@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { getLocalizedFarmer, getLocalizedLocation } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import PortalGuard from '@/components/PortalGuard';
 import { Truck, Navigation, Key, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 export default function TransporterDashboardPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { userName } = useRole();
 
   const [inputOtp, setInputOtp] = useState('');
@@ -43,11 +44,18 @@ export default function TransporterDashboardPage() {
 
   const handleVerifyOtpHandshake = () => {
     if (inputOtp === '4829' || inputOtp === '9103' || inputOtp.length === 4) {
-      setOtpSuccessMsg(`OTP ${inputOtp} verified! Handshake & dispatch authorized.`);
+      setOtpSuccessMsg(
+        language === 'hi'
+          ? `OTP ${inputOtp} सत्यापित! किसान से परिवहन प्रेषण (सुरक्षित हस्तांतरण) अधिकृत।`
+          : `OTP ${inputOtp} Verified! Farm transport dispatch (Escrow Handshake) authorized.`
+      );
       setInputOtp('');
-      confetti({ particleCount: 70, spread: 60 });
     } else {
-      setOtpSuccessMsg('Invalid OTP. Demo OTP: 4829');
+      setOtpSuccessMsg(
+        language === 'hi'
+          ? 'अमान्य OTP। डेमो पिकअप OTP: 4829 दर्ज करें।'
+          : 'Invalid OTP. Enter demo pickup OTP: 4829.'
+      );
     }
   };
 
@@ -69,13 +77,15 @@ export default function TransporterDashboardPage() {
         </div>
         <div>
           <span className="text-[10px] font-extrabold tracking-widest text-amber-400 uppercase bg-emerald-950 px-2.5 py-0.5 rounded-full border border-amber-400/20">
-            {t.transporterTitle}
+            {language === 'hi' ? 'प्रत्यक्ष रसद एवं परिवहन पोर्टल' : 'Direct Logistics & Fleet Portal'}
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
-            Green-Way Logistics Fleet
+            {language === 'hi' ? 'ग्रीन-वे लॉजिस्टिक्स पार्टनर' : 'Green-Way Logistics Fleet Partner'}
           </h1>
           <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
-            {userName} • {t.transporterSubtitle}
+            {language === 'hi'
+              ? `परिवहनकर्ता: ${userName} • AI मार्ग अनुकूलन और सुरक्षित OTP हस्तांतरण`
+              : `Transporter: ${userName} • AI Route Optimization & Secure OTP Handshake`}
           </p>
         </div>
       </div>
@@ -86,15 +96,19 @@ export default function TransporterDashboardPage() {
           <div className="flex items-center gap-3">
             <Navigation className="w-6 h-6 text-amber-400" />
             <div>
-              <h2 className="text-lg font-bold">{t.fleetMetricsTitle}</h2>
-              <p className="text-xs text-amber-200/70">{t.statAiEnginesSub}</p>
+              <h2 className="text-lg font-bold">
+                {language === 'hi' ? 'AI रसद एवं मल्टी-स्टॉप अनुकूलित मार्ग नियोजन' : 'AI Multi-Stop Route Optimizer Engine'}
+              </h2>
+              <p className="text-xs text-amber-200/70">
+                {language === 'hi' ? 'न्यूनतम दूरी, 0% भोजन खराबी, और ईंधन बचत दर' : 'Minimal transit distance, zero spoilage & optimal fuel rate'}
+              </p>
             </div>
           </div>
 
           <div className="flex items-center gap-4 text-xs font-bold bg-emerald-950/80 px-4 py-2 rounded-2xl border border-emerald-800">
-            <div>{t.distanceLabel}: <span className="text-amber-400">{routePlan.metrics.totalDistanceKm} km</span></div>
-            <div>{t.etaLabel}: <span className="text-amber-400">{routePlan.metrics.estimatedEtaMinutes} min</span></div>
-            <div>{t.fuelSavingsLabel}: <span className="text-emerald-400">+{routePlan.metrics.fuelSavingsPercent}%</span></div>
+            <div>{language === 'hi' ? 'दूरी: ' : 'Distance: '}<span className="text-amber-400">{routePlan.metrics.totalDistanceKm} {language === 'hi' ? 'किमी' : 'km'}</span></div>
+            <div>{language === 'hi' ? 'अनुमानित समय: ' : 'ETA: '}<span className="text-amber-400">{routePlan.metrics.estimatedEtaMinutes} {language === 'hi' ? 'मिनट' : 'mins'}</span></div>
+            <div>{language === 'hi' ? 'ईंधन बचत: ' : 'Fuel Saved: '}<span className="text-emerald-400">+{routePlan.metrics.fuelSavingsPercent}%</span></div>
           </div>
         </div>
 
@@ -108,20 +122,20 @@ export default function TransporterDashboardPage() {
                 </div>
                 <div>
                   <h3 className="font-extrabold text-sm text-amber-50">
-                    Order #{stop.orderId} • {t.colBuyer}: {stop.buyerName}
+                    {language === 'hi' ? 'ऑर्डर #' : 'Order #'}{stop.orderId} • {language === 'hi' ? 'खरीदार: ' : 'Buyer: '}{getLocalizedFarmer(stop.buyerName, language)}
                   </h3>
                   <p className="text-xs text-amber-200/70 mt-1">
-                    {t.locationLabel}: <strong>{stop.pickup}</strong> → <strong>{stop.dropoff}</strong>
+                    {language === 'hi' ? 'पिकअप स्थान: ' : 'Pickup Hub: '}<strong>{getLocalizedLocation(stop.pickup, language)}</strong> → {language === 'hi' ? 'डिलीवरी स्थान: ' : 'Delivery Hub: '}<strong>{getLocalizedLocation(stop.dropoff, language)}</strong>
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-2 text-xs">
                 <span className="px-2.5 py-1 bg-amber-500/20 text-amber-300 rounded-lg font-mono font-bold border border-amber-500/30">
-                  {t.pickupOtpLabel}: {stop.pickupOtp}
+                  {language === 'hi' ? 'पिकअप OTP: ' : 'Pickup OTP: '}{stop.pickupOtp}
                 </span>
                 <span className="px-2.5 py-1 bg-emerald-500/20 text-emerald-300 rounded-lg font-mono font-bold border border-emerald-500/30">
-                  {t.deliveryOtpLabel}: {stop.deliveryOtp}
+                  {language === 'hi' ? 'डिलीवरी OTP: ' : 'Delivery OTP: '}{stop.deliveryOtp}
                 </span>
               </div>
             </div>
@@ -132,7 +146,7 @@ export default function TransporterDashboardPage() {
         <div className="bg-emerald-950/90 p-5 rounded-2xl border border-emerald-800 space-y-3">
           <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
             <Key className="w-4 h-4" />
-            <span>{t.otpVerifyTitle}</span>
+            <span>{language === 'hi' ? 'सुरक्षित OTP हस्तांतरण प्रमाणीकरण (किसान / खरीदार OTP)' : 'Secure OTP Handshake Verification (Farmer / Buyer OTP)'}</span>
           </div>
 
           {otpSuccessMsg && (
@@ -147,14 +161,14 @@ export default function TransporterDashboardPage() {
               maxLength={4}
               value={inputOtp}
               onChange={(e) => setInputOtp(e.target.value)}
-              placeholder={t.otpVerifyPlaceholder}
+              placeholder={language === 'hi' ? '4-अंकीय OTP दर्ज करें (उदा. 4829)' : 'Enter 4-digit OTP (e.g. 4829)'}
               className="flex-1 px-3.5 py-2 bg-emerald-900 border border-emerald-700 rounded-xl text-xs text-amber-100 font-mono font-bold focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
             <button
               onClick={handleVerifyOtpHandshake}
               className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold rounded-xl text-xs shadow transition"
             >
-              {t.btnVerifyOtp}
+              {language === 'hi' ? 'सत्यापित करें' : 'Verify Handshake'}
             </button>
           </div>
         </div>

@@ -9,7 +9,6 @@ import CartDrawer from '@/components/CartDrawer';
 import AuthModal from '@/components/AuthModal';
 import IndiaTranslatorModal from '@/components/IndiaTranslatorModal';
 import Footer from '@/components/Footer';
-import IndiaTranslatorModal from '@/components/IndiaTranslatorModal';
 
 export const metadata: Metadata = {
   title: 'KisanBandhan AI — Kisan Diwas Direct Farm-to-Buyer Platform (SIH 2026)',
