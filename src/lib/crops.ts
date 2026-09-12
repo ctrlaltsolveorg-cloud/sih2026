@@ -12,6 +12,8 @@ export interface CropListingInput {
   farmerId?: string;
   farmerName?: string;
   imageUrl?: string;
+  images?: string[]; // 2 to 6 photos support
+  unit?: string;
 }
 
 /**
@@ -53,7 +55,7 @@ export function getCropsByFarmer(farmerId: string) {
  * Create a new crop listing with auto-AI translation & Supabase sync
  */
 export async function createCropListing(input: CropListingInput) {
-  const { cropName, quantityKg, priceRupees, grade, location, category, farmerId, farmerName, imageUrl } = input;
+  const { cropName, quantityKg, priceRupees, grade, location, category, farmerId, farmerName, imageUrl, images, unit } = input;
 
   if (!cropName) {
     throw new Error('Crop name is required');
@@ -69,7 +71,19 @@ export async function createCropListing(input: CropListingInput) {
   const harvestDate = new Date().toISOString().split('T')[0];
   const actualFarmerId = farmerId || 'u_farmer_1';
   const defaultImage = 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80';
-  const cropImage = imageUrl && imageUrl.trim().length > 0 ? imageUrl.trim() : defaultImage;
+  
+  // Format images: prioritize images array (2 to 6 photos), serialize to JSON or fallback to string
+  let finalImageList: string[] = [];
+  if (Array.isArray(images) && images.length > 0) {
+    finalImageList = images.filter((img) => typeof img === 'string' && img.trim().length > 0);
+  } else if (imageUrl && imageUrl.trim().length > 0) {
+    finalImageList = [imageUrl.trim()];
+  } else {
+    finalImageList = [defaultImage];
+  }
+
+  // Ensure image_url stores valid representation
+  const cropImage = finalImageList.length > 1 ? JSON.stringify(finalImageList) : finalImageList[0];
 
   // 1. Auto AI Translation & Cache
   await getOrFetchCropTranslation(cropName);
@@ -81,7 +95,7 @@ export async function createCropListing(input: CropListingInput) {
     crop_name: cropName,
     category: cat,
     quantity_available: qty,
-    unit: 'kg',
+    unit: unit || 'kg',
     price_paise: pricePaise,
     mandi_retail_price_paise: mandiPricePaise,
     grade: gradeVal,
@@ -152,7 +166,118 @@ export async function createCropListing(input: CropListingInput) {
     location: newListing.location,
     farmer_name: farmerName || 'Kisan Member',
     status: 'सत्यापित फसल',
+    imageUrl: cropImage,
+    images: finalImageList,
     supabaseStatus,
+  };
+}
+
+/**
+ * Update an existing crop listing by ID (supports all categories: Vegetables, Fruits, Pulses, Grains)
+ */
+export async function updateCropListing(input: {
+  id: string;
+  cropName?: string;
+  quantityKg?: number | string;
+  priceRupees?: number | string;
+  grade?: string;
+  location?: string;
+  category?: string;
+  images?: string[];
+  imageUrl?: string;
+  unit?: string;
+  isOrganic?: boolean | number;
+}) {
+  const { id, cropName, quantityKg, priceRupees, grade, location, category, images, imageUrl, unit, isOrganic } = input;
+  if (!id) {
+    throw new Error('Crop listing ID is required for update');
+  }
+
+  const db = getDb();
+  const updates: string[] = [];
+  const params: any[] = [];
+
+  if (cropName) {
+    updates.push('crop_name = ?');
+    params.push(cropName);
+    try {
+      await getOrFetchCropTranslation(cropName);
+    } catch (e) {}
+  }
+
+  if (category) {
+    updates.push('category = ?');
+    params.push(category);
+  }
+
+  if (quantityKg !== undefined) {
+    const qty = parseInt(String(quantityKg)) || 0;
+    updates.push('quantity_available = ?');
+    params.push(qty);
+  }
+
+  if (priceRupees !== undefined) {
+    const pricePaise = Math.round((parseFloat(String(priceRupees)) || 30) * 100);
+    updates.push('price_paise = ?');
+    params.push(pricePaise);
+    updates.push('mandi_retail_price_paise = ?');
+    params.push(Math.round(pricePaise * 1.25));
+  }
+
+  if (grade !== undefined) {
+    updates.push('grade = ?');
+    params.push(grade);
+  }
+
+  if (location !== undefined) {
+    updates.push('location = ?');
+    params.push(location);
+  }
+
+  if (unit !== undefined) {
+    updates.push('unit = ?');
+    params.push(unit);
+  }
+
+  if (isOrganic !== undefined) {
+    updates.push('organic_certified = ?');
+    params.push(isOrganic ? 1 : 0);
+  }
+
+  let finalImageList: string[] = [];
+  if (Array.isArray(images) && images.length > 0) {
+    finalImageList = images.filter((img) => typeof img === 'string' && img.trim().length > 0);
+  } else if (imageUrl && imageUrl.trim().length > 0) {
+    finalImageList = [imageUrl.trim()];
+  }
+
+  if (finalImageList.length > 0) {
+    const cropImage = finalImageList.length > 1 ? JSON.stringify(finalImageList) : finalImageList[0];
+    updates.push('image_url = ?');
+    params.push(cropImage);
+  }
+
+  if (updates.length > 0) {
+    params.push(id);
+    db.prepare(`UPDATE product_listings SET ${updates.join(', ')} WHERE id = ?`).run(...params);
+  }
+
+  // Supabase update sync
+  try {
+    const supaUpdate: any = {};
+    if (cropName) supaUpdate.crop_name = cropName;
+    if (category) supaUpdate.category = category;
+    if (quantityKg !== undefined) supaUpdate.quantity_available = parseInt(String(quantityKg));
+    if (priceRupees !== undefined) supaUpdate.price_paise = Math.round((parseFloat(String(priceRupees)) || 30) * 100);
+    if (grade) supaUpdate.grade = grade;
+    if (location) supaUpdate.location = location;
+    await supabase.from('product_listings').update(supaUpdate).eq('id', id);
+  } catch (e) {}
+
+  return {
+    success: true,
+    id,
+    message: 'Crop updated successfully',
   };
 }
 
@@ -175,3 +300,4 @@ export async function deleteCropListing(id: string) {
 
   return { success: true, id };
 }
+
