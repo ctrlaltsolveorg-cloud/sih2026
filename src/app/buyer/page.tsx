@@ -308,7 +308,7 @@ export default function BuyerDashboardPage() {
                 </span>
               </div>
               <h2 className="text-2xl font-extrabold text-emerald-950 mt-1">
-                {language === 'hi' ? 'ताज़ा कृषि उत्पाद बोर्ड (Bulma Responsive Cards)' : 'Live Produce Procurement Board'}
+                {language === 'hi' ? 'ताज़ा कृषि उत्पाद बोर्ड' : 'Live Produce Procurement Board'}
               </h2>
               <p className="text-xs text-emerald-800/70">
                 {language === 'hi'

@@ -1600,7 +1600,7 @@ export default function FarmerDashboardPage() {
             <div>
               <h3 className="font-extrabold text-xl text-emerald-950 flex items-center gap-2">
                 <TrendingUp className="w-5 h-5 text-amber-600" />
-                <span>{language === 'hi' ? 'मेरी पंजीकृत फसलें (Bulma Responsive Cards)' : 'My Registered Crops'}</span>
+                <span>{language === 'hi' ? 'मेरी पंजीकृत फसलें' : 'My Registered Crops'}</span>
               </h3>
               <p className="text-xs text-emerald-800/70">
                 {language === 'hi'

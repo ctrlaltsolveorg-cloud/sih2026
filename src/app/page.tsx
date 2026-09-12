@@ -413,12 +413,12 @@ export default function HomePage() {
             </div>
             <h2 className="text-2xl font-extrabold text-emerald-950 flex items-center gap-2 mt-1">
               <ShoppingBag className="w-6 h-6 text-amber-600" />
-              <span>{t.marketplaceTitle} (Bulma Responsive Cards)</span>
+              <span>{t.marketplaceTitle}</span>
             </h2>
             <p className="text-xs text-emerald-800/70">
               {language === 'hi'
-                ? 'ऊपर प्रोडक्ट नाम व लोगो, मध्य में किसान द्वारा डाली गई 2 से 6 तस्वीरें और नीचे संपूर्ण विवरण'
-                : 'Upper product name & side logo, middle 2 to 6 farmer-inserted photos, bottom niche details'}
+                ? 'आपकी फसल सफलतापूर्वक आपकी फसल सूची में जोड़ दी गई है और अब यह प्लेटफ़ॉर्म पर उपलब्ध है।'
+                : 'Your crop has been added successfully to your crop list and is now available on the platform.'}
             </p>
           </div>
 
