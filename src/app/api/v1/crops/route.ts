@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createCropListing, getAllCrops, getCropsByFarmer, deleteCropListing } from '@/lib/crops';
+import { createCropListing, getAllCrops, getCropsByFarmer, deleteCropListing, updateCropListing } from '@/lib/crops';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,6 +35,21 @@ export async function POST(request: Request) {
   }
 }
 
+export async function PUT(request: Request) {
+  try {
+    const body = await request.json();
+    const result = await updateCropListing(body);
+
+    return NextResponse.json({
+      success: true,
+      message: 'Crop updated successfully!',
+      crop: result,
+    });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+  }
+}
+
 export async function DELETE(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -57,3 +72,4 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
+

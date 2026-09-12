@@ -88,3 +88,135 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
 }
+
+/* ===================================================
+   Bulma Responsive Cards & Media Framework
+   =================================================== */
+.bulma-card {
+  background-color: #FFFFFF;
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 20px -2px rgba(15, 56, 38, 0.08), 0 2px 6px -1px rgba(15, 56, 38, 0.04);
+  border: 1px solid rgba(15, 56, 38, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bulma-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 30px -10px rgba(15, 56, 38, 0.14), 0 10px 10px -5px rgba(15, 56, 38, 0.04);
+  border-color: rgba(217, 119, 6, 0.4);
+}
+
+.bulma-card .card-header-custom {
+  padding: 1.25rem 1.25rem 0.75rem;
+  background: linear-gradient(180deg, rgba(250, 245, 235, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+  border-bottom: 1px solid rgba(15, 56, 38, 0.06);
+}
+
+.bulma-card .card-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  background: #0F3826;
+  overflow: hidden;
+}
+
+.bulma-card .card-content {
+  padding: 1.25rem;
+  flex-grow: 1;
+}
+
+.bulma-card .card-footer {
+  background-color: #FAFAF9;
+  border-top: 1px solid rgba(15, 56, 38, 0.08);
+  display: flex;
+  align-items: stretch;
+  padding: 0.75rem 1.25rem;
+}
+
+.bulma-media {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.bulma-media-left {
+  flex-shrink: 0;
+}
+
+.bulma-media-content {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.bulma-media-right {
+  flex-shrink: 0;
+}
+
+/* Bulma Tag styles */
+.bulma-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+}
+
+.bulma-tag.is-success-light {
+  background-color: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+}
+
+.bulma-tag.is-warning-dark {
+  background-color: #78350F;
+  color: #FEF3C7;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.bulma-tag.is-info-light {
+  background-color: #EFF6FF;
+  color: #1E40AF;
+  border: 1px solid #BFDBFE;
+}
+
+.bulma-tag.is-primary-dark {
+  background-color: #0F3826;
+  color: #FEF3C7;
+}
+
+/* Bulma Responsive Grid Columns */
+.bulma-columns {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -0.75rem;
+}
+
+.bulma-column {
+  padding: 0.75rem;
+  box-sizing: border-box;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+@media screen and (min-width: 768px) {
+  .bulma-column.is-half-tablet {
+    flex: none;
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .bulma-column.is-one-third-desktop {
+    flex: none;
+    width: 33.3333%;
+  }
+}
+
