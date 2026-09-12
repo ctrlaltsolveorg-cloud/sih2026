@@ -21,10 +21,10 @@ export function RoleProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
 
   const [role, setRoleState] = useState<UserRole>('FARMER');
-  const [userId, setUserId] = useState<string>('u_farmer_1');
-  const [userName, setUserName] = useState<string>('Ramesh Patil');
-  const [userPhone, setUserPhone] = useState<string>('9876543210');
-  const [fpoId, setFpoId] = useState<string | undefined>('fpo_nashik_1');
+  const [userId, setUserId] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
+  const [userPhone, setUserPhone] = useState<string>('');
+  const [fpoId, setFpoId] = useState<string | undefined>(undefined);
 
   // Sync role and user details with AuthContext whenever logged-in user changes
   useEffect(() => {
@@ -33,13 +33,18 @@ export function RoleProvider({ children }: { children: React.ReactNode }) {
       setUserId(user.id);
       setUserName(user.name);
       if (user.phone) setUserPhone(user.phone);
+    } else {
+      setUserId('');
+      setUserName('');
+      setUserPhone('');
+      setFpoId(undefined);
     }
   }, [user]);
 
   useEffect(() => {
     const savedRole = localStorage.getItem('kisanbandhan_role') as UserRole;
     if (savedRole && !user) {
-      setRole(savedRole);
+      setRoleState(savedRole);
     }
   }, [user]);
 
@@ -48,37 +53,10 @@ export function RoleProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('kisanbandhan_role', newRole);
 
     if (!user) {
-      if (newRole === 'FARMER') {
-        setUserId('u_farmer_1');
-        setUserName('Ramesh Patil');
-        setUserPhone('9876543210');
-        setFpoId('fpo_nashik_1');
-      } else if (newRole === 'FPO') {
-        setUserId('u_fpo_1');
-        setUserName('Sanjay Deshmukh');
-        setUserPhone('9876543219');
-        setFpoId('fpo_nashik_1');
-      } else if (newRole === 'BUYER') {
-        setUserId('u_buyer_2');
-        setUserName('Annapurna Hotel & Catering');
-        setUserPhone('9822233344');
-        setFpoId(undefined);
-      } else if (newRole === 'HUB_OPERATOR') {
-        setUserId('u_hub_1');
-        setUserName('Rajesh Kulkarni (Hub Supervisor)');
-        setUserPhone('9900088877');
-        setFpoId(undefined);
-      } else if (newRole === 'TRANSPORTER') {
-        setUserId('u_partner_1');
-        setUserName('Vikram Shinde Fleet');
-        setUserPhone('9900011122');
-        setFpoId(undefined);
-      } else if (newRole === 'ADMIN') {
-        setUserId('u_admin_1');
-        setUserName('Ministry Governance Admin');
-        setUserPhone('9000000000');
-        setFpoId(undefined);
-      }
+      setUserId('');
+      setUserName('');
+      setUserPhone('');
+      setFpoId(undefined);
     }
   };
 

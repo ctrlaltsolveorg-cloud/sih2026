@@ -7,7 +7,7 @@ import {
   TranslationSchema,
   SUPPORTED_LANGUAGES,
   LanguageMeta,
-  AGRI_PHRASE_DICTIONARY
+  AGRI_PHRASE_DICTIONARY,
 } from '@/lib/i18n';
 
 interface LanguageContextType {
@@ -23,13 +23,14 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('hi');
+  // Default language is English per user requirement
+  const [language, setLanguageState] = useState<Language>('en');
   const [isTranslatorOpen, setIsTranslatorOpen] = useState(false);
 
   // Load language preference from localStorage on mount
   useEffect(() => {
     try {
-      const savedLang = localStorage.getItem('kisan_selected_language') as Language | null;
+      const savedLang = (localStorage.getItem('kisan_selected_language') || localStorage.getItem('kisan_language')) as Language | null;
       if (savedLang && translations[savedLang]) {
         setLanguageState(savedLang);
       }
@@ -43,17 +44,18 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       setLanguageState(lang);
       try {
         localStorage.setItem('kisan_selected_language', lang);
+        localStorage.setItem('kisan_language', lang);
       } catch {
         // ignore
       }
     }
   };
 
-  // Safe translation resolver with fallback to Hindi then English
+  // Safe translation resolver with fallback to Hindi then English then selected language
   const t: TranslationSchema = {
-    ...translations.en,
     ...translations.hi,
-    ...translations[language],
+    ...translations.en,
+    ...(translations[language] || {}),
   };
 
   // Dynamic phrase translation helper

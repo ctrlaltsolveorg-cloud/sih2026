@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useRole } from '@/context/RoleContext';
-import { Layers, TrendingUp, CheckCircle2, Building2 } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import PortalGuard from '@/components/PortalGuard';
+import { Users, Layers, TrendingUp, CheckCircle2, Building2, Sparkles } from 'lucide-react';
 
 export default function FpoDashboardPage() {
   const { t } = useLanguage();
@@ -26,7 +26,16 @@ export default function FpoDashboardPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <PortalGuard
+      requiredRole="FPO"
+      portalName={language === 'hi' ? 'एफपीओ समूह पोर्टल (FPO Aggregator)' : 'FPO Aggregator'}
+      portalDescription={
+        language === 'hi'
+          ? 'यह पोर्टल केवल पंजीकृत एफपीओ समूह प्रबंधकों के लिए है जहाँ वे किसानों के उत्पादों को एकत्रित व सामूहिक सौदेबाज़ी कर सकते हैं।'
+          : 'This portal is restricted to registered FPO managers for pooling member farm yields and collective bargaining.'
+      }
+    >
+      <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center gap-4 bg-[#0F3826] text-amber-50 p-6 rounded-3xl shadow-xl border border-amber-500/20">
         <div className="p-3 bg-amber-500/20 rounded-2xl">
@@ -152,6 +161,22 @@ export default function FpoDashboardPage() {
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Green Pulse Success Signal Toast */}
+      {successSignal && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#0F3826] text-amber-50 px-5 py-3.5 rounded-2xl shadow-2xl border border-emerald-500/40 flex items-center gap-3 animate-bounce">
+          <div className="p-1.5 bg-emerald-500/20 text-emerald-400 rounded-full animate-pulse">
+            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+          </div>
+          <div>
+            <p className="text-xs font-extrabold text-emerald-300">
+              {language === 'hi' ? 'सफलतापूर्वक पुष्टित ✓' : 'Confirmed Successfully ✓'}
+            </p>
+            <p className="text-xs font-medium text-amber-100/90">{successSignal}</p>
+          </div>
+        </div>
+      )}
+      </div>
+    </PortalGuard>
   );
 }

@@ -2,7 +2,9 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { ShieldCheck, Sparkles, Activity } from 'lucide-react';
+import { getLocalizedFarmer } from '@/lib/i18n';
+import PortalGuard from '@/components/PortalGuard';
+import { ShieldCheck, Sparkles, Activity, FileText, CheckCircle2, TrendingUp } from 'lucide-react';
 
 export default function AdminPage() {
   const { t } = useLanguage();
@@ -43,7 +45,16 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <PortalGuard
+      requiredRole="ADMIN"
+      portalName={language === 'hi' ? 'राष्ट्रीय मंडी शासन (National Governance Admin)' : 'National Governance Admin'}
+      portalDescription={
+        language === 'hi'
+          ? 'यह पोर्टल केवल अधिकृत मंत्रालय एवं राष्ट्रीय मंडी नियामकों के लिए सुरक्षित है जहाँ MSP निगरानी और राष्ट्रव्यापी व्यापार ऑडिट होता है।'
+          : 'This portal is restricted to authorized Ministry and Governance Admins for MSP enforcement and national trade surveillance.'
+      }
+    >
+      <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center gap-4 bg-[#0F3826] text-amber-50 p-6 rounded-3xl shadow-xl border border-amber-500/20">
         <div className="p-3 bg-amber-500/20 rounded-2xl">
@@ -171,6 +182,7 @@ export default function AdminPage() {
           </table>
         </div>
       </div>
-    </div>
+      </div>
+    </PortalGuard>
   );
 }

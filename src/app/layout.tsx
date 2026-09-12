@@ -7,6 +7,7 @@ import { CartProvider } from '@/context/CartContext';
 import Navbar from '@/components/Navbar';
 import CartDrawer from '@/components/CartDrawer';
 import AuthModal from '@/components/AuthModal';
+import IndiaTranslatorModal from '@/components/IndiaTranslatorModal';
 import Footer from '@/components/Footer';
 import IndiaTranslatorModal from '@/components/IndiaTranslatorModal';
 
@@ -21,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="hi">
+    <html lang="en">
       <body className="antialiased selection:bg-amber-200 selection:text-emerald-950">
         <LanguageProvider>
           <AuthProvider>

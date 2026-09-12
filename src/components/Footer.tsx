@@ -18,13 +18,13 @@ export default function Footer() {
             <span>{t.appName}</span>
           </div>
           <p className="text-xs text-amber-200/70 leading-relaxed">
-            {t.footerMission}
+            {t.footerMission || `${t.subTitle}. Smart India Hackathon 2026 Problem Statement 26033 (Ministry of Consumer Affairs, Food & Public Distribution).`}
           </p>
         </div>
 
         <div>
           <h4 className="font-bold text-amber-50 mb-3 text-sm flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-amber-400" /> {t.aiEnginesCore}
+            <Cpu className="w-4 h-4 text-amber-400" /> {t.aiEnginesCore || 'AI इंजन कोर (6 AI Engines)'}
           </h4>
           <ul className="space-y-1.5 text-xs text-amber-200/70">
             <li>• Fair Price AI (Mandi MSP + Quality)</li>
@@ -38,26 +38,26 @@ export default function Footer() {
 
         <div>
           <h4 className="font-bold text-amber-50 mb-3 text-sm flex items-center gap-2">
-            <Shield className="w-4 h-4 text-emerald-400" /> {t.userRolesFooter}
+            <Shield className="w-4 h-4 text-emerald-400" /> {t.userRolesFooter || 'उपयोगकर्ता भूमिकाएं (6 Personas)'}
           </h4>
           <ul className="space-y-1.5 text-xs text-amber-200/70">
-            <li>• {t.roleFarmer} ({t.roleFarmerSub})</li>
-            <li>• {t.roleFPO} ({t.roleFPOSub})</li>
-            <li>• {t.roleBuyer} ({t.roleBuyerSub})</li>
-            <li>• {t.roleHub} ({t.roleHubSub})</li>
-            <li>• {t.roleTransporter} ({t.roleTransporterSub})</li>
-            <li>• {t.roleAdmin} ({t.roleAdminSub})</li>
+            <li>• {t.roleFarmer} ({t.roleFarmerSub || 'IVR/SMS + Fair Price'})</li>
+            <li>• {t.roleFPO} ({t.roleFPOSub || 'Virtual Lot Aggregation'})</li>
+            <li>• {t.roleBuyer} ({t.roleBuyerSub || 'Bulk Procurement Contracts'})</li>
+            <li>• {t.roleHub} ({t.roleHubSub || 'CV Inspection & QR Tagging'})</li>
+            <li>• {t.roleTransporter} ({t.roleTransporterSub || 'OTP Dispatch Verification'})</li>
+            <li>• {t.roleAdmin} ({t.roleAdminSub || 'National Mandi Governance'})</li>
           </ul>
         </div>
 
         <div>
           <h4 className="font-bold text-amber-50 mb-3 text-sm flex items-center gap-2">
-            <Activity className="w-4 h-4 text-amber-400" /> {t.helplineTitle}
+            <Activity className="w-4 h-4 text-amber-400" /> {t.helplineTitle || 'हेल्पलाइन एवं सहायता'}
           </h4>
           <div className="p-3 bg-emerald-900/40 rounded-xl border border-emerald-800/40 text-xs space-y-1">
-            <p className="font-bold text-amber-300">{t.helplineDesc}:</p>
+            <p className="font-bold text-amber-300">{t.helplineDesc || 'किसान टोल-फ्री IVR हेल्पलाइन'}:</p>
             <p className="text-sm font-mono text-amber-100 font-extrabold">1800-KISAN-AI (1800-54726-24)</p>
-            <p className="text-[11px] text-emerald-300/80">{t.allIndiaLangs247}</p>
+            <p className="text-[11px] text-emerald-300/80">{t.allIndiaLangs247 || '24x7 हिंदी एवं क्षेत्रीय भाषाओं में उपलब्ध'}</p>
           </div>
         </div>
       </div>
@@ -66,7 +66,7 @@ export default function Footer() {
         <p>© 2026 KisanBandhan AI — SIH 2026 PS 26033. All rights reserved.</p>
         <div className="flex gap-4">
           <span className="hover:text-amber-200 cursor-pointer">{t.appName}</span>
-          <span className="hover:text-amber-200 cursor-pointer">{t.translatorTitle}</span>
+          <span className="hover:text-amber-200 cursor-pointer">{t.translatorTitle || 'AI Translator'}</span>
           <span className="hover:text-amber-200 cursor-pointer">Agmarknet API</span>
         </div>
       </div>

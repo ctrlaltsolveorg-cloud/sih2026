@@ -34,6 +34,7 @@ export const SUPPORTED_LANGUAGES: LanguageMeta[] = [
 ];
 
 export interface TranslationSchema {
+
   // Navigation & General
   appName: string;
   subTitle: string;
@@ -276,6 +277,68 @@ export interface TranslationSchema {
   statusAvailable: string;
   statusInTransit: string;
   statusDelivered: string;
+  // Keys from main / dashboard portals
+  agmarknetConnected?: string;
+  aiAnalyzing?: string;
+  buyerActiveOrdersHeader?: string;
+  buyerHeaderBadge?: string;
+  buyerHeaderSub?: string;
+  buyerPostReqBtn?: string;
+  buyerRecurringContractsHeader?: string;
+  buyerStatActiveOrders?: string;
+  buyerStatFPOGuarantee?: string;
+  buyerStatGPSLogistics?: string;
+  buyerStatMandiSavings?: string;
+  buyerStatRecurringContracts?: string;
+  buyerStatTotalPurchase?: string;
+  buyerWelcome?: string;
+  cvGradingTitle?: string;
+  farmerAddNewCrop?: string;
+  farmerBadge?: string;
+  fpoAcceptCommitmentBtn?: string;
+  fpoFulfilledPercent?: string;
+  fpoHeaderBadge?: string;
+  fpoHeaderSub?: string;
+  fpoLockLotBtn?: string;
+  fpoLotLockedStatus?: string;
+  fpoSectionBuyerReqs?: string;
+  fpoSectionVirtualLots?: string;
+  fpoStatBargaining?: string;
+  fpoStatBuyerReqs?: string;
+  fpoStatMembersIncluded?: string;
+  fpoStatReadySupply?: string;
+  fpoStatTotalSupply?: string;
+  fpoStatVirtualLots?: string;
+  gradeResults?: string;
+  helplineText?: string;
+  ivrGuideHeader?: string;
+  ivrGuideSub?: string;
+  keypad1Desc?: string;
+  keypad1Sub?: string;
+  keypad1Title?: string;
+  keypad2Desc?: string;
+  keypad2Sub?: string;
+  keypad2Title?: string;
+  keypad3Desc?: string;
+  keypad3Sub?: string;
+  keypad3Title?: string;
+  myRegisteredCrops?: string;
+  qrGenerated?: string;
+  selectDashboardTitle?: string;
+  statAIEngines?: string;
+  statAIEnginesDesc?: string;
+  statActiveListings?: string;
+  statCVGrading?: string;
+  statCVGradingDesc?: string;
+  statEarnedIncome?: string;
+  statEscrowProtected?: string;
+  statMiddlemenDesc?: string;
+  statNoInternet?: string;
+  statNoInternetDesc?: string;
+  statSmartContracts?: string;
+  statVerifiedByAI?: string;
+  statZeroCommission?: string;
+  uploadPrompt?: string;
 }
 
 export const translations: Record<Language, TranslationSchema> = {
@@ -522,6 +585,67 @@ export const translations: Record<Language, TranslationSchema> = {
     statusAvailable: "उपलब्ध",
     statusInTransit: "परिवहन में",
     statusDelivered: "सफलतापूर्वक हस्तांतरित",
+    agmarknetConnected: "एगमार्कनेट AI मंडी से जुड़ा",
+    aiAnalyzing: "AI गुणवत्ता विश्लेषण जारी है...",
+    buyerActiveOrdersHeader: "आपके सक्रिय ऑर्डर एवं लाइव ट्रैकिंग",
+    buyerHeaderBadge: "प्रत्यक्ष खरीदार पोर्टल",
+    buyerHeaderSub: "कंप्यूटर विज़न प्रमाणित ताज़ी फसलें — बिचौलियों के बिना प्रत्यक्ष खरीद",
+    buyerPostReqBtn: "+ थोक आवश्यकता प्रस्ताव भेजें",
+    buyerRecurringContractsHeader: "आवर्ती फार्म आपूर्ति अनुबंध (स्मार्ट अनुबंध)",
+    buyerStatActiveOrders: "सक्रिय ऑर्डर",
+    buyerStatFPOGuarantee: "सहयाद्री FPO गारंटीकृत",
+    buyerStatGPSLogistics: "GPS लाइव रसद ट्रैकिंग",
+    buyerStatMandiSavings: "38% मंडी लागत बचत",
+    buyerStatRecurringContracts: "आवर्ती फार्म आपूर्ति अनुबंध",
+    buyerStatTotalPurchase: "कुल खरीद मूल्य",
+    buyerWelcome: "नमस्ते",
+    cvGradingTitle: "कंप्यूटर विज़न AI फसल गुणवत्ता परीक्षण",
+    farmerAddNewCrop: "नयी फसल दर्ज करें",
+    farmerBadge: "प्रत्यक्ष किसान पोर्टल • 0% मध्यस्थ कमीशन",
+    fpoAcceptCommitmentBtn: "आपूर्ति प्रतिबद्धता स्वीकार करें",
+    fpoFulfilledPercent: "पूर्ति की गई मात्रा",
+    fpoHeaderBadge: "एफपीओ वर्चुअल लॉट एकत्रीकरण केंद्र",
+    fpoHeaderSub: "प्रबंधक: Sanjay Deshmukh • 142 सदस्य किसान एकत्रित (सामूहिक सौदेबाजी क्षमता)",
+    fpoLockLotBtn: "लॉट सुरक्षित करें एवं मांग प्रस्ताव भेजें",
+    fpoLotLockedStatus: "लॉट सुरक्षित एवं प्रेषित",
+    fpoSectionBuyerReqs: "थोक खरीदार मांग प्रस्ताव",
+    fpoSectionVirtualLots: "वर्चुअल एकत्रित फसल लॉट",
+    fpoStatBargaining: "+42% बेहतर मूल्य सौदेबाज़ी",
+    fpoStatBuyerReqs: "संस्थागत मांग प्रस्ताव",
+    fpoStatMembersIncluded: "86 सदस्य किसान शामिल हैं",
+    fpoStatReadySupply: "प्रत्यक्ष आपूर्ति हेतु तैयार",
+    fpoStatTotalSupply: "कुल एफपीओ एकत्रित आपूर्ति",
+    fpoStatVirtualLots: "सक्रिय वर्चुअल लॉट",
+    gradeResults: "गुणवत्ता परीक्षण परिणाम:",
+    helplineText: "टोल-फ्री IVR वॉयस हेल्पलाइन: 1800-KISAN-AI (कीपैड फोन फसल पंजीकरण)",
+    ivrGuideHeader: "टोल-फ्री IVR वॉयस सेवा निर्देशिका (1800-KISAN-AI)",
+    ivrGuideSub: "बिना इंटरनेट वाले साधारण कीपैड फोन से फसल दर्ज करने हेतु निःशुल्क हेल्पलाइन निर्देश",
+    keypad1Desc: "टोल-फ्री नंबर पर 1 दबाकर अपनी फसल और मात्रा वॉयस मैसेज द्वारा दर्ज करें।",
+    keypad1Sub: "फसल बिक्री पंजीकरण",
+    keypad1Title: "कीपैड बटन 1",
+    keypad2Desc: "टोल-फ्री नंबर पर 2 दबाकर अपने निकटतम मंडी का रीयल-टाइम AI न्यूनतम समर्थन मूल्य सुनें।",
+    keypad2Sub: "सद्य मंडी भाव (Agmarknet)",
+    keypad2Title: "कीपैड बटन 2",
+    keypad3Desc: "टोल-फ्री नंबर पर 3 दबाकर अपने बैंक खाते और लंबित प्रत्यक्ष भुगतान की स्थिति जानें।",
+    keypad3Sub: "खाता शेष एवं एस्क्रौ स्टेटस",
+    keypad3Title: "कीपैड बटन 3",
+    myRegisteredCrops: "आपकी पंजीकृत फसलें",
+    qrGenerated: "हब QR लेबल तैयार किया गया",
+    selectDashboardTitle: "उपयोगकर्ता डैशबोर्ड का चयन करें",
+    statAIEngines: "स्मार्ट कृषि इंजन",
+    statAIEnginesDesc: "न्यायसंगत मूल्य + रसद",
+    statActiveListings: "सक्रिय बाज़ार फसलें",
+    statCVGrading: "कंप्यूटर विज़न ग्रेडिंग",
+    statCVGradingDesc: "FSSAI प्रमाणीकरण",
+    statEarnedIncome: "कुल प्रत्यक्ष अर्जित आय",
+    statEscrowProtected: "सुरक्षित एस्क्रौ भुगतान",
+    statMiddlemenDesc: "प्रत्यक्ष किसान एस्क्रौ",
+    statNoInternet: "बिना इंटरनेट सहायता",
+    statNoInternetDesc: "कीपैड फोन सेवा",
+    statSmartContracts: "प्राप्त स्मार्ट अनुबंध",
+    statVerifiedByAI: "Fair Price AI द्वारा सत्यापित",
+    statZeroCommission: "शून्य कमीशन",
+    uploadPrompt: "फसल की फोटो अपलोड करें (या AI परीक्षण चलाएं)",
   },
 
   en: {
@@ -767,6 +891,67 @@ export const translations: Record<Language, TranslationSchema> = {
     statusAvailable: "Available",
     statusInTransit: "In Transit",
     statusDelivered: "Delivered",
+    agmarknetConnected: "Agmarknet AI Mandi Connected",
+    aiAnalyzing: "AI Model Analyzing Defect Ratio & Color Standard...",
+    buyerActiveOrdersHeader: "Your Active Orders & Live Tracking",
+    buyerHeaderBadge: "Direct Buyer Portal",
+    buyerHeaderSub: "Computer Vision Certified Fresh Crops — Direct Purchase Without Middlemen",
+    buyerPostReqBtn: "+ Post Bulk Demand Request",
+    buyerRecurringContractsHeader: "Recurring Farm Supply Contracts (Smart Contracts)",
+    buyerStatActiveOrders: "Active Orders",
+    buyerStatFPOGuarantee: "Sahyadri FPO Guaranteed",
+    buyerStatGPSLogistics: "GPS Live Logistics Tracking",
+    buyerStatMandiSavings: "38% Mandi Cost Savings",
+    buyerStatRecurringContracts: "Recurring Farm Supply Contracts",
+    buyerStatTotalPurchase: "Total Purchase Value",
+    buyerWelcome: "Welcome",
+    cvGradingTitle: "Computer Vision AI Quality Grading",
+    farmerAddNewCrop: "+ Register New Crop",
+    farmerBadge: "Direct Farmer Portal • 0% Middleman Commission",
+    fpoAcceptCommitmentBtn: "Accept Supply Commitment",
+    fpoFulfilledPercent: "Fulfilled Quantity",
+    fpoHeaderBadge: "FPO Virtual Lot Aggregation Center",
+    fpoHeaderSub: "Manager: Sanjay Deshmukh • 142 Member Farmers Pooled (Collective Bargaining Power)",
+    fpoLockLotBtn: "Lock Lot & Send Demand Offer",
+    fpoLotLockedStatus: "Lot Secured & Dispatched",
+    fpoSectionBuyerReqs: "Bulk Buyer Demand Requests",
+    fpoSectionVirtualLots: "Virtual Aggregated Crop Lots",
+    fpoStatBargaining: "+42% Better Price Bargaining",
+    fpoStatBuyerReqs: "Institutional Buyer Requests",
+    fpoStatMembersIncluded: "86 Member Farmers Included",
+    fpoStatReadySupply: "Ready for Direct Supply",
+    fpoStatTotalSupply: "Total FPO Aggregated Supply",
+    fpoStatVirtualLots: "Active Virtual Lots",
+    gradeResults: "Quality Inspection Result:",
+    helplineText: "Toll-Free IVR Voice Helpline: 1800-KISAN-AI (Keypad Phone Crop Registration)",
+    ivrGuideHeader: "Toll-Free IVR Voice Service Directory (1800-KISAN-AI)",
+    ivrGuideSub: "Helpline instructions for registering crops using standard keypad feature phones without internet",
+    keypad1Desc: "Press 1 on toll-free call to record your crop type and quantity via voice message.",
+    keypad1Sub: "Crop Sale Registration",
+    keypad1Title: "Keypad Button 1",
+    keypad2Desc: "Press 2 on toll-free call to hear real-time AI minimum support price for your nearest mandi.",
+    keypad2Sub: "Live Mandi Rates (Agmarknet)",
+    keypad2Title: "Keypad Button 2",
+    keypad3Desc: "Press 3 on toll-free call to check your bank account balance and pending payout status.",
+    keypad3Sub: "Account Balance & Escrow Status",
+    keypad3Title: "Keypad Button 3",
+    myRegisteredCrops: "Your Registered Crops",
+    qrGenerated: "Hub QR Tag Generated",
+    selectDashboardTitle: "Select User Dashboard Persona",
+    statAIEngines: "Smart Agri Engines",
+    statAIEnginesDesc: "Fair Price + Logistics",
+    statActiveListings: "Active Market Listings",
+    statCVGrading: "Computer Vision Grading",
+    statCVGradingDesc: "FSSAI Certification",
+    statEarnedIncome: "Total Direct Earned Income",
+    statEscrowProtected: "Protected Escrow Payment",
+    statMiddlemenDesc: "Direct Farmer Escrow",
+    statNoInternet: "No Internet Assistance",
+    statNoInternetDesc: "Keypad Phone Service",
+    statSmartContracts: "Smart Contracts Executed",
+    statVerifiedByAI: "Verified by Fair Price AI",
+    statZeroCommission: "Zero Commission",
+    uploadPrompt: "Upload produce photo (or run AI Simulation)",
   },
 
   pa: {
@@ -2840,6 +3025,74 @@ export const translations: Record<Language, TranslationSchema> = {
   },
 };
 
+export const AGRI_PHRASE_DICTIONARY: Record<string, Record<Language, string>> = {
+  "what is today's wholesale mandi price for tomatoes?": {
+    hi: "आज नासिक मंडी में टमाटर का थोक भाव क्या है?",
+    en: "What is today's wholesale mandi price for tomatoes?",
+    pa: "ਅੱਜ ਮੰਡੀ ਵਿੱਚ ਟਮਾਟਰ ਦਾ ਥੋਕ ਭਾਅ ਕੀ ਹੈ?",
+    mr: "आज नाशिक बाजारात टोमॅटोचा घाऊक भाव काय आहे?",
+    gu: "આજે નાસિક મંડીમાં ટામેટાંનો જથ્થાબંધ ભાવ શું છે?",
+    bn: "আজ নাসিক মান্ডিতে টমেটোর পাইকারি দর কত?",
+    te: "ఈరోజు నాసిక్ మార్కెట్‌లో ಟಮೊಟాల టోకు ధర ఎంత?",
+    ta: "இன்று நாசிக் சந்தையில் தக்காளியின் மொத்த விலை என்ன?",
+    kn: "ಇಂದು ನಾಸಿಕ್ ಮಂಡಿಯಲ್ಲಿ ಟೊಮೆಟೊ ಸಗಟು ಬೆಲೆ ಎಷ್ಟು?",
+    ml: "ഇന്ന് നാസിക് മാണ്ഡിയിൽ തക്കാളിയുടെ മൊത്തവില എത്രയാണ്?",
+    or: "ଆଜି ନାସିକ ମଣ୍ଡିରେ ଟମାଟୋର ପାଇକାରୀ ଦର କେତେ?",
+  },
+  "produce inspected with computer vision ai and graded a+.": {
+    hi: "फसल कंप्यूटर विज़न AI द्वारा प्रमाणित और ग्रेड A+ है।",
+    en: "Produce inspected with Computer Vision AI and graded A+.",
+    pa: "ਫਸਲ ਕੰਪਿਊਟਰ ਵਿਜ਼ਨ AI ਦੁਆਰਾ ਪ੍ਰਮਾਣਿਤ ਅਤੇ ਗ੍ਰੇਡ A+ ਹੈ।",
+    mr: "शेतमाल संगणक दृष्टी AI द्वारे तपासला असून ग्रेड A+ आहे.",
+    gu: "પાક કમ્પ્યુટર વિઝન AI દ્વારા પ્રમાણિત અને ગ્રેડ A+ છે.",
+    bn: "ফসল কম্পিউটার ভিশন AI দ্বারা যাচাইকৃত এবং গ্রেড A+।",
+    te: "పంట కంప్యూటర్ విజన్ AI ద్వారా ధృవీకరించబడింది మరియు గ్రేడ్ A+ పొందింది.",
+    ta: "பயிர் கம்ப்யூட்டர் விஷன் AI மூலம் ஆய்வு செய்யப்பட்டு தரம் A+ பெற்றது.",
+    kn: "ಬೆಳೆಯನ್ನು ಕಂಪ್ಯೂಟರ್ ವಿಷನ್ AI ಮೂಲಕ ತಪಾಸಣೆ ಮಾಡಿ ಗ್ರೇಡ್ A+ ನೀಡಲಾಗಿದೆ.",
+    ml: "വിള കമ്പ്യൂട്ടർ വിഷൻ AI പരിശോധിച്ച് ഗ്രേഡ് A+ നൽകി.",
+    or: "ଫସଲ କମ୍ପ୍ୟୁଟର ଭିଜନ AI ଦ୍ୱାରା ଯାଞ୍ଚ କରାଯାଇ ଗ୍ରେଡ୍ A+ ପାଇଛି।",
+  },
+  "smart contract payment securely deposited in farmer escrow.": {
+    hi: "स्मार्ट अनुबंध भुगतान सुरक्षित रूप से किसान एस्क्रौ में जमा है।",
+    en: "Smart contract payment securely deposited in farmer escrow.",
+    pa: "ਸਮਾਰਟ ਇਕਰਾਰਨਾਮੇ ਦਾ ਭੁਗਤਾਨ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਕਿਸਾਨ ਐਸਕਰੋ ਵਿੱਚ ਜਮ੍ਹਾਂ ਹੈ।",
+    mr: "स्मार्ट कराराचे पैसे शेतकरी एस्क्रॉ खात्यात सुरक्षित जमा आहेत.",
+    gu: "સ્માર્ટ કરારની ચુકવણી સુરક્ષિત રીતે ખેડૂત એસ્ક્રોમાં જમા છે.",
+    bn: "স্মার্ট চুক্তির অর্থ কৃষক এসক্রো অ্যাকাউন্টে নিরাপদে জমা আছে।",
+    te: "స్మార్ట్ ఒప్పంద చెల్లింపు రైతు ఎస్క్రో ఖాతాలో సురక్షితంగా జమ చేయబడింది.",
+    ta: "ஸ்மார்ட் ஒப்பந்தத் தொகை விவசாயி எஸ்க்ரோ கணக்கில் பாதுகாப்பாக டெபாசிட் செய்யப்பட்டுள்ளது.",
+    kn: "ಸ್ಮಾರ್ಟ್ ಒಪ್ಪಂದ ಪಾವತಿ ಸುರಕ್ಷಿತವಾಗಿ ರೈತ ಎಸ್ಕ್ರೋ ಖಾತೆಯಲ್ಲಿ ಜಮೆಯಾಗಿದೆ.",
+    ml: "സ്മാർട്ട് കരാർ തുക കർഷകന്റെ എസ്ക്രോ അക്കൗണ്ടിൽ സുരക്ഷിതമായി നിക്ഷേപിച്ചിട്ടുണ്ട്.",
+    or: "ସ୍ମାର୍ଟ ଚୁକ୍ତିନାମାର ଅର୍ଥ କୃଷକ ଏସ୍କ୍ରୋ ଆକାଉଣ୍ଟରେ ସୁରକ୍ଷିତ ଜମା ଅଛି।",
+  },
+  "present otp 4829 at the collection hub for vehicle pickup.": {
+    hi: "वाहन पिकअप के लिए हब पर 4829 OTP प्रस्तुत करें।",
+    en: "Present OTP 4829 at the collection hub for vehicle pickup.",
+    pa: "ਗੱਡੀ ਪਿਕਅੱਪ ਲਈ ਹੱਬ ਉੱਤੇ 4829 OTP ਪੇਸ਼ ਕਰੋ।",
+    mr: "वाहन पिकअपसाठी संकलन हबवर ४८२९ OTP सादर करा.",
+    gu: "વાહન પિકઅપ માટે હબ પર 4829 OTP રજૂ કરો.",
+    bn: "যানবাহন পিকআপের জন্য হাবে 4829 OTP পেশ করুন।",
+    te: "వాహనం పికప్ కోసం సేకరణ హబ్‌లో 4829 OTP ని సమర్పించండి.",
+    ta: "வாகன பிக்கப்பிற்கு மையத்தில் 4829 OTP ஐக் காட்டவும்.",
+    kn: "ವಾಹನ ಪಿಕಪ್‌ಗಾಗಿ ಸಂಗ್ರಹಣಾ ಹಬ್‌ನಲ್ಲಿ 4829 OTP ಅನ್ನು ಪ್ರಸ್ತುತಪಡಿಸಿ.",
+    ml: "വാഹനം പിക്കപ്പിനായി ഹബ്ബിൽ 4829 OTP ഹാജരാക്കുക.",
+    or: "ଗାଡି ପିକଅପ୍ ପାଇଁ ହବ୍‌ରେ 4829 OTP ଦାଖଲ କରନ୍ତୁ।",
+  },
+  "virtual pool of 500kg wheat formed under fpo cooperative.": {
+    hi: "एफपीओ समूह में 500 किग्रा गेहूं का वर्चुअल पूल बनाया गया।",
+    en: "Virtual pool of 500kg wheat formed under FPO cooperative.",
+    pa: "ਐਫਪੀਓ ਸਮੂਹ ਵਿੱਚ 500 ਕਿੱਲੋ ਕਣਕ ਦਾ ਵਰਚੁਅਲ ਪੂਲ ਬਣਾਇਆ ਗਿਆ।",
+    mr: "एफपीओ समूहात ५०० किलो गव्हाचा व्हर्च्युअल पूल तयार करण्यात आला.",
+    gu: "FPO જૂથમાં ૫૦૦ કિલો ઘઉંનો વર્ચ્યુઅલ પૂલ બનાવવામાં આવ્યો.",
+    bn: "এফপিও গ্রুপে ৫০০ কেজি গমের ভার্চুয়াল পুল তৈরি করা হয়েছে।",
+    te: "FPO సమూహంలో 500 కిలోల గోధుಮల వర్చుವಲ್ పూల్ సృష్టించబడింది.",
+    ta: "FPO குழுவில் 500 கிலோ கோதுமை விர்ச்சுவல் பூல் உருவாக்கப்பட்டது.",
+    kn: "FPO ಗುಂಪಿನಲ್ಲಿ 500 ಕೆಜಿ ಗೋಧಿ ವರ್ಚುವಲ್ ಪೂಲ್ ರಚಿಸಲಾಗಿದೆ.",
+    ml: "FPO ഗ്രൂപ്പിൽ 500 കിലോ ഗോതമ്പ് വെർച്വൽ പൂൾ രൂപീകരിച്ചു.",
+    or: "FPO ଗ୍ରୁପ୍‌ରେ ୫୦୦ କିଲୋ ଗହମର ଭର୍ଚୁଆଲ୍ ପୁଲ୍ ତିଆରି ହୋଇଛି।",
+  },
+};
+
 export const cropTranslations: Record<string, { hi: string; en: string }> = {
   Tomato: { hi: 'टमाटर', en: 'Tomato' },
   Tomatoes: { hi: 'टमाटर', en: 'Tomatoes' },
@@ -2927,3 +3180,403 @@ export const AGRI_PHRASE_DICTIONARY: Record<string, Record<Language, string>> = 
     or: "FPO ଗ୍ରୁପ୍‌ରେ ୫୦୦ କିଲୋ ଗହମର ଭର୍ଚୁଆଲ୍ ପୁଲ୍ ତିଆରି ହୋଇଛି।",
   },
 };
+
+export const farmerTranslations: Record<string, { hi: string; en: string }> = {
+  'रामेश्वर यादव': { hi: 'रामेश्वर यादव', en: 'Rameshwar Yadav' },
+  'सहयाद्री किसान FPO समूह': { hi: 'सहयाद्री किसान FPO समूह', en: 'Sahyadri Farmers FPO Group' },
+  'सहयाद्री किसान FPO': { hi: 'सहयाद्री किसान FPO', en: 'Sahyadri Farmers FPO' },
+  'सुरेश पाटिल': { hi: 'सुरेश पाटिल', en: 'Suresh Patil' },
+  'कविता चौधरी': { hi: 'कविता चौधरी', en: 'Kavita Choudhary' },
+  'मालवा कृषक FPO': { hi: 'मालवा कृषक FPO', en: 'Malwa Krishak FPO' },
+  'हनुमान सहाय': { hi: 'हनुमान सहाय', en: 'Hanuman Sahay' },
+  'Ramesh Patil': { hi: 'रामेश पाटिल', en: 'Ramesh Patil' },
+  'Harpreet Singh': { hi: 'हरप्रीत सिंह', en: 'Harpreet Singh' },
+  'अन्नपूर्णा होटल एवं कैटरिंग सेवा': { hi: 'अन्नपूर्णा होटल एवं कैटरिंग सेवा', en: 'Annapurna Hotel & Catering Services' },
+  'अन्नपूर्णा पुणे (खरीदार)': { hi: 'अन्नपूर्णा पुणे (खरीदार)', en: 'Annapurna Pune (Buyer)' },
+  'मदर डेयरी एग्री': { hi: 'मदर डेयरी एग्री', en: 'Mother Dairy Agri' },
+  'मदर डेयरी फ्रेश': { hi: 'मदर डेयरी फ्रेश', en: 'Mother Dairy Fresh' },
+  'रिलायंस रिटेल एग्री': { hi: 'रिलायंस रिटेल एग्री', en: 'Reliance Retail Agri' },
+  'रिलायंस रिटेल फूड्स': { hi: 'रिलायंस रिटेल फूड्स', en: 'Reliance Retail Foods' },
+  'बिगबास्केट थोक खरीद': { hi: 'बिगबास्केट थोक खरीद', en: 'BigBasket Wholesale' },
+};
+
+export const categoryTranslations: Record<string, { hi: string; en: string }> = {
+  'सब्जियाँ': { hi: 'सब्जियाँ', en: 'Vegetables' },
+  'कंदमूल': { hi: 'कंदमूल', en: 'Root Crops' },
+  'अनाज': { hi: 'अनाज', en: 'Grains' },
+  'Vegetables': { hi: 'सब्जियाँ', en: 'Vegetables' },
+  'Fruits': { hi: 'फल', en: 'Fruits' },
+  'Grains': { hi: 'अनाज', en: 'Grains' },
+  'Pulses': { hi: 'दालें', en: 'Pulses' },
+  'Spices': { hi: 'मसाले', en: 'Spices' },
+  'All': { hi: 'सभी', en: 'All' },
+};
+
+export const gradeTranslations: Record<string, { hi: string; en: string }> = {
+  'उच्चतम श्रेणी A+': { hi: 'उच्चतम श्रेणी A+', en: 'Grade A+ Premium' },
+  'श्रेणी A': { hi: 'श्रेणी A', en: 'Grade A' },
+  'ग्रेड A+': { hi: 'ग्रेड A+', en: 'Grade A+' },
+  'ग्रेड A': { hi: 'ग्रेड A', en: 'Grade A' },
+  'निर्यात श्रेणी': { hi: 'निर्यात श्रेणी', en: 'Export Grade' },
+  'Grade A Premium': { hi: 'ग्रेड A प्रीमियम', en: 'Grade A Premium' },
+  'Grade A': { hi: 'ग्रेड A', en: 'Grade A' },
+  'Grade A+ Export Quality': { hi: 'ग्रेड A+ निर्यात गुणवत्ता', en: 'Grade A+ Export Quality' },
+  'Grade A Ultra': { hi: 'ग्रेड A अल्ट्रा', en: 'Grade A Ultra' },
+  'Grade A+': { hi: 'ग्रेड A+', en: 'Grade A+' },
+};
+
+// AI Token Map for Word-by-Word Substring & Transliteration Translation
+const tokenMap: Record<string, { hi: string; en: string }> = {
+  'मक्का': { hi: 'मक्का', en: 'Maize (Corn)' },
+  'मकई': { hi: 'मक्का', en: 'Corn / Maize' },
+  'corn': { hi: 'मक्का', en: 'Corn' },
+  'maize': { hi: 'मक्का', en: 'Maize' },
+  'sweetcorn': { hi: 'स्वीट कॉर्न', en: 'Sweet Corn' },
+  'makka': { hi: 'मक्का', en: 'Maize (Corn)' },
+  'makkai': { hi: 'मक्का', en: 'Maize (Corn)' },
+  'धान': { hi: 'धान', en: 'Paddy' },
+  'चावल': { hi: 'चावल', en: 'Rice' },
+  'paddy': { hi: 'धान', en: 'Paddy' },
+  'rice': { hi: 'चावल', en: 'Rice' },
+  'गेहूं': { hi: 'गेहूं', en: 'Wheat' },
+  'गेहूँ': { hi: 'गेहूं', en: 'Wheat' },
+  'wheat': { hi: 'गेहूं', en: 'Wheat' },
+  'gehun': { hi: 'गेहूं', en: 'Wheat' },
+  'टमाटर': { hi: 'टमाटर', en: 'Tomatoes' },
+  'tomato': { hi: 'टमाटर', en: 'Tomato' },
+  'tomatoes': { hi: 'टमाटर', en: 'Tomatoes' },
+  'tamatar': { hi: 'टमाटर', en: 'Tomatoes' },
+  'प्याज': { hi: 'प्याज', en: 'Onions' },
+  'प्याज़': { hi: 'प्याज', en: 'Onions' },
+  'onion': { hi: 'प्याज', en: 'Onion' },
+  'onions': { hi: 'प्याज', en: 'Onions' },
+  'pyaaz': { hi: 'प्याज', en: 'Onions' },
+  'आलू': { hi: 'आलू', en: 'Potatoes' },
+  'potato': { hi: 'आलू', en: 'Potato' },
+  'potatoes': { hi: 'आलू', en: 'Potatoes' },
+  'aalu': { hi: 'आलू', en: 'Potatoes' },
+  'भिंडी': { hi: 'भिंडी', en: 'Okra (Ladyfinger)' },
+  'okra': { hi: 'भिंडी', en: 'Okra' },
+  'ladyfinger': { hi: 'भिंडी', en: 'Ladyfinger' },
+  'bhindi': { hi: 'भिंडी', en: 'Okra' },
+  'बैंगन': { hi: 'बैंगन', en: 'Eggplant (Brinjal)' },
+  'brinjal': { hi: 'बैंगन', en: 'Brinjal' },
+  'eggplant': { hi: 'बैंगन', en: 'Eggplant' },
+  'baingan': { hi: 'बैंगन', en: 'Eggplant' },
+  'गोभी': { hi: 'गोभी', en: 'Cauliflower' },
+  'फूलगोभी': { hi: 'फूलगोभी', en: 'Cauliflower' },
+  'cauliflower': { hi: 'फूलगोभी', en: 'Cauliflower' },
+  'पत्तागोभी': { hi: 'पत्तागोभी', en: 'Cabbage' },
+  'cabbage': { hi: 'पत्तागोभी', en: 'Cabbage' },
+  'मटर': { hi: 'मटर', en: 'Peas' },
+  'peas': { hi: 'मटर', en: 'Peas' },
+  'matar': { hi: 'मटर', en: 'Peas' },
+  'गाजर': { hi: 'गाजर', en: 'Carrot' },
+  'carrot': { hi: 'गाजर', en: 'Carrot' },
+  'carrots': { hi: 'गाजर', en: 'Carrots' },
+  'gajar': { hi: 'गाजर', en: 'Carrot' },
+  'मूली': { hi: 'मूली', en: 'Radish' },
+  'radish': { hi: 'मूली', en: 'Radish' },
+  'mooli': { hi: 'मूली', en: 'Radish' },
+  'शलजम': { hi: 'शलजम', en: 'Turnip' },
+  'शलगम': { hi: 'शलजम', en: 'Turnip' },
+  'turnip': { hi: 'शलजम', en: 'Turnip' },
+  'turnips': { hi: 'शलजम', en: 'Turnips' },
+  'shalgam': { hi: 'शलजम', en: 'Turnip' },
+  'shaljam': { hi: 'शलजम', en: 'Turnip' },
+  'चुकंदर': { hi: 'चुकंदर', en: 'Beetroot' },
+  'beetroot': { hi: 'चुकंदर', en: 'Beetroot' },
+  'chukandar': { hi: 'चुकंदर', en: 'Beetroot' },
+  'शकरकंद': { hi: 'शकरकंद', en: 'Sweet Potato' },
+  'shakarkand': { hi: 'शकरकंद', en: 'Sweet Potato' },
+  'जिमीकंद': { hi: 'जिमीकंद', en: 'Yam' },
+  'सूरन': { hi: 'सूरन', en: 'Yam' },
+  'yam': { hi: 'जिमीकंद', en: 'Yam' },
+  'suran': { hi: 'सूरन', en: 'Yam' },
+  'jimikand': { hi: 'जिमीकंद', en: 'Yam' },
+  'कटहल': { hi: 'कटहल', en: 'Jackfruit' },
+  'jackfruit': { hi: 'कटहल', en: 'Jackfruit' },
+  'kathal': { hi: 'कटहल', en: 'Jackfruit' },
+  'सहजन': { hi: 'सहजन', en: 'Drumstick' },
+  'drumstick': { hi: 'सहजन', en: 'Drumstick' },
+  'moringa': { hi: 'सहजन', en: 'Moringa' },
+  'sahjan': { hi: 'सहजन', en: 'Drumstick' },
+  'गवार': { hi: 'गवार', en: 'Cluster Beans' },
+  'gawar': { hi: 'गवार', en: 'Cluster Beans' },
+  'अरबी': { hi: 'अरबी', en: 'Arbi' },
+  'arbi': { hi: 'अरबी', en: 'Arbi' },
+  'पेठा': { hi: 'पेठा', en: 'Ash Gourd' },
+  'petha': { hi: 'पेठा', en: 'Ash Gourd' },
+  'कद्दू': { hi: 'कद्दू', en: 'Pumpkin' },
+  'pumpkin': { hi: 'कद्दू', en: 'Pumpkin' },
+  'kaddu': { hi: 'कद्दू', en: 'Pumpkin' },
+  'कुंदरू': { hi: 'कुंदरू', en: 'Ivy Gourd' },
+  'kundru': { hi: 'कुंदरू', en: 'Ivy Gourd' },
+  'परवल': { hi: 'परवल', en: 'Pointed Gourd' },
+  'parwal': { hi: 'परवल', en: 'Pointed Gourd' },
+  'तोरई': { hi: 'तोरई', en: 'Ridge Gourd' },
+  'torai': { hi: 'तोरई', en: 'Ridge Gourd' },
+  'पुदीना': { hi: 'पुदीना', en: 'Mint' },
+  'mint': { hi: 'पुदीना', en: 'Mint' },
+  'pudina': { hi: 'पुदीना', en: 'Mint' },
+  'कढ़ी': { hi: 'कढ़ी पत्ता', en: 'Curry Leaves' },
+  'मेथी': { hi: 'मेथी', en: 'Fenugreek' },
+  'methi': { hi: 'मेथी', en: 'Fenugreek' },
+  'गुड़': { hi: 'गुड़', en: 'Jaggery' },
+  'jaggery': { hi: 'गुड़', en: 'Jaggery' },
+  'gud': { hi: 'गुड़', en: 'Jaggery' },
+  'इमली': { hi: 'इमली', en: 'Tamarind' },
+  'tamarind': { hi: 'इमली', en: 'Tamarind' },
+  'imli': { hi: 'इमली', en: 'Tamarind' },
+  'नारियल': { hi: 'नारियल', en: 'Coconut' },
+  'coconut': { hi: 'नारियल', en: 'Coconut' },
+  'nariyal': { hi: 'नारियल', en: 'Coconut' },
+  'अमरूद': { hi: 'अमरूद', en: 'Guava' },
+  'guava': { hi: 'अमरूद', en: 'Guava' },
+  'amrood': { hi: 'अमरूद', en: 'Guava' },
+  'संतरा': { hi: 'संतरा', en: 'Orange' },
+  'orange': { hi: 'संतरा', en: 'Orange' },
+  'santra': { hi: 'संतरा', en: 'Orange' },
+  'नींबू': { hi: 'नींबू', en: 'Lemon' },
+  'lemon': { hi: 'नींबू', en: 'Lemon' },
+  'lime': { hi: 'नींबू', en: 'Lime' },
+  'nimbu': { hi: 'नींबू', en: 'Lemon' },
+  'खरबूजा': { hi: 'खरबूजा', en: 'Muskmelon' },
+  'muskmelon': { hi: 'खरबूजा', en: 'Muskmelon' },
+  'kharbuja': { hi: 'खरबूजा', en: 'Muskmelon' },
+  'gourd': { hi: 'लौकी', en: 'Gourd' },
+  'लौकी': { hi: 'लौकी', en: 'Bottle Gourd' },
+  'lauki': { hi: 'लौकी', en: 'Bottle Gourd' },
+  'करेला': { hi: 'करेला', en: 'Bitter Gourd' },
+  'karela': { hi: 'करेला', en: 'Bitter Gourd' },
+  'पालक': { hi: 'पालक', en: 'Spinach' },
+  'spinach': { hi: 'पालक', en: 'Spinach' },
+  'palak': { hi: 'पालक', en: 'Spinach' },
+  'धनिया': { hi: 'धनिया', en: 'Coriander' },
+  'coriander': { hi: 'धनिया', en: 'Coriander' },
+  'dhaniya': { hi: 'धनिया', en: 'Coriander' },
+  'अदरक': { hi: 'अदरक', en: 'Ginger' },
+  'ginger': { hi: 'अदरक', en: 'Ginger' },
+  'adrak': { hi: 'अदरक', en: 'Ginger' },
+  'लहसुन': { hi: 'लहसुन', en: 'Garlic' },
+  'garlic': { hi: 'लहसुन', en: 'Garlic' },
+  'lahsun': { hi: 'लहसुन', en: 'Garlic' },
+  'हल्दी': { hi: 'हल्दी', en: 'Turmeric' },
+  'turmeric': { hi: 'हल्दी', en: 'Turmeric' },
+  'haldi': { hi: 'हल्दी', en: 'Turmeric' },
+  'मिर्च': { hi: 'मिर्च', en: 'Chilli' },
+  'chilli': { hi: 'मिर्च', en: 'Chilli' },
+  'chili': { hi: 'मिर्च', en: 'Chili' },
+  'mirch': { hi: 'मिर्च', en: 'Chilli' },
+  'शिमला': { hi: 'शिमला मिर्च', en: 'Capsicum' },
+  'capsicum': { hi: 'शिमला मिर्च', en: 'Capsicum' },
+  'सेब': { hi: 'सेब', en: 'Apples' },
+  'apple': { hi: 'सेब', en: 'Apple' },
+  'apples': { hi: 'सेब', en: 'Apples' },
+  'seb': { hi: 'सेब', en: 'Apples' },
+  'आम': { hi: 'आम', en: 'Mangoes' },
+  'mango': { hi: 'आम', en: 'Mango' },
+  'mangoes': { hi: 'आम', en: 'Mangoes' },
+  'aam': { hi: 'आम', en: 'Mangoes' },
+  'केला': { hi: 'केला', en: 'Bananas' },
+  'banana': { hi: 'केला', en: 'Banana' },
+  'bananas': { hi: 'केला', en: 'Bananas' },
+  'kela': { hi: 'केला', en: 'Bananas' },
+  'अंगूर': { hi: 'अंगूर', en: 'Grapes' },
+  'grapes': { hi: 'अंगूर', en: 'Grapes' },
+  'angoor': { hi: 'अंगूर', en: 'Grapes' },
+  'अनार': { hi: 'अनार', en: 'Pomegranate' },
+  'pomegranate': { hi: 'अनार', en: 'Pomegranate' },
+  'anar': { hi: 'अनार', en: 'Pomegranate' },
+  'पपीता': { hi: 'पपीता', en: 'Papaya' },
+  'papaya': { hi: 'पपीता', en: 'Papaya' },
+  'papita': { hi: 'पपीता', en: 'Papaya' },
+  'सोयाबीन': { hi: 'सोयाबीन', en: 'Soybean' },
+  'soybean': { hi: 'सोयाबीन', en: 'Soybean' },
+  'सरसों': { hi: 'सरसों', en: 'Mustard' },
+  'mustard': { hi: 'सरसों', en: 'Mustard' },
+  'sarson': { hi: 'सरसों', en: 'Mustard' },
+  'चना': { hi: 'चना', en: 'Chickpeas' },
+  'chickpeas': { hi: 'चना', en: 'Chickpeas' },
+  'chana': { hi: 'चना', en: 'Chickpeas' },
+  'मूंगफली': { hi: 'मूंगफली', en: 'Peanuts' },
+  'peanuts': { hi: 'मूंगफली', en: 'Peanuts' },
+  'mungfali': { hi: 'मूंगफली', en: 'Peanuts' },
+  'मखाना': { hi: 'मखाना', en: 'Fox Nuts (Makhana)' },
+  'makhana': { hi: 'मखाना', en: 'Fox Nuts (Makhana)' },
+  'ताज़ा': { hi: 'ताज़ा', en: 'Fresh' },
+  'fresh': { hi: 'ताज़ा', en: 'Fresh' },
+  'जैविक': { hi: 'जैविक', en: 'Organic' },
+  'organic': { hi: 'जैविक', en: 'Organic' },
+  'देसी': { hi: 'देसी', en: 'Desi' },
+  'desi': { hi: 'देसी', en: 'Desi' },
+  'हाइब्रिड': { hi: 'हाइब्रिड', en: 'Hybrid' },
+  'hybrid': { hi: 'हाइब्रिड', en: 'Hybrid' },
+};
+
+// Dynamic AI Translation Cache (Populated from SQLite DB & Live Google Translate API)
+export const dynamicCropCache: Record<string, { hi: string; en: string }> = {};
+const pendingTranslateRequests = new Set<string>();
+
+export async function loadDynamicTranslations() {
+  if (typeof window === 'undefined') return;
+  try {
+    const res = await fetch('/api/v1/translate');
+    const data = await res.json();
+    if (data?.success && data?.translations) {
+      Object.assign(dynamicCropCache, data.translations);
+    }
+  } catch (err) {
+    // Ignore fetch error on SSR or initial load
+  }
+}
+
+export async function fetchCropTranslationAI(cropName: string): Promise<{ hi: string; en: string } | null> {
+  if (!cropName) return null;
+  const trimmed = cropName.trim();
+  const lower = trimmed.toLowerCase();
+
+  if (cropTranslations[trimmed]) return cropTranslations[trimmed];
+  if (dynamicCropCache[lower]) return dynamicCropCache[lower];
+
+  try {
+    const res = await fetch('/api/v1/translate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: trimmed }),
+    });
+    const data = await res.json();
+    if (data?.success && data?.hi && data?.en) {
+      const result = { hi: data.hi, en: data.en };
+      dynamicCropCache[lower] = result;
+      dynamicCropCache[trimmed] = result;
+      return result;
+    }
+  } catch (err) {
+    console.error('fetchCropTranslationAI error:', err);
+  }
+  return null;
+}
+
+// Auto load cached DB translations when browser initializes
+if (typeof window !== 'undefined') {
+  loadDynamicTranslations();
+}
+
+export function getLocalizedCropName(name: string, lang: Language): string {
+  if (!name) return name;
+  const trimmed = name.trim();
+  const lower = trimmed.toLowerCase();
+
+  // 0. Check AGRI_PHRASE_DICTIONARY first for direct Indian regional languages
+  for (const [key, mapping] of Object.entries(AGRI_PHRASE_DICTIONARY)) {
+    if (key.toLowerCase() === lower || lower.includes(key.toLowerCase())) {
+      if (mapping[lang]) return mapping[lang];
+    }
+  }
+
+  // 1. Direct exact match in static dictionary
+  if (cropTranslations[trimmed]) {
+    const res = (cropTranslations[trimmed] as any)[lang] || (lang === 'en' ? cropTranslations[trimmed].en : cropTranslations[trimmed].hi);
+    if (res) return res;
+  }
+
+  // 2. Direct match in Dynamic AI Cache (populated from DB or live AI)
+  if (dynamicCropCache[lower]) {
+    const res = (dynamicCropCache[lower] as any)[lang] || (lang === 'en' ? dynamicCropCache[lower].en : dynamicCropCache[lower].hi);
+    if (res) return res;
+  }
+  if (dynamicCropCache[trimmed]) {
+    const res = (dynamicCropCache[trimmed] as any)[lang] || (lang === 'en' ? dynamicCropCache[trimmed].en : dynamicCropCache[trimmed].hi);
+    if (res) return res;
+  }
+
+  // 3. Case-insensitive exact match in static dictionary
+  for (const key of Object.keys(cropTranslations)) {
+    if (key.toLowerCase() === lower) {
+      const res = (cropTranslations[key] as any)[lang] || (lang === 'en' ? cropTranslations[key].en : cropTranslations[key].hi);
+      if (res) return res;
+    }
+  }
+
+  // 4. Substring match for multi-word crop names (e.g., "नासिक मक्का", "ताज़ा मक्का")
+  for (const [key, val] of Object.entries(cropTranslations)) {
+    if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) {
+      if (lang === 'en' && /[ऀ-ॿ]/.test(trimmed)) {
+        return val.en;
+      }
+      if (lang !== 'en' && !/[ऀ-ॿ]/.test(trimmed)) {
+        return val.hi;
+      }
+    }
+  }
+
+  // 5. Token-by-token AI translation / Transliteration
+  const words = trimmed.split(/\s+/);
+  let hasTranslatedToken = false;
+  const translatedTokens = words.map((w) => {
+    const cleanWord = w.replace(/[^a-zA-Zऀ-ॿ]/g, '').toLowerCase();
+    if (tokenMap[cleanWord]) {
+      hasTranslatedToken = true;
+      return (tokenMap[cleanWord] as any)[lang] || (lang === 'en' ? tokenMap[cleanWord].en : tokenMap[cleanWord].hi);
+    }
+    return w;
+  });
+
+  if (hasTranslatedToken) {
+    return translatedTokens.join(' ');
+  }
+
+  // 6. Automatic AI Fallback Cleaner for bracketed names e.g. "ताज़ा हाइब्रिड टमाटर (Fresh Tomatoes)"
+  if (lang === 'en') {
+    const bracketMatch = name.match(/\(([^)]+)\)/);
+    if (bracketMatch && bracketMatch[1]) {
+      return bracketMatch[1].trim();
+    }
+  } else if (lang === 'hi') {
+    const cleaned = name.replace(/\([^)]*\)/g, '').trim();
+    if (cleaned.length > 0 && cleaned !== trimmed) return cleaned;
+  }
+
+  // 7. Background Trigger AI Online Translator for missing crops
+  if (typeof window !== 'undefined' && !pendingTranslateRequests.has(lower)) {
+    pendingTranslateRequests.add(lower);
+    fetchCropTranslationAI(trimmed).then(() => {
+      pendingTranslateRequests.delete(lower);
+    });
+  }
+
+  return name;
+}
+
+export function getLocalizedLocation(loc: string, lang: Language): string {
+  if (!loc) return loc;
+  if (locationTranslations[loc]) {
+    return (locationTranslations[loc] as any)[lang] || (lang === 'en' ? locationTranslations[loc].en : locationTranslations[loc].hi) || loc;
+  }
+  return loc;
+}
+
+export function getLocalizedFarmer(farmer: string, lang: Language): string {
+  if (!farmer) return farmer;
+  if (farmerTranslations[farmer]) {
+    return (farmerTranslations[farmer] as any)[lang] || (lang === 'en' ? farmerTranslations[farmer].en : farmerTranslations[farmer].hi) || farmer;
+  }
+  return farmer;
+}
+
+export function getLocalizedCategory(cat: string, lang: Language): string {
+  if (!cat) return cat;
+  if (categoryTranslations[cat]) {
+    return (categoryTranslations[cat] as any)[lang] || (lang === 'en' ? categoryTranslations[cat].en : categoryTranslations[cat].hi) || cat;
+  }
+  return cat;
+}
+
+export function getLocalizedGrade(grade: string, lang: Language): string {
+  if (!grade) return grade;
+  if (gradeTranslations[grade]) {
+    return (gradeTranslations[grade] as any)[lang] || (lang === 'en' ? gradeTranslations[grade].en : gradeTranslations[grade].hi) || grade;
+  }
+  return grade;
+}

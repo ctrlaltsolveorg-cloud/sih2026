@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { useAuth } from './AuthContext';
 
 export interface CartItem {
-  listingId: number;
+  listingId: number | string;
   cropName: string;
   pricePaisePerKg: number;
   quantityKg: number;
@@ -17,8 +17,8 @@ export interface CartItem {
 interface CartContextType {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
-  removeFromCart: (listingId: number) => void;
-  updateQuantity: (listingId: number, qty: number) => void;
+  removeFromCart: (listingId: number | string) => void;
+  updateQuantity: (listingId: number | string, qty: number) => void;
   clearCart: () => void;
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
@@ -53,11 +53,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setIsCartOpen(true);
   };
 
-  const removeFromCart = (listingId: number) => {
+  const removeFromCart = (listingId: number | string) => {
     setCart((prevCart) => prevCart.filter((i) => i.listingId !== listingId));
   };
 
-  const updateQuantity = (listingId: number, qty: number) => {
+  const updateQuantity = (listingId: number | string, qty: number) => {
     if (qty <= 0) {
       removeFromCart(listingId);
       return;

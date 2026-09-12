@@ -61,9 +61,9 @@ function initTables(db: Database.Database) {
       farmer_id TEXT NOT NULL REFERENCES users(id),
       fpo_id TEXT REFERENCES fpo_groups(id),
       crop_name TEXT NOT NULL,
-      category TEXT NOT NULL CHECK(category IN ('Vegetables', 'Fruits', 'Grains', 'Pulses', 'Spices')),
+      category TEXT NOT NULL CHECK(category IN ('Vegetables', 'Fruits', 'Grains', 'Pulses', 'Spices', 'Seeds')),
       quantity_available INTEGER NOT NULL CHECK(quantity_available >= 0),
-      unit TEXT NOT NULL DEFAULT 'kg' CHECK(unit IN ('kg', 'quintal', 'crate', 'ton')),
+      unit TEXT NOT NULL DEFAULT 'kg' CHECK(unit IN ('kg', 'quintal', 'crate', 'ton', 'packet', 'dozen', 'piece')),
       price_paise INTEGER NOT NULL CHECK(price_paise > 0),
       mandi_retail_price_paise INTEGER NOT NULL,
       grade TEXT DEFAULT 'Grade A',
@@ -192,6 +192,44 @@ function initTables(db: Database.Database) {
     // Ignore error if column already exists
   }
 
+  // Ensure product_listings supports 'Seeds' category
+  try {
+    const testCat = db.prepare(`SELECT 1 FROM product_listings WHERE category = 'Seeds' LIMIT 1`);
+    testCat.get();
+  } catch (e) {
+    // If check constraint fails on older DB schema, migrate it
+    try {
+      db.exec('PRAGMA foreign_keys=OFF;');
+      db.exec(`
+        CREATE TABLE IF NOT EXISTS product_listings_temp (
+          id TEXT PRIMARY KEY,
+          farmer_id TEXT NOT NULL REFERENCES users(id),
+          fpo_id TEXT REFERENCES fpo_groups(id),
+          crop_name TEXT NOT NULL,
+          category TEXT NOT NULL CHECK(category IN ('Vegetables', 'Fruits', 'Grains', 'Pulses', 'Spices', 'Seeds')),
+          quantity_available INTEGER NOT NULL CHECK(quantity_available >= 0),
+          unit TEXT NOT NULL DEFAULT 'kg' CHECK(unit IN ('kg', 'quintal', 'crate', 'ton', 'packet', 'dozen', 'piece')),
+          price_paise INTEGER NOT NULL CHECK(price_paise > 0),
+          mandi_retail_price_paise INTEGER NOT NULL,
+          grade TEXT DEFAULT 'Grade A',
+          harvest_date TEXT NOT NULL,
+          organic_certified INTEGER DEFAULT 0,
+          image_url TEXT NOT NULL,
+          location TEXT NOT NULL,
+          district TEXT NOT NULL,
+          status TEXT DEFAULT 'ACTIVE' CHECK(status IN ('ACTIVE', 'PAUSED', 'SOLD_OUT')),
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+        INSERT INTO product_listings_temp SELECT * FROM product_listings;
+        DROP TABLE product_listings;
+        ALTER TABLE product_listings_temp RENAME TO product_listings;
+        PRAGMA foreign_keys=ON;
+      `);
+    } catch (migErr) {
+      // Ignore migration errors if not needed
+    }
+  }
+
   const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get() as { count: number };
   if (userCount.count === 0) {
     seedData(db);
@@ -279,11 +317,8 @@ function seedData(db: Database.Database) {
     // Admin
     insertUser.run('u_admin_1', 'Ministry Governance Admin', '9000000000', 'admin@kisanbandhan.ai', 'ADMIN', '', 'New Delhi', 'Delhi', 'Dept of Consumer Affairs, Krishi Bhawan, New Delhi');
 
-    // 2. Product Listings (Paise: ₹28 = 2800 paise)
-    insertListing.run('lst_101', 'u_farmer_1', 'fpo_nashik_1', 'Fresh Nashik Tomatoes', 'Vegetables', 450, 'kg', 2800, 4500, 'Grade A Premium', '2026-09-07', 1, 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80', 'Pimplgaon Mandi Hub', 'Nashik', 'ACTIVE');
-    insertListing.run('lst_102', 'u_farmer_1', 'fpo_nashik_1', 'Red Onions (Nashik Quality)', 'Vegetables', 1200, 'kg', 3500, 5200, 'Grade A', '2026-09-06', 0, 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cf?auto=format&fit=crop&w=600&q=80', 'Lasalgaon Cold Storage', 'Nashik', 'ACTIVE');
-    insertListing.run('lst_103', 'u_farmer_2', null, 'Organic Sharbati Wheat', 'Grains', 2500, 'kg', 2600, 3800, 'Grade A Ultra', '2026-09-04', 1, 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80', 'Khanna Grain Mandi', 'Ludhiana', 'ACTIVE');
-    insertListing.run('lst_104', 'u_farmer_1', 'fpo_nashik_1', 'Farm Fresh Potatoes (Jyoti)', 'Vegetables', 800, 'kg', 2200, 3600, 'Grade A', '2026-09-07', 0, 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80', 'Nashik Central Hub', 'Nashik', 'ACTIVE');
+    // 2. Product Listings (Starts completely clean - populated by registered farmers)
+    // No mock seed products
 
     // 3. Pooled Lots (FPO)
     insertPooled.run('pool_101', 'fpo_nashik_1', 'Nashik Tomatoes (FPO Bulk Pool)', 5000, 2700, 34, 'POOLING');
@@ -293,7 +328,6 @@ function seedData(db: Database.Database) {
 
     // 5. Orders
     insertOrder.run('ord_501', 'u_buyer_2', 'u_farmer_1', 'fpo_nashik_1', 'Out for Delivery', 280000, 35000, 315000, 'Annapurna Hotel & Catering, Swargate, Pune 411002', 'BULK_HUB', 'COD', 'PENDING', 'Please deliver before 10 AM');
-    insertOrderItem.run('ord_501', 'lst_101', 'Fresh Nashik Tomatoes', 100, 'kg', 2800);
 
     // 6. Deliveries
     insertDelivery.run('del_701', 'ord_501', 'u_partner_1', 'Pimplgaon Mandi Hub, Nashik', 'Annapurna Hotel, Swargate, Pune', 'IN_TRANSIT', '4829', '9103', 1, 142.0, 180);

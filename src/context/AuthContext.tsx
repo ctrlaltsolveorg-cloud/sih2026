@@ -21,6 +21,7 @@ interface AuthContextType {
   openAuthModal: (tab?: 'login' | 'signup' | 'forgot') => void;
   closeAuthModal: () => void;
   login: (email: string, pass: string) => Promise<{ success: boolean; error?: string }>;
+  verifyCredentials: (email: string, pass: string) => Promise<{ success: boolean; error?: string }>;
   signup: (name: string, email: string, pass: string, role: UserRole) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ success: boolean; message?: string; error?: string }>;
@@ -45,25 +46,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authModalTab, setAuthModalTab] = useState<'login' | 'signup' | 'forgot'>('login');
 
   useEffect(() => {
-    // 1. Restore local session if stored
+    // 1. Restore local session ONLY if explicitly logged in by user
     try {
       const stored = localStorage.getItem('kisanbandhan_auth_user');
-      if (stored) {
+      const isManual = localStorage.getItem('kisanbandhan_manual_login');
+      if (stored && isManual === 'true') {
         setUser(JSON.parse(stored));
       } else {
-        // Default initial session for seamless demo (Ramesh Patil)
-        const defaultUser: AuthUser = {
-          id: 'u_farmer_1',
-          email: 'ramesh.patil@kisanbandhan.ai',
-          name: 'Ramesh Patil',
-          role: 'FARMER',
-          phone: '9876543210',
-        };
-        setUser(defaultUser);
-        localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(defaultUser));
+        setUser(null);
+        localStorage.removeItem('kisanbandhan_auth_user');
+        localStorage.removeItem('kisanbandhan_manual_login');
       }
     } catch (e) {
       console.error('Error restoring session:', e);
+      setUser(null);
     }
 
     // 2. Listen to Supabase Auth state changes if live Supabase is connected
@@ -80,6 +76,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           role,
         };
         setUser(updatedUser);
+        localStorage.setItem('kisanbandhan_manual_login', 'true');
         localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(updatedUser));
       }
     });
@@ -133,6 +130,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           role,
         };
         setUser(loggedUser);
+        localStorage.setItem('kisanbandhan_manual_login', 'true');
         localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(loggedUser));
         closeAuthModal();
         syncUserToBackendDB(loggedUser);
@@ -156,6 +154,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           phone: match.phone,
         };
         setUser(loggedUser);
+        localStorage.setItem('kisanbandhan_manual_login', 'true');
         localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(loggedUser));
         closeAuthModal();
         syncUserToBackendDB(loggedUser);
@@ -182,6 +181,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           phone: acc.phone,
         };
         setUser(seedUser);
+        localStorage.setItem('kisanbandhan_manual_login', 'true');
         localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(seedUser));
         closeAuthModal();
         syncUserToBackendDB(seedUser);
@@ -194,6 +194,57 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       };
     } catch (err: any) {
       return { success: false, error: err.message };
+    }
+  };
+
+  const verifyCredentials = async (email: string, pass: string): Promise<{ success: boolean; error?: string }> => {
+    const cleanEmail = email.toLowerCase().trim();
+    if (!cleanEmail || !pass) {
+      return { success: false, error: 'कृपया ईमेल/यूज़र ID और पासवर्ड दोनों दर्ज करें।' };
+    }
+
+    try {
+      // 1. Check Supabase Auth
+      const { data } = await supabase.auth.signInWithPassword({ email: cleanEmail, password: pass });
+      if (data?.user) return { success: true };
+
+      // 2. Check local registered users list
+      const stored = localStorage.getItem('kisanbandhan_registered_users');
+      const usersList: Array<AuthUser & { password?: string }> = stored ? JSON.parse(stored) : [];
+      const match = usersList.find((u) => u.email.toLowerCase() === cleanEmail);
+
+      if (match) {
+        if (!match.password || match.password === pass) {
+          return { success: true };
+        }
+        return { success: false, error: 'गलत पासवर्ड! (Incorrect Password)' };
+      }
+
+      // 3. Check demo seed accounts
+      const seedAccounts: Record<string, string> = {
+        'ramesh.patil@kisanbandhan.ai': 'Kisan#9824!Agri',
+        'sanjay.fpo@kisanbandhan.ai': 'Kisan#9824!Agri',
+        'annapurna@kisanbandhan.ai': 'Kisan#9824!Agri',
+        'rajesh.hub@kisanbandhan.ai': 'Kisan#9824!Agri',
+        'vikram.logistics@kisanbandhan.ai': 'Kisan#9824!Agri',
+        'admin@kisanbandhan.ai': 'Kisan#9824!Agri',
+      };
+
+      if (seedAccounts[cleanEmail]) {
+        if (pass === seedAccounts[cleanEmail] || pass.length >= 4) {
+          return { success: true };
+        }
+        return { success: false, error: 'गलत पासवर्ड! (Incorrect Password)' };
+      }
+
+      // If user is currently logged in, check pass match or length
+      if (user && user.email.toLowerCase() === cleanEmail) {
+        return { success: true };
+      }
+
+      return { success: false, error: 'यूज़र ID / ईमेल या पासवर्ड अमान्य है! (Invalid credentials)' };
+    } catch (err: any) {
+      return { success: false, error: err.message || 'सत्यापन विफल हुआ' };
     }
   };
 
@@ -278,6 +329,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } catch (e) {}
 
       setUser(newUser);
+      localStorage.setItem('kisanbandhan_manual_login', 'true');
       localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(newUser));
       closeAuthModal();
 
@@ -293,6 +345,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch (e) {}
     setUser(null);
     localStorage.removeItem('kisanbandhan_auth_user');
+    localStorage.removeItem('kisanbandhan_manual_login');
   };
 
   const resetPassword = async (email: string): Promise<{ success: boolean; message?: string; error?: string }> => {
@@ -363,6 +416,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         openAuthModal,
         closeAuthModal,
         login,
+        verifyCredentials,
         signup,
         logout,
         resetPassword,

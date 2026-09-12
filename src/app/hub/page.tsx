@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useRole } from '@/context/RoleContext';
-import { Warehouse, Camera, QrCode, Sparkles, Award } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import PortalGuard from '@/components/PortalGuard';
+import { Warehouse, Camera, QrCode, CheckCircle2, ShieldCheck, Sparkles, Award } from 'lucide-react';
 
 export default function HubOperatorPage() {
   const { t } = useLanguage();
@@ -49,7 +49,16 @@ export default function HubOperatorPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <PortalGuard
+      requiredRole="HUB_OPERATOR"
+      portalName={language === 'hi' ? 'गुणवत्ता जाँच केंद्र ऑपरेटर (Hub Inspector)' : 'Hub Inspector'}
+      portalDescription={
+        language === 'hi'
+          ? 'यह पोर्टल केवल माइक्रोहब गुणवत्ता अधिकारियों के लिए सुरक्षित है जहाँ कंप्यूटर विज़न AI से ग्रेडिंग व QR टैगिंग की जाती है।'
+          : 'This portal is restricted to authorized Hub Quality Inspectors to run Computer Vision quality grading and QR tracking.'
+      }
+    >
+      <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center gap-4 bg-[#0F3826] text-amber-50 p-6 rounded-3xl shadow-xl border border-amber-500/20">
         <div className="p-3 bg-amber-500/20 rounded-2xl">
@@ -179,6 +188,22 @@ export default function HubOperatorPage() {
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Green Pulse Success Signal Toast */}
+      {successSignal && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#0F3826] text-amber-50 px-5 py-3.5 rounded-2xl shadow-2xl border border-emerald-500/40 flex items-center gap-3 animate-bounce">
+          <div className="p-1.5 bg-emerald-500/20 text-emerald-400 rounded-full animate-pulse">
+            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+          </div>
+          <div>
+            <p className="text-xs font-extrabold text-emerald-300">
+              {language === 'hi' ? 'सफलतापूर्वक पुष्टित ✓' : 'Confirmed Successfully ✓'}
+            </p>
+            <p className="text-xs font-medium text-amber-100/90">{successSignal}</p>
+          </div>
+        </div>
+      )}
+      </div>
+    </PortalGuard>
   );
 }
