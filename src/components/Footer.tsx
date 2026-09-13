@@ -65,9 +65,30 @@ export default function Footer() {
       <div className="w-full px-4 sm:px-8 lg:px-12 pt-6 border-t border-emerald-900/40 flex flex-col sm:flex-row items-center justify-between text-xs text-amber-200/50 gap-4">
         <p>© 2026 KisanBandhan AI — SIH 2026 PS 26033. All rights reserved.</p>
         <div className="flex gap-4">
-          <span className="hover:text-amber-200 cursor-pointer">{t.appName}</span>
-          <span className="hover:text-amber-200 cursor-pointer">{t.translatorTitle || 'AI Translator'}</span>
-          <span className="hover:text-amber-200 cursor-pointer">Agmarknet API</span>
+          <a
+            href="https://github.com/ctrlaltsolveorg-cloud/sih2026"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-amber-200 transition-colors"
+          >
+            GitHub
+          </a>
+          <a
+            href="https://sih2026-smoky.vercel.app"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-amber-200 transition-colors"
+          >
+            Live App
+          </a>
+          <a
+            href="https://agmarknet.gov.in"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-amber-200 transition-colors"
+          >
+            Agmarknet API
+          </a>
         </div>
       </div>
     </footer>

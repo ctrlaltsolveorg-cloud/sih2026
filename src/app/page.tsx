@@ -165,10 +165,10 @@ export default function HomePage() {
           farmer_name: 'प्रमाणित किसान नेटवर्क (Farmer Network)',
           location: 'नासिक / इंदौर संकलन हब',
           hub_location: 'राज्य संकलन एग्रो-हब',
-          image_url: item.photos[0],
-          images: item.photos,
-          logo_url: item.logo_url || item.sideLogo,
-          side_logo: item.logo_url || item.sideLogo,
+          image_url: item.photos && item.photos.length > 0 ? item.photos[0] : undefined,
+          images: item.photos && item.photos.length > 0 ? item.photos : undefined,
+          logo_url: item.logo_url || item.sideLogo || (item.photos && item.photos.length > 0 ? item.photos[0] : undefined),
+          side_logo: item.logo_url || item.sideLogo || item.thumbnail || (item.photos && item.photos.length > 0 ? item.photos[0] : undefined),
           unit: item.unit,
         }));
 

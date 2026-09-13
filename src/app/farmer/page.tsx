@@ -104,12 +104,8 @@ export default function FarmerDashboardPage() {
   const [location, setLocation] = useState('नासिक मंडी संकलन हब');
   const [isOrganic, setIsOrganic] = useState(false);
 
-  // 2 to 6 Photos Mandatory State
-  const [photos, setPhotos] = useState<string[]>([
-    'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80'
-  ]);
+  // Photos State (Optional, max 6 photos)
+  const [photos, setPhotos] = useState<string[]>([]);
   const [urlInput, setUrlInput] = useState('');
   const [photoError, setPhotoError] = useState<string | null>(null);
 
@@ -158,9 +154,9 @@ export default function FarmerDashboardPage() {
   const customCatalogItems: CatalogCropItem[] = useMemo(() => {
     return unlistedCustomCrops.map((c) => {
       const pRupees = parseFloat(c.priceRupees) || (c.pricePaise ? c.pricePaise / 100 : 40);
-      const photoArray = Array.isArray(c.photos) && c.photos.length > 0
+      const photoList: string[] = Array.isArray(c.photos) && c.photos.length > 0
         ? c.photos
-        : (c.imageUrl ? [c.imageUrl] : getCropPhotosByName(c.crop || c.crop_name));
+        : (c.imageUrl ? [c.imageUrl] : []);
 
       return createCustomCatalogItem({
         id: String(c.id),
@@ -172,7 +168,7 @@ export default function FarmerDashboardPage() {
         unit: c.unit || 'kg',
         grade: c.grade || 'उच्चतम श्रेणी A+',
         isOrganic: c.isOrganic || (c.grade && (c.grade.includes('जैविक') || c.grade.includes('Organic')) ? 1 : 0),
-        photos: photoArray,
+        photos: photoList,
         farmerId: c.farmerId || user?.id,
         farmerName: c.farmer_name || userName,
         quantityKg: parseInt(c.qty || c.quantity_available) || 500,
@@ -426,38 +422,10 @@ export default function FarmerDashboardPage() {
     e.target.value = '';
   };
 
-  // Best solution for unlisted custom crops: 1-click auto-suggest 3 high-res realistic photos
-  const handleLoadSamplePhotosForCategory = (cat: 'Vegetables' | 'Fruits' | 'Pulses' | 'Grains' | 'Seeds' | string) => {
-    const samplePool: Record<string, string[]> = {
-      Vegetables: [
-        'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80',
-      ],
-      Fruits: [
-        'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80',
-      ],
-      Pulses: [
-        'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80',
-      ],
-      Grains: [
-        'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80',
-      ],
-    };
-    const targetPhotos = samplePool[cat] || samplePool.Vegetables;
-    setPhotos([...targetPhotos]);
+  // Auto-suggest photos (optional helper)
+  const handleLoadSamplePhotosForCategory = (_cat: 'Vegetables' | 'Fruits' | 'Pulses' | 'Grains' | 'Seeds' | string) => {
+    setPhotos([]);
     setPhotoError(null);
-    triggerSuccessSignal(
-      language === 'hi'
-        ? `${cat} श्रेणी हेतु 3 सत्यापित तस्वीरें लोड की गईं!`
-        : `Loaded 3 verified high-res photos for ${cat}!`
-    );
   };
 
   const handleStartCustomProduce = (cat?: 'Vegetables' | 'Fruits' | 'Pulses' | 'Grains') => {
@@ -502,12 +470,7 @@ export default function FarmerDashboardPage() {
     if (Array.isArray(crop.photos) && crop.photos.length > 0) {
       cropPhotos = crop.photos;
     } else if (crop.imageUrl) {
-      cropPhotos = [crop.imageUrl, crop.imageUrl];
-    } else {
-      cropPhotos = [
-        'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
-      ];
+      cropPhotos = [crop.imageUrl];
     }
     setPhotos(cropPhotos);
     setPhotoError(null);
@@ -572,6 +535,15 @@ export default function FarmerDashboardPage() {
   const handleAddProduce = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Optional photos check (max 6)
+    if (photos.length > 6) {
+      setPhotoError(
+        language === 'hi'
+          ? 'अधिकतम 6 तस्वीरें ही अनुमत हैं!'
+          : 'Maximum 6 photos allowed!'
+      );
+      return;
+    }
     setIsSubmitting(true);
     setPhotoError(null);
 
