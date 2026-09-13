@@ -119,15 +119,21 @@ export default function CropImageDropdown({
       >
         <div className="flex items-center gap-3 min-w-0">
           {/* Crop Image Thumbnail */}
-          <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border-2 border-amber-500/40 shadow-sm shrink-0 bg-emerald-950/10">
-            <img
-              src={selectedCrop.sideLogo || selectedCrop.thumbnail || selectedCrop.photos[0]}
-              alt={selectedCrop.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-            />
-            <span className="absolute bottom-1 right-1 text-[10px] leading-none bg-black/60 backdrop-blur-xs text-white px-1 py-0.5 rounded font-mono font-bold">
-              {selectedCrop.photos.length}📷
-            </span>
+          <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border-2 border-amber-500/40 shadow-sm shrink-0 bg-gradient-to-br from-[#0F3826] to-[#082015] flex items-center justify-center text-2xl">
+            {(selectedCrop.sideLogo || selectedCrop.thumbnail || (selectedCrop.photos && selectedCrop.photos[0])) ? (
+              <img
+                src={selectedCrop.sideLogo || selectedCrop.thumbnail || selectedCrop.photos[0]}
+                alt={selectedCrop.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+              />
+            ) : (
+              <span>{categoryEmoji[selectedCrop.category] || '🌱'}</span>
+            )}
+            {selectedCrop.photos && selectedCrop.photos.length > 0 && (
+              <span className="absolute bottom-1 right-1 text-[10px] leading-none bg-black/60 backdrop-blur-xs text-white px-1 py-0.5 rounded font-mono font-bold">
+                {selectedCrop.photos.length}📷
+              </span>
+            )}
           </div>
 
           {/* Crop Details */}
@@ -312,16 +318,22 @@ export default function CropImageDropdown({
                     {/* Left: Crop Image & Texts */}
                     <div className="flex items-center gap-3 min-w-0">
                       {/* Image Thumbnail */}
-                      <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-amber-500/40 shrink-0 bg-emerald-950/20 shadow-xs">
-                        <img
-                          src={cropImg}
-                          alt={crop.name}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                        <span className="absolute bottom-0.5 right-0.5 bg-black/70 text-amber-300 text-[9px] font-mono px-1 rounded">
-                          {crop.photos.length}P
-                        </span>
+                      <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-amber-500/40 shrink-0 bg-gradient-to-br from-[#0F3826] to-[#082015] shadow-xs flex items-center justify-center text-xl">
+                        {cropImg ? (
+                          <img
+                            src={cropImg}
+                            alt={crop.name}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <span>{categoryEmoji[crop.category] || '🌱'}</span>
+                        )}
+                        {crop.photos && crop.photos.length > 0 && (
+                          <span className="absolute bottom-0.5 right-0.5 bg-black/70 text-amber-300 text-[9px] font-mono px-1 rounded">
+                            {crop.photos.length}P
+                          </span>
+                        )}
                       </div>
 
                       {/* Names & Specs */}

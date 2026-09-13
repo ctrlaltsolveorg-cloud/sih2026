@@ -41,6 +41,7 @@ interface Listing {
   hub_location: string;
   image_url?: string;
   images?: string[];
+  side_logo?: string;
   unit?: string;
 }
 
@@ -161,6 +162,7 @@ export default function HomePage() {
           hub_location: 'राज्य संकलन एग्रो-हब',
           image_url: item.photos[0],
           images: item.photos,
+          side_logo: item.sideLogo || item.thumbnail || item.photos[0],
           unit: item.unit,
         }));
 
@@ -599,6 +601,7 @@ export default function HomePage() {
                 is_organic={item.is_organic}
                 farmer_name={item.farmer_name}
                 location={item.location}
+                side_logo={item.side_logo}
                 images={item.images || (item.image_url ? [item.image_url] : undefined)}
                 unit={item.unit}
                 onAddToCart={(c) =>

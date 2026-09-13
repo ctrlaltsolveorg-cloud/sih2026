@@ -13,7 +13,12 @@ import {
   Sparkles,
   Info,
   Calendar,
-  X
+  X,
+  Leaf,
+  Apple,
+  Wheat,
+  Layers,
+  Sprout
 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCategory, getLocalizedCropName, getLocalizedGrade, getLocalizedLocation, getLocalizedFarmer } from '@/lib/i18n';
@@ -90,16 +95,6 @@ export default function BulmaProductCard({
       }
     }
 
-    // Default agricultural fallback photos if less than 2
-    if (result.length === 0) {
-      result = [
-        'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80'
-      ];
-    } else if (result.length === 1) {
-      // Duplicate second realistic angle so card always features at least 2 photos
-      result.push(result[0]);
-    }
     // Cap at maximum 6 photos
     return result.slice(0, 6);
   }, [images, image_url]);
@@ -110,8 +105,17 @@ export default function BulmaProductCard({
   const [orderQty, setOrderQty] = useState(Math.min(100, quantity_kg || 100));
 
   const priceRupees = (price_paise_per_kg / 100).toFixed(2);
-  const activePhoto = photoList[activePhotoIdx] || photoList[0];
-  const sideLogoUrl = side_logo || photoList[0];
+  const activePhoto = photoList[activePhotoIdx] || photoList[0] || '';
+  const sideLogoUrl = (side_logo && side_logo.trim().length > 0) ? side_logo : (photoList[0] || '');
+
+  const renderCategoryBadgeIcon = (cat: string) => {
+    const c = (cat || '').toLowerCase();
+    if (c.includes('veg')) return <Leaf className="w-6 h-6 text-emerald-300" />;
+    if (c.includes('fruit')) return <Apple className="w-6 h-6 text-amber-300" />;
+    if (c.includes('grain')) return <Wheat className="w-6 h-6 text-yellow-300" />;
+    if (c.includes('pulse') || c.includes('dal')) return <Layers className="w-6 h-6 text-amber-200" />;
+    return <Sprout className="w-6 h-6 text-emerald-300" />;
+  };
 
   const handlePrevPhoto = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -150,13 +154,18 @@ export default function BulmaProductCard({
           <div className="bulma-media">
             {/* Side Image Logo / Crop Emblem */}
             <div className="bulma-media-left">
-              <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-amber-500/40 shadow-md bg-emerald-950/10 shrink-0 flex items-center justify-center">
-                <img
-                  src={sideLogoUrl}
-                  alt="Crop Logo"
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+              <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-amber-500/40 shadow-md bg-gradient-to-br from-[#0F3826] to-[#072115] shrink-0 flex items-center justify-center">
+                {sideLogoUrl ? (
+                  <img
+                    src={sideLogoUrl}
+                    alt="Crop Logo"
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition duration-300"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center w-full h-full">
+                    {renderCategoryBadgeIcon(category)}
+                  </div>
+                )}
                 <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 bg-emerald-500 border border-white rounded-full" />
               </div>
             </div>
@@ -205,91 +214,93 @@ export default function BulmaProductCard({
         </div>
 
         {/* ===================================================
-            MIDDLE SECTION: 2 to 6 Photos Gallery via Farmer Insert
+            MIDDLE SECTION: 2 to 6 Photos Gallery via Farmer Insert (Rendered only when photos exist)
             =================================================== */}
-        <div className="card-image group/photo">
-          {/* Main Photo Display */}
-          <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-emerald-950">
-            <img
-              src={activePhoto}
-              alt={`${crop_name} photo ${activePhotoIdx + 1}`}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
+        {photoList.length > 0 && (
+          <div className="card-image group/photo">
+            {/* Main Photo Display */}
+            <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-emerald-950">
+              <img
+                src={activePhoto}
+                alt={`${crop_name} photo ${activePhotoIdx + 1}`}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
 
-            {/* Mandatory 2-6 Photo Counter Pill */}
-            <div className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md text-amber-200 text-[11px] font-bold px-2.5 py-1 rounded-full border border-white/20 flex items-center gap-1 shadow-lg">
-              <span>{language === 'hi' ? 'तस्वीर ' : 'Photo '}</span>
-              <span className="text-white font-extrabold">{activePhotoIdx + 1} / {photoList.length}</span>
-              <span className="text-[9px] text-emerald-300 ml-1 font-mono">
-                {language === 'hi' ? '(2-6 अनिवार्य)' : '(2-6 verified)'}
-              </span>
+              {/* Mandatory 2-6 Photo Counter Pill */}
+              <div className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md text-amber-200 text-[11px] font-bold px-2.5 py-1 rounded-full border border-white/20 flex items-center gap-1 shadow-lg">
+                <span>{language === 'hi' ? 'तस्वीर ' : 'Photo '}</span>
+                <span className="text-white font-extrabold">{activePhotoIdx + 1} / {photoList.length}</span>
+                <span className="text-[9px] text-emerald-300 ml-1 font-mono">
+                  {language === 'hi' ? '(2-6 अनिवार्य)' : '(2-6 verified)'}
+                </span>
+              </div>
+
+              {/* Organic Badge on Photo */}
+              {is_organic === 1 && (
+                <div className="absolute top-2.5 right-2.5 bg-emerald-700/90 backdrop-blur-md text-emerald-100 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-emerald-300/30 flex items-center gap-1 shadow">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-300" />
+                  <span>{language === 'hi' ? '100% जैविक' : '100% Organic'}</span>
+                </div>
+              )}
+
+              {/* Expand / Lightbox Trigger */}
+              <button
+                onClick={() => setShowLightbox(true)}
+                className="absolute bottom-2.5 right-2.5 p-1.5 rounded-lg bg-black/60 hover:bg-black/80 text-white/90 transition backdrop-blur-sm shadow"
+                title="Full Screen Photo View"
+              >
+                <Maximize2 className="w-4 h-4" />
+              </button>
+
+              {/* Photo Navigation Arrows */}
+              {photoList.length > 1 && (
+                <>
+                  <button
+                    onClick={handlePrevPhoto}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition shadow backdrop-blur-sm opacity-90 sm:opacity-0 group-hover/photo:opacity-100"
+                    aria-label="Previous Photo"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={handleNextPhoto}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition shadow backdrop-blur-sm opacity-90 sm:opacity-0 group-hover/photo:opacity-100"
+                    aria-label="Next Photo"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </>
+              )}
             </div>
 
-            {/* Organic Badge on Photo */}
-            {is_organic === 1 && (
-              <div className="absolute top-2.5 right-2.5 bg-emerald-700/90 backdrop-blur-md text-emerald-100 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-emerald-300/30 flex items-center gap-1 shadow">
-                <CheckCircle2 className="w-3 h-3 text-emerald-300" />
-                <span>{language === 'hi' ? '100% जैविक' : '100% Organic'}</span>
-              </div>
-            )}
-
-            {/* Expand / Lightbox Trigger */}
-            <button
-              onClick={() => setShowLightbox(true)}
-              className="absolute bottom-2.5 right-2.5 p-1.5 rounded-lg bg-black/60 hover:bg-black/80 text-white/90 transition backdrop-blur-sm shadow"
-              title="Full Screen Photo View"
-            >
-              <Maximize2 className="w-4 h-4" />
-            </button>
-
-            {/* Photo Navigation Arrows */}
-            {photoList.length > 1 && (
-              <>
+            {/* Middle Photo Thumbnails Strip (2 to 6 Photos) */}
+            <div className="bg-[#0F3826] px-3 py-2 flex items-center justify-center gap-2 border-t border-white/10">
+              <span className="text-[10px] text-amber-200/80 font-bold uppercase tracking-wider mr-1 hidden sm:inline">
+                {language === 'hi' ? 'गैलरी:' : 'Gallery:'}
+              </span>
+              {photoList.map((photo, pIdx) => (
                 <button
-                  onClick={handlePrevPhoto}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition shadow backdrop-blur-sm opacity-90 sm:opacity-0 group-hover/photo:opacity-100"
-                  aria-label="Previous Photo"
+                  key={pIdx}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActivePhotoIdx(pIdx);
+                  }}
+                  className={`relative w-8 h-8 sm:w-9 sm:h-9 rounded-lg overflow-hidden border-2 transition-all shrink-0 ${
+                    activePhotoIdx === pIdx
+                      ? 'border-amber-400 scale-110 shadow-lg ring-2 ring-amber-400/40'
+                      : 'border-white/30 opacity-70 hover:opacity-100'
+                  }`}
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  <img src={photo} alt={`Thumb ${pIdx + 1}`} className="w-full h-full object-cover" />
+                  <span className="absolute bottom-0 right-0 bg-black/70 text-[8px] text-white px-0.5 font-bold leading-none">
+                    {pIdx + 1}
+                  </span>
                 </button>
-                <button
-                  onClick={handleNextPhoto}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition shadow backdrop-blur-sm opacity-90 sm:opacity-0 group-hover/photo:opacity-100"
-                  aria-label="Next Photo"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </>
-            )}
+              ))}
+            </div>
           </div>
-
-          {/* Middle Photo Thumbnails Strip (2 to 6 Photos) */}
-          <div className="bg-[#0F3826] px-3 py-2 flex items-center justify-center gap-2 border-t border-white/10">
-            <span className="text-[10px] text-amber-200/80 font-bold uppercase tracking-wider mr-1 hidden sm:inline">
-              {language === 'hi' ? 'गैलरी:' : 'Gallery:'}
-            </span>
-            {photoList.map((photo, pIdx) => (
-              <button
-                key={pIdx}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActivePhotoIdx(pIdx);
-                }}
-                className={`relative w-8 h-8 sm:w-9 sm:h-9 rounded-lg overflow-hidden border-2 transition-all shrink-0 ${
-                  activePhotoIdx === pIdx
-                    ? 'border-amber-400 scale-110 shadow-lg ring-2 ring-amber-400/40'
-                    : 'border-white/30 opacity-70 hover:opacity-100'
-                }`}
-              >
-                <img src={photo} alt={`Thumb ${pIdx + 1}`} className="w-full h-full object-cover" />
-                <span className="absolute bottom-0 right-0 bg-black/70 text-[8px] text-white px-0.5 font-bold leading-none">
-                  {pIdx + 1}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
+        )}
 
         {/* ===================================================
             NICHE SECTION (Bottom): Detailed Product Specifications

@@ -33,13 +33,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "टमाटर (लाल देशी) (Tomato (Red)) - Pusa Ruby। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -53,13 +49,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "टमाटर (हाइब्रिड) (Tomato (Hybrid)) - Vaishali 108। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -73,13 +65,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "प्याज (नाशिक लाल) (Onion (Nashik Red)) - Bhima Red। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -93,13 +81,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सफेद प्याज (Onion (White)) - Bhima Shweta। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -113,13 +97,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "आलू (कुफरी ज्योति) (Potato (Jyoti)) - Kufri Jyoti। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -133,13 +113,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "आलू (कुफरी चंद्रमुखी) (Potato (Chandramukhi)) - Kufri Chandramukhi। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -153,13 +129,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "आलू (चिप्सोना) (Potato (Chipsona)) - Kufri Chipsona 1। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -173,13 +145,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "फूलगोभी (Cauliflower) - Pusa Snowball। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -193,13 +161,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हरी पत्तागोभी (Cabbage (Green)) - Golden Acre। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -213,13 +177,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लाल पत्तागोभी (Cabbage (Red)) - Red Dynasty। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -233,13 +193,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देसी पालक (Spinach (Palak)) - All Green। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -253,13 +209,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "भिंडी (Ladyfinger / Okra) - Pusa Sawani। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -273,13 +225,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गोल बैंगन (जामुनी) (Brinjal (Round Purple)) - Pusa Purple Round। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -293,13 +241,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लंबा बैंगन (Brinjal (Long)) - Pusa Purple Long। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -313,13 +257,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "छोटा हरा बैंगन (Brinjal (Green Small)) - Kashi Green। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -333,13 +273,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "तीखी हरी मिर्च (Green Chilli (Spicy)) - Jwala। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -353,13 +289,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कम तीखी हरी मिर्च (Green Chilli (Mild)) - Pusa Sadabahar। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -373,13 +305,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हरी शिमला मिर्च (Capsicum (Green)) - California Wonder। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -393,13 +321,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पीली शिमला मिर्च (Capsicum (Yellow)) - Golden Sun। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -413,13 +337,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लाल शिमला मिर्च (Capsicum (Red)) - Red Bull। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -433,13 +353,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ताज़ा अदरक (Ginger (Fresh)) - Maran Ginger। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -453,13 +369,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देसी लहसुन (Garlic (Desi)) - Yamuna Safed। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -473,13 +385,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऊटी लहसुन (Garlic (Ooty)) - Ooty 1। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -493,13 +401,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हरी लौकी (Bottle Gourd (Lauki)) - Pusa Naveen। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -513,13 +417,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देसी करेला (Bitter Gourd (Karela)) - Pusa Vishesh। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -533,13 +433,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "तोरई (Ridge Gourd (Torai)) - Pusa Nasdar। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -553,13 +449,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "नेनुआ / घिया तोरई (Sponge Gourd (Ghia Torai)) - Pusa Chikni। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -573,13 +465,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चिचिंडा / सांप लौकी (Snake Gourd (Chichinda)) - Co 1। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -593,13 +481,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "परवल (Pointed Gourd (Parwal)) - Rajendra Parwal 1। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -613,13 +497,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कुंदरू (Ivy Gourd (Kundru)) - Indira Kundru 5। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -633,13 +513,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पेठा कद्दू / भतुआ (Ash Gourd (Petha)) - Kashi Dhawal। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -653,13 +529,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पीला कद्दू (Pumpkin (Yellow)) - Arka Chandan। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -673,13 +545,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सफेद मूली (Radish (White Mooli)) - Pusa Chetki। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -693,13 +561,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लाल मूली (Radish (Red)) - Rapid Red White Tipped। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -713,13 +577,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देसी लाल गाजर (Carrot (Red Desi)) - Pusa Rudhira। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -733,13 +593,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑरेंज गाजर (Carrot (Orange)) - Nantes। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -753,13 +609,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चुकंदर (Beetroot) - Crimson Globe। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -773,13 +625,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सफेद शलजम (Turnip (Shalgam)) - Pusa Sweti। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -793,13 +641,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "शकरकंद (Sweet Potato (Shakarkand)) - Sree Bhadra। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -813,13 +657,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "जिमीकंद / सूरन (Elephant Foot Yam (Jimikand)) - Gajendra। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -833,13 +673,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "अरबी / घुइयां (Colocasia (Arbi)) - Pusa Panchmukhi। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -853,13 +689,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ताज़ी हरी मटर (Green Peas (Fresh)) - Arkel। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -873,13 +705,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "फ्रेंच बीन्स (French Beans) - Pusa Parvati। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -893,13 +721,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ग्वार फली (Cluster Beans (Guar)) - Pusa Navbahar। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -913,13 +737,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लोबिया फली / बोड़ा (Cowpea Pods (Lobia Phali)) - Pusa Komal। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -933,13 +753,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सेम की फली (Flat Beans (Sem Ki Phali)) - Pusa Early Prolific। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -953,13 +769,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सहजन की फली (Drumstick (Moringa)) - PKM-1। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -973,13 +785,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हरी कसूरी मेथी पत्ता (Fenugreek Leaves (Methi)) - Pusa Early Bunching। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -993,13 +801,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हरा धनिया (Coriander Leaves (Dhaniya)) - Pant Haritima। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1013,13 +817,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ताज़ा पुदीना (Mint Leaves (Pudina)) - Kosi Mint। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1033,13 +833,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सरसों का साग (Mustard Greens (Sarson Saag)) - Pusa Sag-1। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1053,13 +849,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बथुआ साग (Bathua Greens) - Local Desi। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1073,13 +865,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चौलाई साग (लाल व हरा) (Amaranth Greens (Cholai)) - Pusa Kirti। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1093,13 +881,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सोया साग / शेपू (Dill Leaves (Suva / Shepu)) - Local Shepu। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1113,13 +897,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कढ़ी पत्ता (Curry Leaves) - Suhasini। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1133,13 +913,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हरा प्याज / स्प्रिंग अनियन (Spring Onion) - White Lisbon। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1153,13 +929,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देसी खीरा (Cucumber (Desi Kheera)) - Pusa Uday। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1173,13 +945,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "इंग्लिश खीरा (Cucumber (English / Seedless)) - Kian Polyhouse। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1193,13 +961,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ककड़ी (Kakri (Armenian Cucumber)) - Lucknow Early। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1213,13 +977,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कच्चा पपीता (Raw Papaya (Kaccha Papita)) - Pusa Nanha। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1233,13 +993,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सब्जी वाला कच्चा केला (Raw Banana (Kaccha Kela)) - Monthan। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1253,13 +1009,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कच्चा कटहल (Raw Jackfruit (Kaccha Kathal)) - Rudrakshi। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1273,13 +1025,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कच्ची कैरी / टिकोरा (Raw Mango (Kaccha Aam / Kairi)) - Desi Sour। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1293,13 +1041,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देसी कागज़ी नींबू (Lemon (Desi Nimbu)) - Kagzi Lime। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1313,13 +1057,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बटन मशरूम (Mushroom (Button)) - Agaricus Bisporus। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1333,13 +1073,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ढींगरी मशरूम (Mushroom (Oyster)) - Pleurotus Florida। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1353,13 +1089,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हरी ब्रोकली (Broccoli) - Fiesta Hybrid। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1373,13 +1105,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हरी जुकिनी (Zucchini (Green)) - Black Beauty। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1393,13 +1121,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पीली जुकिनी (Zucchini (Yellow)) - Gold Rush। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1413,13 +1137,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "आइसबर्ग लेट्यूस (Lettuce (Iceberg)) - Iceberg Great Lakes। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1433,13 +1153,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "रोमेन लेट्यूस (Lettuce (Romaine)) - Paris Island। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1453,13 +1169,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बेबी कॉर्न (Baby Corn) - HM-4 Hybrid। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1473,13 +1185,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "अमेरिकन स्वीट कॉर्न भुट्टा (Sweet Corn Cob) - Madhuri Sweet। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1493,13 +1201,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "अजमोद / अजवाइन पत्ती (Celery) - Standard Celery। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1513,13 +1217,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "अजमोदा / पार्सले (Parsley) - Italian Flat Leaf। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1533,13 +1233,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बोक चोय / चीनी पत्तागोभी (Bok Choy) - Baby Pak Choy। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1553,13 +1249,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चेरी टमाटर (Cherry Tomato) - Pusa Cherry 1। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1573,13 +1265,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लीक / विलायती प्याज (Leek) - London Flag। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1593,13 +1281,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हाथीचक / आर्टिचोक (Artichoke) - Green Globe। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1613,13 +1297,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "शतावरी डंठल / एस्परैगस (Asparagus) - Mary Washington। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1633,13 +1313,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कमल ककड़ी / भें (Lotus Stem (Kamal Kakdi)) - Desi Dal Lake। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1653,13 +1329,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ताज़ा सिंघाड़ा (Water Chestnut (Singhara Fresh)) - Green Singhara। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1673,13 +1345,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "टिंडा (Tinda (Indian Round Gourd)) - Bikaneri Green। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1693,13 +1361,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कंटोला / खेखसा (Kantola / Spine Gourd) - Indira Kankoda 1। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1713,13 +1377,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गिलकी (Gilki (Smooth Luffa)) - Pusa Supriya। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1733,13 +1393,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चाउ चाउ / बैंगलोर बैंगन (Chayote / Chow Chow) - Green Pear Chow। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1753,13 +1409,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बाकला फली (Broad Beans (Bakla Fresh)) - Pusa Sumeet। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1773,13 +1425,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "भावनगरी मोटी मिर्च (Chilli (Bhavnagri Mild)) - Bhavnagri Bold। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1793,13 +1441,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गुंटूर तीखी मिर्च (Chilli (Guntur Sannam)) - Guntur S4। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1813,13 +1457,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ब्याडगी रंगीन मिर्च (Chilli (Byadgi)) - Byadgi Kaddi। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1833,13 +1473,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कच्ची गांठ हल्दी (Turmeric (Raw Raw Kacchi Haldi)) - Prathiba Raw। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1853,13 +1489,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ताज़ा आंवला (Amla / Indian Gooseberry) - Chakaiya / Banarasi। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1873,13 +1505,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गांठ गोभी (Kohlrabi (Ganth Gobhi)) - White Vienna। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1893,13 +1521,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सांभर छोटा प्याज (Red Onion (Sambar Small)) - CO 5 Small Onion। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1913,13 +1537,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सौंफ भाजी / साग (Sweet Fennel Greens (Saunf Saag)) - Local Fennel। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1933,13 +1553,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गोंगुरा पत्ता / खट्टा साग (Gongura (Roselle Leaves)) - Andhra Gongura। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1953,13 +1569,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पोई साग (Malabar Spinach (Poi Saag)) - Basella Alba। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1973,13 +1585,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "अगस्तिया फूल व पत्ता (Agathi Leaves (Hadga)) - White Agathi। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -1993,13 +1601,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ताज़े बांस के करील / कॉपल (Bamboo Shoots (Fresh)) - Dendrocalamus। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -2013,13 +1617,9 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "केले का फूल / मोचा (Banana Flower (Kele Ka Phool)) - Robusta Flower। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   }
 ];
@@ -2036,13 +1636,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हापुस आम (रत्नागिरी) (Mango (Alphonso / Hapus)) - Ratnagiri Alphonso। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2056,13 +1652,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "केसर आम (गिर जूनागढ़) (Mango (Kesar)) - Gir Kesar। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2076,13 +1668,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "दशहरी आम (मलिहाबाद) (Mango (Dasheri)) - Malihabadi Dasheri। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2096,13 +1684,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लंगड़ा आम (बनारसी) (Mango (Langra)) - Banarasi Langra। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2116,13 +1700,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चौंसा आम (Mango (Chausa)) - Hardoi Chausa। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2136,13 +1716,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बादामी आम (कर्नाटक) (Mango (Badami)) - Karnataka Badami। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2156,13 +1732,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सफेदा आम (बैंगनपल्ली) (Mango (Safeda / Banganapalli)) - AP Banganapalli। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2176,13 +1748,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "तोतापुरी आम (Mango (Totapuri)) - Krishnagiri Totapuri। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2196,13 +1764,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "आम्रपाली आम (Mango (Amrapali)) - Pusa Amrapali। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2216,13 +1780,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मल्लिका आम (Mango (Mallika)) - Pusa Mallika। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2236,13 +1796,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "शिमला सेब (रॉयल डेलिशियस) (Apple (Shimla Royal Delicious)) - Royal Delicious। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2256,13 +1812,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "किन्नौर गोल्डन सेब (Apple (Kinnaur Golden)) - Kinnaur Golden। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2276,13 +1828,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कश्मीरी सेब (लाल) (Apple (Kashmiri Red Delicious)) - Kashmiri Delicious। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2296,13 +1844,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "फूजी सेब (Apple (Fuji Indian)) - Kullu Fuji। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2316,13 +1860,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हरा सेब (ग्रैनी स्मिथ) (Apple (Granny Smith Green)) - Himachal Green। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2336,13 +1876,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "केला (रोबस्टा) (Banana (Robusta)) - Grand Naine G9। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2356,13 +1892,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "इलायची केला (यलक्की) (Banana (Yellaki / Elaichi)) - Mysore Elaichi। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2376,13 +1908,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "नेन्द्रन केला (केरल चिप्स) (Banana (Nendran)) - Kerala Nendran। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2396,13 +1924,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लाल केला (कमलापुर) (Banana (Red Dacca)) - Red Banana। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2416,13 +1940,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "रसथाली केला (Banana (Rasthali)) - Rasthali Silk। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2436,13 +1956,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "अनार (भगवा सिंदूरी) (Pomegranate (Bhagwa)) - Solapur Bhagwa। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2456,13 +1972,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "अनार (आरक्ता) (Pomegranate (Arakta)) - Arakta Deep Red। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2476,13 +1988,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "अनार (गणेश) (Pomegranate (Ganesh)) - Ganesh Soft Seed। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2496,13 +2004,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मौसंबी / मीठा संतरा (Sweet Orange (Mosambi)) - Jalna Mosambi। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2516,13 +2020,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "नागपुर संतरा (रसदार) (Nagpur Orange (Santra)) - Nagpur Mandarin। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2536,13 +2036,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पंजाब किन्नू (Kinnow Mandarin) - Abohar Kinnow। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2556,13 +2052,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "अंगूर (थॉम्पसन सीडलेस) (Grapes (Thompson Seedless)) - Nashik White Seedless। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2576,13 +2068,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "काला अंगूर (शरद सीडलेस) (Grapes (Sharad Seedless Black)) - Sharad Seedless। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2596,13 +2084,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "तास-ए-गणेश अंगूर (Grapes (Tas-A-Ganesh)) - Tas-A-Ganesh। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2616,13 +2100,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "रेड ग्लोब अंगूर (Grapes (Red Globe)) - Red Globe Table। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2636,13 +2116,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "इलाहाबादी सफेदा अमरूद (Guava (Allahabad Safeda)) - Allahabad Safeda। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2656,13 +2132,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सरदार अमरूद (L-49) (Guava (Lucknow 49 / Sardar)) - Lucknow 49। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2676,13 +2148,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "थाई पिंक अमरूद (Guava (Thai Pink Guava)) - Thai VNR Bihi। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2696,13 +2164,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ललित लाल अमरूद (Guava (Lalit Red Flesh)) - CISH Lalit। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2716,13 +2180,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पपीता (रेड लेडी 786) (Papaya (Taiwan 786 Red Lady)) - Taiwan Red Lady 786। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2736,13 +2196,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पूसा डेलिशियस पपीता (Papaya (Pusa Delicious)) - Pusa Delicious। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2756,13 +2212,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हनी ड्यू पपीता (Papaya (Honey Dew)) - Madhubindu। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2776,13 +2228,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "तरबूज (किरण) (Watermelon (Kiran Striped)) - Kiran Hybrid। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2796,13 +2244,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "काला तरबूज (जंबो) (Watermelon (Black Jumbo)) - Namdhari Black Jumbo। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2816,13 +2260,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पीला तरबूज (अनोखा) (Watermelon (Yellow Flesh)) - Yellow Honey। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2836,13 +2276,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देसी गोल खरबूजा (Muskmelon (Kharbuja Desi)) - Hara Madhu। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2856,13 +2292,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कुंदन खरबूजा (Muskmelon (Kundan Striped)) - Kundan Hybrid। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2876,13 +2308,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कैंटालूप रॉकमेलन (Cantaloupe / Rockmelon) - Sarda Melon। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2896,13 +2324,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "रानी अनानास (त्रिपुरा) (Pineapple (Queen)) - Tripura Queen। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2916,13 +2340,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "केव अनानास (बड़ा रसदार) (Pineapple (Kew Giant)) - Assam Giant Kew। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2936,13 +2356,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चीकू (कालीपट्टी) (Sapota / Chiku (Kalipatti)) - Dahanu Kalipatti। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2956,13 +2372,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "क्रिकेट बॉल चीकू (Sapota / Chiku (Cricket Ball)) - Cricket Ball Round। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2976,13 +2388,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सीताफल / शरीफा (बालानगर) (Custard Apple / Sitaphal (Balanagar)) - Balanagar Sitaphal। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -2996,13 +2404,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गोल्डन सीताफल (NMK-1) (Custard Apple (Golden / NMK-1)) - NMK-1 Super Golden। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3016,13 +2420,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "शाही लीची (मुजफ्फरपुर) (Litchi (Shahi Muzaffarpur)) - Muzaffarpur Shahi। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3036,13 +2436,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चाइना लीची (Litchi (China Late)) - China Late Seed। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3056,13 +2452,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "महाबलेश्वर स्ट्रॉबेरी (Strawberry (Winter Dawn)) - Winter Dawn। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3076,13 +2468,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कैमारोसा स्ट्रॉबेरी (Strawberry (Camarosa)) - Camarosa Bright। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3096,13 +2484,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ताज़ा अंजीर (पुणे) (Fig / Anjeer (Poona Fig)) - Poona Fig Purple। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3116,13 +2500,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "दिनकर मीठा अंजीर (Fig / Anjeer (Dinkar)) - Dinkar Hybrid। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3136,13 +2516,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ड्रैगन फ्रूट (लाल गूदा) (Dragon Fruit (Red Flesh)) - Hylocereus Costaricensis। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3156,13 +2532,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ड्रैगन फ्रूट (सफेद गूदा) (Dragon Fruit (White Flesh)) - Hylocereus Undatus। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3176,13 +2548,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हिमाचली कीवी फल (Kiwi Fruit (Himachal Hayward)) - Hayward Kiwi। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3196,13 +2564,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पका मीठा कटहल (बरहल) (Jackfruit (Ripe Kathal)) - Muttam Varikka। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3216,13 +2580,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बब्बूगोशा नाशपाती (Pear / Nashpati (Babbugosha)) - Kashmir Babbugosha। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3236,13 +2596,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पत्थरनख नाशपाती (Pear / Nashpati (Patharnakh)) - Punjab Patharnakh। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3256,13 +2612,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "आड़ू / पीच (Peach / Aadu (Flordasun)) - Flordasun Low Chill। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3276,13 +2628,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "आलूबुखारा (सतलुज पर्पल) (Plum / Aloo Bukhara (Satluj Purple)) - Satluj Purple। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3296,13 +2644,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लद्दाखी खुबानी (हलमान) (Apricot / Khubani (Ladakh Halman)) - Ladakh Raktsey Karpo। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3316,13 +2660,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कश्मीरी चेरी (डबल ग्लास) (Cherry (Kashmiri Double Glass)) - Double Glass Red। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3336,13 +2676,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मखमली मिश्री चेरी (Cherry (Makhmali Mishri)) - Mishri Sweet Cherry। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3356,13 +2692,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देसी मीठा नीम्बू (Sweet Lime / Mousambi Desi) - Coorg Mandarin Lime। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3376,13 +2708,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गुलाबी चकोतरा (Grapefruit / Chakotra (Pink)) - Ruby Red Pomelo। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3396,13 +2724,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सफेद बतावी नींबू / चकोतरा (Pomelo (White Desi Batabi)) - Assam Batabi। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3416,13 +2740,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सेब बेर (थाई ग्रीन) (Ber / Indian Jujube (Apple Ber)) - Thai Apple Ber। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3436,13 +2756,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "उमरान बेर (मीठा गोल) (Ber / Jujube (Umran Bold)) - Umran Late। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3456,13 +2772,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गोला बेर (Ber / Jujube (Gola)) - Gola Early। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3476,13 +2788,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बड़ा जामुन (राजा जामुन) (Jamun / Black Plum (Seedless Bold)) - Konkan Bahadoli। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3496,13 +2804,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बेल पत्र फल (शरबती) (Wood Apple / Bel (Bael Fruit)) - CISH Bael 1। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3516,13 +2820,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कैथा / कबीट (Wood Apple / Kaitha (Elephant Apple)) - Local Kaitha। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3536,13 +2836,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "करौंदा (आचार व चटनी) (Karonda (Bengal Currant)) - Pant Manohar। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3556,13 +2852,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "फालसा (देसी शरबती) (Phalsa (Sherbet Berry)) - Sharbati Phalsa। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3576,13 +2868,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "शहतूत (लंबा मीठा) (Mulberry (Shahtoot Long)) - Kashmiri Shahtoot। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3596,13 +2884,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पैशन फ्रूट (बैंगनी) (Passion Fruit (Purple)) - Kaveri Purple। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3616,13 +2900,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पैशन फ्रूट (पीला खट्टा-मीठा) (Passion Fruit (Yellow)) - Yellow Giant। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3636,13 +2916,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "एवोकैडो (हैस बटर फ्रूट) (Avocado (Hass India)) - Kodaikanal Hass। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3656,13 +2932,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "फुएर्ते एवोकैडो (Avocado (Fuerte Green)) - Coorg Fuerte। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3676,13 +2948,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ब्लूबेरी (नीलबदरी) (Blueberry (Indian Bilberry)) - Nilgiri Blue। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3696,13 +2964,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हिमालयन रसभरी (Raspberry (Himalayan Yellow)) - Rubus Ellipticus। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3716,13 +2980,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "रसभरी (पोहा बेरी) (Cape Gooseberry (Rasbhari)) - Golden Berry Poha। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3736,13 +2996,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मैंगोस्टीन (फलों की रानी) (Mangosteen) - Kerala Mangosteen। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3756,13 +3012,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "रामबुतान (बालदार लीची) (Rambutan) - Malwana Special। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3776,13 +3028,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कमरख / स्टार फ्रूट (Star Fruit / Kamrakh) - Sweet Star Golden। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3796,13 +3044,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "थाई मीठी इमली (Tamarind (Sweet Imli)) - Sweet Tamarind। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3816,13 +3060,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देसी खट्टी लाल इमली (Tamarind (Sour Red Desi)) - PKM 1 Sour। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3836,13 +3076,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बरही ताज़ा खजूर (पीला) (Date Palm (Barhee Fresh Yellow)) - Kutch Barhee Date। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3856,13 +3092,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मेदजूल खजूर (रसीला) (Date Palm (Medjool)) - Rajasthan Medjool। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3876,13 +3108,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "जैतून फल (हरा) (Olive (Rajasthan Green)) - Barnea Olive। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3896,13 +3124,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पानी सेब / जाम्बु (Water Apple / Wax Jambu) - Rose Apple Pink। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3916,13 +3140,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1609842947419-ba4f04d5d60f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "जामरुल / सफेद सेब (Malay Apple / Jamrul) - White Jamrul। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3936,13 +3156,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589217157232-464b505b197f?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "नीर फणस / ब्रेडफ्रूट (Breadfruit (Nirphanas)) - Konkan Breadfruit। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3956,13 +3172,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "जापानी फल (पर्सिमोन) (Persimmon / Japani Phal) - Fuyu Persimmon। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3976,13 +3188,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बही फल (क्विंस) (Quince / Bihi) - Kashmir Quince। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -3996,13 +3204,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "piece",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "नारियल पानी (डाभ / एलानीर) (Tender Coconut (Elaneer)) - Chowghat Orange Dwarf। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   },
   {
@@ -4016,13 +3220,9 @@ export const FRUITS_CATALOG: CatalogCropItem[] = [
     "unit": "piece",
     "grade": "प्रीमियम ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सूखा गोला नारियल (Mature Coconut (Copra Dry)) - West Coast Tall। मीठा, रसदार एवं प्राकृतिक रूप से परिपक्व।"
   }
 ];
@@ -4039,13 +3239,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देसी काला चना (Desi Chickpeas (Kala Chana)) - Pusa 362 Desi। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4059,13 +3255,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "काबुली चना (डॉलर बोल्ड) (Kabuli Chana (Dollar Bold)) - Phule G-0517। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4079,13 +3271,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चना दाल (बिना पॉलिश) (Chana Dal (Unpolished)) - Desi Split Grade-A। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4099,13 +3287,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "भुना चना छिलके वाला (Roasted Chana (With Husk)) - Pusa Roasted। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4119,13 +3303,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "भुनी चना दाल (दलिया/फुटाना) (Roasted Chana Dal (Dalia Split)) - South Roasted Split। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4139,13 +3319,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हरा चना / छोलिया (Green Chickpeas (Chholiya/Harbhara)) - Pusa Green 112। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4159,13 +3335,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑर्गेनिक काला चना (Organic Kala Chana) - Certified NPOP Desi। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4179,13 +3351,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "जेजी-11 देशी चना (JG-11 Desi Chana) - Jawahar Gram 11। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4199,13 +3367,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "विशाल चना (बड़ा दाना) (Vishal Bold Chana) - Phule G-87207। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4219,13 +3383,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बीजीएम 547 चना (BGM 547 Chickpeas) - BGM-547 High Yield। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4239,13 +3399,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "अरहर दाल (अनपॉलिश्ड) (Toor Dal Unpolished (Arhar)) - Desi Hand-Cleaned। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4259,13 +3415,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "फटका तूर दाल (Desi Toor Dal (Fatka)) - Latur Fatka Process। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4279,13 +3431,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑयली तूर दाल (Toor Dal (Oily Polished)) - Gujarat Oily Toor। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4299,13 +3447,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "साबुत अरहर (तूर गोटा) (Whole Red Gram (Arhar Sabut)) - Asha ICPL 87119। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4319,13 +3463,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑर्गेनिक अरहर दाल (Organic Arhar Dal) - NPOP Organic Arhar। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4339,13 +3479,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मारुति तूर दाल (Maruti Toor Dal) - ICP 8863 Maruti। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4359,13 +3495,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बीडीएन-711 अरहर (BDN-711 Arhar Dal) - BDN-711 Drought Hardy। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4379,13 +3511,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लातूर प्रीमियम तूर दाल (Latur Premium Toor) - Latur Special Grade 1। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4399,13 +3527,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गुलबर्गा लाल तूर (GI Tag) (Gulbarga Red Toor) - Gulbarga GI Red। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4419,13 +3543,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देसी यूपी अरहर दाल (UP Desi Pigeon Pea) - UP Narendra Arhar 1। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4439,13 +3559,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "साबुत हरी मूंग दाल (Green Moong Whole (Sabut)) - Pusa Vishal Shiny। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4459,13 +3575,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मूंग दाल छिलका (Moong Dal Split (Chilka)) - Cleaned Split Green। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4479,13 +3591,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "धुली मूंग दाल (पीली) (Moong Dal Yellow (Dhuli)) - Pusa 9531 Dhuli। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4499,13 +3607,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मूंग मोगर दाल (Moong Mogar (Polished Yellow)) - Premium Mogar। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4519,13 +3623,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑर्गेनिक साबुत मूंग (Organic Whole Green Moong) - Certified Organic Moong। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4539,13 +3639,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सम्राट मूंग दाल (Samrat Moong Beans) - PDM-139 Samrat। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4559,13 +3655,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "आईपीएम 02-3 हरी मूंग (IPM-02-3 Green Moong) - IPM 02-3 Bold Seed। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4579,13 +3671,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "अंकुरण हरी मूंग (Small Green Sprouting Moong) - Desi Tiny Sprout Grade। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4599,13 +3687,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चमकी हरी मूंग (Shiny Chamki Moong) - Chamki Maharashtra। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4619,13 +3703,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "एसएमएल 668 मूंग दाल (SML 668 Moong) - SML 668 Punjab। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4639,13 +3719,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "साबुत काली उड़द दाल (Black Urad Whole (Sabut)) - Pant Urad 31 Bold। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4659,13 +3735,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "उड़द दाल छिलका (काली/सफेद) (Urad Dal Split (Chilka)) - Shekhar-2 Split। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4679,13 +3751,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "धुली उड़द दाल (सफेद) (Urad Dal White (Dhuli)) - Macha Dhuli Super। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4699,13 +3767,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "उड़द गोटा साबुत (सफेद) (Urad Gota (Whole White Dehusked)) - Idli/Dosa Gota Grade। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4719,13 +3783,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑर्गेनिक काली उड़द (Organic Black Gram (Urad)) - Certified Organic Urad। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4739,13 +3799,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "टी-9 उड़द दाल (T-9 Urad Dal) - Type 9 Classic। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4759,13 +3815,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "वांबन उड़द दाल (Vamban Urad Dal) - Vamban 8 Tamil Nadu। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4779,13 +3831,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "एलपीजी 20 उड़द दाल (LBG-20 Urad Beans) - LBG-20 Coastal Andhra। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4799,13 +3847,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पहाड़ी काली उड़द (Uttarakhand Black Urad) - Pahadi Desi Organic। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4819,13 +3863,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "माश दाल स्पेशल (Mash Dal Special) - Special Makhani Mash। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4839,13 +3879,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "साबुत भूरी/काली मसूर (Masoor Whole Brown (Sabut Kali)) - Pusa Ageti 51। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4859,13 +3895,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लाल मसूर दाल (धुली) (Masoor Dal Split (Lal Masoor)) - KLS 218 Red Lentil। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4879,13 +3911,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मलका मसूर दाल (Malka Masoor (Bold Whole Red)) - Desi Bold Malka। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4899,13 +3927,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑर्गेनिक लाल मसूर (Organic Red Lentil Masoor) - Certified Organic Masoor। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4919,13 +3943,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "छोटी भूरी मसूर (Small Brown Masoor (Chhoti)) - Desi Tiny Lentil। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4939,13 +3959,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "डीपीएल 62 मसूर दाल (DPL 62 Masoor) - DPL 62 Disease Hardy। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4959,13 +3975,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "जेएल-3 मसूर दाल (JL-3 Masoor Dal) - Jawahar Lentil 3। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4979,13 +3991,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हिमालयन भूरी मसूर (Himalayan Brown Masoor) - Garhwal Hill Lentil। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -4999,13 +4007,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "शिवालिक मसूर दाल (Shivalik Bold Masoor) - Shivalik Big Grain। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5019,13 +4023,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पीली मसूर दाल (Yellow Masoor Dal) - Rare Yellow Masoor। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5039,13 +4039,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कश्मीरी लाल राजमा (छोटा) (Kashmiri Red Rajma) - Kashmir Valley Desi। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5059,13 +4055,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चित्रा राजma (हिमाचली) (Chitra Rajma (Spotted)) - Chitra Cream Speckled। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5079,13 +4071,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "जम्मू भद्रवाह राजमा (GI Tag) (Jammu Bhaderwah Rajma) - Bhaderwah Special GI। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5099,13 +4087,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "शर्मीली लाल राजमा (Sharmili Dark Red Rajma) - Sharmili Deep Burgundy। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5119,13 +4103,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चकराता पहाड़ी राजमा (Chakrata Pahadi Rajma) - Uttarakhand Chakrata। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5139,13 +4119,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सफेद राजमा (सफेद लोबिया बीन) (White Rajma (Cannellini)) - White Kidney Bean। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5159,13 +4135,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑर्गेनिक कश्मीरी राजमा (Organic Kashmiri Rajma) - NPOP Organic Jammu। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5179,13 +4151,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लाल चित्तीदार राजमा (Spotted Red Rajma) - Joshimath Speckled। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5199,13 +4167,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हर्षिल घाटी राजमा (Harsil Pahadi Rajma) - Harsil Valley Rare। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5219,13 +4183,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पूसा राजमा लाल (Pusa Red Kidney Bean) - Pusa Parvati Bean। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5239,13 +4199,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सूखे हरे मटर (Dried Green Peas (Sukha Matar)) - Rachna Field Pea। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5259,13 +4215,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सफेद मटर (वटाना) (Dried White Peas (Safed Vatana)) - HFP 4 White Pea। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5279,13 +4231,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पीली मटर दाल (Yellow Split Peas (Matar Dal)) - Split Dry Yellow Pea। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5299,13 +4247,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑर्गेनिक सूखा हरा मटर (Organic Dried Peas) - Certified Organic Pea। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5319,13 +4263,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बोल्ड सफेद वटाना (Bold White Vatana) - Mumbai Chaat Vatana। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5339,13 +4279,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "आईपीएपीडी 99-13 मटर (IPFD 99-13 Field Pea) - IPFD 99-13। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5359,13 +4295,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पूसा प्रगति सूखा मटर (Pusa Pragati Dry Pea) - Pusa Pragati। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5379,13 +4311,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कल्याणपुर सफेद मटर (Kalyanpur White Pea) - Kalyanpur Matar। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5399,13 +4327,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "काला काबुली चना (दुर्लभ) (Black Kabuli Chana) - Rare Black Garbanzo। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5419,13 +4343,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हिमाचली पहाड़ी काला चना (Himachali Kala Chana) - Kullu Valley Desi। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5439,13 +4359,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सफेद लोबिया (काली आंख / चौली) (White Lobia (Chawli / Rongi)) - Pusa Komal White। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5459,13 +4375,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लाल लोबिया (Red Lobia (Lal Chawli)) - Kerala Red Cowpea। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5479,13 +4391,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "भूरी छोटी लोबिया (Brown Small Cowpea) - Desi Brown Cowpea। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5499,13 +4407,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑर्गेनिक सफेद लोबिया (Organic White Lobia) - Certified Organic Chawli। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5519,13 +4423,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पूसा सुकोमल लोबिया (Pusa Sukomal Cowpea) - Pusa Sukomal Dual। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5539,13 +4439,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पूसा फाल्गुनी लोबिया (Pusa Phalguni Cowpea) - Pusa Phalguni Dwarf। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5559,13 +4455,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गोल्डन आई लोबिया (Golden Eye Cowpea) - Amber Cowpea। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5579,13 +4471,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "काली लोबिया (Black Lobia (Kala Cowpea)) - Rare Black Cowpea। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5599,13 +4487,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गुजरात चौली 3 (Gujarat Chawli 3) - GC-3 High Yield। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5619,13 +4503,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बुंदेलखंड लाल लोबिया (Bundelkhand Red Lobia) - Bundelkhand Desi। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5639,13 +4519,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "साबुत मोठ / मटकी (Whole Moth Beans (Matki)) - RMO-40 Bikaneri। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5659,13 +4535,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मोठ दाल छिलका (Moth Dal Split (Chilka)) - Split Marwar Moth। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5679,13 +4551,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मोठ मोगर दाल (धुली) (Moth Mogar (Dhuli)) - Rajasthan Bhujia Mogar। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5699,13 +4567,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑर्गेनिक मोठ दाल (Organic Moth Beans) - Certified Organic Matki। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5719,13 +4583,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "आरएमओ-225 मरु मोठ (RMO-225 Maru Moth) - RMO-225 Drought Proof। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5739,13 +4599,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "साबुत कुलथी / हुलगा (Horse Gram Whole (Kulthi / Hulgah)) - CRIDA 18 Horsegram। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5759,13 +4615,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "भूरी कुलथी दाल (Brown Horse Gram (Kulthi)) - Desi Brown Kulthi। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5779,13 +4631,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "काली कुलथी दाल (Black Horse Gram (Kala Kulthi)) - Southern Black Kulthi। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5799,13 +4647,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑर्गेनिक कुलथी दाल (Organic Kulthi Dal) - Certified Organic Horsegram। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5819,13 +4663,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "उत्तराखंडी गहत दाल (कुलथी) (Himalayan Gahat Dal) - Pahadi Gahat GI Special। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5839,13 +4679,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पीला सोयाबीन (दाना) (Yellow Soybean Whole) - JS-335 Madhya Pradesh। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5859,13 +4695,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "काला सोयाबीन (भट की दाल) (Black Soybean (Bhatt Ki Dal)) - Kumaoni Bhatmash। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5879,13 +4711,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ऑर्गेनिक पीला सोयाबीन (Organic Yellow Soybean) - NPOP Non-GMO Soya। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5899,13 +4727,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "जेएस-9560 सोयाबीन (JS-9560 Soybean) - JS-9560 Early Harvest। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5919,13 +4743,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "वाल दाल (कड़वे वाल) (Val Dal / Field Beans Split (Kadvave)) - Konkan Val Split। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5939,13 +4759,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सुरती पापड़ी लिलवा दाना (Surti Papdi Lilva Beans) - Surti Special Papdi। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5959,13 +4775,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बाकला दाल / फाबा बीन (Faba Bean / Bakla Dal) - Pusa Sumeet Dry Bean। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5979,13 +4791,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पंचमेल दाल मिक्स (प्रीमियम) (Panchmel Dal Mix (5 Dal)) - 5-Dal Royal Rajasthan। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -5999,13 +4807,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "प्रीमियम ग्रेड A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1589135233689-d49914b43729?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "नवरत्न मिक्स दाल (Navratan Mix Dal (9 Lentils)) - 9-Pulses Protein Blend। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   },
   {
@@ -6019,13 +4823,9 @@ export const PULSES_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्च गुणवत्ता ग्रेड A",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हाथ कुटी देसी अरहर दाल (Hand-Pounded Organic Toor Dal) - Traditional Hath Kuti। उच्च प्रोटीन, शुद्ध एवं गैर-पॉलिश की हुई दाल।"
   }
 ];
@@ -6045,13 +4845,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "शरबाती गेहूं (मध्य प्रदेश सीहोर) (Sharbati Wheat (MP Sehore)) - C-306 Golden। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6065,13 +4861,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "लोकवान गेहूं (Lokwan Wheat (Maharashtra)) - Lokwan Bold Grain। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6085,13 +4877,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "खपली गेहूं (डायबिटीज स्पेशल) (Khapli / Emmer Wheat) - DDK-1029 Ancient। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6105,13 +4893,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गेहूं HD-2967 (HD-2967 Wheat) - HD-2967 High Yield। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6125,13 +4909,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गेहूं पूसा गौतमी (HD-3086) (HD-3086 Wheat (Pusa Gautami)) - HD-3086 Pusa। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6145,13 +4925,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "बंशी काठिया गेहूं (ड्यूरम) (Bansi Kathiya Wheat (Durum)) - HI-8498 Durum। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6165,13 +4941,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "काला गेहूं (एंटीऑक्सीडेंट युक्त) (Black Wheat (Kala Gehu)) - NABI Black Wheat। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6185,13 +4957,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पूसा बासमती 1121 (Pusa Basmati 1121 Paddy/Rice) - PB 1121 Extra Long। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6205,13 +4973,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पूसा बासमती 1509 (Pusa Basmati 1509 Paddy/Rice) - PB 1509 Early। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6225,13 +4989,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पूसा बासमती 1718 (Pusa Basmati 1718) - PB 1718 Resistant। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6245,13 +5005,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देहरादूनी बासमती चावल (Traditional Dehraduni Basmati) - Type 3 Heritage। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6265,13 +5021,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "गोविंदभोग खुशबूदार चावल (Govindobhog Rice (Bengal)) - Bengal Govindobhog GI। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6285,13 +5037,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "काला नमक चावल (बुद्ध का उपहार) (Kalanamak Rice (Siddharthnagar)) - KN-3 Kalanamak GI। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6305,13 +5053,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सोना मसूरी चावल (Sona Masoori Rice (Kurnool)) - BPT 5204 Sona। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6325,13 +5069,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सीरगा सांबा बिरयानी चावल (Jeera Samba Rice (Seeraga Samba)) - Tamil Nadu Samba GI। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6345,13 +5085,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "वाडा कोलम चावल (Kolam Rice (Wada Maharashtra)) - Zini Wada Kolam GI। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6365,13 +5101,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "इंद्रायणी सुगंधित चावल (Indrayani Rice (Maval Fragrant)) - Indrayani Selection। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6385,13 +5117,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "केरल मट्टा लाल चावल (Red Rice (Matta Palakkadan)) - Palakkad Matta GI। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6405,13 +5133,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मणिपुरी काला चावल (चाक-हाओ) (Black Rice (Chak-Hao Manipur)) - Chak-Hao Black GI। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6425,13 +5149,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "ब्राउन राइस (अनपॉलिश्ड) (Brown Rice (Unpolished Basmati)) - PB 1121 Brown Whole। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6445,13 +5165,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "स्वर्णा चावल (Swarna Rice (IR-36)) - MTU 7029 Swarna। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6465,13 +5181,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "IR-64 सफेद चावल (IR-64 Raw Rice) - IR-64 Semi Dwarf। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6485,13 +5197,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मिनिकिट चावल (Miniket Rice (Bengal)) - Shatabdi Miniket। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6505,13 +5213,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "देसी बाजरा (Pearl Millet / Bajra (Desi)) - HHB 67 Improved। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6525,13 +5229,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "हाइब्रिड बाजरा (Bajra Hybrid (Rajasthan)) - ProAgro 9444। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6545,13 +5245,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "मालदांडी ज्वार (सफेद) (Sorghum / Jowar (Maldandi White)) - Maldandi M 35-1। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6565,13 +5261,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पीली ज्वार (Sorghum / Jowar (Yellow Desi)) - Parbhani Moti। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6585,13 +5277,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "रागी / मड़ुआ / नाचनी (Finger Millet / Ragi (Mandua)) - GPU 28 High Calcium। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6605,13 +5293,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कंगनी / काकुन मिलेट (Foxtail Millet / Kangni) - SiA 3088 Foxtail। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6625,13 +5309,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सांवा / झंगोरा मिलेट (Barnyard Millet / Sanwa / Jhangora) - PRJ 1 Barnyard। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6645,13 +5325,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कुटकी मिलेट (Little Millet / Kutki) - JK 8 Little Millet। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6665,13 +5341,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कोदो मिलेट (Kodo Millet / Kodra) - RBK 155 Kodo। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6685,13 +5357,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "चीना / वरी मिलेट (Proso Millet / Cheena) - TNAU Proso 202। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6705,13 +5373,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पीला मक्का दाना (Yellow Maize / Corn Grain) - Pioneer 3396 Maize। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6725,13 +5389,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सफेद मक्का (White Maize (Desi Makka)) - Ganga Safed 2। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6745,13 +5405,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "स्वीट कॉर्न दाना (Sweet Corn Grain) - Sugar 75 Grain। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6765,13 +5421,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पॉपकॉर्न मक्का दाना (Popcorn Maize Grain) - Amber Popcorn। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6785,13 +5437,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "जौ दाना (छह पंक्ति) (Barley / Jau (Six Row)) - RD 2035 Six Row। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6805,13 +5453,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "छिलका रहित जौ (Hullless Barley (Jau Chhilka Mukt)) - Karan 16 Hullless। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6825,13 +5469,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "जई दाना (होल ओट्स) (Oats Grain / Jai) - Kent Oat Grain। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6845,13 +5485,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "राई अनाज (रई) (Rye Grain) - Winter Rye Russian। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6865,13 +5501,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "कुट्टू दाना (साबुत) (Buckwheat / Kuttu (Fagopyrum)) - Shimla B1 Buckwheat। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6885,13 +5517,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "राजगिरा / रामदाना (Amaranth Grain / Rajgira / Ramdana) - Suvarna Amaranth। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6905,13 +5533,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "भारतीय सफेद क्विनोआ (Quinoa Grain (Indian White)) - Himachal White Quinoa। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6925,13 +5549,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "तीसी / अलसी दाना (Flaxseed Grain / Alsi) - Garima High Lignan। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6945,13 +5565,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सफेद तिल (Sesame / Til (White Desi)) - RT 351 White Sesame। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6965,13 +5581,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "काला तिल (Sesame / Til (Black Kala Til)) - TKG 22 Black Sesame। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -6985,13 +5597,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "पीली सरसों दाना (Mustard Grain / Sarson (Pusa Bold)) - Pusa Bold 40% Oil। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -7005,13 +5613,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 1,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "काली राई दाना (Black Mustard / Rai (Small)) - Kranti Black Mustard। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -7025,13 +5629,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1627998670817-48f8bca15a4d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "साबुत मूंगफली (छिलके सहित) (Groundnut Pods / Mungfali (In Shell)) - TAG 24 Trombay। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -7045,13 +5645,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "मंडी प्रमाणित ग्रेड A",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सोयाबीन दाना (फूड ग्रेड) (Soybean Grain (Yellow Grains)) - JS-335 Cleaned। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   },
   {
@@ -7065,13 +5661,9 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     "unit": "kg",
     "grade": "उच्चतम श्रेणी A+",
     "isOrganic": 0,
-    "photos": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
-    ],
-    "thumbnail": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    "photos": [],
+    "thumbnail": "",
+    "sideLogo": "",
     "description": "सूरजमुखी दाना (Sunflower Seeds Grain / Surajmukhi) - KBSH 44 Hybrid। नमी नियंत्रित, स्वच्छ एवं उच्च पोषण मूल्य।"
   }
 ];
@@ -7113,24 +5705,12 @@ export function createCustomCatalogItem(params: {
   quantityKg?: number;
   location?: string;
 }): CatalogCropItem {
-  // Ensure valid photo set (2-6 photos)
+  // Ensure valid photo set
   let cleanPhotos = Array.isArray(params.photos)
-    ? params.photos.filter((p) => typeof p === 'string' && p.trim().length > 0)
+    ? params.photos.filter((p) => typeof p === 'string' && p.trim().length > 0).slice(0, 6)
     : [];
 
-  if (cleanPhotos.length === 0) {
-    cleanPhotos = [
-      'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
-    ];
-  } else if (cleanPhotos.length === 1) {
-    cleanPhotos.push(cleanPhotos[0]);
-  }
-
-  // Cap at 6 photos
-  cleanPhotos = cleanPhotos.slice(0, 6);
-
-  const mainPhoto = cleanPhotos[0];
+  const mainPhoto = cleanPhotos[0] || '';
   const pRupees = Math.max(1, params.priceRupees || 30);
   const isOrg = typeof params.isOrganic === 'boolean' ? (params.isOrganic ? 1 : 0) : (params.isOrganic || 0);
   const cleanId = params.id ? String(params.id) : `custom_${Date.now()}`;
