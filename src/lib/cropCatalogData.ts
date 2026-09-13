@@ -1,4 +1,29 @@
 // Auto-generated 352 Crop Catalog Data: 100 Vegetables, 100 Fruits, 100 Pulses, 52 Grains
+import { matchCropImagesByName } from './cropImageMatcher';
+import productImagesRegistry from '@/data/product_images.json';
+
+export interface StructuredLogo {
+  link_id: string;
+  url: string;
+  alt: string;
+  type?: string;
+  aspect_ratio?: string;
+  format?: string;
+}
+
+export interface StructuredImageItem {
+  link_id: string;
+  url: string;
+  alt?: string;
+  type?: string;
+}
+
+export interface StructuredImages {
+  primary: StructuredImageItem;
+  thumbnail: StructuredImageItem;
+  gallery: StructuredImageItem[];
+}
+
 export interface CatalogCropItem {
   id: string;
   name: string;
@@ -13,6 +38,9 @@ export interface CatalogCropItem {
   photos: string[]; // 2 to 6 photos mandatory
   thumbnail: string;
   sideLogo?: string;
+  logo_url?: string;
+  logo?: StructuredLogo;
+  imagesStructure?: StructuredImages;
   description: string;
   isCustom?: boolean; // Flag for produce not in the 352 catalog
   farmerId?: string;
@@ -854,12 +882,12 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     "grade": "मंडी प्रमाणित ग्रेड B",
     "isOrganic": 0,
     "photos": [
-      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1592394533824-9440e5d68530?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
     ],
-    "thumbnail": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
-    "sideLogo": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=800&q=80",
+    "thumbnail": "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?auto=format&fit=crop&w=800&q=80",
+    "sideLogo": "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?auto=format&fit=crop&w=800&q=80",
     "description": "ताज़ी हरी मटर (Green Peas (Fresh)) - Arkel। उच्च गुणवत्ता युक्त, खेत से सीधे संकलित।"
   },
   {
@@ -7076,12 +7104,52 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
   }
 ];
 
+const mediaMap = new Map<string, any>(
+  (productImagesRegistry as any[]).map((entry) => [entry.product_id, entry])
+);
+
+export function getProductMedia(productId: string) {
+  return mediaMap.get(productId) || null;
+}
+
 export const FULL_CROP_CATALOG: CatalogCropItem[] = [
   ...VEGETABLES_CATALOG,
   ...FRUITS_CATALOG,
   ...PULSES_CATALOG,
   ...GRAINS_CATALOG,
-];
+].map((item) => {
+  const match = matchCropImagesByName(item.name);
+  const media = mediaMap.get(item.id);
+
+  let updatedPhotos = match.matched ? [...match.photos] : [...item.photos];
+  let updatedThumb = match.matched ? match.sideLogo : item.thumbnail;
+  let updatedLogo = media?.logo_url || (match.matched ? match.sideLogo : item.sideLogo);
+
+  if (media) {
+    if (media.primary_image_url) {
+      updatedPhotos = [media.primary_image_url, ...(media.gallery_urls || [])];
+    }
+    if (media.thumbnail_url) {
+      updatedThumb = media.thumbnail_url;
+    }
+  }
+
+  return {
+    ...item,
+    photos: updatedPhotos,
+    thumbnail: updatedThumb,
+    sideLogo: updatedLogo,
+    logo_url: updatedLogo,
+    logo: media?.logo_structure || {
+      link_id: `lnk_logo_${item.id}`,
+      url: updatedLogo,
+      alt: `${item.name} Official Product Logo`,
+      type: 'square_logo',
+      aspect_ratio: '1:1',
+    },
+    imagesStructure: media?.images_structure,
+  };
+});
 
 export const CATALOG_STATS = {
   vegetablesCount: 100,
@@ -7151,6 +7219,31 @@ export function createCustomCatalogItem(params: {
     photos: cleanPhotos,
     thumbnail: mainPhoto,
     sideLogo: mainPhoto,
+    logo_url: mainPhoto,
+    logo: {
+      link_id: `lnk_logo_${cleanId}`,
+      url: mainPhoto,
+      alt: `${engName} Logo`,
+      type: 'square_logo',
+      aspect_ratio: '1:1',
+    },
+    imagesStructure: {
+      primary: {
+        link_id: `lnk_img_${cleanId}_primary`,
+        url: mainPhoto,
+        alt: `${engName} Primary View`,
+      },
+      thumbnail: {
+        link_id: `lnk_img_${cleanId}_thumb`,
+        url: mainPhoto,
+        alt: `${engName} Thumbnail`,
+      },
+      gallery: cleanPhotos.map((p, idx) => ({
+        link_id: `lnk_img_${cleanId}_gal_${idx + 1}`,
+        url: p,
+        alt: `${engName} Photo ${idx + 1}`,
+      })),
+    },
     description:
       params.description ||
       `${hiName} (${engName}) - अनलिस्टेड फसल जो 352 कैटलॉग में नहीं है। किसान द्वारा 2-6 फोटो सहित सीधे पंजीकृत।`,

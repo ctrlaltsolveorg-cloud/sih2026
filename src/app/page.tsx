@@ -41,6 +41,8 @@ interface Listing {
   hub_location: string;
   image_url?: string;
   images?: string[];
+  logo_url?: string;
+  side_logo?: string;
   unit?: string;
 }
 
@@ -96,6 +98,8 @@ export default function HomePage() {
               hub_location: 'नासिक एग्रो-हब #04',
               image_url: photos[0],
               images: photos,
+              logo_url: item.logo_url || item.sideLogo || photos[0],
+              side_logo: item.logo_url || item.sideLogo || photos[0],
               unit: item.unit || 'kg',
             };
           });
@@ -137,6 +141,8 @@ export default function HomePage() {
                 hub_location: c.district ? `${c.district} एग्रो-हब` : 'नासिक एग्रो-हब #04',
                 image_url: photoList[0],
                 images: photoList,
+                logo_url: c.logo_url || photoList[0],
+                side_logo: c.logo_url || photoList[0],
                 unit: c.unit || 'kg',
               };
             });
@@ -161,6 +167,8 @@ export default function HomePage() {
           hub_location: 'राज्य संकलन एग्रो-हब',
           image_url: item.photos[0],
           images: item.photos,
+          logo_url: item.logo_url || item.sideLogo,
+          side_logo: item.logo_url || item.sideLogo,
           unit: item.unit,
         }));
 
@@ -217,10 +225,20 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Hero Banner Section */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0F3826] via-[#164E35] to-[#0A2619] text-amber-50 p-8 sm:p-12 shadow-2xl border border-amber-500/20">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
+      {/* Hero Banner Section with Agriculture Farm Background */}
+      <div className="relative overflow-hidden rounded-3xl text-amber-50 p-8 sm:p-12 shadow-2xl border border-amber-500/30">
+        {/* Background Farm Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105 transition-transform duration-1000 ease-out"
+          style={{ backgroundImage: "url('/images/hero_farm_bg.jpg')" }}
+        />
+        {/* Multi-layer Dark Gradient & Atmosphere Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#072417]/95 via-[#0F3826]/88 to-[#092b1b]/92" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-500/15 via-transparent to-black/40" />
+
+        {/* Ambient Glows */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-7 space-y-6">
@@ -256,28 +274,28 @@ export default function HomePage() {
           </div>
 
           <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-            <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
+            <div className="p-5 bg-[#072417]/65 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-amber-400/60 hover:bg-[#072417]/80 transition">
               <div className="text-3xl font-extrabold text-amber-400">0%</div>
-              <div className="text-xs text-amber-200/80 font-medium">{t.statMiddlemen}</div>
-              <p className="text-[10px] text-amber-300/60">{t.statMiddlemenDesc}</p>
+              <div className="text-xs text-amber-100 font-medium">{t.statMiddlemen}</div>
+              <p className="text-[10px] text-amber-200/70">{t.statMiddlemenDesc}</p>
             </div>
 
-            <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
+            <div className="p-5 bg-[#072417]/65 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-emerald-400/60 hover:bg-[#072417]/80 transition">
               <div className="text-3xl font-extrabold text-emerald-400">99.4%</div>
-              <div className="text-xs text-amber-200/80 font-medium">{t.statCVGrading}</div>
-              <p className="text-[10px] text-amber-300/60">{t.statCVGradingDesc}</p>
+              <div className="text-xs text-amber-100 font-medium">{t.statCVGrading}</div>
+              <p className="text-[10px] text-amber-200/70">{t.statCVGradingDesc}</p>
             </div>
 
-            <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
+            <div className="p-5 bg-[#072417]/65 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-amber-400/60 hover:bg-[#072417]/80 transition">
               <div className="text-3xl font-extrabold text-amber-400">6 AI</div>
-              <div className="text-xs text-amber-200/80 font-medium">{t.statAIEngines}</div>
-              <p className="text-[10px] text-amber-300/60">{t.statAIEnginesDesc}</p>
+              <div className="text-xs text-amber-100 font-medium">{t.statAIEngines}</div>
+              <p className="text-[10px] text-amber-200/70">{t.statAIEnginesDesc}</p>
             </div>
 
-            <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center space-y-1">
+            <div className="p-5 bg-[#072417]/65 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-emerald-400/60 hover:bg-[#072417]/80 transition">
               <div className="text-3xl font-extrabold text-emerald-400">IVR/SMS</div>
-              <div className="text-xs text-amber-200/80 font-medium">{t.statNoInternet}</div>
-              <p className="text-[10px] text-amber-300/60">{t.statNoInternetDesc}</p>
+              <div className="text-xs text-amber-100 font-medium">{t.statNoInternet}</div>
+              <p className="text-[10px] text-amber-200/70">{t.statNoInternetDesc}</p>
             </div>
           </div>
         </div>
@@ -600,6 +618,8 @@ export default function HomePage() {
                 farmer_name={item.farmer_name}
                 location={item.location}
                 images={item.images || (item.image_url ? [item.image_url] : undefined)}
+                logo_url={item.logo_url}
+                side_logo={item.side_logo}
                 unit={item.unit}
                 onAddToCart={(c) =>
                   addToCart({

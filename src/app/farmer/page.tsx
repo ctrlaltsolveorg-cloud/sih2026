@@ -24,6 +24,11 @@ import {
   getStoredCustomCatalogItems
 } from '@/lib/cropCatalogData';
 import {
+  matchCropImagesByName,
+  getCropLogoUrl,
+  getCropPhotosByName
+} from '@/lib/cropImageMatcher';
+import {
   Tractor,
   Plus,
   Sparkles,
@@ -116,6 +121,8 @@ export default function FarmerDashboardPage() {
 
   // User-isolated active listings
   const [myListings, setMyListings] = useState<any[]>([]);
+  const [isSeedingAll, setIsSeedingAll] = useState(false);
+  const [seedStatusMessage, setSeedStatusMessage] = useState<string | null>(null);
 
   // Filtered catalog items for quick-picker
   const filteredCatalogItems = useMemo(() => {
@@ -153,7 +160,7 @@ export default function FarmerDashboardPage() {
       const pRupees = parseFloat(c.priceRupees) || (c.pricePaise ? c.pricePaise / 100 : 40);
       const photoArray = Array.isArray(c.photos) && c.photos.length > 0
         ? c.photos
-        : [c.imageUrl || 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80'];
+        : (c.imageUrl ? [c.imageUrl] : getCropPhotosByName(c.crop || c.crop_name));
 
       return createCustomCatalogItem({
         id: String(c.id),
@@ -317,6 +324,70 @@ export default function FarmerDashboardPage() {
     } else {
       setEditingCropId(null);
     }
+  };
+
+  // =========================================================
+  // INTELLIGENT NAME-TO-LOGO & PRODUCE IMAGE AUTO-UPLOADER
+  // Matches name (e.g. "onion", "प्याज", "potato", etc.) to real produce logo and photos!
+  // =========================================================
+  const handleCropNameChange = (val: string) => {
+    setCropName(val);
+    if (!val || val.trim().length < 2) return;
+
+    const match = matchCropImagesByName(val);
+    if (match.matched) {
+      setPhotos([...match.photos]);
+      setPhotoError(null);
+      if (match.category && match.category !== 'Seeds') {
+        setCategory(match.category as any);
+      }
+      if (!cropNameHi || cropNameHi.trim() === '' || cropNameHi.includes('टमाटर') || cropNameHi.includes('फसल')) {
+        setCropNameHi(match.canonicalNameHi);
+      }
+      if (variety === 'देसी / स्थानीय फसल (Local Harvest)' || !variety) {
+        setVariety(match.variety);
+      }
+    }
+  };
+
+  const handleApplyPresetCrop = (presetName: string) => {
+    const match = matchCropImagesByName(presetName);
+    setCropName(match.canonicalName);
+    setCropNameHi(match.canonicalNameHi);
+    if (match.category && match.category !== 'Seeds') {
+      setCategory(match.category as any);
+    }
+    setVariety(match.variety);
+    setBasePriceRupees(String(match.suggestedPriceRupees || 30));
+    setPhotos([...match.photos]);
+    setPhotoError(null);
+    triggerSuccessSignal(
+      language === 'hi'
+        ? `🧅 "${match.canonicalNameHi}" का मुख्य लोगो व ${match.photos.length} सत्यापित तस्वीरें स्वतः अपलोड की गईं!`
+        : `🧅 Auto-uploaded logo & ${match.photos.length} verified photos for "${match.canonicalName}"!`
+    );
+  };
+
+  const handleAutoMatchLogoFromCropName = () => {
+    const target = cropName.trim();
+    if (!target) {
+      alert(language === 'hi' ? 'कृपया पहले फसल का नाम दर्ज करें' : 'Please enter crop name first');
+      return;
+    }
+    const match = matchCropImagesByName(target);
+    setPhotos([...match.photos]);
+    setPhotoError(null);
+    if (match.category && match.category !== 'Seeds') {
+      setCategory(match.category as any);
+    }
+    if (!cropNameHi || cropNameHi.trim() === '') {
+      setCropNameHi(match.canonicalNameHi);
+    }
+    triggerSuccessSignal(
+      language === 'hi'
+        ? `🎯 नाम "${target}" के अनुसार ${match.canonicalNameHi} का मुख्य लोगो व ${match.photos.length} तस्वीरें स्वतः अपलोड की गईं!`
+        : `🎯 Auto-matched and uploaded logo & ${match.photos.length} photos for "${match.canonicalName}"!`
+    );
   };
 
   // Photo handlers (2 to 6 photos validation - supports multiple file upload from camera/device)
@@ -500,25 +571,6 @@ export default function FarmerDashboardPage() {
   // Produce Submission (Farmer Desk to Buyer) - Handles Both New Registration & Existing Update
   const handleAddProduce = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // STRICT VALIDATION: 2 photos mandatory and maximum 6 photos!
-    if (photos.length < 2) {
-      setPhotoError(
-        language === 'hi'
-          ? 'फसल पंजीकरण / अपडेट हेतु कम से कम 2 तस्वीरें अनिवार्य हैं! (अधिकतम 6 तस्वीरें)'
-          : 'Minimum 2 photos are mandatory for produce registration or update! (Max 6 photos)'
-      );
-      return;
-    }
-
-    if (photos.length > 6) {
-      setPhotoError(
-        language === 'hi'
-          ? 'अधिकतम 6 तस्वीरें ही अनुमत हैं!'
-          : 'Maximum 6 photos allowed!'
-      );
-      return;
-    }
 
     setIsSubmitting(true);
     setPhotoError(null);
@@ -1174,7 +1226,6 @@ export default function FarmerDashboardPage() {
                         </button>
                         {unlistedCustomCrops.map((c) => {
                           const isCurrentlyEditing = editingCropId === c.id;
-                          const cropThumb = (c.photos && c.photos[0]) || c.imageUrl;
                           return (
                             <button
                               key={c.id}
@@ -1185,11 +1236,9 @@ export default function FarmerDashboardPage() {
                                   : 'bg-white hover:bg-amber-50 text-emerald-950 border-emerald-900/20'
                                 }`}
                             >
-                              <img
-                                src={cropThumb}
-                                alt={c.crop || c.crop_name}
-                                className="w-10 h-10 object-cover rounded-lg border border-amber-500/30 shrink-0"
-                              />
+                              <div className="w-8 h-8 rounded-lg bg-emerald-100/80 border border-emerald-900/15 flex items-center justify-center text-sm font-bold shrink-0">
+                                🌱
+                              </div>
                               <div className="min-w-0 pr-1">
                                 <div className="font-extrabold text-xs truncate max-w-[130px]">
                                   {c.crop || c.crop_name}
@@ -1246,176 +1295,116 @@ export default function FarmerDashboardPage() {
 
           {/* Quick Insert Form Container */}
           <form onSubmit={handleAddProduce} className="space-y-6 pt-2">
-            {/* Upper: Product Name & Category */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-emerald-950 mb-1">
-                  {language === 'hi' ? 'फसल का नाम (अंग्रेज़ी / मुख्य)' : 'Crop Name (Primary)'}
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={cropName}
-                  onChange={(e) => setCropName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-semibold"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-emerald-950 mb-1">
-                  {language === 'hi' ? 'फसल का हिंदी नाम' : 'Crop Hindi Name'}
-                </label>
-                <input
-                  type="text"
-                  value={cropNameHi}
-                  onChange={(e) => setCropNameHi(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-emerald-950 mb-1">
-                  {language === 'hi' ? 'श्रेणी (Category)' : 'Category'}
-                </label>
-                <select
-                  value={category}
-                  onChange={(e: any) => setCategory(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold"
-                >
-                  <option value="Vegetables">{language === 'hi' ? 'सब्जियाँ (Vegetables)' : 'Vegetables'}</option>
-                  <option value="Fruits">{language === 'hi' ? 'फल (Fruits)' : 'Fruits'}</option>
-                  <option value="Pulses">{language === 'hi' ? 'दालें / दलहन (Pulses)' : 'Pulses'}</option>
-                  <option value="Grains">{language === 'hi' ? 'अनाज (Grains)' : 'Grains'}</option>
-                </select>
-              </div>
-            </div>
-
-            {/* ===================================================
-                MIDDLE: 2 PHOTO MANDATORY & MAXIMUM 6 PHOTO MANAGER
-                =================================================== */}
-            <div className="p-4 sm:p-5 bg-emerald-950/5 rounded-2xl border-2 border-emerald-900/15 space-y-3.5">
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <div className="flex items-center gap-2">
-                  <ImageIcon className="w-5 h-5 text-amber-600" />
-                  <div>
-                    <h3 className="text-xs font-black text-emerald-950 uppercase tracking-wider">
-                      {language === 'hi' ? 'फसल की तस्वीरें (2 से 6 फोटो अनिवार्य)' : 'Crop Photos (2 to 6 Photos Mandatory)'}
-                    </h3>
-                    <p className="text-[11px] text-emerald-800/80">
-                      {language === 'hi'
-                        ? 'कैमरा/गैलरी से अपलोड करें, लिंक डालें, या नीचे 1-क्लिक ऑटो-सजेस्ट से तुरंत 3 फोटो लगाएं।'
-                        : 'Upload from camera/device, paste link, or use 1-click auto-suggest.'}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  {/* Quick 1-Click Auto-Suggest Photos button */}
-                  <button
-                    type="button"
-                    onClick={() => handleLoadSamplePhotosForCategory(category)}
-                    className="px-3 py-1.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-300 font-bold rounded-xl text-[11px] flex items-center gap-1.5 shadow transition"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                    <span>{language === 'hi' ? '✨ 3 फोटो ऑटो-सजेस्ट करें' : '✨ Auto-Suggest Photos'}</span>
-                  </button>
-
-                  {/* Photo Counter Pill */}
-                  <div
-                    className={`px-3 py-1.5 rounded-full text-xs font-extrabold flex items-center gap-1.5 shadow-sm ${photos.length >= 2 && photos.length <= 6
-                        ? 'bg-emerald-700 text-white'
-                        : 'bg-red-600 text-white animate-pulse'
-                      }`}
-                  >
-                    <Camera className="w-3.5 h-3.5" />
+            {/* Upper: Fast Crop Presets & Product Name & Category */}
+            <div className="space-y-4">
+              {/* Quick 1-Click Name-to-Logo & Photos Auto-Select Toolbar */}
+              <div className="p-3 bg-gradient-to-r from-amber-500/10 via-emerald-900/10 to-amber-500/10 rounded-2xl border border-amber-500/30 space-y-2">
+                <div className="flex items-center justify-between flex-wrap gap-2 text-[11px] font-extrabold text-emerald-950">
+                  <span className="flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-600" />
                     <span>
-                      {language === 'hi' ? 'तस्वीरें: ' : 'Photos: '}
-                      {photos.length} / 6
+                      {language === 'hi'
+                        ? 'नाम अनुसार 1-क्लिक लोगो व फोटो लोड करें (उदा. प्याज, आलू, टमाटर...):'
+                        : '1-Click Name-to-Logo & Photos Auto-Select:'}
                     </span>
-                    <span>{photos.length >= 2 ? '✓' : '(न्यूनतम 2 अनिवार्य)'}</span>
-                  </div>
+                  </span>
+                  <span className="text-[10px] text-amber-900 font-extrabold bg-amber-200/90 px-2 py-0.5 rounded-md">
+                    {language === 'hi' ? '⚡ नाम लिखते ही लोगो व 3 फोटो स्वतः लोड होंगे' : '⚡ Auto-loads logo as you type'}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+                  {[
+                    { key: 'onion', label: '🧅 प्याज (Onion)', name: 'Onion (Nashik Red)' },
+                    { key: 'potato', label: '🥔 आलू (Potato)', name: 'Potato (Jyoti)' },
+                    { key: 'tomato', label: '🍅 टमाटर (Tomato)', name: 'Tomato (Red Desi)' },
+                    { key: 'garlic', label: '🧄 लहसुन (Garlic)', name: 'Garlic (Ooty Grade A)' },
+                    { key: 'ginger', label: '🫚 अदरक (Ginger)', name: 'Ginger (Fresh Organic)' },
+                    { key: 'chilli', label: '🌶️ मिर्च (Chilli)', name: 'Green Chilli (Guntur Hot)' },
+                    { key: 'wheat', label: '🌾 गेहूं (Wheat)', name: 'Wheat (Sharbati Gold)' },
+                    { key: 'rice', label: '🍚 चावल (Rice)', name: 'Rice (Basmati 1121)' },
+                    { key: 'chana', label: '🫘 चना (Chana)', name: 'Chana (Desi Bengal Gram)' },
+                    { key: 'apple', label: '🍎 सेब (Apple)', name: 'Apple (Kinnaur Royal)' },
+                    { key: 'mango', label: '🥭 आम (Mango)', name: 'Mango (Ratnagiri Alphonso)' },
+                  ].map((chip) => {
+                    const isSelected =
+                      cropName.toLowerCase().includes(chip.key) ||
+                      (cropNameHi && chip.label.includes(cropNameHi));
+                    return (
+                      <button
+                        key={chip.key}
+                        type="button"
+                        onClick={() => handleApplyPresetCrop(chip.name)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-black transition shrink-0 flex items-center gap-1 shadow-xs border ${
+                          isSelected
+                            ? 'bg-[#0F3826] text-amber-300 border-amber-400 ring-2 ring-amber-400/40'
+                            : 'bg-white hover:bg-amber-50 text-emerald-950 border-emerald-900/15'
+                        }`}
+                      >
+                        <span>{chip.label}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Photo Error Banner if under 2 photos */}
-              {photoError && (
-                <div className="p-2.5 bg-red-100/90 border border-red-300 text-red-800 rounded-xl text-xs flex items-center gap-2 font-bold animate-fadeIn">
-                  <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
-                  <span>{photoError}</span>
-                </div>
-              )}
-
-              {/* Photos Preview Gallery (2 to 6 Photos) */}
-              <div className="grid grid-cols-2 sm:grid-cols-6 gap-3">
-                {photos.map((ph, idx) => (
-                  <div
-                    key={idx}
-                    className="relative group rounded-xl overflow-hidden border-2 border-emerald-900/20 shadow bg-white h-28"
-                  >
-                    <img src={ph} alt={`Produce Angle ${idx + 1}`} className="w-full h-full object-cover" />
-                    <div className="absolute top-1 left-1 bg-black/70 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
-                      #{idx + 1}
-                    </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-emerald-950 mb-1 flex items-center justify-between">
+                    <span>{language === 'hi' ? 'फसल का नाम (अंग्रेज़ी / मुख्य)' : 'Crop Name (Primary)'}</span>
+                    <span className="text-[10px] text-amber-800 font-extrabold">
+                      {language === 'hi' ? 'उदा. onion' : 'e.g. onion'}
+                    </span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Onion, Potato, Tomato..."
+                      value={cropName}
+                      onChange={(e) => handleCropNameChange(e.target.value)}
+                      className="w-full pl-3.5 pr-24 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold"
+                    />
                     <button
                       type="button"
-                      onClick={() => handleRemovePhoto(idx)}
-                      className="absolute top-1 right-1 p-1 bg-red-600 text-white rounded-full opacity-80 hover:opacity-100 shadow transition"
-                      title={language === 'hi' ? 'तस्वीर हटाएं' : 'Remove photo'}
+                      onClick={() => handleAutoMatchLogoFromCropName()}
+                      className="absolute right-1.5 top-1.5 bottom-1.5 px-2.5 bg-amber-400 hover:bg-amber-300 text-emerald-950 font-black text-[10px] rounded-lg shadow-xs flex items-center gap-1 transition"
+                      title={language === 'hi' ? 'नाम अनुसार लोगो अपलोड करें' : 'Upload logo from name'}
                     >
-                      <X className="w-3.5 h-3.5" />
+                      <Sparkles className="w-3 h-3 text-emerald-950" />
+                      <span>{language === 'hi' ? 'लोगो लोड' : 'Get Logo'}</span>
                     </button>
-                    {idx === 0 && (
-                      <span className="absolute bottom-1 left-1 right-1 bg-amber-500 text-emerald-950 font-extrabold text-[8px] text-center py-0.5 rounded shadow">
-                        {language === 'hi' ? 'मुख्य लोगो/फोटो' : 'Side Logo / Main'}
-                      </span>
-                    )}
                   </div>
-                ))}
-
-                {/* Upload More Photos Trigger (supports multiple selection from camera or files) */}
-                {photos.length < 6 && (
-                  <label className="h-28 border-2 border-dashed border-emerald-900/30 hover:border-amber-500 rounded-xl flex flex-col items-center justify-center cursor-pointer bg-white/70 hover:bg-amber-50/50 transition p-2 text-center text-emerald-950 group">
-                    <Camera className="w-6 h-6 text-amber-600 mb-1 group-hover:scale-110 transition" />
-                    <span className="text-[11px] font-black leading-tight">
-                      {language === 'hi' ? '+ कैमरा / गैलरी' : '+ Camera / File'}
-                    </span>
-                    <span className="text-[9px] text-emerald-800/70 font-semibold">
-                      ({photos.length}/6 फ़ोटो)
-                    </span>
-                    <input
-                      type="file"
-                      multiple
-                      accept="image/*"
-                      onChange={handleFileUpload}
-                      className="hidden"
-                    />
-                  </label>
-                )}
-              </div>
-
-              {/* Add by URL input */}
-              {photos.length < 6 && (
-                <div className="flex gap-2 pt-1">
-                  <input
-                    type="url"
-                    placeholder={
-                      language === 'hi'
-                        ? 'या फोटो का वेब लिंक (URL) यहाँ डालें...'
-                        : 'Or paste image URL (e.g. Unsplash or Cloud URL)...'
-                    }
-                    value={urlInput}
-                    onChange={(e) => setUrlInput(e.target.value)}
-                    className="flex-1 px-3 py-1.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleAddUrlPhoto}
-                    className="px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold rounded-xl text-xs shadow-sm transition"
-                  >
-                    {language === 'hi' ? 'लिंक जोड़ें' : 'Add URL'}
-                  </button>
                 </div>
-              )}
+
+                <div>
+                  <label className="block text-xs font-bold text-emerald-950 mb-1">
+                    {language === 'hi' ? 'फसल का हिंदी नाम' : 'Crop Hindi Name'}
+                  </label>
+                  <input
+                    type="text"
+                    value={cropNameHi}
+                    onChange={(e) => setCropNameHi(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-semibold"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-emerald-950 mb-1">
+                    {language === 'hi' ? 'श्रेणी (Category)' : 'Category'}
+                  </label>
+                  <select
+                    value={category}
+                    onChange={(e: any) => setCategory(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold"
+                  >
+                    <option value="Vegetables">{language === 'hi' ? 'सब्जियाँ (Vegetables)' : 'Vegetables'}</option>
+                    <option value="Fruits">{language === 'hi' ? 'फल (Fruits)' : 'Fruits'}</option>
+                    <option value="Pulses">{language === 'hi' ? 'दालें / दलहन (Pulses)' : 'Pulses'}</option>
+                    <option value="Grains">{language === 'hi' ? 'अनाज (Grains)' : 'Grains'}</option>
+                  </select>
+                </div>
+              </div>
             </div>
 
             {/* ===================================================
@@ -1596,6 +1585,21 @@ export default function FarmerDashboardPage() {
             REGISTERED PRODUCE LISTINGS: BULMA RESPONSIVE CARDS
             =================================================== */}
         <div className="space-y-4">
+          {seedStatusMessage && (
+            <div className="p-3 bg-amber-100 border-2 border-amber-400 text-emerald-950 rounded-2xl text-xs font-bold flex items-center justify-between shadow-sm animate-fadeIn">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-amber-600" />
+                <span>{seedStatusMessage}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSeedStatusMessage(null)}
+                className="text-emerald-900 hover:text-red-700 font-bold ml-4"
+              >
+                ✕
+              </button>
+            </div>
+          )}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
               <h3 className="font-extrabold text-xl text-emerald-950 flex items-center gap-2">
@@ -1702,11 +1706,6 @@ export default function FarmerDashboardPage() {
                   key={crop.id}
                   className="p-4 bg-white rounded-2xl border border-emerald-900/10 shadow-sm flex items-center justify-between gap-3 group hover:border-emerald-900/20 transition"
                 >
-                  <img
-                    src={crop.imageUrl || (crop.photos && crop.photos[0])}
-                    alt={crop.crop}
-                    className="w-14 h-14 object-cover rounded-xl border border-emerald-900/10 shrink-0 shadow-sm"
-                  />
                   <div className="flex-1 min-w-0">
                     <span className="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded-md">
                       {getLocalizedGrade(crop.grade, language)}
@@ -1715,10 +1714,7 @@ export default function FarmerDashboardPage() {
                       {getLocalizedCropName(crop.crop || crop.crop_name, language)}
                     </h4>
                     <p className="text-xs text-emerald-800/70 mt-0.5 truncate">
-                      {crop.qty || crop.quantity_available} {crop.unit || 'kg'} • {getLocalizedLocation(crop.location, language)} •{' '}
-                      <span className="font-mono text-emerald-800">
-                        {crop.photos ? `${crop.photos.length} फोटो` : '2 फोटो'}
-                      </span>
+                      {crop.qty || crop.quantity_available} {crop.unit || 'kg'} • {getLocalizedLocation(crop.location, language)}
                     </p>
                   </div>
 
@@ -1768,12 +1764,10 @@ export default function FarmerDashboardPage() {
               </div>
             ) : (
               <>
-                <div className="flex items-center gap-3 border-b border-emerald-500/20 px-4 py-3">
-                  <img
-                    src={successSignal.logo}
-                    alt={successSignal.cropName}
-                    className="h-12 w-12 shrink-0 rounded-xl border-2 border-amber-400/70 object-cover"
-                  />
+                <div className="flex items-center gap-3 px-4 py-3">
+                  <div className="p-2 bg-emerald-500/20 text-emerald-400 rounded-xl shrink-0">
+                    <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+                  </div>
                   <div className="min-w-0">
                     <p className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-300">
                       {language === 'hi' ? 'फसल सफलतापूर्वक दर्ज' : 'Crop registered successfully'}
@@ -1785,18 +1779,6 @@ export default function FarmerDashboardPage() {
                       {language === 'hi' ? successSignal.cropName : successSignal.cropNameHi}
                     </p>
                   </div>
-                  <CheckCircle2 className="ml-auto h-5 w-5 shrink-0 text-emerald-400" />
-                </div>
-
-                <div className="grid grid-cols-3 gap-1.5 bg-emerald-950/40 p-3">
-                  {successSignal.photos.map((photo, index) => (
-                    <img
-                      key={`${photo}-${index}`}
-                      src={photo}
-                      alt={`${successSignal.cropName} ${index + 1}`}
-                      className="aspect-square w-full rounded-lg object-cover"
-                    />
-                  ))}
                 </div>
 
                 <div className="border-t border-emerald-500/20 px-4 py-3">
@@ -1947,6 +1929,7 @@ export default function FarmerDashboardPage() {
                   </p>
                 </div>
                 <button
+                  type="button"
                   onClick={() => {
                     setShowAddModal(false);
                     if (editingCropId) handleCancelEdit();
@@ -1957,227 +1940,125 @@ export default function FarmerDashboardPage() {
                 </button>
               </div>
 
-              {/* Mode Switcher inside Modal */}
               <div className="flex items-center gap-2 p-1.5 bg-emerald-950/10 rounded-2xl flex-wrap">
                 <button
                   type="button"
-                  onClick={() => {
-                    if (editingCropId) handleCancelEdit();
-                    setProduceSourceMode('catalog');
-                  }}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition ${produceSourceMode === 'catalog' && !editingCropId
-                      ? 'bg-[#0F3826] text-amber-300 shadow'
-                      : 'text-emerald-950 hover:bg-emerald-100/70'
+                  onClick={() => setProduceSourceMode('catalog')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition ${produceSourceMode === 'catalog'
+                    ? 'bg-[#0F3826] text-amber-200 border border-amber-400'
+                    : 'bg-white text-emerald-950 border border-emerald-900/15'
                     }`}
                 >
-                  <Layers className="w-3.5 h-3.5 text-amber-500" />
-                  <span>{language === 'hi' ? '352+ कैटलॉग से चुनें' : '352+ Catalog Produce'}</span>
+                  <Layers className="w-3.5 h-3.5" />
+                  {language === 'hi' ? 'कैटलॉग' : 'Catalog'}
                 </button>
-
                 <button
                   type="button"
-                  onClick={() => handleStartCustomProduce()}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition ${produceSourceMode === 'custom' && !editingCropId
-                      ? 'bg-[#0F3826] text-amber-300 shadow'
-                      : 'text-emerald-950 hover:bg-emerald-100/70'
+                  onClick={() => setProduceSourceMode('custom')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition ${produceSourceMode === 'custom'
+                    ? 'bg-[#0F3826] text-amber-200 border border-amber-400'
+                    : 'bg-white text-emerald-950 border border-emerald-900/15'
                     }`}
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                  <span>{language === 'hi' ? '➕ नया अनलिस्टेड (जो 352 में नहीं है)' : '➕ Add Unlisted (Not in 352)'}</span>
+                  <Plus className="w-3.5 h-3.5" />
+                  {language === 'hi' ? 'कस्टम फसल' : 'Custom Crop'}
                 </button>
               </div>
 
-              {/* Active Edit Alert Banner in Modal */}
-              {editingCropId && (
-                <div className="p-3 bg-amber-400/25 border-2 border-amber-500/60 rounded-2xl flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-600 animate-ping shrink-0" />
-                    <div>
-                      <span className="text-xs font-black text-emerald-950">
-                        {language === 'hi' ? '✏️ संपादन मोड सक्रिय:' : '✏️ Edit Mode Active:'} <span className="text-amber-900 underline">{cropName}</span>
-                      </span>
-                      <p className="text-[11px] text-emerald-900/80">
-                        {language === 'hi' ? 'विवरण या तस्वीरें बदलकर नीचे "फसल अपडेट करें" दबाएं।' : 'Modify details/photos and click "Update Crop" below.'}
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={handleCancelEdit}
-                    className="px-2.5 py-1 bg-white hover:bg-red-50 text-red-700 font-extrabold text-[11px] rounded-lg border border-red-300 shrink-0"
-                  >
-                    {language === 'hi' ? 'रद्द करें' : 'Cancel Edit'}
-                  </button>
-                </div>
-              )}
-
-              {/* Autocomplete from Catalog Dropdown */}
-              <div className="bg-white p-3.5 rounded-2xl border border-emerald-900/10 space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold text-emerald-950">
-                    {language === 'hi' ? '352+ कैटलॉग या अनलिस्टेड फसल चुनें:' : 'Select from 352+ Catalog or Unlisted:'}
-                  </label>
-                  {unlistedCustomCrops.length > 0 && (
-                    <span className="text-[10px] font-extrabold text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full">
-                      ✨ {unlistedCustomCrops.length} {language === 'hi' ? 'अनलिस्टेड फसलें' : 'Unlisted Crops'}
-                    </span>
-                  )}
-                </div>
-                <select
-                  value={selectedCatalogId}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (val === '__new_unlisted__') {
-                      handleStartCustomProduce();
-                    } else if (val.startsWith('custom_')) {
-                      const unlisted = unlistedCustomCrops.find((it) => `custom_${it.id}` === val);
-                      if (unlisted) handleStartEditCrop(unlisted);
-                    } else {
-                      const found = FULL_CROP_CATALOG.find((it) => it.id === val);
-                      if (found) handleSelectCatalogItem(found);
-                    }
-                  }}
-                  className="w-full px-3.5 py-2.5 bg-emerald-50/50 border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500"
-                >
-                  <option value="__new_unlisted__">
-                    ➕ {language === 'hi' ? 'नया उत्पाद जोड़ें (जो 352 कैटलॉग में नहीं है)' : 'Add New Produce (Not in 352 Catalog)'}
-                  </option>
-                  {unlistedCustomCrops.length > 0 && (
-                    <optgroup label="✨ मेरी अनलिस्टेड फसलें (Custom Unlisted Produce)">
-                      {unlistedCustomCrops.map((c) => (
-                        <option key={c.id} value={`custom_${c.id}`}>
-                          ✨ {c.crop_name_hi || c.crop || c.crop_name} ({c.crop || c.crop_name}) - ₹{c.priceRupees || (c.pricePaise ? (c.pricePaise / 100).toFixed(2) : '40')}/{c.unit || 'kg'}
-                        </option>
-                      ))}
-                    </optgroup>
-                  )}
-                  <optgroup label="100 Vegetables (सब्जियाँ)">
-                    {VEGETABLES_CATALOG.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.nameHi} ({c.name}) - ₹{c.priceRupees}/{c.unit}
-                      </option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="100 Fruits (फल)">
-                    {FRUITS_CATALOG.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.nameHi} ({c.name}) - ₹{c.priceRupees}/{c.unit}
-                      </option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="100 Pulses (दालें / दलहन)">
-                    {PULSES_CATALOG.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.nameHi} ({c.name}) - ₹{c.priceRupees}/{c.unit}
-                      </option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="52 Grains (अनाज)">
-                    {GRAINS_CATALOG.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.nameHi} ({c.name}) - ₹{c.priceRupees}/{c.unit}
-                      </option>
-                    ))}
-                  </optgroup>
-                </select>
-              </div>
-
-              {/* Photo Manager inside Modal */}
-              <div className="p-4 bg-emerald-950/5 rounded-2xl border border-emerald-900/10 space-y-3">
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <div className="flex items-center gap-1.5">
-                    <Camera className="w-4 h-4 text-amber-600" />
-                    <span className="text-xs font-bold text-emerald-950">
-                      {language === 'hi' ? 'फसल की तस्वीरें (2-6 अनिवार्य):' : 'Crop Photos (2-6 Mandatory):'}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleLoadSamplePhotosForCategory(category)}
-                      className="px-2.5 py-1 bg-[#0F3826] hover:bg-emerald-900 text-amber-300 font-bold rounded-lg text-[10px] flex items-center gap-1 shadow"
-                    >
-                      <Sparkles className="w-3 h-3 text-amber-400" />
-                      <span>{language === 'hi' ? '3 फोटो ऑटो-सजेस्ट' : 'Auto-Suggest 3'}</span>
-                    </button>
-
-                    <span
-                      className={`text-xs font-extrabold px-2.5 py-0.5 rounded-full ${photos.length >= 2 && photos.length <= 6
-                          ? 'bg-emerald-700 text-white'
-                          : 'bg-red-600 text-white animate-pulse'
-                        }`}
-                    >
-                      {photos.length} / 6
-                    </span>
-                  </div>
-                </div>
-
-                {photoError && (
-                  <div className="p-2.5 bg-red-100 border border-red-300 text-red-800 rounded-xl text-xs font-bold">
-                    {photoError}
-                  </div>
-                )}
-
-                <div className="grid grid-cols-3 gap-2">
-                  {photos.map((ph, idx) => (
-                    <div key={idx} className="relative h-24 rounded-xl overflow-hidden border border-emerald-900/20 bg-white shadow-xs">
-                      <img src={ph} alt={`Angle ${idx + 1}`} className="w-full h-full object-cover" />
-                      <button
-                        type="button"
-                        onClick={() => handleRemovePhoto(idx)}
-                        className="absolute top-1 right-1 p-1 bg-red-600 text-white rounded-full text-xs shadow"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                      <span className="absolute bottom-1 left-1 bg-black/70 text-white text-[9px] px-1 rounded font-bold">
-                        #{idx + 1}
-                      </span>
-                    </div>
-                  ))}
-                  {photos.length < 6 && (
-                    <label className="h-24 border-2 border-dashed border-emerald-900/30 rounded-xl flex flex-col items-center justify-center cursor-pointer bg-white hover:bg-emerald-50 text-center p-2">
-                      <Camera className="w-5 h-5 text-amber-600" />
-                      <span className="text-[10px] font-bold text-emerald-950">+ फोटो</span>
-                      <input type="file" multiple accept="image/*" onChange={handleFileUpload} className="hidden" />
-                    </label>
-                  )}
-                </div>
-
-                {photos.length < 6 && (
-                  <div className="flex gap-2 pt-1">
-                    <input
-                      type="url"
-                      placeholder={language === 'hi' ? 'फोटो वेब लिंक (URL) डालें...' : 'Or paste photo URL...'}
-                      value={urlInput}
-                      onChange={(e) => setUrlInput(e.target.value)}
-                      className="flex-1 px-3 py-1.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleAddUrlPhoto}
-                      className="px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold rounded-xl text-xs shadow-sm"
-                    >
-                      {language === 'hi' ? 'जोड़ें' : 'Add'}
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Product Details Form */}
               <form onSubmit={handleAddProduce} className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
+                {produceSourceMode === 'catalog' && (
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-[10px] font-extrabold text-emerald-950">
+                      <span>{language === 'hi' ? '⚡ कैटलॉग से फसल चुनें:' : '⚡ Pick from catalog:'}</span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold text-emerald-950 mb-1">
+                          {language === 'hi' ? 'फसल नाम' : 'Crop Name'}
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="e.g. Onion, Potato..."
+                          value={cropName}
+                          onChange={(e) => handleCropNameChange(e.target.value)}
+                          className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-emerald-950 mb-1">
+                          {language === 'hi' ? 'श्रेणी (Category)' : 'Category'}
+                        </label>
+                        <select
+                          value={category}
+                          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value as 'Vegetables' | 'Fruits' | 'Pulses' | 'Grains' | 'Seeds')}
+                          className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold"
+                        >
+                          <option value="Vegetables">{language === 'hi' ? 'सब्जियाँ (Vegetables)' : 'Vegetables'}</option>
+                          <option value="Fruits">{language === 'hi' ? 'फल (Fruits)' : 'Fruits'}</option>
+                          <option value="Pulses">{language === 'hi' ? 'दालें / दलहन (Pulses)' : 'Pulses'}</option>
+                          <option value="Grains">{language === 'hi' ? 'अनाज (Grains)' : 'Grains'}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between text-[10px] font-extrabold text-emerald-950">
+                    <span>{language === 'hi' ? '⚡ 1-क्लिक से नाम व लोगो लगाएं:' : '⚡ 1-Click Name & Logo:'}</span>
+                    <span className="text-amber-800 font-black">
+                      {language === 'hi' ? 'उदा. onion लिखते ही लोगो सेट होगा' : 'Type "onion" to auto-match logo'}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
+                    {[
+                      { key: 'onion', label: '🧅 प्याज (Onion)', name: 'Onion (Nashik Red)' },
+                      { key: 'potato', label: '🥔 आलू (Potato)', name: 'Potato (Jyoti)' },
+                      { key: 'tomato', label: '🍅 टमाटर (Tomato)', name: 'Tomato (Red Desi)' },
+                      { key: 'garlic', label: '🧄 लहसुन (Garlic)', name: 'Garlic (Ooty Grade A)' },
+                      { key: 'wheat', label: '🌾 गेहूं (Wheat)', name: 'Wheat (Sharbati Gold)' },
+                    ].map((chip) => (
+                      <button
+                        key={chip.key}
+                        type="button"
+                        onClick={() => handleApplyPresetCrop(chip.name)}
+                        className={`px-2.5 py-1 rounded-lg text-[11px] font-black transition shrink-0 border ${
+                          cropName.toLowerCase().includes(chip.key)
+                            ? 'bg-[#0F3826] text-amber-300 border-amber-400 ring-1 ring-amber-400'
+                            : 'bg-white hover:bg-amber-50 text-emerald-950 border-emerald-900/15'
+                        }`}
+                      >
+                        {chip.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-bold text-emerald-950 mb-1">
                       {language === 'hi' ? 'फसल नाम' : 'Crop Name'}
                     </label>
-                    <input
-                      type="text"
-                      required
-                      value={cropName}
-                      onChange={(e) => setCropName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold"
-                    />
+                    <div className="relative">
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Onion, Potato..."
+                        value={cropName}
+                        onChange={(e) => handleCropNameChange(e.target.value)}
+                        className="w-full pl-3 pr-16 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleAutoMatchLogoFromCropName()}
+                        className="absolute right-1 top-1 bottom-1 px-2 bg-amber-400 hover:bg-amber-300 text-emerald-950 font-black text-[9px] rounded-lg shadow-xs flex items-center gap-0.5"
+                      >
+                        <Sparkles className="w-2.5 h-2.5" />
+                        <span>{language === 'hi' ? 'लोगो' : 'Logo'}</span>
+                      </button>
+                    </div>
                   </div>
 
                   <div>
@@ -2186,7 +2067,7 @@ export default function FarmerDashboardPage() {
                     </label>
                     <select
                       value={category}
-                      onChange={(e: any) => setCategory(e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value as 'Vegetables' | 'Fruits' | 'Pulses' | 'Grains' | 'Seeds')}
                       className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold"
                     >
                       <option value="Vegetables">{language === 'hi' ? 'सब्जियाँ (Vegetables)' : 'Vegetables'}</option>
@@ -2197,18 +2078,55 @@ export default function FarmerDashboardPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="p-2 bg-amber-500/10 border border-amber-500/40 rounded-xl flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-amber-500 shrink-0">
+                      <img src={photos[0] || '/placeholder.png'} alt="Crop Logo" className="w-full h-full object-cover" />
+                      <span className="absolute bottom-0 inset-x-0 bg-black/80 text-amber-300 text-[6px] text-center font-bold">LOGO</span>
+                    </div>
+                    <div className="min-w-0">
+                      <span className="text-[10px] font-black text-emerald-950 block truncate">
+                        ✓ {language === 'hi' ? 'मुख्य लोगो:' : 'Main Logo:'} {cropNameHi || cropName}
+                      </span>
+                      <span className="text-[9px] text-emerald-700 block truncate">
+                        {language === 'hi' ? 'नाम अनुसार तस्वीरें स्वतः कनेक्टेड हैं' : 'Auto-connected from crop name'}
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleAutoMatchLogoFromCropName()}
+                    className="px-2 py-1 bg-amber-400 hover:bg-amber-300 text-emerald-950 font-bold text-[9px] rounded-md shrink-0"
+                  >
+                    ⚡ {language === 'hi' ? 'अपडेट' : 'Sync'}
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-bold text-emerald-950 mb-1">
                       {language === 'hi' ? 'मात्रा' : 'Quantity'}
                     </label>
-                    <input
-                      type="number"
-                      required
-                      value={quantityKg}
-                      onChange={(e) => setQuantityKg(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    />
+                    <div className="flex gap-1.5">
+                      <input
+                        type="number"
+                        required
+                        value={quantityKg}
+                        onChange={(e) => setQuantityKg(e.target.value)}
+                        className="w-full px-3 py-2 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      />
+                      <select
+                        value={unit}
+                        onChange={(e) => setUnit(e.target.value)}
+                        className="px-2 py-2 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold"
+                      >
+                        <option value="kg">kg</option>
+                        <option value="quintal">quintal</option>
+                        <option value="packet">packet</option>
+                        <option value="dozen">dozen</option>
+                        <option value="piece">piece</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div>
@@ -2226,56 +2144,145 @@ export default function FarmerDashboardPage() {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-emerald-950 mb-1">
-                    {language === 'hi' ? 'मंडी संकलन स्थान' : 'Hub Location'}
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-emerald-950 mb-1">
+                      {language === 'hi' ? 'गुणवत्ता ग्रेड (Grade)' : 'Quality Grade'}
+                    </label>
+                    <select
+                      value={grade}
+                      onChange={(e) => setGrade(e.target.value)}
+                      className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold"
+                    >
+                      <option value="उच्चतम श्रेणी A+">उच्चतम श्रेणी A+ (Premium)</option>
+                      <option value="ग्रेड A">ग्रेड A (Standard Market)</option>
+                      <option value="ग्रेड B">ग्रेड B (Bulk Commercial)</option>
+                      <option value="100% जैविक (Organic Certified)">100% जैविक (Organic Certified)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-emerald-950 mb-1">
+                      {language === 'hi' ? 'मंडी संकलन स्थान' : 'Hub Location'}
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                  </div>
                 </div>
 
-                <div className="pt-2 flex gap-3">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowAddModal(false);
-                      if (editingCropId) handleCancelEdit();
-                    }}
-                    className="flex-1 py-3 bg-emerald-100 hover:bg-emerald-200 text-emerald-950 font-bold rounded-xl text-xs transition"
-                  >
-                    {language === 'hi' ? 'रद्द करें' : 'Cancel'}
-                  </button>
+                <div className="space-y-2">
+                  <label className="block text-xs font-bold text-emerald-950">
+                    {language === 'hi' ? 'फोटो जोड़ें (2-6)' : 'Add Photos (2-6)'}
+                  </label>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting || photos.length < 2 || photos.length > 6}
-                    className={`flex-1 py-3 font-extrabold rounded-xl text-xs shadow-md transition flex items-center justify-center gap-2 disabled:opacity-50 ${editingCropId
-                        ? 'bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-emerald-950'
-                        : 'bg-[#0F3826] hover:bg-emerald-900 text-amber-50'
-                      }`}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
-                        <span>{editingCropId ? (language === 'hi' ? 'अपडेट हो रहा है...' : 'Updating...') : (language === 'hi' ? 'दर्ज हो रहा है...' : 'Registering...')}</span>
-                      </>
-                    ) : editingCropId ? (
-                      <>
-                        <Check className="w-4 h-4 text-emerald-950" />
-                        <span>{language === 'hi' ? `फसल अपडेट करें (${photos.length} फोटो)` : `Update Crop (${photos.length} Photos)`}</span>
-                      </>
-                    ) : (
-                      <>
-                        <Check className="w-4 h-4 text-amber-400" />
-                        <span>{language === 'hi' ? `सत्यापित करके बाज़ार में भेजें (${photos.length} फोटो)` : `Publish Produce (${photos.length} Photos)`}</span>
-                      </>
-                    )}
-                  </button>
+                  <div className="flex gap-2">
+                    <input
+                      type="url"
+                      value={urlInput}
+                      onChange={(e) => setUrlInput(e.target.value)}
+                      placeholder={language === 'hi' ? 'फोटो URL डालें...' : 'Paste photo URL...'}
+                      className="flex-1 px-3 py-2 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleAddUrlPhoto}
+                      className="px-3 py-2 bg-emerald-800 hover:bg-emerald-900 text-white font-bold rounded-xl text-xs shadow-sm"
+                    >
+                      {language === 'hi' ? 'जोड़ें' : 'Add'}
+                    </button>
+                  </div>
+
+                  {photoError && (
+                    <div className="p-2 bg-red-100 border border-red-300 rounded-xl text-[11px] text-red-800 font-bold">
+                      {photoError}
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-3 gap-2">
+                    {photos.map((photo, index) => (
+                      <div key={`${photo}-${index}`} className="relative group">
+                        <img src={photo} alt={`Crop ${index + 1}`} className="h-20 w-full object-cover rounded-xl border border-emerald-900/10" />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setPhotos((prev) => prev.filter((_, i) => i !== index));
+                            if (photoError) setPhotoError(null);
+                          }}
+                          className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center text-[10px] font-bold shadow-lg"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2 border-t border-emerald-900/10">
+                  <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-emerald-950">
+                    <input
+                      type="checkbox"
+                      checked={isOrganic}
+                      onChange={(e) => setIsOrganic(e.target.checked)}
+                      className="w-4 h-4 text-emerald-700 rounded focus:ring-amber-500"
+                    />
+                    <span>{language === 'hi' ? 'यह फसल 100% प्राकृतिक/जैविक प्रमाणित है' : '100% Certified Organic produce'}</span>
+                  </label>
+
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowAddModal(false);
+                        if (editingCropId) handleCancelEdit();
+                      }}
+                      className="px-5 py-3.5 bg-gray-200 hover:bg-gray-300 text-emerald-950 font-bold rounded-2xl transition text-xs"
+                    >
+                      {language === 'hi' ? 'रद्द करें' : 'Cancel'}
+                    </button>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting || photos.length < 2 || photos.length > 6}
+                      className={`px-8 py-3.5 font-extrabold rounded-2xl shadow-xl transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed ${editingCropId
+                          ? 'bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-emerald-950 shadow-amber-500/20'
+                          : 'bg-gradient-to-r from-emerald-800 via-[#0F3826] to-emerald-950 hover:from-emerald-700 hover:to-emerald-900 text-amber-50'
+                        }`}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
+                          <span>
+                            {editingCropId
+                              ? (language === 'hi' ? 'अपडेट हो रहा है...' : 'Updating...')
+                              : (language === 'hi' ? 'दर्ज हो रहा है...' : 'Publishing to Buyer...')}
+                          </span>
+                        </>
+                      ) : editingCropId ? (
+                        <>
+                          <Save className="w-4 h-4 text-emerald-950" />
+                          <span>
+                            {language === 'hi'
+                              ? `फसल अपडेट करें (${photos.length} फोटो) → खरीदार डेस्क पर अपडेट करें`
+                              : `Update Crop (${photos.length} Photos) → Refresh on Buyer Desk`}
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="w-4 h-4 text-amber-400" />
+                          <span>
+                            {language === 'hi'
+                              ? `फसल दर्ज करें (${photos.length} फोटो) → खरीदार डेस्क भेजें`
+                              : `Publish Crop (${photos.length} Photos) → to Buyer Desk`}
+                          </span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

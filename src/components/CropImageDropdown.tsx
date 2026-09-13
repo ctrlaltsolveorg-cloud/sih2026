@@ -118,16 +118,13 @@ export default function CropImageDropdown({
         className="w-full bg-white hover:bg-amber-50/40 border-2 border-emerald-900/20 hover:border-amber-500 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between gap-3 shadow-md transition-all duration-200 text-left focus:outline-none focus:ring-4 focus:ring-amber-400/20 group"
       >
         <div className="flex items-center gap-3 min-w-0">
-          {/* Crop Image Thumbnail */}
-          <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border-2 border-amber-500/40 shadow-sm shrink-0 bg-emerald-950/10">
+          {/* Product Logo Image */}
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden border-2 border-emerald-900/20 shadow-sm bg-white p-0.5 shrink-0 group-hover:border-amber-500 transition">
             <img
-              src={selectedCrop.sideLogo || selectedCrop.thumbnail || selectedCrop.photos[0]}
+              src={selectedCrop.logo_url || selectedCrop.sideLogo || selectedCrop.thumbnail}
               alt={selectedCrop.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+              className="w-full h-full object-cover rounded-xl"
             />
-            <span className="absolute bottom-1 right-1 text-[10px] leading-none bg-black/60 backdrop-blur-xs text-white px-1 py-0.5 rounded font-mono font-bold">
-              {selectedCrop.photos.length}📷
-            </span>
           </div>
 
           {/* Crop Details */}
@@ -311,17 +308,16 @@ export default function CropImageDropdown({
                   >
                     {/* Left: Crop Image & Texts */}
                     <div className="flex items-center gap-3 min-w-0">
-                      {/* Image Thumbnail */}
-                      <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-amber-500/40 shrink-0 bg-emerald-950/20 shadow-xs">
+                      {/* Product Logo Badge */}
+                      <div className={`w-10 h-10 rounded-xl overflow-hidden shrink-0 border p-0.5 bg-white ${
+                        isSelected ? 'border-amber-400 ring-2 ring-amber-400/40 shadow-sm' : 'border-emerald-900/15 shadow-xs'
+                      }`}>
                         <img
-                          src={cropImg}
+                          src={crop.logo_url || crop.sideLogo || crop.thumbnail}
                           alt={crop.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover rounded-lg"
                           loading="lazy"
                         />
-                        <span className="absolute bottom-0.5 right-0.5 bg-black/70 text-amber-300 text-[9px] font-mono px-1 rounded">
-                          {crop.photos.length}P
-                        </span>
                       </div>
 
                       {/* Names & Specs */}

@@ -1,6 +1,8 @@
 import { getDb } from './db';
 import { supabase } from './supabase';
 import { getOrFetchCropTranslation } from './translator';
+import { getCropPhotosByName } from './cropImageMatcher';
+import { FULL_CROP_CATALOG } from './cropCatalogData';
 
 export interface CropListingInput {
   cropName: string;
@@ -13,6 +15,7 @@ export interface CropListingInput {
   farmerName?: string;
   imageUrl?: string;
   images?: string[]; // 2 to 6 photos support
+  logoUrl?: string;
   unit?: string;
 }
 
@@ -70,16 +73,14 @@ export async function createCropListing(input: CropListingInput) {
   const gradeVal = grade || 'उच्चतम श्रेणी A+';
   const harvestDate = new Date().toISOString().split('T')[0];
   const actualFarmerId = farmerId || 'u_farmer_1';
-  const defaultImage = 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80';
-  
-  // Format images: prioritize images array (2 to 6 photos), serialize to JSON or fallback to string
+  // Format images: prioritize images array (2 to 6 photos), serialize to JSON or fallback to name-matched crop photos
   let finalImageList: string[] = [];
   if (Array.isArray(images) && images.length > 0) {
     finalImageList = images.filter((img) => typeof img === 'string' && img.trim().length > 0);
   } else if (imageUrl && imageUrl.trim().length > 0) {
     finalImageList = [imageUrl.trim()];
   } else {
-    finalImageList = [defaultImage];
+    finalImageList = getCropPhotosByName(cropName);
   }
 
   // Ensure image_url stores valid representation
@@ -102,6 +103,7 @@ export async function createCropListing(input: CropListingInput) {
     harvest_date: harvestDate,
     organic_certified: gradeVal.includes('ऑर्गेनिक') || gradeVal.includes('Organic') ? 1 : 0,
     image_url: cropImage,
+    logo_url: input.logoUrl || (finalImageList.length > 0 ? finalImageList[0] : ''),
     location: loc,
     district: 'Nashik',
     status: 'ACTIVE',
@@ -109,29 +111,57 @@ export async function createCropListing(input: CropListingInput) {
 
   // 2. Save in SQLite DB
   const db = getDb();
-  db.prepare(
+  try {
+    db.prepare(
+      `
+      INSERT INTO product_listings (id, farmer_id, fpo_id, crop_name, category, quantity_available, unit, price_paise, mandi_retail_price_paise, grade, harvest_date, organic_certified, image_url, logo_url, location, district, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `
-    INSERT INTO product_listings (id, farmer_id, fpo_id, crop_name, category, quantity_available, unit, price_paise, mandi_retail_price_paise, grade, harvest_date, organic_certified, image_url, location, district, status)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `
-  ).run(
-    id,
-    newListing.farmer_id,
-    newListing.fpo_id,
-    newListing.crop_name,
-    newListing.category,
-    newListing.quantity_available,
-    newListing.unit,
-    newListing.price_paise,
-    newListing.mandi_retail_price_paise,
-    newListing.grade,
-    newListing.harvest_date,
-    newListing.organic_certified,
-    newListing.image_url,
-    newListing.location,
-    newListing.district,
-    newListing.status
-  );
+    ).run(
+      id,
+      newListing.farmer_id,
+      newListing.fpo_id,
+      newListing.crop_name,
+      newListing.category,
+      newListing.quantity_available,
+      newListing.unit,
+      newListing.price_paise,
+      newListing.mandi_retail_price_paise,
+      newListing.grade,
+      newListing.harvest_date,
+      newListing.organic_certified,
+      newListing.image_url,
+      newListing.logo_url,
+      newListing.location,
+      newListing.district,
+      newListing.status
+    );
+  } catch (dbErr) {
+    // Fallback if older schema without logo_url
+    db.prepare(
+      `
+      INSERT INTO product_listings (id, farmer_id, fpo_id, crop_name, category, quantity_available, unit, price_paise, mandi_retail_price_paise, grade, harvest_date, organic_certified, image_url, location, district, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `
+    ).run(
+      id,
+      newListing.farmer_id,
+      newListing.fpo_id,
+      newListing.crop_name,
+      newListing.category,
+      newListing.quantity_available,
+      newListing.unit,
+      newListing.price_paise,
+      newListing.mandi_retail_price_paise,
+      newListing.grade,
+      newListing.harvest_date,
+      newListing.organic_certified,
+      newListing.image_url,
+      newListing.location,
+      newListing.district,
+      newListing.status
+    );
+  }
 
   // 3. Supabase Sync
   let supabaseStatus = 'Supabase Synced';
@@ -146,6 +176,8 @@ export async function createCropListing(input: CropListingInput) {
         price_paise: newListing.price_paise,
         grade: newListing.grade,
         location: newListing.location,
+        image_url: newListing.image_url,
+        logo_url: newListing.logo_url,
         status: 'ACTIVE',
       },
     ]);
@@ -300,4 +332,127 @@ export async function deleteCropListing(id: string) {
 
   return { success: true, id };
 }
+
+/**
+ * Seed all 352 catalog products to the default kisan user ('u_farmer_1' - Ramesh Patil)
+ * Inserts or updates in SQLite `product_listings` and Supabase `product_listings`
+ */
+export async function seedDefaultKisanAllProducts() {
+  const db = getDb();
+  const farmerId = 'u_farmer_1';
+  const fpoId = 'fpo_nashik_1';
+
+  // Ensure default user exists in SQLite
+  const user = db.prepare('SELECT id FROM users WHERE id = ?').get(farmerId);
+  if (!user) {
+    db.prepare(`
+      INSERT OR IGNORE INTO users (id, name, phone, email, role, village, district, state, address)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      farmerId,
+      'Ramesh Patil',
+      '9876543210',
+      'ramesh.patil@kisanbandhan.ai',
+      'FARMER',
+      'Pimplgaon',
+      'Nashik',
+      'Maharashtra',
+      'Pimplgaon Baswant, Nashik, MH 422209'
+    );
+  }
+
+  const upsertStmt = db.prepare(`
+    INSERT INTO product_listings (
+      id, farmer_id, fpo_id, crop_name, category, quantity_available, unit,
+      price_paise, mandi_retail_price_paise, grade, harvest_date, organic_certified,
+      image_url, logo_url, location, district, status
+    ) VALUES (
+      ?, ?, ?, ?, ?, ?, ?,
+      ?, ?, ?, ?, ?,
+      ?, ?, ?, ?, ?
+    )
+    ON CONFLICT(id) DO UPDATE SET
+      quantity_available = excluded.quantity_available,
+      price_paise = excluded.price_paise,
+      image_url = excluded.image_url,
+      logo_url = excluded.logo_url,
+      status = 'ACTIVE'
+  `);
+
+  const harvestDate = new Date().toISOString().split('T')[0];
+  const supaRecords: any[] = [];
+  let insertedCount = 0;
+
+  db.transaction(() => {
+    for (const item of FULL_CROP_CATALOG) {
+      const listingId = `lst_kisan_${item.id}`;
+      const photos = item.photos && item.photos.length > 0 ? item.photos : [item.thumbnail];
+      const imageUrlJson = JSON.stringify(photos);
+      const logoUrl = item.logo_url || item.sideLogo || photos[0];
+      const pricePaise = item.pricePaise || Math.round((item.priceRupees || 30) * 100);
+      const mandiPricePaise = Math.round(pricePaise * 1.25);
+
+      upsertStmt.run(
+        listingId,
+        farmerId,
+        fpoId,
+        item.name,
+        item.category,
+        500,
+        item.unit || 'kg',
+        pricePaise,
+        mandiPricePaise,
+        item.grade || 'उच्चतम श्रेणी A+',
+        harvestDate,
+        item.isOrganic ? 1 : 0,
+        imageUrlJson,
+        logoUrl,
+        'नासिक संकलन केंद्र (Nashik Mandi)',
+        'Nashik',
+        'ACTIVE'
+      );
+
+      supaRecords.push({
+        id: listingId,
+        farmer_id: farmerId,
+        crop_name: item.name,
+        category: item.category,
+        quantity_available: 500,
+        price_paise: pricePaise,
+        grade: item.grade || 'उच्चतम श्रेणी A+',
+        location: 'नासिक संकलन केंद्र (Nashik Mandi)',
+        status: 'ACTIVE',
+        image_url: imageUrlJson,
+        logo_url: logoUrl,
+      });
+
+      insertedCount++;
+    }
+  })();
+
+  // Also sync in batches of 50 to Supabase
+  let supabaseSyncedCount = 0;
+  try {
+    const chunkSize = 50;
+    for (let i = 0; i < supaRecords.length; i += chunkSize) {
+      const chunk = supaRecords.slice(i, i + chunkSize);
+      const { error } = await supabase.from('product_listings').upsert(chunk, { onConflict: 'id' });
+      if (!error) {
+        supabaseSyncedCount += chunk.length;
+      }
+    }
+  } catch (err: any) {
+    console.error('Supabase batch upsert error:', err);
+  }
+
+  return {
+    success: true,
+    count: insertedCount,
+    supabaseSyncedCount,
+    farmerId,
+    farmerName: 'Ramesh Patil',
+    message: `Successfully seeded ${insertedCount} products to default Kisan user (${farmerId} / Ramesh Patil).`,
+  };
+}
+
 

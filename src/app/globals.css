@@ -17,6 +17,8 @@
 
 body {
   background-color: var(--bg-sand);
+  background-image: radial-gradient(rgba(15, 56, 38, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: #1A2E26;
   font-family: 'Plus Jakarta Sans', sans-serif;
   min-height: 100vh;

@@ -184,10 +184,36 @@ function initTables(db: Database.Database) {
       en_name TEXT NOT NULL,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS product_images (
+      id TEXT PRIMARY KEY,
+      product_id TEXT NOT NULL,
+      crop_name TEXT NOT NULL,
+      crop_name_hi TEXT,
+      category TEXT NOT NULL,
+      variety TEXT,
+      logo_id TEXT NOT NULL,
+      logo_url TEXT NOT NULL,
+      logo_alt TEXT,
+      primary_image_id TEXT NOT NULL,
+      primary_image_url TEXT NOT NULL,
+      thumbnail_id TEXT NOT NULL,
+      thumbnail_url TEXT NOT NULL,
+      gallery_urls TEXT,
+      logo_structure TEXT,
+      images_structure TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
   `);
 
   try {
     db.exec('ALTER TABLE users ADD COLUMN email TEXT;');
+  } catch (e) {
+    // Ignore error if column already exists
+  }
+
+  try {
+    db.exec('ALTER TABLE product_listings ADD COLUMN logo_url TEXT;');
   } catch (e) {
     // Ignore error if column already exists
   }
