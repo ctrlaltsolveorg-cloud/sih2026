@@ -213,9 +213,9 @@ export default function HomePage() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105 transition-transform duration-1000 ease-out pointer-events-none"
           style={{ backgroundImage: "url('/images/hero_farm_bg.jpg')" }}
         />
-        {/* Open Minimal Atmospheric Overlay — rich emerald at top, seamless dissolve to sand below */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#051C12]/95 via-[#08291B]/88 to-[#0F3826]/75 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-[#FAF5EB] pointer-events-none" />
+        {/* Contrast overlay — rich dark emerald over text, clear vibrant farm imagery across right, ZERO white fade */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#03140D]/92 via-[#051E13]/75 to-[#08291B]/45 pointer-events-none" />
+        <div className="absolute inset-0 bg-black/20 pointer-events-none" />
 
         {/* Ambient Glows */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
