@@ -1,10 +1,13 @@
 import { getDb } from './db';
 import { cropTranslations } from './i18n';
+import { findProbabilisticCropMatch } from './fuzzyMatcher';
 
 export interface TranslationResult {
   hi: string;
   en: string;
-  source: 'dictionary' | 'db_cache' | 'google_ai_live';
+  source: 'dictionary' | 'db_cache' | 'google_ai_live' | 'probabilistic_fuzzy_match';
+  confidence?: number;
+  matchedKey?: string;
 }
 
 /**
@@ -83,6 +86,20 @@ export async function getOrFetchCropTranslation(cropName: string): Promise<Trans
       hi: cropTranslations[trimmed].hi,
       en: cropTranslations[trimmed].en,
       source: 'dictionary',
+      confidence: 1.0,
+      matchedKey: trimmed,
+    };
+  }
+
+  // 1b. Smart Probabilistic & Phonetic Matcher (e.g., 'baigan', 'began', 'bagan' -> 'baingan')
+  const probMatch = findProbabilisticCropMatch(trimmed, cropTranslations, 0.75);
+  if (probMatch && probMatch.confidence >= 0.75) {
+    return {
+      hi: probMatch.translation.hi,
+      en: probMatch.translation.en,
+      source: 'probabilistic_fuzzy_match',
+      confidence: probMatch.confidence,
+      matchedKey: probMatch.matchedKey,
     };
   }
 

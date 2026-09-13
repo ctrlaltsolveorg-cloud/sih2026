@@ -1,3 +1,5 @@
+import { findProbabilisticCropMatch } from './fuzzyMatcher';
+
 export type Language =
   | 'hi' // हिन्दी (Hindi)
   | 'en' // English
@@ -3687,6 +3689,13 @@ export function getLocalizedCropName(name: string, lang: Language): string {
 
   if (hasTranslatedToken) {
     return translatedTokens.join(' ');
+  }
+
+  // 5b. Smart Probabilistic & Phonetic Fuzzy Matcher (e.g., 'baigan', 'began', 'bagan' -> 'बैंगन' / 'Eggplant')
+  const fuzzyMatch = findProbabilisticCropMatch(trimmed, cropTranslations, 0.75);
+  if (fuzzyMatch) {
+    const res = (fuzzyMatch.translation as any)[lang] || (lang === 'en' ? fuzzyMatch.translation.en : fuzzyMatch.translation.hi);
+    if (res) return res;
   }
 
   // 6. Automatic AI Fallback Cleaner for bracketed names e.g. "ताज़ा हाइब्रिड टमाटर (Fresh Tomatoes)"
