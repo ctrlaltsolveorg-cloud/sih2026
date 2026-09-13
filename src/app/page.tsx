@@ -18,7 +18,13 @@ import {
   Truck,
   Building2,
   UserCheck,
-  Search
+  Search,
+  Cpu,
+  Bot,
+  Activity,
+  Radio,
+  Scan,
+  Lock
 } from 'lucide-react';
 import Link from 'next/link';
 import BulmaProductCard from '@/components/BulmaProductCard';
@@ -274,30 +280,188 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Minimal Frosted Glass Stat Cards */}
-            <div className="lg:col-span-5 grid grid-cols-2 gap-3.5">
-              <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 text-center space-y-1 hover:bg-white/15 hover:border-amber-400/40 transition shadow-sm">
-                <div className="text-3xl font-black text-amber-400">0%</div>
-                <div className="text-xs text-amber-100 font-semibold">{t.statMiddlemen}</div>
-                <p className="text-[10px] text-amber-200/75">{t.statMiddlemenDesc}</p>
+            {/* Floating Glassmorphic Robotics Telemetry HUD — Pure Transparent Glass */}
+            <div className="lg:col-span-5 space-y-3">
+              {/* Telemetry Status Bar — High Transparency */}
+              <div className="flex items-center justify-between px-3.5 py-2 rounded-2xl bg-black/20 hover:bg-black/25 backdrop-blur-md border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_24px_rgba(0,0,0,0.3)] text-[11px] font-mono text-cyan-200 transition">
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+                  </span>
+                  <span className="font-extrabold tracking-wider uppercase drop-shadow-xs">ROBOTICS AI TELEMETRY</span>
+                </div>
+                <div className="flex items-center gap-2 text-[10px]">
+                  <span className="text-amber-300 font-bold drop-shadow-xs">NODE: 6/6 LIVE</span>
+                  <span className="text-white/40">•</span>
+                  <span className="text-emerald-400 font-bold drop-shadow-xs">SYS: 99.9%</span>
+                </div>
               </div>
 
-              <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 text-center space-y-1 hover:bg-white/15 hover:border-emerald-400/40 transition shadow-sm">
-                <div className="text-3xl font-black text-emerald-300">99.4%</div>
-                <div className="text-xs text-amber-100 font-semibold">{t.statCVGrading}</div>
-                <p className="text-[10px] text-amber-200/75">{t.statCVGradingDesc}</p>
-              </div>
+              {/* 4 Ultra-Transparent Floating Glass HUD Cards */}
+              <div className="grid grid-cols-2 gap-3.5">
+                {/* Card 1: Computer Vision Circular Gauge Widget */}
+                <div className="p-4 bg-black/20 hover:bg-black/25 backdrop-blur-md rounded-3xl border border-white/20 hover:border-cyan-400/50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_12px_32px_rgba(0,0,0,0.35)] transition-all duration-300 animate-float-slow flex flex-col justify-between relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none rounded-3xl" />
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-cyan-200 mb-1">
+                      <span className="flex items-center gap-1 font-bold">
+                        <Scan className="w-3.5 h-3.5 text-cyan-400" />
+                        <span>CV GRADING</span>
+                      </span>
+                      <span className="text-emerald-300 font-bold text-[9px] bg-emerald-500/25 px-1.5 py-0.5 rounded-full border border-emerald-400/40 backdrop-blur-xs">
+                        GRADE-A
+                      </span>
+                    </div>
 
-              <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 text-center space-y-1 hover:bg-white/15 hover:border-amber-400/40 transition shadow-sm">
-                <div className="text-3xl font-black text-amber-400">6 AI</div>
-                <div className="text-xs text-amber-100 font-semibold">{t.statAIEngines}</div>
-                <p className="text-[10px] text-amber-200/75">{t.statAIEnginesDesc}</p>
-              </div>
+                    {/* Circular Telemetry Ring */}
+                    <div className="flex items-center justify-center my-2">
+                      <div className="relative w-20 h-20 flex items-center justify-center">
+                        <svg className="w-full h-full -rotate-90" viewBox="0 0 76 76">
+                          <circle
+                            cx="38"
+                            cy="38"
+                            r="32"
+                            fill="none"
+                            stroke="rgba(255, 255, 255, 0.15)"
+                            strokeWidth="5"
+                          />
+                          <circle
+                            cx="38"
+                            cy="38"
+                            r="32"
+                            fill="none"
+                            stroke="url(#cyanEmeraldGrad)"
+                            strokeWidth="5"
+                            strokeDasharray="201"
+                            strokeDashoffset="1.2"
+                            strokeLinecap="round"
+                            className="transition-all duration-1000"
+                          />
+                          <defs>
+                            <linearGradient id="cyanEmeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#22d3ee" />
+                              <stop offset="100%" stopColor="#10b981" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                          <span className="text-lg font-black text-white font-mono tracking-tight leading-none drop-shadow-md">
+                            99.4%
+                          </span>
+                          <span className="text-[8px] font-mono text-cyan-200/90 font-bold uppercase drop-shadow-xs">
+                            ACCURACY
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-              <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 text-center space-y-1 hover:bg-white/15 hover:border-emerald-400/40 transition shadow-sm">
-                <div className="text-3xl font-black text-emerald-300">IVR/SMS</div>
-                <div className="text-xs text-amber-100 font-semibold">{t.statNoInternet}</div>
-                <p className="text-[10px] text-amber-200/75">{t.statNoInternetDesc}</p>
+                  <div className="pt-2 border-t border-white/15 text-center relative z-10">
+                    <div className="text-xs text-white font-extrabold drop-shadow-sm">{t.statCVGrading}</div>
+                    <p className="text-[10px] text-cyan-100/80 font-mono leading-tight mt-0.5">{t.statCVGradingDesc}</p>
+                  </div>
+                </div>
+
+                {/* Card 2: Smart Escrow Zero Middlemen Protocol */}
+                <div className="p-4 bg-black/20 hover:bg-black/25 backdrop-blur-md rounded-3xl border border-white/20 hover:border-amber-400/50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_12px_32px_rgba(0,0,0,0.35)] transition-all duration-300 animate-float-delay flex flex-col justify-between relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none rounded-3xl" />
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-amber-200 mb-1">
+                      <span className="flex items-center gap-1 font-bold">
+                        <Lock className="w-3.5 h-3.5 text-amber-400" />
+                        <span>SMART ESCROW</span>
+                      </span>
+                      <span className="text-amber-300 text-[9px] bg-amber-500/25 px-1.5 py-0.5 rounded-full border border-amber-400/40 backdrop-blur-xs font-bold">
+                        ZERO-CUT
+                      </span>
+                    </div>
+
+                    <div className="text-center my-3">
+                      <div className="text-4xl font-black text-amber-400 font-mono tracking-tight drop-shadow-md">
+                        0%
+                      </div>
+                      <span className="inline-block mt-1 text-[9px] font-mono text-amber-100 uppercase font-bold px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 backdrop-blur-xs">
+                        MIDDLEMEN CUT
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-white/15 text-center relative z-10">
+                    <div className="text-xs text-white font-extrabold drop-shadow-sm">{t.statMiddlemen}</div>
+                    <p className="text-[10px] text-amber-100/80 leading-tight mt-0.5">{t.statMiddlemenDesc}</p>
+                  </div>
+                </div>
+
+                {/* Card 3: 6 AI Neural Engines Equalizer */}
+                <div className="p-4 bg-black/20 hover:bg-black/25 backdrop-blur-md rounded-3xl border border-white/20 hover:border-cyan-400/50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_12px_32px_rgba(0,0,0,0.35)] transition-all duration-300 animate-float-delay flex flex-col justify-between relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none rounded-3xl" />
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-cyan-200 mb-1">
+                      <span className="flex items-center gap-1 font-bold">
+                        <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+                        <span>NEURAL CORE</span>
+                      </span>
+                      <span className="text-cyan-200 text-[9px] bg-cyan-500/25 px-1.5 py-0.5 rounded-full border border-cyan-400/40 backdrop-blur-xs font-mono font-bold">
+                        6 ENGINES
+                      </span>
+                    </div>
+
+                    <div className="text-center my-1.5">
+                      <div className="text-3xl font-black text-cyan-300 font-mono drop-shadow-md">6 AI</div>
+                    </div>
+
+                    {/* Animated Equalizer Waveform Bars */}
+                    <div className="flex items-end justify-center gap-1.5 h-7 my-2">
+                      {[45, 80, 100, 65, 90, 50].map((height, i) => (
+                        <div
+                          key={i}
+                          className="w-2 bg-gradient-to-t from-emerald-400 to-cyan-300 rounded-t shadow-xs animate-pulse"
+                          style={{
+                            height: `${height}%`,
+                            animationDelay: `${i * 150}ms`,
+                            animationDuration: '1.4s'
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-white/15 text-center relative z-10">
+                    <div className="text-xs text-white font-extrabold drop-shadow-sm">{t.statAIEngines}</div>
+                    <p className="text-[10px] text-cyan-100/80 font-mono leading-tight mt-0.5">{t.statAIEnginesDesc}</p>
+                  </div>
+                </div>
+
+                {/* Card 4: Satellite / IVR Voice Node */}
+                <div className="p-4 bg-black/20 hover:bg-black/25 backdrop-blur-md rounded-3xl border border-white/20 hover:border-emerald-400/50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_12px_32px_rgba(0,0,0,0.35)] transition-all duration-300 animate-float-slow flex flex-col justify-between relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none rounded-3xl" />
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-emerald-200 mb-1">
+                      <span className="flex items-center gap-1 font-bold">
+                        <Radio className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>VOICE NODE</span>
+                      </span>
+                      <span className="text-emerald-300 text-[9px] bg-emerald-500/25 px-1.5 py-0.5 rounded-full border border-emerald-400/40 backdrop-blur-xs font-bold">
+                        OFFLINE
+                      </span>
+                    </div>
+
+                    <div className="text-center my-2">
+                      <div className="text-2xl font-black text-emerald-300 font-mono tracking-tight drop-shadow-md">
+                        IVR / SMS
+                      </div>
+                      <span className="inline-block mt-1 text-[9px] font-mono text-emerald-100 uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 backdrop-blur-xs">
+                        KEYPAD PHONE
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-white/15 text-center relative z-10">
+                    <div className="text-xs text-white font-extrabold drop-shadow-sm">{t.statNoInternet}</div>
+                    <p className="text-[10px] text-amber-100/80 leading-tight mt-0.5">{t.statNoInternetDesc}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
