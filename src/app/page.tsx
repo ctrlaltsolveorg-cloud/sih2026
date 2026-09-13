@@ -206,96 +206,99 @@ export default function HomePage() {
 
   return (
     <div className="space-y-10">
-      {/* Live Mandi Agmarknet Ticker */}
-      <div className="w-full bg-[#0F3826] text-amber-100 rounded-2xl py-2.5 px-4 shadow-md overflow-hidden border border-emerald-800/40 flex items-center gap-3">
-        <div className="flex items-center gap-2 text-xs font-bold text-amber-400 shrink-0 bg-emerald-950/80 px-3 py-1 rounded-lg border border-amber-400/20">
-          <TrendingUp className="w-3.5 h-3.5" />
-          <span>{t.liveMandiTicker}</span>
-        </div>
-        <div className="overflow-hidden relative w-full">
-          <div className="animate-marquee whitespace-nowrap flex gap-8 text-xs">
-            {tickerItems.concat(tickerItems).map((item, idx) => (
-              <span key={idx} className="inline-flex items-center gap-2 font-medium">
-                <span className="text-amber-50">{getLocalizedCropName(item.crop, language)}</span>
-                <span className="font-mono text-amber-300">{language === 'hi' ? item.price : item.price.replace('/किग्रा', '/kg')}</span>
-                <span className="text-emerald-400 text-[11px] font-bold">{item.trend}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Hero Banner Section with Agriculture Farm Background */}
-      <div className="relative overflow-hidden rounded-3xl text-amber-50 p-8 sm:p-12 shadow-2xl border border-amber-500/30">
-        {/* Background Farm Image */}
+      {/* Full-width Open Hero Section with Edge-to-Edge Farm Background */}
+      <div className="relative -mx-4 sm:-mx-8 lg:-mx-12 -mt-6 pt-6 sm:pt-8 pb-16 px-4 sm:px-8 lg:px-12 overflow-hidden text-amber-50">
+        {/* Full-bleed Background Farm Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105 transition-transform duration-1000 ease-out"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105 transition-transform duration-1000 ease-out pointer-events-none"
           style={{ backgroundImage: "url('/images/hero_farm_bg.jpg')" }}
         />
-        {/* Multi-layer Dark Gradient & Atmosphere Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#072417]/95 via-[#0F3826]/88 to-[#092b1b]/92" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-500/15 via-transparent to-black/40" />
+        {/* Open Minimal Atmospheric Overlay — rich emerald at top, seamless dissolve to sand below */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#051C12]/95 via-[#08291B]/88 to-[#0F3826]/75 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-[#FAF5EB] pointer-events-none" />
 
         {/* Ambient Glows */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-semibold">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>SIH 2026 PS 26033 • किसान दिवस समर्पित प्रत्यक्ष कृषि मंच</span>
+        <div className="relative z-10 max-w-7xl mx-auto space-y-8">
+          {/* Live Mandi Agmarknet Ticker */}
+          <div className="w-full bg-[#051C12]/70 backdrop-blur-md text-amber-100 rounded-2xl py-2 px-4 shadow-sm overflow-hidden border border-white/10 flex items-center gap-3">
+            <div className="flex items-center gap-2 text-xs font-bold text-amber-400 shrink-0 bg-amber-500/15 px-3 py-1 rounded-lg border border-amber-400/20">
+              <TrendingUp className="w-3.5 h-3.5" />
+              <span>{t.liveMandiTicker}</span>
             </div>
-
-            <h1 className="text-3xl sm:text-5xl font-extrabold text-amber-50 leading-tight">
-              {t.heroTitle}
-            </h1>
-
-            <p className="text-sm sm:text-base text-amber-100/80 leading-relaxed max-w-2xl">
-              {t.heroDesc}
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <a
-                href="#marketplace"
-                className="px-6 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 font-extrabold rounded-xl shadow-lg hover:from-amber-400 hover:to-amber-500 transition flex items-center gap-2 text-sm"
-              >
-                <ShoppingBag className="w-4 h-4" />
-                <span>{t.heroCTA}</span>
-              </a>
-
-              <div className="px-4 py-3 bg-emerald-950/80 border border-amber-500/30 rounded-xl text-xs text-amber-200 flex items-center gap-2.5 shadow-inner">
-                <PhoneCall className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>
-                  <strong className="text-amber-300">टोल-फ्री IVR वॉयस हेल्पलाइन: 1800-KISAN-AI</strong> (कीपैड फोन फसल पंजीकरण)
-                </span>
+            <div className="overflow-hidden relative w-full">
+              <div className="animate-marquee whitespace-nowrap flex gap-8 text-xs">
+                {tickerItems.concat(tickerItems).map((item, idx) => (
+                  <span key={idx} className="inline-flex items-center gap-2 font-medium">
+                    <span className="text-amber-50">{getLocalizedCropName(item.crop, language)}</span>
+                    <span className="font-mono text-amber-300">{language === 'hi' ? item.price : item.price.replace('/किग्रा', '/kg')}</span>
+                    <span className="text-emerald-400 text-[11px] font-bold">{item.trend}</span>
+                  </span>
+                ))}
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-            <div className="p-5 bg-[#072417]/65 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-amber-400/60 hover:bg-[#072417]/80 transition">
-              <div className="text-3xl font-extrabold text-amber-400">0%</div>
-              <div className="text-xs text-amber-100 font-medium">{t.statMiddlemen}</div>
-              <p className="text-[10px] text-amber-200/70">{t.statMiddlemenDesc}</p>
+          {/* Hero Content — Open, Breathable & Minimal */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-4">
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/25 text-xs font-semibold backdrop-blur-sm shadow-xs">
+                <Sparkles className="w-4 h-4 text-amber-400" />
+                <span>SIH 2026 PS 26033 • किसान दिवस समर्पित प्रत्यक्ष कृषि मंच</span>
+              </div>
+
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight drop-shadow-md">
+                {t.heroTitle}
+              </h1>
+
+              <p className="text-sm sm:text-base text-amber-100/90 leading-relaxed max-w-2xl font-normal drop-shadow-xs">
+                {t.heroDesc}
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <a
+                  href="#marketplace"
+                  className="px-7 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl shadow-xl transition-all duration-200 flex items-center gap-2 text-sm hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <ShoppingBag className="w-4 h-4" />
+                  <span>{t.heroCTA}</span>
+                </a>
+
+                <div className="px-4 py-3 bg-white/10 backdrop-blur-md border border-white/15 rounded-xl text-xs text-amber-200 flex items-center gap-2.5 shadow-sm">
+                  <PhoneCall className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span>
+                    <strong className="text-amber-300">टोल-फ्री IVR वॉयस हेल्पलाइन: 1800-KISAN-AI</strong> (कीपैड फोन फसल पंजीकरण)
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <div className="p-5 bg-[#072417]/65 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-emerald-400/60 hover:bg-[#072417]/80 transition">
-              <div className="text-3xl font-extrabold text-emerald-400">99.4%</div>
-              <div className="text-xs text-amber-100 font-medium">{t.statCVGrading}</div>
-              <p className="text-[10px] text-amber-200/70">{t.statCVGradingDesc}</p>
-            </div>
+            {/* Minimal Frosted Glass Stat Cards */}
+            <div className="lg:col-span-5 grid grid-cols-2 gap-3.5">
+              <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 text-center space-y-1 hover:bg-white/15 hover:border-amber-400/40 transition shadow-sm">
+                <div className="text-3xl font-black text-amber-400">0%</div>
+                <div className="text-xs text-amber-100 font-semibold">{t.statMiddlemen}</div>
+                <p className="text-[10px] text-amber-200/75">{t.statMiddlemenDesc}</p>
+              </div>
 
-            <div className="p-5 bg-[#072417]/65 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-amber-400/60 hover:bg-[#072417]/80 transition">
-              <div className="text-3xl font-extrabold text-amber-400">6 AI</div>
-              <div className="text-xs text-amber-100 font-medium">{t.statAIEngines}</div>
-              <p className="text-[10px] text-amber-200/70">{t.statAIEnginesDesc}</p>
-            </div>
+              <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 text-center space-y-1 hover:bg-white/15 hover:border-emerald-400/40 transition shadow-sm">
+                <div className="text-3xl font-black text-emerald-300">99.4%</div>
+                <div className="text-xs text-amber-100 font-semibold">{t.statCVGrading}</div>
+                <p className="text-[10px] text-amber-200/75">{t.statCVGradingDesc}</p>
+              </div>
 
-            <div className="p-5 bg-[#072417]/65 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-emerald-400/60 hover:bg-[#072417]/80 transition">
-              <div className="text-3xl font-extrabold text-emerald-400">IVR/SMS</div>
-              <div className="text-xs text-amber-100 font-medium">{t.statNoInternet}</div>
-              <p className="text-[10px] text-amber-200/70">{t.statNoInternetDesc}</p>
+              <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 text-center space-y-1 hover:bg-white/15 hover:border-amber-400/40 transition shadow-sm">
+                <div className="text-3xl font-black text-amber-400">6 AI</div>
+                <div className="text-xs text-amber-100 font-semibold">{t.statAIEngines}</div>
+                <p className="text-[10px] text-amber-200/75">{t.statAIEnginesDesc}</p>
+              </div>
+
+              <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 text-center space-y-1 hover:bg-white/15 hover:border-emerald-400/40 transition shadow-sm">
+                <div className="text-3xl font-black text-emerald-300">IVR/SMS</div>
+                <div className="text-xs text-amber-100 font-semibold">{t.statNoInternet}</div>
+                <p className="text-[10px] text-amber-200/75">{t.statNoInternetDesc}</p>
+              </div>
             </div>
           </div>
         </div>
