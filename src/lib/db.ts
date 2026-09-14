@@ -1,4 +1,5 @@
 import Database from 'better-sqlite3';
+import fs from 'fs';
 import path from 'path';
 
 let dbInstance: Database.Database | null = null;
@@ -8,7 +9,26 @@ export function getDb(): Database.Database {
     return dbInstance;
   }
 
-  const dbPath = path.join(process.cwd(), 'kisanbandhan.db');
+  let dbPath: string;
+  // On Vercel / AWS Lambda, process.cwd() is strictly read-only.
+  // /tmp is the only writable filesystem directory.
+  if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+    const tmpDbPath = path.join('/tmp', 'kisanbandhan.db');
+    const localDbPath = path.join(process.cwd(), 'kisanbandhan.db');
+    if (!fs.existsSync(tmpDbPath)) {
+      try {
+        if (fs.existsSync(localDbPath)) {
+          fs.copyFileSync(localDbPath, tmpDbPath);
+        }
+      } catch (copyErr) {
+        console.warn('Notice copying db to /tmp:', copyErr);
+      }
+    }
+    dbPath = tmpDbPath;
+  } else {
+    dbPath = path.join(process.cwd(), 'kisanbandhan.db');
+  }
+
   dbInstance = new Database(dbPath, { timeout: 10000 });
 
   try {
@@ -112,6 +132,19 @@ function initTables(db: Database.Database) {
       payment_method TEXT DEFAULT 'COD' CHECK(payment_method IN ('COD', 'UPI', 'BANK_TRANSFER')),
       payment_status TEXT DEFAULT 'PENDING' CHECK(payment_status IN ('PENDING', 'PAID')),
       notes TEXT,
+      recipient_name TEXT,
+      recipient_phone TEXT,
+      alt_phone TEXT,
+      flat_building TEXT,
+      area_street TEXT,
+      landmark TEXT,
+      post_office TEXT,
+      district TEXT,
+      state TEXT,
+      pin_code TEXT,
+      address_type TEXT,
+      delivery_instructions TEXT,
+      shipping_json TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
@@ -138,6 +171,10 @@ function initTables(db: Database.Database) {
       optimized_stop_sequence INTEGER DEFAULT 1,
       estimated_distance_km REAL DEFAULT 14.5,
       estimated_eta_minutes INTEGER DEFAULT 35,
+      driver_name TEXT DEFAULT 'विक्रम शिंदे (Vikram Shinde)',
+      driver_phone TEXT DEFAULT '+91 99000 11122',
+      driver_vehicle TEXT DEFAULT 'MH-15-EG-8821 (Tata Ace Gold)',
+      cod_collected INTEGER DEFAULT 0,
       assigned_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -216,6 +253,40 @@ function initTables(db: Database.Database) {
     db.exec('ALTER TABLE product_listings ADD COLUMN logo_url TEXT;');
   } catch (e) {
     // Ignore error if column already exists
+  }
+
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN driver_name TEXT;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN driver_phone TEXT;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN driver_vehicle TEXT;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN cod_collected INTEGER DEFAULT 0;');
+  } catch (e) {}
+
+  const orderColumns = [
+    'recipient_name TEXT',
+    'recipient_phone TEXT',
+    'alt_phone TEXT',
+    'flat_building TEXT',
+    'area_street TEXT',
+    'landmark TEXT',
+    'post_office TEXT',
+    'district TEXT',
+    'state TEXT',
+    'pin_code TEXT',
+    'address_type TEXT',
+    'delivery_instructions TEXT',
+    'shipping_json TEXT',
+  ];
+  for (const col of orderColumns) {
+    try {
+      db.exec(`ALTER TABLE orders ADD COLUMN ${col};`);
+    } catch (e) {}
   }
 
   // Ensure product_listings supports 'Seeds' category
@@ -340,8 +411,9 @@ function seedData(db: Database.Database) {
     insertFarmer.run('u_farmer_5', 'Marwar Spices & Pulses', null, 20.0, 'VERIFIED', 'BARB0005566', 'BARB0005566');
 
     // Buyer
-    insertUser.run('u_buyer_1', 'Priya Sharma (Consumer)', '9811122233', 'priya@kisanbandhan.ai', 'BUYER', '', 'Pune', 'Maharashtra', 'Flat 402, Green Acres, Viman Nagar, Pune 411014');
-    insertUser.run('u_buyer_2', 'Annapurna Hotel & Catering', '9822233344', 'annapurna@kisanbandhan.ai', 'BUYER', '', 'Pune', 'Maharashtra', 'Sector 17, Swargate, Pune 411002');
+    insertUser.run('u_buyer_1', 'Priya Sharma (Consumer)', '9811122233', 'priya@kisanbandhan.ai', 'BUYER', 'Viman Nagar', 'Pune', 'Maharashtra', 'Flat 402, Green Acres, Viman Nagar, Pune 411014');
+    insertUser.run('u_buyer_2', 'Annapurna Hotel & Catering', '9822233344', 'annapurna@kisanbandhan.ai', 'BUYER', 'Swargate', 'Pune', 'Maharashtra', 'Sector 17, Swargate, Pune 411002');
+    insertUser.run('u_dev_master', 'Piyush Kumar (Dev Master)', '9999999999', 'dev@kisanbandhan.ai', 'ADMIN', 'Viman Nagar', 'Pune', 'Maharashtra', 'Flat 402, Green Acres, Viman Nagar, Pune 411014');
 
     // Hub Operator
     insertUser.run('u_hub_1', 'Rajesh Kulkarni (Hub Supervisor)', '9900088877', 'rajesh.hub@kisanbandhan.ai', 'HUB_OPERATOR', 'Hadapsar Mandi', 'Pune', 'Maharashtra', 'KisanBandhan Hub 4, Hadapsar, Pune');

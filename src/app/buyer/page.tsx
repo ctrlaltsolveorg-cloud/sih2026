@@ -25,7 +25,9 @@ import {
   ArrowRight,
   ShieldCheck,
   User,
-  Phone
+  Phone,
+  Truck,
+  RefreshCw
 } from 'lucide-react';
 
 export default function BuyerDashboardPage() {
@@ -92,10 +94,33 @@ export default function BuyerDashboardPage() {
     }
   };
 
+  const [generatingDeliveryOtp, setGeneratingDeliveryOtp] = useState<Record<string, boolean>>({});
+
+  const handleGenerateDeliveryOtp = async (orderId: string) => {
+    setGeneratingDeliveryOtp((prev) => ({ ...prev, [orderId]: true }));
+    try {
+      const res = await fetch('/api/v1/orders/generate-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, otpType: 'delivery' }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'OTP जनरेट करने में विफल');
+      }
+      await fetchOrders();
+    } catch (err: any) {
+      alert(err.message || 'OTP जनरेट करने में त्रुटि आई।');
+    } finally {
+      setGeneratingDeliveryOtp((prev) => ({ ...prev, [orderId]: false }));
+    }
+  };
+
   useEffect(() => {
     fetchOrders();
     const handleOrderUpdate = () => fetchOrders();
     window.addEventListener('kb_order_updated', handleOrderUpdate);
+    const interval = setInterval(fetchOrders, 6000);
 
     if (typeof window !== 'undefined' && window.location.hash.includes('order')) {
       setTimeout(() => {
@@ -106,7 +131,10 @@ export default function BuyerDashboardPage() {
       }, 350);
     }
 
-    return () => window.removeEventListener('kb_order_updated', handleOrderUpdate);
+    return () => {
+      window.removeEventListener('kb_order_updated', handleOrderUpdate);
+      clearInterval(interval);
+    };
   }, [user]);
 
   const handleVerifyOtp = async (orderId: string, otpType: 'pickup' | 'delivery') => {
@@ -593,21 +621,52 @@ export default function BuyerDashboardPage() {
                         </p>
                       </div>
 
+                      {/* Driver Status Banner */}
+                      <div className="p-2.5 bg-emerald-950/5 rounded-xl border border-emerald-900/10 flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-1.5">
+                          <Truck className="w-3.5 h-3.5 text-emerald-700" />
+                          <span className="font-bold text-emerald-950">
+                            चालक: {ord.driver_name || 'विक्रम शिंदे (Tata Ace)'}
+                          </span>
+                        </div>
+                        {ord.driver_phone && (
+                          <a
+                            href={`tel:${ord.driver_phone}`}
+                            className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded hover:underline"
+                          >
+                            <Phone className="w-3 h-3 text-emerald-600" />
+                            <span>{ord.driver_phone}</span>
+                          </a>
+                        )}
+                      </div>
+
                       {/* Zero-Trust Delivery OTP Card */}
-                      <div className="p-3 bg-amber-500/10 border border-amber-600/30 rounded-xl space-y-1">
+                      <div className="p-3 bg-amber-500/10 border border-amber-600/30 rounded-xl space-y-1.5">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1.5 text-xs font-extrabold text-amber-950">
                             <ShieldCheck className="w-4 h-4 text-amber-700" />
                             <span>डिलीवरी सत्यापन OTP:</span>
                           </div>
-                          <span className="font-mono text-base font-black px-2.5 py-0.5 bg-white border border-amber-300 rounded-lg text-emerald-950 tracking-wider">
-                            {ord.delivery_otp || '----'}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-base font-black px-2.5 py-0.5 bg-white border border-amber-300 rounded-lg text-emerald-950 tracking-wider shadow-xs">
+                              {ord.delivery_otp || '----'}
+                            </span>
+                            {!isDelivered && (
+                              <button
+                                onClick={() => handleGenerateDeliveryOtp(ord.id)}
+                                disabled={generatingDeliveryOtp[ord.id]}
+                                title="नया OTP जनरेट करें"
+                                className="p-1 hover:bg-amber-200 text-amber-950 rounded-lg transition"
+                              >
+                                <RefreshCw className={`w-3.5 h-3.5 ${generatingDeliveryOtp[ord.id] ? 'animate-spin text-amber-700' : ''}`} />
+                              </button>
+                            )}
+                          </div>
                         </div>
                         <p className="text-[10px] text-amber-900/90 leading-tight">
                           {isDelivered 
                             ? '✓ यह OTP सफलतापूर्वक सत्यापित हो चुका है। भुगतान किसान को हस्तांतरित कर दिया गया है।'
-                            : '⚠️ सुरक्षा नियम: डिलीवरी एजेंट को यह 4-अंकीय कोड केवल तभी बताएं जब आपको फसल सही सलामत मिल जाए।'}
+                            : '⚠️ सुरक्षा नियम: डिलीवरी एजेंट को यह 4-अंकीय कोड केवल तभी बताएं जब आपको फसल सही सलामत मिल जाए व (COD होने पर) नकद भुगतान हो जाए।'}
                         </p>
                       </div>
 
