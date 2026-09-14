@@ -24,19 +24,67 @@ export default function CartDrawer() {
 
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [contractId, setContractId] = useState<string | null>(null);
+  const [placedOrderId, setPlacedOrderId] = useState<string | null>(null);
+  const [deliveryOtpCode, setDeliveryOtpCode] = useState<string | null>(null);
+  const [deliveryAddress, setDeliveryAddress] = useState('Flat 402, Green Acres, Viman Nagar, Pune 411014');
+  const [paymentMethod, setPaymentMethod] = useState<'UPI' | 'COD'>('UPI');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   if (!isCartOpen) return null;
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (!isAuthenticated || !user) {
       openAuthModal('login');
       return;
     }
 
-    // Generate simulated smart contract hash
-    const hash = 'KF-CONTRACT-' + Math.random().toString(36).substring(2, 9).toUpperCase();
-    setContractId(hash);
-    setOrderPlaced(true);
+    if (cart.length === 0) return;
+
+    setIsSubmitting(true);
+    setCheckoutError(null);
+
+    try {
+      const payload = {
+        buyerId: user.id || 'u_buyer_1',
+        deliveryAddress: deliveryAddress.trim() || 'Flat 402, Green Acres, Viman Nagar, Pune 411014',
+        deliveryType: 'EXPRESS',
+        paymentMethod,
+        notes: `Direct Farm Purchase by ${user.name || 'Buyer'}`,
+        items: cart.map((it) => ({
+          listingId: it.listingId,
+          cropName: it.cropName,
+          quantity: it.quantityKg,
+          unitPricePaise: it.pricePaisePerKg,
+          unit: 'kg',
+        })),
+      };
+
+      const res = await fetch('/api/v1/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'ऑर्डर दर्ज करने में त्रुटि आई। कृपया पुनः प्रयास करें।');
+      }
+
+      setContractId(data.smartContractHash || 'KB-ESCROW-' + Math.random().toString(36).substring(2, 9).toUpperCase());
+      setPlacedOrderId(data.orderId);
+      setDeliveryOtpCode(data.deliveryOtp);
+      setOrderPlaced(true);
+
+      // Notify dashboard pages to refresh orders
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('kb_order_updated'));
+      }
+    } catch (err: any) {
+      setCheckoutError(err.message || 'ऑर्डर असफल रहा।');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCloseSuccess = () => {
@@ -69,32 +117,45 @@ export default function CartDrawer() {
 
         {/* Body */}
         {orderPlaced ? (
-          <div className="p-8 flex-1 flex flex-col items-center justify-center text-center">
-            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4 text-emerald-700 animate-bounce">
+          <div className="p-6 flex-1 flex flex-col items-center justify-center text-center overflow-y-auto">
+            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-3 text-emerald-700 animate-bounce">
               <CheckCircle2 className="w-10 h-10" />
             </div>
-            <h3 className="text-2xl font-bold text-emerald-950 mb-2">ऑर्डर अनुबंध सफलतापूर्वक निष्पादित!</h3>
-            <p className="text-sm text-emerald-800/80 mb-4">
-              किसान और हब ऑपरेटर को स्वचालित प्रेषण आदेश भेज दिया गया है।
+            <h3 className="text-xl font-extrabold text-emerald-950 mb-1">सुरक्षित एस्क्रो ऑर्डर निष्पादित!</h3>
+            <p className="text-xs text-emerald-800/80 mb-4">
+              ऑर्डर ID: <span className="font-mono font-bold text-emerald-900">{placedOrderId}</span>
             </p>
-            <div className="p-4 bg-emerald-900/5 rounded-2xl border border-emerald-900/10 w-full mb-6 text-left text-xs space-y-2 font-mono">
-              <p className="text-emerald-900 font-bold">स्मार्ट कॉन्ट्रैक्ट आईडी: {contractId}</p>
-              <p className="text-emerald-700">कुल भुगतान: ₹{(totalPaise / 100).toFixed(2)} ({totalPaise} पैसे)</p>
-              <p className="text-emerald-700">
-                {language === 'hi' ? 'खरीदार संपर्क: ' : 'Buyer Tel: '}
-                <span className="font-bold">{user?.phone || '+91 98230 45678'}</span> ({user?.name})
+
+            {/* Zero-Trust OTP Security Box */}
+            <div className="w-full bg-amber-500/10 border-2 border-amber-600/30 rounded-2xl p-4 mb-4 text-left shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <ShieldCheck className="w-5 h-5 text-amber-700" />
+                <span className="font-extrabold text-xs uppercase tracking-wider text-amber-950">
+                  डिलीवरी सत्यापन कोड (Delivery Handover OTP)
+                </span>
+              </div>
+              <div className="bg-white rounded-xl p-3 border border-amber-300 text-center mb-2 shadow-inner">
+                <span className="text-3xl font-mono font-black tracking-[0.3em] text-emerald-950">
+                  {deliveryOtpCode || '----'}
+                </span>
+              </div>
+              <p className="text-[11px] text-amber-950 leading-relaxed">
+                <strong className="text-amber-900">सुरक्षा चेतावनी:</strong> यह 4-अंकीय OTP डिलीवरी एजेंट को <strong>केवल तभी दें जब आप फसल की गुणवत्ता व वजन जांच लें</strong>। आपके OTP देने के बाद ही एस्क्रो से किसान को भुगतान जारी होगा!
               </p>
-              <p className="text-emerald-700">
-                {language === 'hi' ? 'किसान सहायता / डिस्पैच: ' : 'Farmer Support / Helpline: '}
-                <span className="font-bold">1800-KISAN-AI (Toll-Free)</span>
-              </p>
-              <p className="text-emerald-700">एस्क्रौ स्थिति: निष्पादित (Locked in Escrow)</p>
             </div>
+
+            <div className="p-3.5 bg-emerald-900/5 rounded-xl border border-emerald-900/10 w-full mb-5 text-left text-xs space-y-1.5 font-mono">
+              <p className="text-emerald-900 font-bold">स्मार्ट कॉन्ट्रैक्ट ID: {contractId}</p>
+              <p className="text-emerald-800">भुगतान माध्यम: {paymentMethod === 'UPI' ? 'सुरक्षित एस्क्रो (Escrow Hold)' : 'कैश ऑन डिलीवरी (COD)'}</p>
+              <p className="text-emerald-800">कुल राशि: ₹{(totalPaise / 100).toFixed(2)}</p>
+              <p className="text-emerald-700">एस्क्रो स्थिति: <span className="text-amber-700 font-bold">सुरक्षित लॉक्ड (Held in Escrow)</span></p>
+            </div>
+
             <button
               onClick={handleCloseSuccess}
-              className="w-full py-3.5 bg-[#0F3826] text-amber-50 font-bold rounded-xl shadow-lg hover:bg-emerald-900 transition flex items-center justify-center gap-2"
+              className="w-full py-3.5 bg-[#0F3826] text-amber-50 font-bold rounded-xl shadow-lg hover:bg-emerald-900 transition flex items-center justify-center gap-2 text-sm"
             >
-              पूर्ण करें (Close) <ArrowRight className="w-4 h-4" />
+              पूर्ण करें एवं डैशबोर्ड में देखें <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         ) : (
@@ -188,10 +249,69 @@ export default function CartDrawer() {
                   </div>
                 </div>
 
+                {/* Delivery Address & Payment Mode inputs */}
+                <div className="space-y-2 pt-2 border-t border-emerald-900/10">
+                  <div>
+                    <label className="block text-[11px] font-bold text-emerald-900 mb-1">
+                      {language === 'hi' ? 'डिलीवरी पता (Delivery Address):' : 'Delivery Address:'}
+                    </label>
+                    <input
+                      type="text"
+                      value={deliveryAddress}
+                      onChange={(e) => setDeliveryAddress(e.target.value)}
+                      placeholder="Enter delivery address in city / mandi"
+                      className="w-full text-xs p-2.5 rounded-lg border border-emerald-900/20 bg-emerald-50/50 focus:outline-none focus:ring-1 focus:ring-emerald-700 text-emerald-950 font-medium"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-emerald-900 mb-1">
+                      {language === 'hi' ? 'भुगतान विधि (Payment Method):' : 'Payment Method:'}
+                    </label>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <button
+                        type="button"
+                        onClick={() => setPaymentMethod('UPI')}
+                        className={`p-2 rounded-lg border text-left flex flex-col transition ${
+                          paymentMethod === 'UPI'
+                            ? 'bg-emerald-800 text-amber-50 border-emerald-900 shadow-sm'
+                            : 'bg-white text-emerald-900 border-emerald-900/20 hover:bg-emerald-50'
+                        }`}
+                      >
+                        <span className="font-bold">एस्क्रो UPI (Escrow)</span>
+                        <span className={`text-[10px] ${paymentMethod === 'UPI' ? 'text-amber-200' : 'text-emerald-700/70'}`}>
+                          OTP सत्यापन पर रिलीज़
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setPaymentMethod('COD')}
+                        className={`p-2 rounded-lg border text-left flex flex-col transition ${
+                          paymentMethod === 'COD'
+                            ? 'bg-emerald-800 text-amber-50 border-emerald-900 shadow-sm'
+                            : 'bg-white text-emerald-900 border-emerald-900/20 hover:bg-emerald-50'
+                        }`}
+                      >
+                        <span className="font-bold">कैश ऑन डिलीवरी</span>
+                        <span className={`text-[10px] ${paymentMethod === 'COD' ? 'text-amber-200' : 'text-emerald-700/70'}`}>
+                          COD + हैंडओवर OTP
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="flex items-center gap-1.5 text-[11px] text-emerald-700/80 bg-emerald-50 p-2 rounded-lg">
                   <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>{language === 'hi' ? 'किसान एस्क्रौ सुरक्षा — भुगतान केवल गुणवत्ता प्रमाणन के बाद।' : 'Escrow Security — Funds released only post quality verification.'}</span>
+                  <span>{language === 'hi' ? 'शून्य-जोखिम सुरक्षा — डिलीवरी OTP सत्यापित होने तक भुगतान सुरक्षित लॉक रहता है।' : 'Zero-Risk Security — Funds released only after delivery OTP verification.'}</span>
                 </div>
+
+                {checkoutError && (
+                  <div className="p-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 font-medium">
+                    {checkoutError}
+                  </div>
+                )}
 
                 {!isAuthenticated && (
                   <div className="p-2.5 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-950 flex items-center gap-2">
@@ -206,9 +326,12 @@ export default function CartDrawer() {
 
                 <button
                   onClick={handleCheckout}
-                  className="w-full py-3.5 bg-[#0F3826] text-amber-50 font-bold rounded-xl shadow-lg hover:bg-emerald-900 transition flex items-center justify-center gap-2 text-sm"
+                  disabled={isSubmitting}
+                  className="w-full py-3.5 bg-[#0F3826] text-amber-50 font-bold rounded-xl shadow-lg hover:bg-emerald-900 transition flex items-center justify-center gap-2 text-sm disabled:opacity-50"
                 >
-                  {isAuthenticated ? (
+                  {isSubmitting ? (
+                    <span>अनुबंध निष्पादित हो रहा है... (Securing Order...)</span>
+                  ) : isAuthenticated ? (
                     <>
                       {t.proceedOrder} <ArrowRight className="w-4 h-4" />
                     </>

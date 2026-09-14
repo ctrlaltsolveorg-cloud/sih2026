@@ -337,31 +337,205 @@ export async function deleteCropListing(id: string) {
  * Seed all 352 catalog products to the default kisan user ('u_farmer_1' - Ramesh Patil)
  * Inserts or updates in SQLite `product_listings` and Supabase `product_listings`
  */
+export const DEFAULT_REGISTERED_FARMERS = [
+  {
+    id: 'u_farmer_1',
+    name: 'Ramesh Patil',
+    phone: '9876543210',
+    email: 'ramesh.patil@kisanbandhan.ai',
+    district: 'Nashik',
+    state: 'Maharashtra',
+    address: 'Pimplgaon Baswant, Nashik, MH 422209',
+    location: 'नासिक संकलन केंद्र (Nashik Mandi Hub)',
+    fpoId: 'fpo_nashik_1',
+  },
+  {
+    id: 'u_farmer_2',
+    name: 'Harpreet Singh',
+    phone: '9876543211',
+    email: 'harpreet@kisanbandhan.ai',
+    district: 'Ludhiana',
+    state: 'Punjab',
+    address: 'G.T. Road, Khanna, Ludhiana, PB 141401',
+    location: 'खन्ना अनाज मंडी (Khanna Grain Mandi, PB)',
+    fpoId: null,
+  },
+  {
+    id: 'u_farmer_3',
+    name: 'Suresh Gaikwad',
+    phone: '9876543212',
+    email: 'suresh.gaikwad@kisanbandhan.ai',
+    district: 'Pune',
+    state: 'Maharashtra',
+    address: 'Baramati Agro Hub, Pune, MH 413102',
+    location: 'बारामती एग्रो-हब (Baramati Agro Hub, Pune)',
+    fpoId: null,
+  },
+  {
+    id: 'u_farmer_4',
+    name: 'Ananya Roy',
+    phone: '9876543213',
+    email: 'ananya.roy@kisanbandhan.ai',
+    district: 'Hooghly',
+    state: 'West Bengal',
+    address: 'Singur Krishi Mandi, Hooghly, WB 712409',
+    location: 'सिंगूर कृषि संकलन केंद्र (Singur Hub, WB)',
+    fpoId: null,
+  },
+  {
+    id: 'u_farmer_5',
+    name: 'Rajesh Choudhary',
+    phone: '9876543214',
+    email: 'rajesh.farmer@kisanbandhan.ai',
+    district: 'Jaipur',
+    state: 'Rajasthan',
+    address: 'Chomu Mandi Link Road, Jaipur, RJ 303702',
+    location: 'चोमू कृषि मंडी हब (Chomu Mandi, Jaipur)',
+    fpoId: null,
+  },
+];
+
+export const ALL_DEFAULT_USERS = [
+  ...DEFAULT_REGISTERED_FARMERS.map((f) => ({
+    id: f.id,
+    name: f.name,
+    phone: f.phone,
+    email: f.email,
+    role: 'FARMER',
+    district: f.district,
+    state: f.state,
+    address: f.address,
+  })),
+  {
+    id: 'u_fpo_1',
+    name: 'Sanjay Deshmukh (FPO Lead)',
+    phone: '9876543219',
+    email: 'sanjay.fpo@kisanbandhan.ai',
+    role: 'FPO',
+    district: 'Nashik',
+    state: 'Maharashtra',
+    address: 'Sahyadri Farmers Producer Co., Lasalgaon, Nashik, MH',
+  },
+  {
+    id: 'u_buyer_1',
+    name: 'Priya Sharma (Consumer)',
+    phone: '9811122233',
+    email: 'priya@kisanbandhan.ai',
+    role: 'BUYER',
+    district: 'Pune',
+    state: 'Maharashtra',
+    address: 'Flat 402, Green Acres, Viman Nagar, Pune 411014',
+  },
+  {
+    id: 'u_buyer_2',
+    name: 'Annapurna Hotel & Catering',
+    phone: '9822233344',
+    email: 'annapurna@kisanbandhan.ai',
+    role: 'BUYER',
+    district: 'Pune',
+    state: 'Maharashtra',
+    address: 'Sector 17, Swargate, Pune 411002',
+  },
+  {
+    id: 'u_hub_1',
+    name: 'Rajesh Kulkarni (Hub Supervisor)',
+    phone: '9900088877',
+    email: 'rajesh.hub@kisanbandhan.ai',
+    role: 'HUB_OPERATOR',
+    district: 'Pune',
+    state: 'Maharashtra',
+    address: 'KisanBandhan Hub 4, Hadapsar Mandi, Pune 411028',
+  },
+  {
+    id: 'u_partner_1',
+    name: 'Vikram Shinde Fleet',
+    phone: '9900011122',
+    email: 'vikram.logistics@kisanbandhan.ai',
+    role: 'TRANSPORTER',
+    district: 'Pune',
+    state: 'Maharashtra',
+    address: 'Kisan Express Logistics Hub, Pune 411013',
+  },
+  {
+    id: 'u_admin_1',
+    name: 'Ministry Governance Admin',
+    phone: '9000000000',
+    email: 'admin@kisanbandhan.ai',
+    role: 'ADMIN',
+    district: 'New Delhi',
+    state: 'Delhi',
+    address: 'Dept of Consumer Affairs, Krishi Bhawan, New Delhi 110001',
+  },
+  {
+    id: 'u_dev_master',
+    name: 'Piyush Kumar (Lead Dev & Collaborator)',
+    phone: '9999999999',
+    email: 'piyush@kisanbandhan.ai',
+    role: 'ADMIN',
+    district: 'Nashik',
+    state: 'Maharashtra',
+    address: 'KisanBandhan Innovation Lab, Maharashtra',
+  },
+];
+
 export async function seedDefaultKisanAllProducts() {
   const db = getDb();
-  const farmerId = 'u_farmer_1';
-  const fpoId = 'fpo_nashik_1';
 
-  // Ensure default user exists in SQLite
-  const user = db.prepare('SELECT id FROM users WHERE id = ?').get(farmerId);
-  if (!user) {
-    db.prepare(`
-      INSERT OR IGNORE INTO users (id, name, phone, email, role, village, district, state, address)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(
-      farmerId,
-      'Ramesh Patil',
-      '9876543210',
-      'ramesh.patil@kisanbandhan.ai',
-      'FARMER',
-      'Pimplgaon',
-      'Nashik',
-      'Maharashtra',
-      'Pimplgaon Baswant, Nashik, MH 422209'
+  // 1. Ensure all default registered users exist in SQLite
+  const insertUserStmt = db.prepare(`
+    INSERT INTO users (id, name, phone, email, role, village, district, state, address)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT(id) DO UPDATE SET
+      name = excluded.name,
+      phone = excluded.phone,
+      email = excluded.email,
+      role = excluded.role,
+      district = excluded.district,
+      state = excluded.state,
+      address = excluded.address
+  `);
+
+  db.transaction(() => {
+    for (const u of ALL_DEFAULT_USERS) {
+      insertUserStmt.run(
+        u.id,
+        u.name,
+        u.phone,
+        u.email,
+        u.role,
+        'Agro Hub',
+        u.district,
+        u.state,
+        u.address
+      );
+    }
+  })();
+
+  // 2. Sync all default users to Supabase `users` table
+  let supaUserSyncCount = 0;
+  try {
+    const { error: userError } = await supabase.from('users').upsert(
+      ALL_DEFAULT_USERS.map((u) => ({
+        id: u.id,
+        name: u.name,
+        phone: u.phone,
+        email: u.email,
+        role: u.role,
+        district: u.district,
+        state: u.state,
+        address: u.address,
+      })),
+      { onConflict: 'id' }
     );
+    if (!userError) {
+      supaUserSyncCount = ALL_DEFAULT_USERS.length;
+    }
+  } catch (err: any) {
+    console.error('Supabase user upsert error:', err);
   }
 
-  const upsertStmt = db.prepare(`
+  // 3. Prepare product listings upsert statement
+  const upsertListingStmt = db.prepare(`
     INSERT INTO product_listings (
       id, farmer_id, fpo_id, crop_name, category, quantity_available, unit,
       price_paise, mandi_retail_price_paise, grade, harvest_date, organic_certified,
@@ -372,18 +546,33 @@ export async function seedDefaultKisanAllProducts() {
       ?, ?, ?, ?, ?
     )
     ON CONFLICT(id) DO UPDATE SET
+      farmer_id = excluded.farmer_id,
+      fpo_id = excluded.fpo_id,
       quantity_available = excluded.quantity_available,
       price_paise = excluded.price_paise,
+      mandi_retail_price_paise = excluded.mandi_retail_price_paise,
       image_url = excluded.image_url,
       logo_url = excluded.logo_url,
+      location = excluded.location,
+      district = excluded.district,
       status = 'ACTIVE'
   `);
 
   const harvestDate = new Date().toISOString().split('T')[0];
   const supaRecords: any[] = [];
-  let insertedCount = 0;
+  const farmerProductCounts: Record<string, { name: string; count: number; crops: string[] }> = {};
 
+  DEFAULT_REGISTERED_FARMERS.forEach((f) => {
+    farmerProductCounts[f.id] = { name: f.name, count: 0, crops: [] };
+  });
+
+  // Assign crops smartly across the 5 default registered farmers
   db.transaction(() => {
+    let vegIdx = 0;
+    let fruitIdx = 0;
+    let pulseIdx = 0;
+    let grainIdx = 0;
+
     for (const item of FULL_CROP_CATALOG) {
       const listingId = `lst_kisan_${item.id}`;
       const photos = item.photos && item.photos.length > 0 ? item.photos : [item.thumbnail];
@@ -392,10 +581,35 @@ export async function seedDefaultKisanAllProducts() {
       const pricePaise = item.pricePaise || Math.round((item.priceRupees || 30) * 100);
       const mandiPricePaise = Math.round(pricePaise * 1.25);
 
-      upsertStmt.run(
+      // Distribute crops realistically:
+      // - Vegetables: Ramesh Patil (Nashik, first half) & Ananya Roy (Bengal, second half)
+      // - Grains: Harpreet Singh (Khanna / Punjab)
+      // - Fruits: Suresh Gaikwad (Pune / Baramati) & Ramesh Patil (grapes/oranges)
+      // - Pulses: Ananya Roy (first half) & Rajesh Choudhary (Rajasthan, second half)
+      // - Seeds/Spices: Rajesh Choudhary (Jaipur / Rajasthan)
+      let assignedFarmer = DEFAULT_REGISTERED_FARMERS[0]; // default u_farmer_1
+
+      if (item.category === 'Vegetables') {
+        assignedFarmer = vegIdx % 2 === 0 ? DEFAULT_REGISTERED_FARMERS[0] : DEFAULT_REGISTERED_FARMERS[3]; // Ramesh (0) or Ananya (3)
+        vegIdx++;
+      } else if (item.category === 'Grains') {
+        assignedFarmer = DEFAULT_REGISTERED_FARMERS[1]; // Harpreet Singh (1)
+        grainIdx++;
+      } else if (item.category === 'Fruits') {
+        assignedFarmer = fruitIdx % 3 === 0 ? DEFAULT_REGISTERED_FARMERS[0] : DEFAULT_REGISTERED_FARMERS[2]; // Ramesh (0) or Suresh Gaikwad (2)
+        fruitIdx++;
+      } else if (item.category === 'Pulses') {
+        assignedFarmer = pulseIdx % 2 === 0 ? DEFAULT_REGISTERED_FARMERS[3] : DEFAULT_REGISTERED_FARMERS[4]; // Ananya (3) or Rajesh (4)
+        pulseIdx++;
+      } else {
+        // Seeds / Spices
+        assignedFarmer = DEFAULT_REGISTERED_FARMERS[4]; // Rajesh Choudhary (4)
+      }
+
+      upsertListingStmt.run(
         listingId,
-        farmerId,
-        fpoId,
+        assignedFarmer.id,
+        assignedFarmer.fpoId,
         item.name,
         item.category,
         500,
@@ -407,30 +621,39 @@ export async function seedDefaultKisanAllProducts() {
         item.isOrganic ? 1 : 0,
         imageUrlJson,
         logoUrl,
-        'नासिक संकलन केंद्र (Nashik Mandi)',
-        'Nashik',
+        assignedFarmer.location,
+        assignedFarmer.district,
         'ACTIVE'
       );
 
       supaRecords.push({
         id: listingId,
-        farmer_id: farmerId,
+        farmer_id: assignedFarmer.id,
+        fpo_id: assignedFarmer.fpoId,
         crop_name: item.name,
         category: item.category,
         quantity_available: 500,
+        unit: item.unit || 'kg',
         price_paise: pricePaise,
+        mandi_retail_price_paise: mandiPricePaise,
         grade: item.grade || 'उच्चतम श्रेणी A+',
-        location: 'नासिक संकलन केंद्र (Nashik Mandi)',
+        harvest_date: harvestDate,
+        organic_certified: item.isOrganic ? 1 : 0,
+        location: assignedFarmer.location,
+        district: assignedFarmer.district,
         status: 'ACTIVE',
         image_url: imageUrlJson,
         logo_url: logoUrl,
       });
 
-      insertedCount++;
+      farmerProductCounts[assignedFarmer.id].count++;
+      if (farmerProductCounts[assignedFarmer.id].crops.length < 5) {
+        farmerProductCounts[assignedFarmer.id].crops.push(item.name);
+      }
     }
   })();
 
-  // Also sync in batches of 50 to Supabase
+  // 4. Sync in batches of 50 to Supabase `product_listings` table
   let supabaseSyncedCount = 0;
   try {
     const chunkSize = 50;
@@ -447,11 +670,12 @@ export async function seedDefaultKisanAllProducts() {
 
   return {
     success: true,
-    count: insertedCount,
+    totalProductsSeeded: FULL_CROP_CATALOG.length,
     supabaseSyncedCount,
-    farmerId,
-    farmerName: 'Ramesh Patil',
-    message: `Successfully seeded ${insertedCount} products to default Kisan user (${farmerId} / Ramesh Patil).`,
+    supaUserSyncCount,
+    registeredUsersCount: ALL_DEFAULT_USERS.length,
+    farmerProductBreakdown: farmerProductCounts,
+    message: `Successfully seeded all ${FULL_CROP_CATALOG.length} catalog products across ${DEFAULT_REGISTERED_FARMERS.length} registered default farmers in both SQLite and Supabase!`,
   };
 }
 
