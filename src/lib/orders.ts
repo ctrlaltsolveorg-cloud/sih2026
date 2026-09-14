@@ -59,7 +59,7 @@ export async function createOrder(input: CreateOrderInput) {
 
   // Validate buyer existence or fallback to u_buyer_1
   let actualBuyerId = buyerId;
-  const buyerUser = db.prepare('SELECT id, name FROM users WHERE id = ?').get(buyerId);
+  const buyerUser = db.prepare('SELECT id, name, phone FROM users WHERE id = ?').get(buyerId) as any;
   if (!buyerUser) {
     actualBuyerId = 'u_buyer_1';
   }
@@ -202,11 +202,21 @@ export async function createOrder(input: CreateOrderInput) {
     console.warn('Supabase order sync notice:', err.message);
   }
 
+  const farmerUser = db.prepare('SELECT id, name, phone FROM users WHERE id = ?').get(actualFarmerId) as any;
+  const primaryItem = items[0];
+
   return {
     success: true,
     orderId,
     deliveryId,
     smartContractHash,
+    customer_name: buyerUser?.name || 'Annapurna Hotel & Catering',
+    phone: buyerUser?.phone || '+91 98230 45678',
+    product: primaryItem?.cropName || 'Fresh Tomatoes',
+    quantity: `${primaryItem?.quantity || 500} ${primaryItem?.unit || 'kg'}`,
+    farmer_name: farmerUser?.name || 'Ramesh Patil',
+    farmer_phone: farmerUser?.phone || '+91 98765 43210',
+    delivery_address: deliveryAddress,
     subtotalPaise,
     deliveryFeePaise,
     totalAmountPaise,
