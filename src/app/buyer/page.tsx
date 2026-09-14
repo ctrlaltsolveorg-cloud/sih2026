@@ -56,6 +56,9 @@ export default function BuyerDashboardPage() {
     {
       id: 301,
       farmer_name: 'रामेश्वर यादव',
+      farmer_phone: '+91 98765 43210',
+      buyer_name: 'अन्नपूर्णा पुणे (खरीदार)',
+      buyer_phone: '+91 98230 45678',
       delivery_address: 'नासिक हब से पुणे प्रेषित',
       total_amount_paise: 4140000, // ₹41,400.00
       status: 'परिवहन में',
@@ -63,6 +66,9 @@ export default function BuyerDashboardPage() {
     {
       id: 302,
       farmer_name: 'सुरेश पाटिल',
+      farmer_phone: '+91 98765 43212',
+      buyer_name: 'अन्नपूर्णा पुणे (खरीदार)',
+      buyer_phone: '+91 98230 45678',
       delivery_address: 'इन्दौर हब से सीधा पिकअप',
       total_amount_paise: 2250000, // ₹22,500.00
       status: 'सफलतापूर्वक हस्तांतरित',
@@ -465,6 +471,26 @@ export default function BuyerDashboardPage() {
                         : (language === 'hi' ? 'इन्दौर हब से सीधा पिकअप' : 'Direct Pickup from Indore Hub')}
                     </span>
                   </p>
+
+                  {/* Buyer & Farmer Contact Phone Numbers */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2.5 bg-emerald-900/5 rounded-xl border border-emerald-900/10 text-xs">
+                    <div className="flex items-center gap-1.5 text-emerald-950">
+                      <Phone className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                      <span>
+                        <strong className="text-emerald-900">{language === 'hi' ? 'किसान फ़ोन: ' : 'Farmer Tel: '}</strong>
+                        <a href={`tel:${ord.farmer_phone}`} className="text-emerald-800 font-bold hover:underline font-mono">
+                          {ord.farmer_phone}
+                        </a>
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-emerald-950">
+                      <User className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+                      <span>
+                        <strong className="text-emerald-900">{language === 'hi' ? 'खरीदार फ़ोन: ' : 'Buyer Tel: '}</strong>
+                        <span className="font-mono text-emerald-950 font-bold">{ord.buyer_phone}</span>
+                      </span>
+                    </div>
+                  </div>
 
                   <div className="pt-3 border-t border-emerald-900/10 flex items-center justify-between">
                     <div className="text-base font-extrabold text-amber-800">

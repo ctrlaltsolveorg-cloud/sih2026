@@ -5,7 +5,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedFarmer, getLocalizedLocation } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import PortalGuard from '@/components/PortalGuard';
-import { Truck, Navigation, Key, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Truck, Navigation, Key, CheckCircle2, ShieldCheck, Phone } from 'lucide-react';
 
 export default function TransporterDashboardPage() {
   const { t, language } = useLanguage();
@@ -25,6 +25,9 @@ export default function TransporterDashboardPage() {
         stopIndex: 1,
         orderId: '501',
         buyerName: 'अन्नपूर्णा पुणे (खरीदार)',
+        buyerPhone: '+91 98222 33344',
+        farmerName: 'रामेश्वर यादव (किसान)',
+        farmerPhone: '+91 98765 43210',
         pickup: 'नासिक एग्रो-हब #04',
         dropoff: 'पुणे स्वॉरगेट वितरण हब',
         pickupOtp: '4829',
@@ -34,6 +37,9 @@ export default function TransporterDashboardPage() {
         stopIndex: 2,
         orderId: '502',
         buyerName: 'मदर डेयरी एग्री',
+        buyerPhone: '+91 98230 45678',
+        farmerName: 'सुरेश पाटिल (किसान)',
+        farmerPhone: '+91 98765 43212',
         pickup: 'लासलगांव संकलन केंद्र',
         dropoff: 'मुंबई सेन्ट्रल कोल्ड स्टोर',
         pickupOtp: '6712',
@@ -127,6 +133,22 @@ export default function TransporterDashboardPage() {
                   <p className="text-xs text-amber-200/70 mt-1">
                     {language === 'hi' ? 'पिकअप स्थान: ' : 'Pickup Hub: '}<strong>{getLocalizedLocation(stop.pickup, language)}</strong> → {language === 'hi' ? 'डिलीवरी स्थान: ' : 'Delivery Hub: '}<strong>{getLocalizedLocation(stop.dropoff, language)}</strong>
                   </p>
+                  <div className="flex flex-wrap items-center gap-3 mt-2 text-[11px]">
+                    <a
+                      href={`tel:${stop.farmerPhone}`}
+                      className="inline-flex items-center gap-1 text-emerald-300 hover:text-white bg-emerald-900/60 px-2 py-0.5 rounded-md border border-emerald-700/60 font-mono"
+                    >
+                      <Phone className="w-3 h-3 text-emerald-400" />
+                      <span>{language === 'hi' ? 'किसान: ' : 'Farmer: '}{stop.farmerPhone}</span>
+                    </a>
+                    <a
+                      href={`tel:${stop.buyerPhone}`}
+                      className="inline-flex items-center gap-1 text-amber-300 hover:text-white bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-700/60 font-mono"
+                    >
+                      <Phone className="w-3 h-3 text-amber-400" />
+                      <span>{language === 'hi' ? 'खरीदार: ' : 'Buyer: '}{stop.buyerPhone}</span>
+                    </a>
+                  </div>
                 </div>
               </div>
 

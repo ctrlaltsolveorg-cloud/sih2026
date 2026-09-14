@@ -80,6 +80,14 @@ export default function CartDrawer() {
             <div className="p-4 bg-emerald-900/5 rounded-2xl border border-emerald-900/10 w-full mb-6 text-left text-xs space-y-2 font-mono">
               <p className="text-emerald-900 font-bold">स्मार्ट कॉन्ट्रैक्ट आईडी: {contractId}</p>
               <p className="text-emerald-700">कुल भुगतान: ₹{(totalPaise / 100).toFixed(2)} ({totalPaise} पैसे)</p>
+              <p className="text-emerald-700">
+                {language === 'hi' ? 'खरीदार संपर्क: ' : 'Buyer Tel: '}
+                <span className="font-bold">{user?.phone || '+91 98230 45678'}</span> ({user?.name})
+              </p>
+              <p className="text-emerald-700">
+                {language === 'hi' ? 'किसान सहायता / डिस्पैच: ' : 'Farmer Support / Helpline: '}
+                <span className="font-bold">1800-KISAN-AI (Toll-Free)</span>
+              </p>
               <p className="text-emerald-700">एस्क्रौ स्थिति: निष्पादित (Locked in Escrow)</p>
             </div>
             <button
