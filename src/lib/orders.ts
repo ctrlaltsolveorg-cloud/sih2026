@@ -1,5 +1,5 @@
 import { getDb } from './db';
-import { supabase } from './supabase';
+import { supabase, supabaseAdmin } from './supabase';
 
 export interface CreateOrderItemInput {
   listingId?: string;
@@ -9,11 +9,30 @@ export interface CreateOrderItemInput {
   unitPricePaise: number;
 }
 
+export interface ShippingDetails {
+  fullName: string;
+  mobileNumber: string;
+  altPhone?: string;
+  flatBuilding: string;
+  areaStreet: string;
+  landmark: string;
+  postOffice: string;
+  district: string;
+  state: string;
+  pincode: string;
+  addressType?: 'HOME' | 'WORK' | 'MANDI_SHOP';
+  deliveryInstructions?: string;
+}
+
 export interface CreateOrderInput {
   buyerId: string;
+  buyerName?: string;
+  buyerPhone?: string;
+  buyerEmail?: string;
+  shipping?: ShippingDetails;
   farmerId?: string;
   fpoId?: string;
-  deliveryAddress: string;
+  deliveryAddress?: string;
   deliveryType?: 'EXPRESS' | 'BULK_HUB';
   paymentMethod?: 'COD' | 'UPI' | 'BANK_TRANSFER' | 'ESCROW';
   notes?: string;
@@ -25,6 +44,7 @@ export interface VerifyOtpInput {
   otpType: 'pickup' | 'delivery';
   enteredOtp: string;
   partnerId?: string;
+  codCollected?: boolean;
 }
 
 /**
@@ -41,27 +61,44 @@ function generate4DigitOtp(): string {
 export async function createOrder(input: CreateOrderInput) {
   const {
     buyerId,
-    deliveryAddress,
     deliveryType = 'EXPRESS',
     paymentMethod = 'COD',
     notes = '',
     items,
+    shipping,
   } = input;
+
+  const canonicalAddress = shipping
+    ? `${shipping.fullName} | Phone: ${shipping.mobileNumber}${shipping.altPhone ? ', Alt: ' + shipping.altPhone : ''} | ${shipping.flatBuilding}, ${shipping.areaStreet}, Landmark: ${shipping.landmark}, P.O.: ${shipping.postOffice}, ${shipping.district}, ${shipping.state} - ${shipping.pincode} (${shipping.addressType || 'HOME'})${shipping.deliveryInstructions ? ' | Notes: ' + shipping.deliveryInstructions : ''}`
+    : (input.deliveryAddress || '').trim();
 
   if (!items || items.length === 0) {
     throw new Error('Order must contain at least one produce item.');
   }
-  if (!deliveryAddress || deliveryAddress.trim().length === 0) {
-    throw new Error('Valid delivery address is required.');
+  if (!canonicalAddress || canonicalAddress.trim().length === 0) {
+    throw new Error('पूर्ण डिलीवरी पता, पिन कोड, जिला, राज्य एवं मोबाइल नंबर अनिवार्य है।');
   }
 
   const db = getDb();
 
-  // Validate buyer existence or fallback to u_buyer_1
-  let actualBuyerId = buyerId;
-  const buyerUser = db.prepare('SELECT id, name, phone FROM users WHERE id = ?').get(buyerId) as any;
+  // Ensure buyer existence in users table or auto-register under their exact user.id
+  let actualBuyerId = buyerId || 'u_buyer_1';
+  const buyerUser = db.prepare('SELECT id, name FROM users WHERE id = ?').get(actualBuyerId);
   if (!buyerUser) {
-    actualBuyerId = 'u_buyer_1';
+    try {
+      db.prepare(`
+        INSERT OR IGNORE INTO users (id, name, phone, email, role, address)
+        VALUES (?, ?, ?, ?, 'BUYER', ?)
+      `).run(
+        actualBuyerId,
+        input.buyerName || shipping?.fullName || 'Verified Buyer',
+        input.buyerPhone || shipping?.mobileNumber || '9811122233',
+        input.buyerEmail || `${actualBuyerId}@kisanbandhan.ai`,
+        canonicalAddress.trim()
+      );
+    } catch (e) {
+      console.warn('Auto-registering buyer user row notice:', e);
+    }
   }
 
   // Calculate totals
@@ -105,8 +142,11 @@ export async function createOrder(input: CreateOrderInput) {
       id, buyer_id, farmer_id, fpo_id, status,
       subtotal_paise, delivery_fee_paise, total_amount_paise,
       delivery_address, delivery_type, payment_method, payment_status,
-      notes
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      notes,
+      recipient_name, recipient_phone, alt_phone,
+      flat_building, area_street, landmark, post_office, district, state, pin_code,
+      address_type, delivery_instructions, shipping_json
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
     orderId,
     actualBuyerId,
@@ -116,11 +156,24 @@ export async function createOrder(input: CreateOrderInput) {
     subtotalPaise,
     deliveryFeePaise,
     totalAmountPaise,
-    deliveryAddress.trim(),
+    canonicalAddress,
     deliveryType,
     validPaymentMethod,
     paymentStatus,
-    notes ? `${notes} | Contract: ${smartContractHash}` : `Contract: ${smartContractHash}`
+    notes ? `${notes} | Contract: ${smartContractHash}` : `Contract: ${smartContractHash}`,
+    shipping?.fullName || input.buyerName || 'Buyer',
+    shipping?.mobileNumber || input.buyerPhone || '9811122233',
+    shipping?.altPhone || null,
+    shipping?.flatBuilding || null,
+    shipping?.areaStreet || null,
+    shipping?.landmark || null,
+    shipping?.postOffice || null,
+    shipping?.district || 'Pune',
+    shipping?.state || 'Maharashtra',
+    shipping?.pincode || '411014',
+    shipping?.addressType || 'HOME',
+    shipping?.deliveryInstructions || null,
+    shipping ? JSON.stringify(shipping) : null
   );
 
   // 2. Insert into SQLite `order_items`
@@ -158,7 +211,7 @@ export async function createOrder(input: CreateOrderInput) {
     orderId,
     'u_partner_1',
     pickupLocation,
-    deliveryAddress.trim(),
+    canonicalAddress.trim(),
     'ASSIGNED',
     pickupOtp,
     deliveryOtp,
@@ -178,7 +231,7 @@ export async function createOrder(input: CreateOrderInput) {
       subtotal_paise: subtotalPaise,
       delivery_fee_paise: deliveryFeePaise,
       total_amount_paise: totalAmountPaise,
-      delivery_address: deliveryAddress.trim(),
+      delivery_address: canonicalAddress.trim(),
       delivery_type: deliveryType,
       payment_method: paymentMethod,
       payment_status: paymentStatus,
@@ -191,7 +244,7 @@ export async function createOrder(input: CreateOrderInput) {
         order_id: orderId,
         partner_id: 'u_partner_1',
         pickup_location: pickupLocation,
-        drop_location: deliveryAddress.trim(),
+        drop_location: canonicalAddress.trim(),
         status: 'ASSIGNED',
         pickup_otp: pickupOtp,
         delivery_otp: deliveryOtp,
@@ -202,21 +255,11 @@ export async function createOrder(input: CreateOrderInput) {
     console.warn('Supabase order sync notice:', err.message);
   }
 
-  const farmerUser = db.prepare('SELECT id, name, phone FROM users WHERE id = ?').get(actualFarmerId) as any;
-  const primaryItem = items[0];
-
   return {
     success: true,
     orderId,
     deliveryId,
     smartContractHash,
-    customer_name: buyerUser?.name || 'Annapurna Hotel & Catering',
-    phone: buyerUser?.phone || '+91 98230 45678',
-    product: primaryItem?.cropName || 'Fresh Tomatoes',
-    quantity: `${primaryItem?.quantity || 500} ${primaryItem?.unit || 'kg'}`,
-    farmer_name: farmerUser?.name || 'Ramesh Patil',
-    farmer_phone: farmerUser?.phone || '+91 98765 43210',
-    delivery_address: deliveryAddress,
     subtotalPaise,
     deliveryFeePaise,
     totalAmountPaise,
@@ -231,7 +274,7 @@ export async function createOrder(input: CreateOrderInput) {
 }
 
 /**
- * Fetch orders for Buyer or Farmer with full items & delivery OTP details
+ * Fetch orders for Buyer, Farmer, or Transporter with full items & delivery OTP details
  */
 export function getOrders(filter: { userId?: string; role?: string; orderId?: string }) {
   const db = getDb();
@@ -245,16 +288,25 @@ export function getOrders(filter: { userId?: string; role?: string; orderId?: st
       f.name as farmer_name,
       f.phone as farmer_phone,
       d.id as delivery_id,
+      d.partner_id,
       d.status as delivery_status,
       d.pickup_otp,
       d.delivery_otp,
       d.pickup_location,
       d.drop_location,
-      d.estimated_eta_minutes
+      d.estimated_eta_minutes,
+      d.estimated_distance_km,
+      d.driver_name,
+      d.driver_phone,
+      d.driver_vehicle,
+      d.cod_collected,
+      p.name as partner_user_name,
+      p.phone as partner_user_phone
     FROM orders o
     LEFT JOIN users b ON o.buyer_id = b.id
     LEFT JOIN users f ON o.farmer_id = f.id
     LEFT JOIN deliveries d ON o.id = d.order_id
+    LEFT JOIN users p ON d.partner_id = p.id
   `;
 
   const params: any[] = [];
@@ -264,14 +316,20 @@ export function getOrders(filter: { userId?: string; role?: string; orderId?: st
     whereClauses.push('o.id = ?');
     params.push(orderId);
   } else if (userId) {
-    if (role === 'FARMER') {
-      whereClauses.push('(o.farmer_id = ? OR o.farmer_id = "u_farmer_1")');
+    if (userId === 'u_dev_master' || role === 'ADMIN') {
+      // Dev / Admin can monitor all orders
+    } else if (role === 'TRANSPORTER') {
+      // Transporter can see available deliveries or deliveries assigned to them
+      whereClauses.push(`(d.partner_id = ? OR d.partner_id IS NULL OR d.partner_id = 'u_partner_1' OR o.status IN ('Placed', 'Accepted', 'Picked Up', 'Out for Delivery'))`);
+      params.push(userId);
+    } else if (role === 'FARMER') {
+      whereClauses.push('(o.farmer_id = ? OR o.farmer_id = \'u_farmer_1\')');
       params.push(userId);
     } else if (role === 'BUYER') {
-      whereClauses.push('(o.buyer_id = ? OR o.buyer_id = "u_buyer_1" OR o.buyer_id = "u_buyer_2")');
+      whereClauses.push('(o.buyer_id = ? OR o.buyer_id IN (\'u_buyer_1\', \'u_buyer_2\', \'u_dev_master\'))');
       params.push(userId);
     } else {
-      whereClauses.push('(o.buyer_id = ? OR o.farmer_id = ?)');
+      whereClauses.push('(o.buyer_id = ? OR o.farmer_id = ? OR o.buyer_id IN (\'u_buyer_1\', \'u_dev_master\'))');
       params.push(userId, userId);
     }
   }
@@ -288,40 +346,174 @@ export function getOrders(filter: { userId?: string; role?: string; orderId?: st
   const itemStmt = db.prepare('SELECT * FROM order_items WHERE order_id = ?');
   return rows.map((r) => {
     const items = itemStmt.all(r.id);
+    let shippingObj = null;
+    if (r.shipping_json) {
+      try {
+        shippingObj = JSON.parse(r.shipping_json);
+      } catch (e) {}
+    }
+    if (!shippingObj && (r.recipient_name || r.pin_code)) {
+      shippingObj = {
+        fullName: r.recipient_name || r.buyer_name || 'Buyer',
+        mobileNumber: r.recipient_phone || r.buyer_phone || '',
+        altPhone: r.alt_phone || '',
+        flatBuilding: r.flat_building || '',
+        areaStreet: r.area_street || '',
+        landmark: r.landmark || '',
+        postOffice: r.post_office || '',
+        district: r.district || '',
+        state: r.state || '',
+        pincode: r.pin_code || '',
+        addressType: r.address_type || 'HOME',
+        deliveryInstructions: r.delivery_instructions || '',
+      };
+    }
     return {
       ...r,
       items,
+      shipping: shippingObj,
       total_rupees: (r.total_amount_paise / 100).toFixed(2),
       subtotal_rupees: (r.subtotal_paise / 100).toFixed(2),
       delivery_fee_rupees: (r.delivery_fee_paise / 100).toFixed(2),
+      driver_name: r.driver_name || r.partner_user_name || 'विक्रम शिंदे (Vikram Shinde)',
+      driver_phone: r.driver_phone || r.partner_user_phone || '+91 99000 11122',
+      driver_vehicle: r.driver_vehicle || 'MH-15-EG-8821 (Tata Ace Gold)',
     };
   });
 }
 
 /**
- * Verify Pickup or Delivery OTP and advance order & escrow state
+ * Generate a fresh instant 4-digit OTP for Farmer Handshake (pickup) or Buyer Delivery
+ */
+export async function generateOrderOtp(orderId: string, otpType: 'pickup' | 'delivery') {
+  const db = getDb();
+  const newOtp = Math.floor(1000 + Math.random() * 9000).toString();
+
+  const delivery = db.prepare('SELECT * FROM deliveries WHERE order_id = ?').get(orderId) as any;
+  if (!delivery) {
+    throw new Error(`ऑर्डर #${orderId} का डिलीवरी रिकॉर्ड नहीं मिला।`);
+  }
+
+  if (otpType === 'pickup') {
+    db.prepare(`UPDATE deliveries SET pickup_otp = ? WHERE order_id = ?`).run(newOtp, orderId);
+    try {
+      await supabase.from('deliveries').update({ pickup_otp: newOtp }).eq('order_id', orderId);
+    } catch (err: any) {
+      console.warn('Supabase pickup_otp update notice:', err.message);
+    }
+    return {
+      success: true,
+      orderId,
+      otpType,
+      otp: newOtp,
+      generatedAt: new Date().toISOString(),
+      message: `नया पिकअप OTP: ${newOtp}। जब ड्राइवर माल वाहन में लोड कर ले, तभी यह OTP उसे बताएं।`,
+    };
+  } else {
+    db.prepare(`UPDATE deliveries SET delivery_otp = ? WHERE order_id = ?`).run(newOtp, orderId);
+    try {
+      await supabase.from('deliveries').update({ delivery_otp: newOtp }).eq('order_id', orderId);
+    } catch (err: any) {
+      console.warn('Supabase delivery_otp update notice:', err.message);
+    }
+    return {
+      success: true,
+      orderId,
+      otpType,
+      otp: newOtp,
+      generatedAt: new Date().toISOString(),
+      message: `नया डिलीवरी OTP: ${newOtp}। माल प्राप्त होने पर ड्राइवर को यह OTP दें।`,
+    };
+  }
+}
+
+/**
+ * Transporter Driver accepts an available order
+ */
+export async function acceptDelivery(input: {
+  orderId: string;
+  partnerId?: string;
+  driverName?: string;
+  driverPhone?: string;
+  driverVehicle?: string;
+}) {
+  const db = getDb();
+  const {
+    orderId,
+    partnerId = 'u_partner_1',
+    driverName = 'विक्रम शिंदे (Vikram Shinde)',
+    driverPhone = '+91 99000 11122',
+    driverVehicle = 'MH-15-EG-8821 (Tata Ace Gold)',
+  } = input;
+
+  const delivery = db.prepare('SELECT * FROM deliveries WHERE order_id = ?').get(orderId) as any;
+  if (!delivery) {
+    throw new Error(`ऑर्डर #${orderId} का डिलीवरी रिकॉर्ड नहीं मिला।`);
+  }
+
+  db.prepare(`
+    UPDATE deliveries 
+    SET partner_id = ?, driver_name = ?, driver_phone = ?, driver_vehicle = ?, status = 'ASSIGNED'
+    WHERE order_id = ?
+  `).run(partnerId, driverName, driverPhone, driverVehicle, orderId);
+
+  db.prepare(`
+    UPDATE orders 
+    SET status = 'Accepted', updated_at = CURRENT_TIMESTAMP 
+    WHERE id = ? AND status = 'Placed'
+  `).run(orderId);
+
+  try {
+    await supabase.from('deliveries').update({
+      partner_id: partnerId,
+      status: 'ASSIGNED',
+    }).eq('order_id', orderId);
+    await supabase.from('orders').update({
+      status: 'Accepted',
+    }).eq('id', orderId);
+  } catch (err: any) {
+    console.warn('Supabase acceptDelivery sync notice:', err.message);
+  }
+
+  return {
+    success: true,
+    orderId,
+    deliveryStatus: 'ASSIGNED',
+    orderStatus: 'Accepted',
+    driverName,
+    driverPhone,
+    driverVehicle,
+    message: `डिलीवरी कार्य #${orderId} सफलतापूर्वक स्वीकार किया गया! किसान व खरीदार को ड्राइवर विवरण अपडेट कर दिया गया है।`,
+  };
+}
+
+/**
+ * Strict verification of Pickup OTP (Farmer Handshake) or Delivery OTP (Buyer Dropoff + COD check)
  */
 export async function verifyOrderOtp(input: VerifyOtpInput) {
-  const { orderId, otpType, enteredOtp } = input;
+  const { orderId, otpType, enteredOtp, codCollected } = input;
   const db = getDb();
 
   const delivery = db.prepare(`
-    SELECT d.*, o.payment_method, o.payment_status, o.status as order_status
+    SELECT d.*, o.payment_method, o.payment_status, o.status as order_status, o.total_amount_paise
     FROM deliveries d
     JOIN orders o ON d.order_id = o.id
     WHERE d.order_id = ?
   `).get(orderId) as any;
 
   if (!delivery) {
-    throw new Error('Order or Delivery tracking record not found.');
+    throw new Error(`ऑर्डर #${orderId} का डिलीवरी या ट्रैकिंग रिकॉर्ड नहीं मिला।`);
   }
 
   const cleanEntered = (enteredOtp || '').trim();
+  if (!cleanEntered) {
+    throw new Error('कृपया सत्यापन हेतु 4-अंकीय OTP दर्ज करें।');
+  }
 
   if (otpType === 'pickup') {
-    // Verify Farmer Pickup OTP
-    if (delivery.pickup_otp !== cleanEntered) {
-      throw new Error(`अमान्य पिकअप OTP! (Invalid Pickup OTP. Please check the code given by the farmer.)`);
+    // Strict comparison against Farmer Pickup OTP
+    if (!delivery.pickup_otp || delivery.pickup_otp !== cleanEntered) {
+      throw new Error(`अमान्य पिकअप OTP! आपके द्वारा दर्ज कोड (${cleanEntered}) गलत है। कृपया किसान से सही 4-अंकीय कोड पूछें।`);
     }
 
     db.prepare(`
@@ -332,24 +524,39 @@ export async function verifyOrderOtp(input: VerifyOtpInput) {
       UPDATE orders SET status = 'Out for Delivery', updated_at = CURRENT_TIMESTAMP WHERE id = ?
     `).run(orderId);
 
+    try {
+      await supabase.from('deliveries').update({ status: 'IN_TRANSIT' }).eq('order_id', orderId);
+      await supabase.from('orders').update({ status: 'Out for Delivery' }).eq('id', orderId);
+    } catch (err: any) {
+      console.warn('Supabase pickup sync notice:', err.message);
+    }
+
     return {
       success: true,
       orderId,
       orderStatus: 'Out for Delivery',
       deliveryStatus: 'IN_TRANSIT',
-      message: 'सफलतापूर्वक पिकअप सत्यापित! फसल डिलीवरी हेतु रवाना हो गई है। (Produce picked up and in transit)',
+      message: '✅ पिकअप सफलतापूर्वक सत्यापित! माल वाहन में लोड हो चुका है और डिलीवरी के लिए रवाना है।',
     };
   }
 
   if (otpType === 'delivery') {
-    // Verify Buyer Delivery OTP (Release Escrow)
-    if (delivery.delivery_otp !== cleanEntered) {
-      throw new Error(`अमान्य डिलीवरी OTP! (Invalid Delivery OTP. Payment cannot be released without matching OTP.)`);
+    // Verify COD collection if payment method is COD
+    if (delivery.payment_method === 'COD' && !codCollected && !delivery.cod_collected) {
+      const amountRupees = (delivery.total_amount_paise / 100).toFixed(2);
+      throw new Error(`कैश ऑन डिलीवरी (COD) नकद संग्रह आवश्यक है! कृपया पहले खरीदार से ₹${amountRupees} नकद प्राप्त करने की पुष्टि (चेकबॉक्स) करें।`);
+    }
+
+    // Strict comparison against Buyer Delivery OTP
+    if (!delivery.delivery_otp || delivery.delivery_otp !== cleanEntered) {
+      throw new Error(`अमान्य डिलीवरी OTP! आपके द्वारा दर्ज कोड (${cleanEntered}) गलत है। कृपया खरीदार से सही डिलीवरी कोड प्राप्त करें।`);
     }
 
     // Mark delivery completed
     db.prepare(`
-      UPDATE deliveries SET status = 'DELIVERED' WHERE order_id = ?
+      UPDATE deliveries 
+      SET status = 'DELIVERED', cod_collected = 1 
+      WHERE order_id = ?
     `).run(orderId);
 
     // Release Escrow -> Mark Order Delivered & Payment Settled/Paid
@@ -368,6 +575,7 @@ export async function verifyOrderOtp(input: VerifyOtpInput) {
 
       await supabase.from('deliveries').update({
         status: 'DELIVERED',
+        cod_collected: 1,
       }).eq('order_id', orderId);
     } catch (err: any) {
       console.warn('Supabase status sync notice:', err.message);
@@ -379,9 +587,9 @@ export async function verifyOrderOtp(input: VerifyOtpInput) {
       orderStatus: 'Delivered',
       deliveryStatus: 'DELIVERED',
       paymentStatus: 'PAID',
-      message: 'डिलीवरी एवं एस्क्रो भुगतान सफलतापूर्वक सत्यापित! भुगतान किसान खाते में सुरक्षित रूप से हस्तांतरित। (Escrow released and order delivered).',
+      message: '🎉 डिलीवरी एवं भुगतान सफलतापूर्वक संपन्न! एस्क्रो फंड किसान के बैंक खाते में ट्रांसफर कर दिया गया है।',
     };
   }
 
-  throw new Error('Invalid otpType specified.');
+  throw new Error('अमान्य otpType निर्दिष्ट किया गया है। केवल "pickup" या "delivery" मान्य हैं।');
 }

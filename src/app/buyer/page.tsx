@@ -25,7 +25,9 @@ import {
   ArrowRight,
   ShieldCheck,
   User,
-  Phone
+  Phone,
+  Truck,
+  RefreshCw
 } from 'lucide-react';
 
 export default function BuyerDashboardPage() {
@@ -54,8 +56,16 @@ export default function BuyerDashboardPage() {
   const [loadingProduce, setLoadingProduce] = useState(true);
 
   const { user } = useAuth();
-  const [buyerOrders, setBuyerOrders] = useState<any[]>([]);
-  const [loadingOrders, setLoadingOrders] = useState(true);
+  const [buyerOrders, setBuyerOrders] = useState<any[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem('kb_buyer_active_orders');
+        if (stored) return JSON.parse(stored);
+      } catch (e) {}
+    }
+    return [];
+  });
+  const [loadingOrders, setLoadingOrders] = useState(false);
   const [activeVerifyOrder, setActiveVerifyOrder] = useState<any | null>(null);
   const [verifyOtpInput, setVerifyOtpInput] = useState('');
   const [verifyingOtp, setVerifyingOtp] = useState(false);
@@ -63,10 +73,19 @@ export default function BuyerDashboardPage() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch(`/api/v1/orders?userId=${user?.id || 'u_buyer_1'}&role=BUYER`);
+      const activeUserId = user?.id || 'u_buyer_1';
+      const res = await fetch(`/api/v1/orders?userId=${activeUserId}&role=BUYER`);
       const data = await res.json();
       if (data.success && Array.isArray(data.orders)) {
-        setBuyerOrders(data.orders);
+        setBuyerOrders((prev) => {
+          const apiIds = new Set(data.orders.map((o: any) => o.id));
+          const localOnly = prev.filter((o) => !apiIds.has(o.id));
+          const combined = [...data.orders, ...localOnly];
+          try {
+            localStorage.setItem('kb_buyer_active_orders', JSON.stringify(combined));
+          } catch (e) {}
+          return combined;
+        });
       }
     } catch (e) {
       console.error('Error fetching buyer orders:', e);
@@ -75,11 +94,47 @@ export default function BuyerDashboardPage() {
     }
   };
 
+  const [generatingDeliveryOtp, setGeneratingDeliveryOtp] = useState<Record<string, boolean>>({});
+
+  const handleGenerateDeliveryOtp = async (orderId: string) => {
+    setGeneratingDeliveryOtp((prev) => ({ ...prev, [orderId]: true }));
+    try {
+      const res = await fetch('/api/v1/orders/generate-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, otpType: 'delivery' }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'OTP जनरेट करने में विफल');
+      }
+      await fetchOrders();
+    } catch (err: any) {
+      alert(err.message || 'OTP जनरेट करने में त्रुटि आई।');
+    } finally {
+      setGeneratingDeliveryOtp((prev) => ({ ...prev, [orderId]: false }));
+    }
+  };
+
   useEffect(() => {
     fetchOrders();
     const handleOrderUpdate = () => fetchOrders();
     window.addEventListener('kb_order_updated', handleOrderUpdate);
-    return () => window.removeEventListener('kb_order_updated', handleOrderUpdate);
+    const interval = setInterval(fetchOrders, 6000);
+
+    if (typeof window !== 'undefined' && window.location.hash.includes('order')) {
+      setTimeout(() => {
+        const el = document.getElementById('active-orders');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 350);
+    }
+
+    return () => {
+      window.removeEventListener('kb_order_updated', handleOrderUpdate);
+      clearInterval(interval);
+    };
   }, [user]);
 
   const handleVerifyOtp = async (orderId: string, otpType: 'pickup' | 'delivery') => {
@@ -482,7 +537,7 @@ export default function BuyerDashboardPage() {
         {/* Active Orders & Recurring Contracts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
           {/* Active Orders */}
-          <div className="space-y-4">
+          <div id="active-orders" className="space-y-4 scroll-mt-24">
             <h2 className="text-xl font-extrabold text-emerald-950 flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-amber-600" />
               <span>{t.buyerActiveOrdersHeader}</span>
@@ -539,26 +594,79 @@ export default function BuyerDashboardPage() {
                         </div>
                       )}
 
-                      <p className="text-xs text-emerald-800/80 flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                        <span>{ord.delivery_address || 'पुणे डिलीवरी संकलन हब'}</span>
-                      </p>
+                      {/* Detailed Delivery Destination */}
+                      <div className="p-2.5 bg-emerald-50/70 rounded-xl border border-emerald-900/10 text-xs text-emerald-950 space-y-1">
+                        <div className="flex items-center justify-between font-bold">
+                          <span className="flex items-center gap-1 text-emerald-900">
+                            <MapPin className="w-3.5 h-3.5 text-amber-600" />
+                            डिलीवरी पता: {ord.shipping?.fullName || ord.recipient_name || ord.buyer_name || 'क्रेता'}
+                          </span>
+                          <span className="text-[10px] px-2 py-0.5 bg-white rounded-full border border-emerald-200 text-emerald-800">
+                            {ord.shipping?.addressType === 'WORK' ? '🏢 ऑफिस/दुकान' : ord.shipping?.addressType === 'MANDI_SHOP' ? '🏪 थोक मंडी' : '🏠 घर (Home)'}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-emerald-800 leading-snug">
+                          {ord.shipping?.flatBuilding || ord.flat_building ? (
+                            <>
+                              {ord.shipping?.flatBuilding || ord.flat_building}, {ord.shipping?.areaStreet || ord.area_street}
+                              {(ord.shipping?.landmark || ord.landmark) && `, लैंडमार्क: ${ord.shipping?.landmark || ord.landmark}`}
+                              <br />
+                              <span className="font-bold text-emerald-900">
+                                डाकघर: {ord.shipping?.postOffice || ord.post_office || '-'}, {ord.shipping?.district || ord.district || 'Pune'}, {ord.shipping?.state || ord.state || 'Maharashtra'} — {ord.shipping?.pincode || ord.pin_code || '411014'}
+                              </span>
+                            </>
+                          ) : (
+                            ord.delivery_address || 'पुणे डिलीवरी संकलन हब'
+                          )}
+                        </p>
+                      </div>
+
+                      {/* Driver Status Banner */}
+                      <div className="p-2.5 bg-emerald-950/5 rounded-xl border border-emerald-900/10 flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-1.5">
+                          <Truck className="w-3.5 h-3.5 text-emerald-700" />
+                          <span className="font-bold text-emerald-950">
+                            चालक: {ord.driver_name || 'विक्रम शिंदे (Tata Ace)'}
+                          </span>
+                        </div>
+                        {ord.driver_phone && (
+                          <a
+                            href={`tel:${ord.driver_phone}`}
+                            className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded hover:underline"
+                          >
+                            <Phone className="w-3 h-3 text-emerald-600" />
+                            <span>{ord.driver_phone}</span>
+                          </a>
+                        )}
+                      </div>
 
                       {/* Zero-Trust Delivery OTP Card */}
-                      <div className="p-3 bg-amber-500/10 border border-amber-600/30 rounded-xl space-y-1">
+                      <div className="p-3 bg-amber-500/10 border border-amber-600/30 rounded-xl space-y-1.5">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1.5 text-xs font-extrabold text-amber-950">
                             <ShieldCheck className="w-4 h-4 text-amber-700" />
                             <span>डिलीवरी सत्यापन OTP:</span>
                           </div>
-                          <span className="font-mono text-base font-black px-2.5 py-0.5 bg-white border border-amber-300 rounded-lg text-emerald-950 tracking-wider">
-                            {ord.delivery_otp || '----'}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-base font-black px-2.5 py-0.5 bg-white border border-amber-300 rounded-lg text-emerald-950 tracking-wider shadow-xs">
+                              {ord.delivery_otp || '----'}
+                            </span>
+                            {!isDelivered && (
+                              <button
+                                onClick={() => handleGenerateDeliveryOtp(ord.id)}
+                                disabled={generatingDeliveryOtp[ord.id]}
+                                title="नया OTP जनरेट करें"
+                                className="p-1 hover:bg-amber-200 text-amber-950 rounded-lg transition"
+                              >
+                                <RefreshCw className={`w-3.5 h-3.5 ${generatingDeliveryOtp[ord.id] ? 'animate-spin text-amber-700' : ''}`} />
+                              </button>
+                            )}
+                          </div>
                         </div>
                         <p className="text-[10px] text-amber-900/90 leading-tight">
                           {isDelivered 
                             ? '✓ यह OTP सफलतापूर्वक सत्यापित हो चुका है। भुगतान किसान को हस्तांतरित कर दिया गया है।'
-                            : '⚠️ सुरक्षा नियम: डिलीवरी एजेंट को यह 4-अंकीय कोड केवल तभी बताएं जब आपको फसल सही सलामत मिल जाए।'}
+                            : '⚠️ सुरक्षा नियम: डिलीवरी एजेंट को यह 4-अंकीय कोड केवल तभी बताएं जब आपको फसल सही सलामत मिल जाए व (COD होने पर) नकद भुगतान हो जाए।'}
                         </p>
                       </div>
 

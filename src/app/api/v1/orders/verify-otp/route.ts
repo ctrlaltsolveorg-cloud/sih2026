@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { orderId, otpType, enteredOtp, partnerId } = body;
+    const { orderId, otpType, enteredOtp, partnerId, codCollected } = body;
 
     if (!orderId || !otpType || !enteredOtp) {
       return NextResponse.json(
@@ -20,6 +20,7 @@ export async function POST(request: Request) {
       otpType,
       enteredOtp,
       partnerId,
+      codCollected: Boolean(codCollected),
     });
 
     return NextResponse.json(result);

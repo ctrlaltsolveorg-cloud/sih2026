@@ -16,7 +16,8 @@ import {
   LogOut,
   Languages,
   ChevronDown,
-  Check
+  Check,
+  ShieldCheck
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -354,6 +355,16 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               <span className="hidden sm:inline">{language === 'hi' ? 'लॉगिन' : 'Log In'}</span>
             </button>
           )}
+
+          {/* Orders Quick Nav */}
+          <Link
+            href="/buyer#active-orders"
+            className="hidden sm:flex px-3 py-2 bg-emerald-900/60 hover:bg-emerald-800 text-amber-200 hover:text-amber-100 font-bold rounded-xl border border-white/10 shadow-sm transition items-center gap-1.5 text-xs shrink-0"
+            title="सक्रिय ऑर्डर ट्रैक करें"
+          >
+            <ShieldCheck className="w-4 h-4 text-amber-400" />
+            <span>{language === 'hi' ? 'मेरे ऑर्डर' : 'My Orders'}</span>
+          </Link>
 
           {/* Cart Trigger Button */}
           <button

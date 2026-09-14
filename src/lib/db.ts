@@ -218,6 +218,40 @@ function initTables(db: Database.Database) {
     // Ignore error if column already exists
   }
 
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN driver_name TEXT;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN driver_phone TEXT;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN driver_vehicle TEXT;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN cod_collected INTEGER DEFAULT 0;');
+  } catch (e) {}
+
+  const orderColumns = [
+    'recipient_name TEXT',
+    'recipient_phone TEXT',
+    'alt_phone TEXT',
+    'flat_building TEXT',
+    'area_street TEXT',
+    'landmark TEXT',
+    'post_office TEXT',
+    'district TEXT',
+    'state TEXT',
+    'pin_code TEXT',
+    'address_type TEXT',
+    'delivery_instructions TEXT',
+    'shipping_json TEXT',
+  ];
+  for (const col of orderColumns) {
+    try {
+      db.exec(`ALTER TABLE orders ADD COLUMN ${col};`);
+    } catch (e) {}
+  }
+
   // Ensure product_listings supports 'Seeds' category
   try {
     const testCat = db.prepare(`SELECT 1 FROM product_listings WHERE category = 'Seeds' LIMIT 1`);

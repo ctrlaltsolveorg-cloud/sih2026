@@ -13,9 +13,7 @@ export default function AdminPage() {
     {
       id: 501,
       buyer_name: 'बिगबास्केट थोक खरीद',
-      buyer_phone: '+91 98222 33344',
       farmer_name: 'रामेश्वर यादव',
-      farmer_phone: '+91 98765 43210',
       total_amount_paise: 4140000, // ₹41,400.00
       delivery_type: 'हब पिकअप',
       status: 'सफलतापूर्वक हस्तांतरित',
@@ -23,9 +21,7 @@ export default function AdminPage() {
     {
       id: 502,
       buyer_name: 'मदर डेयरी फ्रेश',
-      buyer_phone: '+91 98230 45678',
       farmer_name: 'सहयाद्री किसान FPO',
-      farmer_phone: '+91 98765 43219',
       total_amount_paise: 9800000, // ₹98,000.00
       delivery_type: 'प्रत्यक्ष खेत प्रेषण',
       status: 'परिवहन में',
@@ -33,9 +29,7 @@ export default function AdminPage() {
     {
       id: 503,
       buyer_name: 'रिलायंस रिटेल फूड्स',
-      buyer_phone: '+91 98111 22233',
       farmer_name: 'सुरेश पाटिल',
-      farmer_phone: '+91 98765 43212',
       total_amount_paise: 6300000, // ₹63,000.00
       delivery_type: 'हब पिकअप',
       status: 'सुरक्षित एस्क्रौ locked',
@@ -186,14 +180,8 @@ export default function AdminPage() {
               {orders.map((ord) => (
                 <tr key={ord.id} className="hover:bg-emerald-50/50 transition font-medium">
                   <td className="p-3 font-bold text-emerald-950">#{ord.id}</td>
-                  <td className="p-3">
-                    <div className="font-bold">{getLocalizedFarmer(ord.buyer_name, language)}</div>
-                    <div className="text-[10px] font-mono text-emerald-800/80">📞 {ord.buyer_phone}</div>
-                  </td>
-                  <td className="p-3">
-                    <div className="font-bold">{getLocalizedFarmer(ord.farmer_name, language)}</div>
-                    <div className="text-[10px] font-mono text-emerald-800/80">📞 {ord.farmer_phone}</div>
-                  </td>
+                  <td className="p-3">{getLocalizedFarmer(ord.buyer_name, language)}</td>
+                  <td className="p-3">{getLocalizedFarmer(ord.farmer_name, language)}</td>
                   <td className="p-3 font-extrabold text-amber-800">
                     ₹{(ord.total_amount_paise / 100).toFixed(2)}{' '}
                     <span className="text-[10px] text-emerald-700 font-normal">({ord.total_amount_paise} {t.paiseSuffix})</span>
