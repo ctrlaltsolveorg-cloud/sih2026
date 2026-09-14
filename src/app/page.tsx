@@ -465,9 +465,7 @@ export default function HomePage() {
               <span>{t.marketplaceTitle}</span>
             </h2>
             <p className="text-xs text-emerald-800/70">
-              {language === 'hi'
-                ? 'आपकी फसल सफलतापूर्वक आपकी फसल सूची में जोड़ दी गई है और अब यह प्लेटफ़ॉर्म पर उपलब्ध है।'
-                : 'Your crop has been added successfully to your crop list and is now available on the platform.'}
+              {t.marketplaceSubtitle}
             </p>
           </div>
 
