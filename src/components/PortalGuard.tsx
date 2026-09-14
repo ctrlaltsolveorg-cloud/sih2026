@@ -47,19 +47,19 @@ export default function PortalGuard({
   if (!isAuthenticated || !user) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center px-4 py-12 animate-fadeIn">
-        <div className="max-w-md w-full bg-[#FAF5EB] border border-emerald-900/15 rounded-3xl p-8 shadow-xl text-center space-y-6">
-          <div className="w-16 h-16 mx-auto bg-amber-500/20 text-amber-900 border border-amber-500/30 rounded-2xl flex items-center justify-center shadow-inner">
-            <Lock className="w-8 h-8 text-amber-700 animate-pulse" />
+        <div className="max-w-md w-full bg-[#FAF5EB] dark:bg-[#0c2217] border border-emerald-900/15 dark:border-emerald-500/30 rounded-3xl p-8 shadow-xl text-center space-y-6 text-[#1A2E26] dark:text-[#E2E8F0] transition-colors duration-200">
+          <div className="w-16 h-16 mx-auto bg-amber-500/20 text-amber-900 dark:text-amber-300 border border-amber-500/30 rounded-2xl flex items-center justify-center shadow-inner">
+            <Lock className="w-8 h-8 text-amber-700 dark:text-amber-400 animate-pulse" />
           </div>
 
           <div className="space-y-2">
-            <span className="inline-block px-3 py-1 bg-amber-500/20 text-amber-900 font-extrabold text-[10px] rounded-full uppercase tracking-wider border border-amber-500/30">
+            <span className="inline-block px-3 py-1 bg-amber-500/20 text-amber-900 dark:text-amber-300 font-extrabold text-[10px] rounded-full uppercase tracking-wider border border-amber-500/30">
               {language === 'hi' ? 'सुरक्षित पोर्टल • लॉगिन अनिवार्य' : 'Secure Portal • Login Required'}
             </span>
-            <h2 className="text-2xl font-black text-emerald-950">
+            <h2 className="text-2xl font-black text-emerald-950 dark:text-amber-100">
               {portalName}
             </h2>
-            <p className="text-xs text-emerald-900/80 leading-relaxed">
+            <p className="text-xs text-emerald-900/80 dark:text-emerald-300/80 leading-relaxed">
               {portalDescription ||
                 (language === 'hi'
                   ? `इस पोर्टल का उपयोग करने के लिए आपका ${roleDisplayName[primaryRequired]?.hi || primaryRequired} के रूप में लॉगिन होना अनिवार्य है।`
@@ -82,9 +82,9 @@ export default function PortalGuard({
 
             <button
               onClick={() => openAuthModal('signup')}
-              className="w-full py-3 px-4 bg-white hover:bg-amber-50/80 text-emerald-950 font-bold rounded-2xl text-xs border border-emerald-900/20 flex items-center justify-center gap-2 shadow-sm transition"
+              className="w-full py-3 px-4 bg-white dark:bg-[#07170f] hover:bg-amber-50/80 dark:hover:bg-emerald-900/40 text-emerald-950 dark:text-emerald-100 font-bold rounded-2xl text-xs border border-emerald-900/20 dark:border-emerald-500/30 flex items-center justify-center gap-2 shadow-sm transition"
             >
-              <UserPlus className="w-4 h-4 text-emerald-700" />
+              <UserPlus className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
               <span>
                 {language === 'hi'
                   ? `नया ${roleDisplayName[primaryRequired]?.hi} खाता बनाएँ`
@@ -94,7 +94,7 @@ export default function PortalGuard({
 
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 text-xs text-emerald-900/70 hover:text-emerald-950 font-semibold pt-2 transition"
+              className="inline-flex items-center gap-1.5 text-xs text-emerald-900/70 dark:text-emerald-300/70 hover:text-emerald-950 dark:hover:text-emerald-100 font-semibold pt-2 transition"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>{language === 'hi' ? 'सार्वजनिक कृषि बाज़ार पर वापस जाएँ' : 'Return to Public Marketplace'}</span>
@@ -115,22 +115,22 @@ export default function PortalGuard({
 
     return (
       <div className="min-h-[70vh] flex items-center justify-center px-4 py-12 animate-fadeIn">
-        <div className="max-w-lg w-full bg-[#FAF5EB] border-2 border-red-500/20 rounded-3xl p-8 shadow-2xl text-center space-y-6">
-          <div className="w-16 h-16 mx-auto bg-red-100 text-red-700 border border-red-300 rounded-2xl flex items-center justify-center shadow-inner">
-            <ShieldAlert className="w-8 h-8 text-red-600" />
+        <div className="max-w-lg w-full bg-[#FAF5EB] dark:bg-[#0c2217] border-2 border-red-500/20 dark:border-red-500/30 rounded-3xl p-8 shadow-2xl text-center space-y-6 text-[#1A2E26] dark:text-[#E2E8F0] transition-colors duration-200">
+          <div className="w-16 h-16 mx-auto bg-red-100 dark:bg-red-950/70 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-500/40 rounded-2xl flex items-center justify-center shadow-inner">
+            <ShieldAlert className="w-8 h-8 text-red-600 dark:text-red-400" />
           </div>
 
           <div className="space-y-2">
-            <span className="inline-block px-3 py-1 bg-red-100 text-red-900 font-extrabold text-[10px] rounded-full uppercase tracking-wider border border-red-200">
+            <span className="inline-block px-3 py-1 bg-red-100 dark:bg-red-950/70 text-red-900 dark:text-red-200 font-extrabold text-[10px] rounded-full uppercase tracking-wider border border-red-200 dark:border-red-500/40">
               {language === 'hi' ? 'अनधिकृत भूमिका • एक्सेस निषेध' : 'Role Restricted • Access Prohibited'}
             </span>
-            <h2 className="text-2xl font-black text-emerald-950">
+            <h2 className="text-2xl font-black text-emerald-950 dark:text-amber-100">
               {language === 'hi' ? 'भूमिका प्रतिबंध (Role Mismatch)' : 'Portal Access Prohibited'}
             </h2>
-            <div className="bg-red-50/80 border border-red-200 rounded-2xl p-4 text-xs text-emerald-950 space-y-1.5 text-left">
+            <div className="bg-red-50/80 dark:bg-red-950/40 border border-red-200 dark:border-red-500/30 rounded-2xl p-4 text-xs text-emerald-950 dark:text-emerald-100 space-y-1.5 text-left">
               <p>
                 <strong>{language === 'hi' ? 'आपकी वर्तमान भूमिका: ' : 'Your Current Role: '}</strong>
-                <span className="px-2 py-0.5 bg-amber-500/20 text-amber-950 rounded-md font-extrabold">
+                <span className="px-2 py-0.5 bg-amber-500/20 text-amber-950 dark:text-amber-300 rounded-md font-extrabold">
                   {language === 'hi' ? userRoleText.hi : userRoleText.en} ({user.name})
                 </span>
               </p>
@@ -140,7 +140,7 @@ export default function PortalGuard({
                   {language === 'hi' ? targetRoleText.hi : targetRoleText.en}
                 </span>
               </p>
-              <p className="text-emerald-900/70 pt-1 text-[11px] leading-relaxed">
+              <p className="text-emerald-900/70 dark:text-emerald-300/70 pt-1 text-[11px] leading-relaxed">
                 {language === 'hi'
                   ? `आपूर्ति श्रृंखला सुरक्षा के तहत एक भूमिका का उपयोगकर्ता दूसरी भूमिका के पोर्टल के आंतरिक डेटा को एक्सेस नहीं कर सकता।`
                   : `To protect supply-chain integrity, only verified ${targetRoleText.en} accounts can access this portal.`}
@@ -166,9 +166,9 @@ export default function PortalGuard({
                 await logout();
                 openAuthModal('login');
               }}
-              className="w-full py-3 px-4 bg-white hover:bg-amber-50/80 text-emerald-950 font-bold rounded-2xl text-xs border border-emerald-900/20 flex items-center justify-center gap-2 shadow-sm transition"
+              className="w-full py-3 px-4 bg-white dark:bg-[#07170f] hover:bg-amber-50/80 dark:hover:bg-emerald-900/40 text-emerald-950 dark:text-emerald-100 font-bold rounded-2xl text-xs border border-emerald-900/20 dark:border-emerald-500/30 flex items-center justify-center gap-2 shadow-sm transition"
             >
-              <RefreshCw className="w-4 h-4 text-amber-700" />
+              <RefreshCw className="w-4 h-4 text-amber-700 dark:text-amber-400" />
               <span>
                 {language === 'hi'
                   ? `खाता बदलें / ${targetRoleText.hi} के रूप में लॉगिन करें`

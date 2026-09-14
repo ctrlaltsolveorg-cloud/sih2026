@@ -1,0 +1,313 @@
+'use client';
+
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
+import {
+  Sparkles,
+  ShoppingBag,
+  UserPlus,
+  PhoneCall,
+  ChevronLeft,
+  ChevronRight,
+  Sprout,
+  ShieldCheck,
+  TrendingUp,
+  Cpu,
+  Radio
+} from 'lucide-react';
+
+interface HeroCarouselProps {
+  onExploreClick?: () => void;
+}
+
+export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
+  const { t, language } = useLanguage();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  // 4 high-quality local static images stored in public/images
+  const slides = [
+    {
+      id: 1,
+      image: '/images/farmer2.jpg',
+      badgeHi: 'SIH 2026 PS 26033 • किसान दिवस समर्पित प्रत्यक्ष कृषि मंच',
+      badgeEn: 'SIH 2026 PS 26033 • Farmer-First Direct Agri Platform',
+      titleHi: 'किसान से खरीदार तक: सीधा, पारदर्शी एवं डिजिटल व्यापार',
+      titleEn: 'Farmer-to-Buyer: Direct, Transparent & Digital Agri Trade',
+      descHi: '1.4 लाख+ सत्यापित भारतीय किसानों को सीधे थोक खरीदारों, FPOs और उपभोक्ताओं से जोड़ने वाला आधुनिक डिजिटल मंडी नेटवर्क।',
+      descEn: 'Connecting 1.4 Lakh+ verified Indian farmers directly with institutional buyers, FPOs, and consumers with 0% middlemen commission.',
+      ctaPrimaryEn: 'Explore Products',
+      ctaPrimaryHi: 'फसल बाजार देखें',
+      ctaSecondaryEn: 'Register as Farmer',
+      ctaSecondaryHi: 'किसान पंजीकरण',
+    },
+    {
+      id: 2,
+      image: '/images/farmer3.jpg',
+      badgeHi: '100% Farm-Fresh • खेत से सीधी ताज़ी उपज',
+      badgeEn: '100% Farm-Fresh • Direct Harvest from Fields',
+      titleHi: 'ताज़ी फल-सब्जियां और जैविक उपज सीधे खेत से',
+      titleEn: 'Fresh Farm Fruits, Vegetables & Organic Harvest Direct to You',
+      descHi: 'कंप्यूटर विज़न AI ग्रेडिंग और बायो-सेंसिंग प्रमाणित ताज़ी फसलें। उच्च पोषण, शून्य बिचौलिए और तत्काल डिजिटल भुगतान।',
+      descEn: 'AI computer vision grade-certified fresh produce harvested today with zero middlemen, escrow protection, and rapid farm-gate dispatch.',
+      ctaPrimaryEn: 'Explore Products',
+      ctaPrimaryHi: 'ताज़ी उपज देखें',
+      ctaSecondaryEn: 'Register as Farmer',
+      ctaSecondaryHi: 'किसान पंजीकरण',
+    },
+    {
+      id: 3,
+      image: '/images/farmer1.jpg',
+      badgeHi: 'Mandi Agro-Hub • अनाज, दलहन एवं व्यापारिक फसलें',
+      badgeEn: 'Mandi Agro-Hub • Quality Grains, Pulses & Agro Commodities',
+      titleHi: 'उच्च गुणवत्ता अनाज, दलहन एवं आधुनिक एग्रो-हब संकलन',
+      titleEn: 'Premium Quality Grains, Pulses & Modern Agro-Hub Aggregation',
+      descHi: '42 राज्य स्तरीय एग्रो-हब के माध्यम से पारदर्शी नीलामी, स्वचालित नमी व गुणवत्ता परीक्षण तथा त्वरित बैंक अंतरण।',
+      descEn: 'Transparent bulk procurement across 42 certified agro-hubs with automated quality inspection, fair pricing, and direct bank transfers.',
+      ctaPrimaryEn: 'Explore Products',
+      ctaPrimaryHi: 'अनाज स्टॉक देखें',
+      ctaSecondaryEn: 'Register as Farmer',
+      ctaSecondaryHi: 'किसान पंजीकरण',
+    },
+    {
+      id: 4,
+      image: '/images/farmer4.jpg',
+      badgeHi: 'Fair Price Assured • पारदर्शी किसान-खरीदार अनुबंध',
+      badgeEn: 'Fair Price Assured • Direct Farmer-to-Buyer Contracts',
+      titleHi: 'बिचौलिया मुक्त कृषि व्यापार और सुनिश्चित उचित मूल्य',
+      titleEn: 'Middlemen-Free Agri Commerce with Fair Price Assurance',
+      descHi: 'लाइव एगमार्कनेट मंडी भाव, बहुभाषी टोल-फ्री AI वॉयस हेल्पलाइन और फार्म-गेट से गोदाम तक डिजिटल लॉजिस्टिक्स सुरक्षा।',
+      descEn: 'Real-time Agmarknet mandi rates, multilingual toll-free voice registration, and end-to-end multi-modal logistics straight to your doorstep.',
+      ctaPrimaryEn: 'Explore Products',
+      ctaPrimaryHi: 'कृषि बाजार देखें',
+      ctaSecondaryEn: 'Register as Farmer',
+      ctaSecondaryHi: 'किसान पंजीकरण',
+    },
+  ];
+
+  const totalSlides = slides.length;
+
+  const goToNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % totalSlides);
+  }, [totalSlides]);
+
+  const goToPrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+  }, [totalSlides]);
+
+  const goToSlide = (idx: number) => {
+    setCurrentIndex(idx);
+  };
+
+  // Touch handlers for mobile swipe gesture
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const distance = touchStartX.current - touchEndX.current;
+    const isLeftSwipe = distance > 45;
+    const isRightSwipe = distance < -45;
+
+    if (isLeftSwipe) {
+      goToNext();
+    } else if (isRightSwipe) {
+      goToPrev();
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
+  return (
+    <div className="w-full space-y-3">
+      {/* Banner Box with Smooth Cross-Fade Slides */}
+      <div
+        className="relative overflow-hidden rounded-3xl text-amber-50 shadow-2xl border border-amber-500/30 group"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="KisanBandhan Agriculture Hero Carousel"
+      >
+        {/* Slides Container */}
+        <div className="relative min-h-[480px] sm:min-h-[520px] lg:min-h-[460px] flex items-center">
+          {slides.map((slide, idx) => {
+            const isActive = idx === currentIndex;
+            const isHindi = language === 'hi';
+
+            return (
+              <div
+                key={slide.id}
+                aria-hidden={!isActive}
+                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                  isActive ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none z-0'
+                }`}
+              >
+                {/* Background Image with subtle scale */}
+                <div
+                  className={`absolute inset-0 bg-cover bg-center bg-no-repeat transform transition-transform duration-1000 ease-out ${
+                    isActive ? 'scale-105' : 'scale-100'
+                  }`}
+                  style={{ backgroundImage: `url('${slide.image}')` }}
+                />
+
+                {/* Dark Gradient and Protective Vignette Layer for maximum readability */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#041a10]/95 via-[#07281c]/85 to-[#051e14]/92" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-500/20 via-transparent to-black/60" />
+
+                {/* Ambient Glows */}
+                <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
+
+                {/* Content Overlay */}
+                <div className="relative z-10 h-full flex items-center p-6 sm:p-10 lg:p-12">
+                  <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    {/* Left Column: Heading, Description & CTA */}
+                    <div className="lg:col-span-7 space-y-5 sm:space-y-6">
+                      {/* Tag / Badge */}
+                      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs font-semibold backdrop-blur-sm shadow-sm">
+                        <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                        <span>{isHindi ? slide.badgeHi : slide.badgeEn}</span>
+                      </div>
+
+                      {/* Main Title */}
+                      <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-amber-50 leading-tight drop-shadow-md">
+                        {isHindi ? slide.titleHi : slide.titleEn}
+                      </h1>
+
+                      {/* Description */}
+                      <p className="text-xs sm:text-sm lg:text-base text-amber-100/90 leading-relaxed max-w-2xl drop-shadow-sm font-normal">
+                        {isHindi ? slide.descHi : slide.descEn}
+                      </p>
+
+                      {/* Action Buttons */}
+                      <div className="flex flex-wrap items-center gap-3 pt-2">
+                        {/* CTA 1: Explore Products */}
+                        <a
+                          href="#marketplace"
+                          onClick={onExploreClick}
+                          className="px-5 sm:px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl shadow-lg hover:shadow-amber-500/30 transition-all flex items-center gap-2 text-xs sm:text-sm active:scale-95"
+                          id="hero-carousel-explore-cta"
+                        >
+                          <ShoppingBag className="w-4 h-4" />
+                          <span>{isHindi ? slide.ctaPrimaryHi : slide.ctaPrimaryEn}</span>
+                        </a>
+
+                        {/* CTA 2: Register as Farmer */}
+                        <Link
+                          href="/farmer"
+                          className="px-5 sm:px-6 py-3 bg-emerald-800/80 hover:bg-emerald-700 text-amber-100 border border-amber-400/40 font-bold rounded-xl shadow-md transition-all flex items-center gap-2 text-xs sm:text-sm active:scale-95 backdrop-blur-sm"
+                          id="hero-carousel-register-cta"
+                        >
+                          <Sprout className="w-4 h-4 text-amber-400" />
+                          <span>{isHindi ? slide.ctaSecondaryHi : slide.ctaSecondaryEn}</span>
+                        </Link>
+
+                        {/* Toll-free IVR Voice badge */}
+                        <div className="w-full sm:w-auto px-3.5 py-2.5 bg-emerald-950/90 border border-amber-500/30 rounded-xl text-[11px] sm:text-xs text-amber-200 flex items-center gap-2 shadow-inner">
+                          <PhoneCall className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                          <span>
+                            <strong className="text-amber-300">1800-KISAN-AI</strong> (Toll-Free IVR Helpline)
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right Column: Platform Proof & Live Trust Metrics */}
+                    <div className="lg:col-span-5 grid grid-cols-2 gap-3 sm:gap-4">
+                      <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-amber-400/60 hover:bg-[#072417]/85 transition">
+                        <div className="text-2xl sm:text-3xl font-extrabold text-amber-400">0%</div>
+                        <div className="text-xs text-amber-100 font-medium">{t.statMiddlemen || 'बिचौलिए (Middlemen)'}</div>
+                        <p className="text-[10px] text-amber-200/70">{t.statMiddlemenDesc || 'सीधा बैंक अंतरण'}</p>
+                      </div>
+
+                      <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-emerald-400/60 hover:bg-[#072417]/85 transition">
+                        <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400">99.4%</div>
+                        <div className="text-xs text-amber-100 font-medium">{t.statCVGrading || 'AI ग्रेडिंग सटीकता'}</div>
+                        <p className="text-[10px] text-amber-200/70">{t.statCVGradingDesc || 'कंप्यूटर विज़न लैब'}</p>
+                      </div>
+
+                      <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-amber-400/60 hover:bg-[#072417]/85 transition">
+                        <div className="text-2xl sm:text-3xl font-extrabold text-amber-400">6 AI</div>
+                        <div className="text-xs text-amber-100 font-medium">{t.statAIEngines || 'इंजन एकीकृत'}</div>
+                        <p className="text-[10px] text-amber-200/70">{t.statAIEnginesDesc || 'मूल्य, मार्ग व गुणवत्ता'}</p>
+                      </div>
+
+                      <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-emerald-400/60 text-center space-y-1 shadow-lg hover:bg-[#072417]/85 transition">
+                        <div className="text-xl sm:text-2xl font-extrabold text-emerald-400">IVR/SMS</div>
+                        <div className="text-xs text-amber-100 font-medium">{t.statNoInternet || 'बिना इंटरनेट'}</div>
+                        <p className="text-[10px] text-amber-200/70">{t.statNoInternetDesc || 'कीपैड फोन सपोर्ट'}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Previous Arrow Button */}
+        <button
+          type="button"
+          onClick={goToPrev}
+          aria-label="Previous Slide"
+          className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/40 hover:bg-black/70 text-amber-200 hover:text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-110 active:scale-95 shadow-lg"
+          id="hero-carousel-prev"
+        >
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+
+        {/* Next Arrow Button */}
+        <button
+          type="button"
+          onClick={goToNext}
+          aria-label="Next Slide"
+          className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/40 hover:bg-black/70 text-amber-200 hover:text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-110 active:scale-95 shadow-lg"
+          id="hero-carousel-next"
+        >
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+      </div>
+
+      {/* Manual Navigation Dots Below the Banner */}
+      <div 
+        className="flex items-center justify-center gap-1.5 pt-2 pb-1"
+        role="tablist"
+        aria-label="Hero carousel pagination"
+      >
+        {slides.map((slide, index) => {
+          const isActive = index === currentIndex;
+          return (
+            <button
+              key={slide.id}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-label={`Slide ${index + 1} of ${totalSlides}`}
+              title={language === 'hi' ? slide.titleHi : slide.titleEn}
+              onClick={() => goToSlide(index)}
+              className="p-2 cursor-pointer focus:outline-none group"
+            >
+              <span
+                className={`block transition-all duration-300 rounded-full ${
+                  isActive
+                    ? 'w-7 h-2.5 bg-emerald-600 dark:bg-amber-400 shadow-md ring-2 ring-emerald-500/30'
+                    : 'w-2.5 h-2.5 bg-emerald-900/30 dark:bg-emerald-200/40 group-hover:bg-emerald-600 group-hover:scale-125 dark:group-hover:bg-amber-400'
+                }`}
+              />
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

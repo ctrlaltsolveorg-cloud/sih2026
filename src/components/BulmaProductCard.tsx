@@ -192,12 +192,12 @@ export default function BulmaProductCard({
                 )}
               </div>
 
-              <h3 className="font-extrabold text-base sm:text-lg text-emerald-950 mt-1 leading-snug truncate">
+              <h3 className="font-extrabold text-base sm:text-lg text-emerald-950 dark:text-amber-100 mt-1 leading-snug truncate">
                 {getLocalizedCropName(crop_name, language)}
               </h3>
 
               {crop_name_hi && crop_name_hi !== crop_name && (
-                <p className="text-xs text-emerald-700/80 font-medium truncate">
+                <p className="text-xs text-emerald-700/80 dark:text-emerald-300/80 font-medium truncate">
                   {crop_name_hi}
                 </p>
               )}
@@ -311,60 +311,60 @@ export default function BulmaProductCard({
             =================================================== */}
         <div className="card-content space-y-3">
           {/* Price & Quantity Available Highlight */}
-          <div className="flex items-center justify-between bg-amber-50/70 p-2.5 rounded-xl border border-amber-200/60">
+          <div className="flex items-center justify-between bg-amber-50/70 dark:bg-amber-950/40 p-2.5 rounded-xl border border-amber-200/60 dark:border-amber-500/20">
             <div>
-              <span className="text-[10px] uppercase tracking-wider font-extrabold text-amber-900/80 block">
+              <span className="text-[10px] uppercase tracking-wider font-extrabold text-amber-900/80 dark:text-amber-300 block">
                 {language === 'hi' ? 'Fair Price AI दर' : 'Fair Price AI Rate'}
               </span>
-              <div className="text-xl font-extrabold text-amber-900 flex items-baseline gap-1">
+              <div className="text-xl font-extrabold text-amber-900 dark:text-amber-300 flex items-baseline gap-1">
                 <span>₹{priceRupees}</span>
-                <span className="text-xs font-semibold text-emerald-950">/ {unit}</span>
+                <span className="text-xs font-semibold text-emerald-950 dark:text-emerald-200">/ {unit}</span>
               </div>
-              <span className="text-[10px] font-mono text-emerald-800 block">
+              <span className="text-[10px] font-mono text-emerald-800 dark:text-emerald-300/80 block">
                 ({price_paise_per_kg} {language === 'hi' ? 'पैसे' : 'paise'})
               </span>
             </div>
 
             <div className="text-right">
-              <span className="text-[10px] uppercase tracking-wider font-extrabold text-emerald-900/80 block">
+              <span className="text-[10px] uppercase tracking-wider font-extrabold text-emerald-900/80 dark:text-emerald-200 block">
                 {language === 'hi' ? 'उपलब्ध स्टॉक' : 'Stock Ready'}
               </span>
-              <div className="text-base font-extrabold text-emerald-950">
+              <div className="text-base font-extrabold text-emerald-950 dark:text-emerald-100">
                 {quantity_kg.toLocaleString()} {unit}
               </div>
-              <span className="text-[10px] text-emerald-700 font-bold bg-emerald-100/80 px-1.5 py-0.5 rounded-full inline-block mt-0.5">
+              <span className="text-[10px] text-emerald-700 dark:text-emerald-300 font-bold bg-emerald-100/80 dark:bg-emerald-900/50 px-1.5 py-0.5 rounded-full inline-block mt-0.5">
                 {language === 'hi' ? 'सत्यापित लॉट' : 'Verified Lot'}
               </span>
             </div>
           </div>
 
           {/* Farmer & Location Niche Info */}
-          <div className="text-xs space-y-1.5 text-emerald-900/90 bg-[#FAF5EB] p-2.5 rounded-xl border border-emerald-900/10">
+          <div className="text-xs space-y-1.5 text-emerald-900/90 dark:text-emerald-200 bg-[#FAF5EB] dark:bg-[#07170f] p-2.5 rounded-xl border border-emerald-900/10 dark:border-emerald-500/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5 truncate">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400 shrink-0" />
                 <span className="font-bold truncate">
                   {getLocalizedFarmer(farmer_name, language)}
                 </span>
               </div>
-              <span className="text-[10px] font-extrabold text-emerald-800 uppercase bg-emerald-200/60 px-1.5 py-0.5 rounded">
+              <span className="text-[10px] font-extrabold text-emerald-800 dark:text-emerald-200 uppercase bg-emerald-200/60 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded">
                 {language === 'hi' ? 'किसान' : 'Farmer'}
               </span>
             </div>
 
-            <div className="flex items-center gap-1.5 text-emerald-800/80 text-[11px] truncate">
-              <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+            <div className="flex items-center gap-1.5 text-emerald-800/80 dark:text-emerald-300/80 text-[11px] truncate">
+              <MapPin className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
               <span className="truncate">{getLocalizedLocation(location, language)}</span>
             </div>
 
-            <div className="flex items-center justify-between text-[10px] text-emerald-700/80 pt-1 border-t border-emerald-900/10">
+            <div className="flex items-center justify-between text-[10px] text-emerald-700/80 dark:text-emerald-300/80 pt-1 border-t border-emerald-900/10 dark:border-emerald-500/20">
               <span className="flex items-center gap-1">
-                <Calendar className="w-3 h-3 text-amber-600" />
+                <Calendar className="w-3 h-3 text-amber-600 dark:text-amber-400" />
                 <span>{language === 'hi' ? 'कटाई:' : 'Harvest:'} {harvest_date}</span>
               </span>
               <button
                 onClick={() => setShowDetailsModal(true)}
-                className="text-amber-800 hover:text-amber-900 font-bold underline flex items-center gap-0.5"
+                className="text-amber-800 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 font-bold underline flex items-center gap-0.5"
               >
                 <Info className="w-3 h-3" />
                 <span>{language === 'hi' ? 'सम्पूर्ण विवरण' : 'Full Specs'}</span>
@@ -378,15 +378,15 @@ export default function BulmaProductCard({
             =================================================== */}
         <div className="card-footer flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
           {/* Quick Quantity Counter */}
-          <div className="flex items-center justify-between sm:justify-start gap-2 bg-white px-2.5 py-1.5 rounded-xl border border-emerald-900/15">
-            <span className="text-[11px] font-bold text-emerald-900">
+          <div className="flex items-center justify-between sm:justify-start gap-2 bg-white dark:bg-[#07170f] px-2.5 py-1.5 rounded-xl border border-emerald-900/15 dark:border-emerald-500/25">
+            <span className="text-[11px] font-bold text-emerald-900 dark:text-emerald-200">
               {language === 'hi' ? 'मात्रा:' : 'Qty:'}
             </span>
             <div className="flex items-center gap-1.5">
               <button
                 type="button"
                 onClick={() => setOrderQty((q) => Math.max(10, q - 10))}
-                className="w-6 h-6 rounded-md bg-emerald-100 hover:bg-emerald-200 text-emerald-950 font-bold text-xs flex items-center justify-center transition"
+                className="w-6 h-6 rounded-md bg-emerald-100 dark:bg-emerald-900/80 hover:bg-emerald-200 dark:hover:bg-emerald-800 text-emerald-950 dark:text-emerald-100 font-bold text-xs flex items-center justify-center transition"
               >
                 -
               </button>
@@ -394,13 +394,13 @@ export default function BulmaProductCard({
                 type="number"
                 value={orderQty}
                 onChange={(e) => setOrderQty(Math.max(1, parseInt(e.target.value) || 1))}
-                className="w-12 text-center text-xs font-bold text-emerald-950 focus:outline-none border-b border-emerald-900/30"
+                className="w-12 text-center text-xs font-bold text-emerald-950 dark:text-emerald-100 bg-transparent focus:outline-none border-b border-emerald-900/30 dark:border-emerald-500/30"
               />
-              <span className="text-[10px] text-emerald-800 font-semibold">{unit}</span>
+              <span className="text-[10px] text-emerald-800 dark:text-emerald-300 font-semibold">{unit}</span>
               <button
                 type="button"
                 onClick={() => setOrderQty((q) => Math.min(quantity_kg, q + 10))}
-                className="w-6 h-6 rounded-md bg-emerald-100 hover:bg-emerald-200 text-emerald-950 font-bold text-xs flex items-center justify-center transition"
+                className="w-6 h-6 rounded-md bg-emerald-100 dark:bg-emerald-900/80 hover:bg-emerald-200 dark:hover:bg-emerald-800 text-emerald-950 dark:text-emerald-100 font-bold text-xs flex items-center justify-center transition"
               >
                 +
               </button>
@@ -485,12 +485,12 @@ export default function BulmaProductCard({
           =================================================== */}
       {showDetailsModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fadeIn">
-          <div className="bg-[#FAF5EB] rounded-3xl p-6 w-full max-w-lg shadow-2xl border border-emerald-900/20 space-y-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
+          <div className="bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl p-6 w-full max-w-lg shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-emerald-900/10 dark:border-emerald-500/20 pb-3">
               <div className="flex items-center gap-3">
                 <img src={sideLogoUrl} alt="Logo" className="w-10 h-10 rounded-xl object-cover border border-amber-500" />
                 <div>
-                  <h3 className="font-extrabold text-lg text-emerald-950">
+                  <h3 className="font-extrabold text-lg text-emerald-950 dark:text-amber-100">
                     {getLocalizedCropName(crop_name, language)}
                   </h3>
                   <span className="bulma-tag is-success-light text-[10px]">
@@ -500,7 +500,7 @@ export default function BulmaProductCard({
               </div>
               <button
                 onClick={() => setShowDetailsModal(false)}
-                className="p-1 hover:bg-emerald-100 rounded-full text-emerald-800"
+                className="p-1 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 rounded-full text-emerald-800 dark:text-emerald-200"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -508,12 +508,12 @@ export default function BulmaProductCard({
 
             {/* Photos Preview in Modal */}
             <div>
-              <span className="text-xs font-bold text-emerald-900 block mb-1">
+              <span className="text-xs font-bold text-emerald-900 dark:text-emerald-200 block mb-1">
                 {language === 'hi' ? 'किसान द्वारा अपलोड की गई 2-6 तस्वीरें:' : 'Farmer Inserted Photos (2 to 6 verified):'}
               </span>
               <div className="grid grid-cols-3 gap-2">
                 {photoList.map((ph, idx) => (
-                  <div key={idx} className="relative h-20 rounded-xl overflow-hidden border border-emerald-900/20">
+                  <div key={idx} className="relative h-20 rounded-xl overflow-hidden border border-emerald-900/20 dark:border-emerald-500/30">
                     <img src={ph} alt="Crop Angle" className="w-full h-full object-cover" />
                     <span className="absolute bottom-1 right-1 bg-black/70 text-[9px] text-white px-1 rounded font-mono">
                       #{idx + 1}
@@ -524,34 +524,34 @@ export default function BulmaProductCard({
             </div>
 
             {/* Details Table */}
-            <div className="bg-white p-4 rounded-2xl border border-emerald-900/10 space-y-2 text-xs">
-              <div className="flex justify-between py-1 border-b border-emerald-900/5">
-                <span className="text-emerald-800/80">{language === 'hi' ? 'मूल्य दर:' : 'Rate:'}</span>
-                <span className="font-bold text-amber-900">₹{priceRupees} / {unit}</span>
+            <div className="bg-white dark:bg-[#07170f] p-4 rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20 space-y-2 text-xs">
+              <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
+                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'मूल्य दर:' : 'Rate:'}</span>
+                <span className="font-bold text-amber-900 dark:text-amber-300">₹{priceRupees} / {unit}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-emerald-900/5">
-                <span className="text-emerald-800/80">{language === 'hi' ? 'उपलब्ध मात्रा:' : 'Available Stock:'}</span>
-                <span className="font-bold text-emerald-950">{quantity_kg} {unit}</span>
+              <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
+                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'उपलब्ध मात्रा:' : 'Available Stock:'}</span>
+                <span className="font-bold text-emerald-950 dark:text-emerald-100">{quantity_kg} {unit}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-emerald-900/5">
-                <span className="text-emerald-800/80">{language === 'hi' ? 'गुणवत्ता ग्रेड:' : 'Grade:'}</span>
-                <span className="font-bold text-emerald-950">{quality_grade}</span>
+              <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
+                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'गुणवत्ता ग्रेड:' : 'Grade:'}</span>
+                <span className="font-bold text-emerald-950 dark:text-emerald-100">{quality_grade}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-emerald-900/5">
-                <span className="text-emerald-800/80">{language === 'hi' ? 'CV विश्वासांक:' : 'CV Confidence:'}</span>
-                <span className="font-bold text-emerald-700">{cv_trust_score}%</span>
+              <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
+                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'CV विश्वासांक:' : 'CV Confidence:'}</span>
+                <span className="font-bold text-emerald-700 dark:text-emerald-400">{cv_trust_score}%</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-emerald-900/5">
-                <span className="text-emerald-800/80">{language === 'hi' ? 'उत्पादक किसान:' : 'Farmer:'}</span>
-                <span className="font-bold text-emerald-950">{farmer_name}</span>
+              <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
+                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'उत्पादक किसान:' : 'Farmer:'}</span>
+                <span className="font-bold text-emerald-950 dark:text-emerald-100">{farmer_name}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-emerald-900/5">
-                <span className="text-emerald-800/80">{language === 'hi' ? 'मंडी / संकलन केंद्र:' : 'Hub Location:'}</span>
-                <span className="font-bold text-emerald-950">{location}</span>
+              <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
+                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'मंडी / संकलन केंद्र:' : 'Hub Location:'}</span>
+                <span className="font-bold text-emerald-950 dark:text-emerald-100">{location}</span>
               </div>
               <div className="flex justify-between py-1">
-                <span className="text-emerald-800/80">{language === 'hi' ? 'कटाई तिथि:' : 'Harvest Date:'}</span>
-                <span className="font-bold text-emerald-950">{harvest_date}</span>
+                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'कटाई तिथि:' : 'Harvest Date:'}</span>
+                <span className="font-bold text-emerald-950 dark:text-emerald-100">{harvest_date}</span>
               </div>
             </div>
 

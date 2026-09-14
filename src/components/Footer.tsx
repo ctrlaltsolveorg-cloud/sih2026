@@ -8,7 +8,7 @@ export default function Footer() {
   const { t } = useLanguage();
 
   return (
-    <footer className="bg-[#0A2619] text-amber-100/80 border-t border-emerald-900/30 pt-12 pb-8 px-4 sm:px-8 mt-16">
+    <footer className="bg-[#0A2619] dark:bg-[#040e09] text-amber-100/80 border-t border-emerald-900/30 dark:border-emerald-900/60 pt-12 pb-8 px-4 sm:px-8 mt-16">
       <div className="w-full px-4 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
         <div className="space-y-3">
           <div className="flex items-center gap-2 text-amber-400 font-extrabold text-xl">

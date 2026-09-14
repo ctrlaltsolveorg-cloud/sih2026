@@ -7,6 +7,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { useRole } from '@/context/RoleContext';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
+import { useTheme } from '@/context/ThemeContext';
 import UserAvatar from './UserAvatar';
 import {
   Leaf,
@@ -16,7 +17,9 @@ import {
   LogOut,
   Languages,
   ChevronDown,
-  Check
+  Check,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -35,6 +38,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
   const { role, setRole, userName } = useRole();
   const { user, isAuthenticated, openAuthModal, logout } = useAuth();
   const { itemCount, setIsCartOpen } = useCart();
+  const { theme, resolvedTheme, toggleTheme } = useTheme();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -73,7 +77,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
     supportedLanguages[0];
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#FAF5EB]/95 backdrop-blur-md border-b border-emerald-900/10 shadow-sm">
+    <header className="sticky top-0 z-40 w-full bg-[#FAF5EB]/95 dark:bg-[#07170f]/95 backdrop-blur-md border-b border-emerald-900/10 dark:border-emerald-500/20 shadow-sm transition-colors duration-200">
       {/* Top Banner */}
       <div className="bg-[#0F3826] text-amber-50 text-[11px] py-1.5 px-4 sm:px-8 border-b border-amber-500/10 flex items-center justify-between">
         <div className="flex items-center gap-2 font-medium">
@@ -98,23 +102,23 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             <Leaf className="w-6 h-6 fill-amber-400" />
           </div>
           <div>
-            <h1 className="font-extrabold text-xl text-emerald-950 leading-none tracking-tight">
+            <h1 className="font-extrabold text-xl text-emerald-950 dark:text-amber-100 leading-none tracking-tight">
               {t.appName}
             </h1>
-            <span className="text-[10px] text-amber-800 font-semibold leading-none">
+            <span className="text-[10px] text-amber-800 dark:text-amber-400 font-semibold leading-none">
               किसान दिवस एग्री-टेक मंच
             </span>
           </div>
         </Link>
 
         {/* Desktop 6 Role Nav Links */}
-        <nav className="hidden xl:flex items-center gap-1 bg-emerald-900/5 p-1 rounded-2xl border border-emerald-900/10 text-xs font-bold">
+        <nav className="hidden xl:flex items-center gap-1 bg-emerald-900/5 dark:bg-emerald-950/60 p-1 rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20 text-xs font-bold">
           <Link
             href="/"
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 hover:bg-emerald-100/60'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navHome}
@@ -125,7 +129,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/farmer'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 hover:bg-emerald-100/60'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navFarmer}
@@ -136,7 +140,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/fpo'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 hover:bg-emerald-100/60'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navFPO}
@@ -147,7 +151,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/buyer'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 hover:bg-emerald-100/60'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navBuyer}
@@ -158,7 +162,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/hub'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 hover:bg-emerald-100/60'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navHub}
@@ -169,7 +173,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/transporter'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 hover:bg-emerald-100/60'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navTransporter}
@@ -180,22 +184,48 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/admin'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'text-emerald-950 hover:bg-emerald-100/60'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navAdmin}
           </Link>
         </nav>
 
-        {/* Right Buttons: India Translator + 11-Language Dropdown + User Profile + Cart */}
+        {/* Right Buttons: Theme Toggle + India Translator + 11-Language Dropdown + User Profile + Cart */}
         <div className="flex items-center gap-2 shrink-0">
+          {/* Theme Toggle Button (Sun / Moon) */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            id="theme-toggle-btn"
+            aria-label={resolvedTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            title={
+              resolvedTheme === 'dark'
+                ? (language === 'hi' ? 'लाइट मोड चालू करें' : 'Switch to Light Mode')
+                : (language === 'hi' ? 'डार्क मोड चालू करें' : 'Switch to Dark Mode')
+            }
+            className="px-2.5 sm:px-3 py-1.5 bg-white/90 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 text-emerald-950 dark:text-amber-300 border border-emerald-900/15 dark:border-emerald-500/30 font-extrabold rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition transform active:scale-95"
+          >
+            {resolvedTheme === 'dark' ? (
+              <>
+                <Sun className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                <span className="hidden md:inline">{language === 'hi' ? 'लाइट' : 'Light'}</span>
+              </>
+            ) : (
+              <>
+                <Moon className="w-3.5 h-3.5 text-emerald-800 dark:text-amber-400" />
+                <span className="hidden md:inline">{language === 'hi' ? 'डार्क' : 'Dark'}</span>
+              </>
+            )}
+          </button>
+
           {/* India Translator Launch Button */}
           <button
             onClick={() => setIsTranslatorOpen(true)}
-            className="px-2.5 sm:px-3 py-1.5 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-emerald-800/10 hover:bg-amber-500/30 text-emerald-950 border border-amber-600/30 font-extrabold rounded-xl text-xs flex items-center gap-1.5 shadow-xs transition"
+            className="px-2.5 sm:px-3 py-1.5 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-emerald-800/10 hover:bg-amber-500/30 text-emerald-950 dark:text-amber-200 border border-amber-600/30 dark:border-amber-500/30 font-extrabold rounded-xl text-xs flex items-center gap-1.5 shadow-xs transition"
             title={t.translatorTitle || 'India Multi-Language Translator'}
           >
-            <Languages className="w-3.5 h-3.5 text-amber-700" />
+            <Languages className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
             <span className="hidden md:inline">{t.translatorBtn || '🇮🇳 India Translator'}</span>
             <span className="md:hidden">🇮🇳</span>
           </button>
@@ -204,22 +234,22 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-              className="px-2.5 sm:px-3 py-1.5 bg-white/90 hover:bg-white text-emerald-950 border border-emerald-900/15 font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
+              className="px-2.5 sm:px-3 py-1.5 bg-white/90 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 text-emerald-950 dark:text-emerald-100 border border-emerald-900/15 dark:border-emerald-500/30 font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
               aria-label="Select Indian Language"
             >
-              <Globe className="w-3.5 h-3.5 text-emerald-800" />
+              <Globe className="w-3.5 h-3.5 text-emerald-800 dark:text-emerald-300" />
               <span className="font-extrabold">{currentLangMeta.flagEmoji} {currentLangMeta.nativeName}</span>
-              <ChevronDown className="w-3.5 h-3.5 text-emerald-800/60" />
+              <ChevronDown className="w-3.5 h-3.5 text-emerald-800/60 dark:text-emerald-300/60" />
             </button>
 
             {/* Dropdown Menu */}
             {isLangDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-64 sm:w-72 bg-white rounded-2xl shadow-2xl border border-emerald-900/15 py-2 z-50 animate-fadeIn">
-                <div className="px-3 py-1.5 border-b border-emerald-900/10 flex items-center justify-between">
-                  <span className="text-[11px] font-extrabold text-emerald-950 uppercase tracking-wider">
+              <div className="absolute right-0 mt-2 w-64 sm:w-72 bg-white dark:bg-[#0c2217] rounded-2xl shadow-2xl border border-emerald-900/15 dark:border-emerald-500/30 py-2 z-50 animate-fadeIn">
+                <div className="px-3 py-1.5 border-b border-emerald-900/10 dark:border-emerald-500/20 flex items-center justify-between">
+                  <span className="text-[11px] font-extrabold text-emerald-950 dark:text-emerald-100 uppercase tracking-wider">
                     {t.selectLanguage || 'भाषा चुनें'} (11 Languages)
                   </span>
-                  <span className="text-[10px] text-amber-700 font-bold bg-amber-100 px-1.5 py-0.5 rounded">
+                  <span className="text-[10px] text-amber-700 dark:text-amber-300 font-bold bg-amber-100 dark:bg-amber-950/80 px-1.5 py-0.5 rounded">
                     Pan-India
                   </span>
                 </div>
@@ -237,14 +267,14 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                         className={`w-full px-3 py-2 text-left text-xs flex items-center justify-between transition ${
                           isSelected
                             ? 'bg-[#0F3826] text-amber-50 font-bold'
-                            : 'hover:bg-emerald-50 text-emerald-950'
+                            : 'hover:bg-emerald-50 dark:hover:bg-emerald-900/50 text-emerald-950 dark:text-emerald-100'
                         }`}
                       >
                         <div className="flex items-center gap-2">
                           <span className="text-sm">{lang.flagEmoji}</span>
                           <div>
                             <div className="font-bold leading-tight">{lang.nativeName}</div>
-                            <div className={`text-[10px] ${isSelected ? 'text-amber-200/80' : 'text-emerald-800/60'}`}>
+                            <div className={`text-[10px] ${isSelected ? 'text-amber-200/80' : 'text-emerald-800/60 dark:text-emerald-300/60'}`}>
                               {lang.name} • {lang.region}
                             </div>
                           </div>
@@ -256,15 +286,15 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                   })}
                 </div>
 
-                <div className="px-3 pt-2 mt-1 border-t border-emerald-900/10 text-center">
+                <div className="px-3 pt-2 mt-1 border-t border-emerald-900/10 dark:border-emerald-500/20 text-center">
                   <button
                     onClick={() => {
                       setIsLangDropdownOpen(false);
                       setIsTranslatorOpen(true);
                     }}
-                    className="text-[11px] text-emerald-800 hover:text-emerald-950 font-bold flex items-center justify-center gap-1 w-full py-1 hover:bg-emerald-50 rounded-lg transition"
+                    className="text-[11px] text-emerald-800 dark:text-emerald-300 hover:text-emerald-950 dark:hover:text-emerald-100 font-bold flex items-center justify-center gap-1 w-full py-1 hover:bg-emerald-50 dark:hover:bg-emerald-900/40 rounded-lg transition"
                   >
-                    <Languages className="w-3 h-3 text-amber-600" />
+                    <Languages className="w-3 h-3 text-amber-600 dark:text-amber-400" />
                     <span>{t.translatorTitle || 'AI Translator'}</span>
                   </button>
                 </div>
@@ -277,22 +307,22 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             <div className="relative">
               <button
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                className="flex items-center gap-2 p-1.5 bg-white/80 hover:bg-white border border-emerald-900/15 rounded-2xl shadow-sm transition"
+                className="flex items-center gap-2 p-1.5 bg-white/80 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 border border-emerald-900/15 dark:border-emerald-500/30 rounded-2xl shadow-sm transition"
               >
                 <UserAvatar name={user.name} size="sm" />
-                <span className="text-xs font-extrabold text-emerald-950 max-w-[90px] truncate hidden md:inline">
+                <span className="text-xs font-extrabold text-emerald-950 dark:text-emerald-100 max-w-[90px] truncate hidden md:inline">
                   {user.name}
                 </span>
               </button>
 
               {showProfileMenu && (
-                <div className="absolute right-0 mt-2 w-56 bg-[#FAF5EB] rounded-2xl shadow-2xl border border-emerald-900/20 p-3 z-50 animate-fadeIn space-y-2">
-                  <div className="flex items-center gap-3 p-2 bg-emerald-900/5 rounded-xl border border-emerald-900/10">
+                <div className="absolute right-0 mt-2 w-56 bg-[#FAF5EB] dark:bg-[#0c2217] rounded-2xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 p-3 z-50 animate-fadeIn space-y-2">
+                  <div className="flex items-center gap-3 p-2 bg-emerald-900/5 dark:bg-emerald-950/60 rounded-xl border border-emerald-900/10 dark:border-emerald-500/20">
                     <UserAvatar name={user.name} size="md" />
                     <div className="overflow-hidden">
-                      <p className="text-xs font-extrabold text-emerald-950 truncate">{user.name}</p>
-                      <p className="text-[10px] text-emerald-800/70 truncate">{user.email}</p>
-                      <span className="inline-block mt-0.5 text-[9px] font-bold px-2 py-0.5 bg-amber-500/20 text-amber-900 rounded-md border border-amber-500/30">
+                      <p className="text-xs font-extrabold text-emerald-950 dark:text-amber-100 truncate">{user.name}</p>
+                      <p className="text-[10px] text-emerald-800/70 dark:text-emerald-300/70 truncate">{user.email}</p>
+                      <span className="inline-block mt-0.5 text-[9px] font-bold px-2 py-0.5 bg-amber-500/20 text-amber-900 dark:text-amber-300 rounded-md border border-amber-500/30">
                         {user.role}
                       </span>
                     </div>
@@ -303,7 +333,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                       logout();
                       setShowProfileMenu(false);
                     }}
-                    className="w-full py-2 px-3 bg-red-100 hover:bg-red-200 text-red-900 font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition"
+                    className="w-full py-2 px-3 bg-red-100 dark:bg-red-950/60 hover:bg-red-200 dark:hover:bg-red-900/60 text-red-900 dark:text-red-200 font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition"
                   >
                     <LogOut className="w-3.5 h-3.5" />
                     <span>{language === 'hi' ? 'लॉगआउट (Log Out)' : 'Log Out'}</span>
@@ -338,14 +368,14 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
       </div>
 
       {/* Mobile / Tablet Horizontal Role Navigation Strip */}
-      <div className="xl:hidden border-t border-emerald-900/10 bg-emerald-900/5 px-4 py-2 overflow-x-auto no-scrollbar">
+      <div className="xl:hidden border-t border-emerald-900/10 dark:border-emerald-500/20 bg-emerald-900/5 dark:bg-[#07170f] px-4 py-2 overflow-x-auto no-scrollbar">
         <nav className="flex items-center gap-1.5 min-w-max text-xs font-bold">
           <Link
             href="/"
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 text-emerald-950 hover:bg-white'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navHome}
@@ -356,7 +386,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/farmer'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 text-emerald-950 hover:bg-white'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navFarmer}
@@ -367,7 +397,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/fpo'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 text-emerald-950 hover:bg-white'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navFPO}
@@ -378,7 +408,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/buyer'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 text-emerald-950 hover:bg-white'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navBuyer}
@@ -389,7 +419,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/hub'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 text-emerald-950 hover:bg-white'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navHub}
@@ -400,7 +430,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/transporter'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 text-emerald-950 hover:bg-white'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navTransporter}
@@ -411,7 +441,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/admin'
                 ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                : 'bg-white/70 text-emerald-950 hover:bg-white'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navAdmin}

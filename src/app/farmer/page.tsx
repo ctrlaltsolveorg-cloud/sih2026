@@ -422,9 +422,32 @@ export default function FarmerDashboardPage() {
     e.target.value = '';
   };
 
-  // Auto-suggest photos (optional helper)
-  const handleLoadSamplePhotosForCategory = (_cat: 'Vegetables' | 'Fruits' | 'Pulses' | 'Grains' | 'Seeds' | string) => {
-    setPhotos([]);
+  // Auto-suggest 3 high-res realistic photos for category
+  const handleLoadSamplePhotosForCategory = (cat: 'Vegetables' | 'Fruits' | 'Pulses' | 'Grains' | 'Seeds' | string) => {
+    const samplePool: Record<string, string[]> = {
+      Vegetables: [
+        'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80',
+      ],
+      Fruits: [
+        'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80',
+      ],
+      Pulses: [
+        'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80',
+      ],
+      Grains: [
+        'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80',
+      ],
+    };
+    const targetPhotos = samplePool[cat] || samplePool.Vegetables;
+    setPhotos([...targetPhotos]);
     setPhotoError(null);
   };
 
@@ -1267,86 +1290,21 @@ export default function FarmerDashboardPage() {
 
           {/* Quick Insert Form Container */}
           <form onSubmit={handleAddProduce} className="space-y-6 pt-2">
-            {/* Upper: Fast Crop Presets & Product Name & Category */}
+            {/* Upper: Product Name & Category */}
             <div className="space-y-4">
-              {/* Quick 1-Click Name-to-Logo & Photos Auto-Select Toolbar */}
-              <div className="p-3 bg-gradient-to-r from-amber-500/10 via-emerald-900/10 to-amber-500/10 rounded-2xl border border-amber-500/30 space-y-2">
-                <div className="flex items-center justify-between flex-wrap gap-2 text-[11px] font-extrabold text-emerald-950">
-                  <span className="flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                    <span>
-                      {language === 'hi'
-                        ? 'नाम अनुसार 1-क्लिक लोगो व फोटो लोड करें (उदा. प्याज, आलू, टमाटर...):'
-                        : '1-Click Name-to-Logo & Photos Auto-Select:'}
-                    </span>
-                  </span>
-                  <span className="text-[10px] text-amber-900 font-extrabold bg-amber-200/90 px-2 py-0.5 rounded-md">
-                    {language === 'hi' ? '⚡ नाम लिखते ही लोगो व 3 फोटो स्वतः लोड होंगे' : '⚡ Auto-loads logo as you type'}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
-                  {[
-                    { key: 'onion', label: '🧅 प्याज (Onion)', name: 'Onion (Nashik Red)' },
-                    { key: 'potato', label: '🥔 आलू (Potato)', name: 'Potato (Jyoti)' },
-                    { key: 'tomato', label: '🍅 टमाटर (Tomato)', name: 'Tomato (Red Desi)' },
-                    { key: 'garlic', label: '🧄 लहसुन (Garlic)', name: 'Garlic (Ooty Grade A)' },
-                    { key: 'ginger', label: '🫚 अदरक (Ginger)', name: 'Ginger (Fresh Organic)' },
-                    { key: 'chilli', label: '🌶️ मिर्च (Chilli)', name: 'Green Chilli (Guntur Hot)' },
-                    { key: 'wheat', label: '🌾 गेहूं (Wheat)', name: 'Wheat (Sharbati Gold)' },
-                    { key: 'rice', label: '🍚 चावल (Rice)', name: 'Rice (Basmati 1121)' },
-                    { key: 'chana', label: '🫘 चना (Chana)', name: 'Chana (Desi Bengal Gram)' },
-                    { key: 'apple', label: '🍎 सेब (Apple)', name: 'Apple (Kinnaur Royal)' },
-                    { key: 'mango', label: '🥭 आम (Mango)', name: 'Mango (Ratnagiri Alphonso)' },
-                  ].map((chip) => {
-                    const isSelected =
-                      cropName.toLowerCase().includes(chip.key) ||
-                      (cropNameHi && chip.label.includes(cropNameHi));
-                    return (
-                      <button
-                        key={chip.key}
-                        type="button"
-                        onClick={() => handleApplyPresetCrop(chip.name)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-black transition shrink-0 flex items-center gap-1 shadow-xs border ${
-                          isSelected
-                            ? 'bg-[#0F3826] text-amber-300 border-amber-400 ring-2 ring-amber-400/40'
-                            : 'bg-white hover:bg-amber-50 text-emerald-950 border-emerald-900/15'
-                        }`}
-                      >
-                        <span>{chip.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-emerald-950 mb-1 flex items-center justify-between">
-                    <span>{language === 'hi' ? 'फसल का नाम (अंग्रेज़ी / मुख्य)' : 'Crop Name (Primary)'}</span>
-                    <span className="text-[10px] text-amber-800 font-extrabold">
-                      {language === 'hi' ? 'उदा. onion' : 'e.g. onion'}
-                    </span>
+                  <label className="block text-xs font-bold text-emerald-950 mb-1">
+                    {language === 'hi' ? 'फसल का नाम (अंग्रेज़ी / मुख्य)' : 'Crop Name (Primary)'}
                   </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Onion, Potato, Tomato..."
-                      value={cropName}
-                      onChange={(e) => handleCropNameChange(e.target.value)}
-                      className="w-full pl-3.5 pr-24 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleAutoMatchLogoFromCropName()}
-                      className="absolute right-1.5 top-1.5 bottom-1.5 px-2.5 bg-amber-400 hover:bg-amber-300 text-emerald-950 font-black text-[10px] rounded-lg shadow-xs flex items-center gap-1 transition"
-                      title={language === 'hi' ? 'नाम अनुसार लोगो अपलोड करें' : 'Upload logo from name'}
-                    >
-                      <Sparkles className="w-3 h-3 text-emerald-950" />
-                      <span>{language === 'hi' ? 'लोगो लोड' : 'Get Logo'}</span>
-                    </button>
-                  </div>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Onion, Potato, Tomato..."
+                    value={cropName}
+                    onChange={(e) => handleCropNameChange(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-semibold"
+                  />
                 </div>
 
                 <div>
@@ -1377,6 +1335,128 @@ export default function FarmerDashboardPage() {
                   </select>
                 </div>
               </div>
+            </div>
+
+            {/* ===================================================
+                MIDDLE: CROP PHOTOS (2 TO 6 PHOTOS MANDATORY)
+                =================================================== */}
+            <div className="p-4 sm:p-5 bg-emerald-950/5 rounded-2xl border-2 border-emerald-900/15 space-y-3.5">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-2">
+                  <Camera className="w-5 h-5 text-amber-600" />
+                  <div>
+                    <h3 className="text-xs font-black text-emerald-950 uppercase tracking-wider">
+                      CROP PHOTOS (2 TO 6 PHOTOS MANDATORY)
+                    </h3>
+                    <p className="text-[11px] text-emerald-800/80">
+                      Upload from camera/device, paste link, or use 1-click auto-suggest.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  {/* Auto-Suggest Photos button */}
+                  <button
+                    type="button"
+                    onClick={() => handleLoadSamplePhotosForCategory(category)}
+                    className="px-3.5 py-1.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-300 font-bold rounded-xl text-xs flex items-center gap-1.5 shadow transition"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <span>✨ Auto-Suggest Photos</span>
+                  </button>
+
+                  {/* Photo Counter Pill */}
+                  <div
+                    className={`px-3 py-1.5 rounded-full text-xs font-extrabold flex items-center gap-1.5 shadow-sm ${
+                      photos.length >= 2 && photos.length <= 6
+                        ? 'bg-emerald-700 text-white'
+                        : 'bg-red-400 text-white'
+                    }`}
+                  >
+                    <Camera className="w-3.5 h-3.5" />
+                    <span>
+                      Photos: {photos.length}/6 {photos.length >= 2 ? '' : '(न्यूनतम 2 अनिवार्य)'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Photo Error Banner if any */}
+              {photoError && (
+                <div className="p-2.5 bg-red-100/90 border border-red-300 text-red-800 rounded-xl text-xs flex items-center gap-2 font-bold animate-fadeIn">
+                  <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+                  <span>{photoError}</span>
+                </div>
+              )}
+
+              {/* Photos Grid: Camera/File trigger + preview thumbnails */}
+              <div className="grid grid-cols-2 sm:grid-cols-6 gap-3">
+                {/* Upload Trigger Box */}
+                {photos.length < 6 && (
+                  <label className="h-28 border-2 border-dashed border-emerald-900/30 hover:border-amber-500 rounded-xl flex flex-col items-center justify-center cursor-pointer bg-white/70 hover:bg-amber-50/50 transition p-2 text-center text-emerald-950 group">
+                    <Camera className="w-6 h-6 text-amber-600 mb-1 group-hover:scale-110 transition" />
+                    <span className="text-[11px] font-black leading-tight">
+                      + Camera / File
+                    </span>
+                    <span className="text-[9px] text-emerald-800/70 font-semibold">
+                      ({photos.length}/6 फोटो)
+                    </span>
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                    />
+                  </label>
+                )}
+
+                {/* Uploaded Photos */}
+                {photos.map((ph, idx) => (
+                  <div
+                    key={idx}
+                    className="relative group rounded-xl overflow-hidden border-2 border-emerald-900/20 shadow bg-white h-28"
+                  >
+                    <img src={ph} alt={`Crop photo ${idx + 1}`} className="w-full h-full object-cover" />
+                    <div className="absolute top-1 left-1 bg-black/70 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                      #{idx + 1}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleRemovePhoto(idx)}
+                      className="absolute top-1 right-1 p-1 bg-red-600 text-white rounded-full opacity-80 hover:opacity-100 shadow transition"
+                      title="Remove photo"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                    {idx === 0 && (
+                      <span className="absolute bottom-1 left-1 right-1 bg-amber-500 text-emerald-950 font-extrabold text-[8px] text-center py-0.5 rounded shadow">
+                        Main Logo / Photo
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Paste Image URL */}
+              {photos.length < 6 && (
+                <div className="flex gap-2 pt-1">
+                  <input
+                    type="url"
+                    placeholder="Or paste image URL (e.g. Unsplash or Cloud URL)..."
+                    value={urlInput}
+                    onChange={(e) => setUrlInput(e.target.value)}
+                    className="flex-1 px-3 py-2 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddUrlPhoto}
+                    className="px-4 py-2 bg-[#0F3826] hover:bg-emerald-900 text-white font-bold rounded-xl text-xs shadow-sm transition shrink-0"
+                  >
+                    Add URL
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* ===================================================

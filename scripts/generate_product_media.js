@@ -31,8 +31,9 @@ function makeThumbUrl(url) {
 
 const mediaEntries = [];
 const updatedCatalogItems = [];
+const items = Array.isArray(catalogData) ? catalogData : (catalogData.items || []);
 
-for (const item of catalogData.items) {
+for (const item of items) {
   const productId = item.id;
   const logoId = `lnk_logo_${productId}`;
   const primaryId = `lnk_img_${productId}_primary`;
@@ -110,8 +111,10 @@ fs.writeFileSync(outputMediaJsonPath, JSON.stringify(mediaEntries, null, 2), 'ut
 fs.writeFileSync(srcDataMediaJsonPath, JSON.stringify(mediaEntries, null, 2), 'utf8');
 
 // 2. Update catalog.json
-catalogData.items = updatedCatalogItems;
-fs.writeFileSync(catalogPath, JSON.stringify(catalogData, null, 2), 'utf8');
+const outputCatalog = Array.isArray(catalogData)
+  ? updatedCatalogItems
+  : { ...catalogData, items: updatedCatalogItems };
+fs.writeFileSync(catalogPath, JSON.stringify(outputCatalog, null, 2), 'utf8');
 
 console.log(`Successfully generated ${mediaEntries.length} media records in:`);
 console.log(` - ${outputMediaJsonPath}`);

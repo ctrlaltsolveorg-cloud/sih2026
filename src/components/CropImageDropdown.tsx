@@ -6,7 +6,6 @@ import {
   ChevronDown,
   Check,
   Sparkles,
-  Layers,
   Image as ImageIcon,
   X,
   Edit3
@@ -14,14 +13,10 @@ import {
 import {
   CatalogCropItem,
   FULL_CROP_CATALOG,
-  VEGETABLES_CATALOG,
-  FRUITS_CATALOG,
-  PULSES_CATALOG,
-  GRAINS_CATALOG,
   CATALOG_STATS
 } from '@/lib/cropCatalogData';
 import { useLanguage } from '@/context/LanguageContext';
-import { getLocalizedCropName, getLocalizedCategory } from '@/lib/i18n';
+import { getLocalizedCategory } from '@/lib/i18n';
 
 interface CropImageDropdownProps {
   selectedId: string;
@@ -120,16 +115,16 @@ export default function CropImageDropdown({
         <div className="flex items-center gap-3 min-w-0">
           {/* Crop Image Thumbnail */}
           <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border-2 border-amber-500/40 shadow-sm shrink-0 bg-gradient-to-br from-[#0F3826] to-[#082015] flex items-center justify-center text-2xl">
-            {(selectedCrop.logo_url || selectedCrop.sideLogo || selectedCrop.thumbnail || (selectedCrop.photos && selectedCrop.photos[0])) ? (
+            {(selectedCrop?.logo_url || selectedCrop?.sideLogo || selectedCrop?.thumbnail || (selectedCrop?.photos && selectedCrop.photos[0])) ? (
               <img
-                src={selectedCrop.logo_url || selectedCrop.sideLogo || selectedCrop.thumbnail || selectedCrop.photos[0]}
-                alt={selectedCrop.name}
+                src={selectedCrop.logo_url || selectedCrop.sideLogo || selectedCrop.thumbnail || selectedCrop.photos?.[0]}
+                alt={selectedCrop?.name || 'Crop'}
                 className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
               />
             ) : (
-              <span>{categoryEmoji[selectedCrop.category] || '🌱'}</span>
+              <span>{categoryEmoji[selectedCrop?.category] || '🌱'}</span>
             )}
-            {selectedCrop.photos && selectedCrop.photos.length > 0 && (
+            {selectedCrop?.photos && selectedCrop.photos.length > 0 && (
               <span className="absolute bottom-1 right-1 text-[10px] leading-none bg-black/60 backdrop-blur-xs text-white px-1 py-0.5 rounded font-mono font-bold">
                 {selectedCrop.photos.length}📷
               </span>
@@ -302,14 +297,20 @@ export default function CropImageDropdown({
             ) : (
               filteredList.map((crop) => {
                 const isSelected = crop.id === selectedId;
-                const cropImg = crop.sideLogo || crop.thumbnail || crop.photos[0];
+                const cropImg = crop.sideLogo || crop.thumbnail || crop.photos?.[0];
 
                 return (
-                  <button
+                  <div
                     key={crop.id}
-                    type="button"
+                    role="button"
+                    tabIndex={0}
                     onClick={() => handleSelect(crop)}
-                    className={`w-full p-2.5 sm:p-3 rounded-xl text-left flex items-center justify-between gap-3 transition-colors ${
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        handleSelect(crop);
+                      }
+                    }}
+                    className={`w-full p-2.5 sm:p-3 rounded-xl text-left flex items-center justify-between gap-3 transition-colors cursor-pointer ${
                       isSelected
                         ? 'bg-emerald-900 text-amber-50 shadow-sm'
                         : 'hover:bg-amber-50/70 text-emerald-950'
@@ -346,7 +347,7 @@ export default function CropImageDropdown({
                             </span>
                           )}
                           <span
-                            className={`px-1.5 py-0.2 rounded text-[10px] font-extrabold ${
+                            className={`px-1.5 py-0.5 rounded text-[10px] font-extrabold ${
                               isSelected ? 'bg-amber-400 text-emerald-950' : 'bg-emerald-100 text-emerald-900'
                             }`}
                           >
@@ -375,7 +376,7 @@ export default function CropImageDropdown({
                           </span>
                           <span className="opacity-40">•</span>
                           <span className="text-[10px] font-mono text-emerald-600 bg-emerald-100/70 px-1 rounded">
-                            {crop.photos.length}📷
+                            {crop.photos?.length || 0}📷
                           </span>
                         </div>
                       </div>
@@ -384,7 +385,8 @@ export default function CropImageDropdown({
                     {/* Right: Actions (Direct Edit or Select Checkmark) */}
                     <div className="shrink-0 flex items-center gap-2">
                       {(crop.id.startsWith('custom_') || crop.isCustom) && onEditCrop && (
-                        <span
+                        <button
+                          type="button"
                           onClick={(e) => {
                             e.stopPropagation();
                             onEditCrop(crop);
@@ -395,7 +397,7 @@ export default function CropImageDropdown({
                         >
                           <Edit3 className="w-3 h-3" />
                           <span>{language === 'hi' ? 'अपडेट' : 'Update'}</span>
-                        </span>
+                        </button>
                       )}
 
                       {isSelected ? (
@@ -408,7 +410,7 @@ export default function CropImageDropdown({
                         </span>
                       )}
                     </div>
-                  </button>
+                  </div>
                 );
               })
             )}
