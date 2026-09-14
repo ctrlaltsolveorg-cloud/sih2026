@@ -18,15 +18,7 @@ import {
   Truck,
   Building2,
   UserCheck,
-  Search,
-  ArrowRight,
-  Coins,
-  Shield,
-  Zap,
-  CheckCircle2,
-  Scan,
-  Users,
-  Scale
+  Search
 } from 'lucide-react';
 import Link from 'next/link';
 import BulmaProductCard from '@/components/BulmaProductCard';
@@ -340,399 +332,142 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Purpose-Driven Dual Gateway: Built for Farmers & Buyers */}
-      <div className="space-y-8">
-        <div className="text-center max-w-3xl mx-auto space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/10 text-emerald-900 border border-emerald-900/15 text-xs font-bold">
-            <Scale className="w-3.5 h-3.5 text-amber-600" />
-            <span>{language === 'hi' ? 'दोहरी शक्ति: किसके लिए बना है किसानबंधन?' : 'Dual Mission: Who is KisanBandhan Built For?'}</span>
-          </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-emerald-950 tracking-tight">
-            {language === 'hi' 
-              ? 'किसान की मेहनत, खरीदार की बचत — बिना बिचौलिया प्रत्यक्ष सेतु' 
-              : 'Empowering Farmers, Enabling Buyers — Zero Middlemen Direct Bridge'}
+      {/* 6 Persona Dynamic Switcher Bar */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold text-emerald-950 flex items-center gap-2">
+            <Layers className="w-5 h-5 text-amber-600" />
+            <span>{t.selectDashboardTitle}</span>
           </h2>
-          <p className="text-xs sm:text-sm text-emerald-800/80 leading-relaxed">
-            {language === 'hi'
-              ? 'पारंपरिक मंडियों में 30-40% मुनाफा बिचौलिये ले जाते हैं। किसानबंधन सीधे अन्नदाता को थोक खरीदारों से जोड़कर पारदर्शी एआई मूल्य और एस्क्रो सुरक्षा प्रदान करता है।'
-              : 'Traditional supply chains lose 30-40% value to middlemen. KisanBandhan AI connects growers directly with bulk buyers through transparent AI pricing and escrow.'}
-          </p>
+          <span className="text-xs text-emerald-800/60">{t.integratedRolesCount}</span>
         </div>
 
-        {/* Dual Pillar Cards: Farmer vs Buyer */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-          {/* Pillar 1: For Farmers */}
-          <div className="bg-gradient-to-br from-[#062215] via-[#0A2E1E] to-[#0F3826] text-amber-50 rounded-3xl p-6 sm:p-8 border border-emerald-500/30 shadow-xl flex flex-col justify-between relative overflow-hidden group hover:border-emerald-400/50 transition duration-300">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="relative z-10 space-y-5">
-              <div className="flex items-center justify-between">
-                <span className="px-3 py-1 bg-amber-500/20 text-amber-300 font-mono text-[10px] font-extrabold rounded-full border border-amber-400/30 uppercase tracking-wider flex items-center gap-1.5">
-                  <UserCheck className="w-3.5 h-3.5 text-amber-400" />
-                  <span>{language === 'hi' ? 'अन्नदाता किसान भाईयों के लिए' : 'FOR FARMERS & GROWERS'}</span>
-                </span>
-                <span className="text-xs font-mono text-emerald-300/80 font-semibold">0% Middlemen Cut</span>
-              </div>
-
-              <div>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
-                  {language === 'hi' ? 'किसान पोर्टल (Farmer Desk)' : 'Farmer Desk & Direct Gate'}
-                </h3>
-                <p className="text-xs sm:text-sm text-amber-100/85 mt-1 leading-relaxed">
-                  {language === 'hi'
-                    ? 'मेहनत आपकी, पूरा मुनाफा आपका — किसी दलाल या आढ़ती को कमीशन दिए बिना सीधे देश भर के खरीदारों को बेचें।'
-                    : 'Your harvest, your profit — sell directly to nationwide buyers without paying a single rupee to commission agents.'}
-                </p>
-              </div>
-
-              {/* Benefit Bullets */}
-              <div className="space-y-3 pt-2">
-                <div className="flex items-start gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0 mt-0.5 border border-amber-400/30">
-                    <Coins className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-white">
-                      {language === 'hi' ? '0% कमीशन, 100% सीधा बैंक भुगतान' : '0% Commission, 100% Direct Payout'}
-                    </h4>
-                    <p className="text-[11px] text-amber-100/75 leading-tight">
-                      {language === 'hi' ? 'डिलीवरी होते ही सुरक्षित एस्क्रो से पूरा भुगतान 2 घंटे में सीधे आपके खाते / UPI में।' : 'Full payment transferred directly to your bank/UPI via secure escrow within 2 hours of delivery.'}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-400/30">
-                    <TrendingUp className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-white">
-                      {language === 'hi' ? 'AI सटीक मंडी भाव (Agmarknet Live)' : 'AI Fair Price Intelligence'}
-                    </h4>
-                    <p className="text-[11px] text-amber-100/75 leading-tight">
-                      {language === 'hi' ? 'दलालों के बहकावे से मुक्ति — देश भर की 2,400+ मंडियों का लाइव सटीक बेंचमार्क रेट।' : 'Real-time Agmarknet mandi feeds and AI rate calculations prevent distress selling.'}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center shrink-0 mt-0.5 border border-cyan-400/30">
-                    <PhoneCall className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-white">
-                      {language === 'hi' ? '1800-KISAN-AI (कीपैड फोन पर भी)' : 'Toll-Free IVR / SMS for Basic Phones'}
-                    </h4>
-                    <p className="text-[11px] text-amber-100/75 leading-tight">
-                      {language === 'hi' ? 'इंटरनेट या स्मार्टफोन नहीं है? टोल-फ्री कॉल करें और अपनी भाषा में फसल दर्ज कराएं।' : 'No smartphone needed — dial our 24/7 toll-free IVR to list crops in 11 regional languages.'}
-                    </p>
-                  </div>
-                </div>
-              </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <Link
+            href="/farmer"
+            onClick={() => setRole('FARMER')}
+            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'FARMER'
+                ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md'
+                : 'glass-card hover:border-emerald-800/30 text-emerald-950'
+              }`}
+          >
+            <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-700">
+              <UserCheck className="w-4 h-4" />
             </div>
-
-            <div className="pt-6 relative z-10">
-              <Link
-                href="/farmer"
-                onClick={() => setRole('FARMER')}
-                className="w-full py-3.5 px-6 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-black rounded-2xl shadow-xl transition flex items-center justify-center gap-2 text-sm hover:scale-[1.01] active:scale-[0.99]"
-              >
-                <span>{language === 'hi' ? 'किसान पोर्टल में जाएं (Farmer Desk)' : 'Enter Farmer Portal (Sell Produce)'}</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Pillar 2: For Buyers & Consumers */}
-          <div className="bg-white/95 backdrop-blur-md text-emerald-950 rounded-3xl p-6 sm:p-8 border border-emerald-900/15 shadow-xl flex flex-col justify-between relative overflow-hidden group hover:border-amber-500/40 transition duration-300">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="relative z-10 space-y-5">
-              <div className="flex items-center justify-between">
-                <span className="px-3 py-1 bg-emerald-900/10 text-emerald-900 font-mono text-[10px] font-extrabold rounded-full border border-emerald-900/20 uppercase tracking-wider flex items-center gap-1.5">
-                  <ShoppingBag className="w-3.5 h-3.5 text-emerald-700" />
-                  <span>{language === 'hi' ? 'थोक खरीदार, FPO व उपभोक्ताओं के लिए' : 'FOR BUYERS, FPOs & RETAILERS'}</span>
-                </span>
-                <span className="text-xs font-mono text-emerald-800/70 font-semibold">100% Farm-Fresh</span>
-              </div>
-
-              <div>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-emerald-950 leading-tight">
-                  {language === 'hi' ? 'खरीदार पोर्टल (Buyer Hub)' : 'Buyer Hub & Bulk Procurement'}
-                </h3>
-                <p className="text-xs sm:text-sm text-emerald-800/80 mt-1 leading-relaxed">
-                  {language === 'hi'
-                    ? 'सीधे खेत से ताज़ा फसल, कंप्यूटर विज़न क्वालिटी ग्रेडिंग और पारदर्शी एस्क्रो अनुबंध के साथ थोक में खरीदें।'
-                    : 'Source directly from verified farm gates with computer vision certified grading and secure smart contract escrow.'}
-                </p>
-              </div>
-
-              {/* Benefit Bullets */}
-              <div className="space-y-3 pt-2">
-                <div className="flex items-start gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-emerald-500/15 text-emerald-800 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-600/20">
-                    <Scan className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-emerald-950">
-                      {language === 'hi' ? 'कंप्यूटर विज़न AI ग्रेडिंग (Grade-A)' : 'Computer Vision Grade-A Quality'}
-                    </h4>
-                    <p className="text-[11px] text-emerald-800/70 leading-tight">
-                      {language === 'hi' ? 'FSSAI और एगमार्क मानकों पर जांची गई फसल — नमी, आकार व रंग का सटीक स्कोर।' : 'Multi-spectral AI defect detection certifies produce quality before dispatch.'}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-amber-500/15 text-amber-800 flex items-center justify-center shrink-0 mt-0.5 border border-amber-600/20">
-                    <Shield className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-emerald-950">
-                      {language === 'hi' ? 'स्मार्ट एस्क्रो भुगतान सुरक्षा' : 'Guaranteed Escrow Protection'}
-                    </h4>
-                    <p className="text-[11px] text-emerald-800/70 leading-tight">
-                      {language === 'hi' ? 'आपका पैसा तब तक सुरक्षित रहता है जब तक आप माल की गुणवत्ता से पूरी तरह संतुष्ट न हों।' : 'Funds remain locked in banking escrow until delivery inspection and OTP verification.'}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-blue-500/15 text-blue-800 flex items-center justify-center shrink-0 mt-0.5 border border-blue-600/20">
-                    <Truck className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-emerald-950">
-                      {language === 'hi' ? 'कोल्ड-चेन ट्रैकिंग व सीधी डिलीवरी' : 'Optimized Cold-Chain Fleet'}
-                    </h4>
-                    <p className="text-[11px] text-emerald-800/70 leading-tight">
-                      {language === 'hi' ? 'खेत या निकटतम एग्री-हब से सीधे आपके गोदाम तक लाइव जीपीएस लॉजिस्टिक्स।' : 'Live GPS route tracking and perishable freshness monitoring right to your warehouse.'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-6 relative z-10">
-              <a
-                href="#marketplace"
-                className="w-full py-3.5 px-6 bg-[#0F3826] hover:bg-[#164E35] text-amber-50 font-black rounded-2xl shadow-xl transition flex items-center justify-center gap-2 text-sm hover:scale-[1.01] active:scale-[0.99]"
-              >
-                <span>{language === 'hi' ? 'फसलें खोजें और खरीदें (Explore Produce)' : 'Explore Marketplace (Buy Produce)'}</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* 4-Step Direct Farm-to-Fork Process Strip */}
-        <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-emerald-900/15 shadow-sm space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-900/10 pb-4">
             <div>
-              <span className="text-[10px] font-mono font-extrabold uppercase text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-md">
-                {language === 'hi' ? 'पारदर्शी प्रक्रिया' : 'TRANSPARENT PROCESS'}
-              </span>
-              <h3 className="text-lg sm:text-xl font-extrabold text-emerald-950 mt-1">
-                {language === 'hi' ? 'खेत से प्लेट तक — 4 चरणों में सीधी व्यवस्था' : 'Farm-to-Fork in 4 Transparent Steps'}
-              </h3>
+              <p className="font-bold text-xs leading-tight">{t.roleFarmer}</p>
+              <p className="text-[10px] opacity-80">{t.roleFarmerSub}</p>
             </div>
-            <p className="text-xs text-emerald-800/70 max-w-md">
-              {language === 'hi'
-                ? 'कोई छुपा हुआ शुल्क नहीं, कोई अनावश्यक मध्यस्थ नहीं — सिर्फ तकनीकी रूप से सक्षम सीधी कृषि।'
-                : 'Zero hidden fees, zero middlemen layers — purely AI-assisted direct agriculture.'}
-            </p>
-          </div>
+          </Link>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-900/10 space-y-2 relative">
-              <span className="text-2xl font-black text-emerald-800/20 font-mono">01</span>
-              <h4 className="text-xs font-extrabold text-emerald-950">
-                {language === 'hi' ? 'खेत से सीधी लिस्टिंग' : 'Direct Farm Listing'}
-              </h4>
-              <p className="text-[11px] text-emerald-800/80 leading-relaxed">
-                {language === 'hi'
-                  ? 'किसान वेब पोर्टल या 1800-KISAN-AI पर कॉल करके अपनी फसल, मात्रा व अपेक्षित दाम दर्ज करता है।'
-                  : 'Farmer registers produce via web portal or 1800-KISAN-AI toll-free phone with crop specs.'}
-              </p>
+          <Link
+            href="/fpo"
+            onClick={() => setRole('FPO')}
+            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'FPO'
+                ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md'
+                : 'glass-card hover:border-emerald-800/30 text-emerald-950'
+              }`}
+          >
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-700">
+              <Building2 className="w-4 h-4" />
             </div>
-
-            <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-900/10 space-y-2 relative">
-              <span className="text-2xl font-black text-emerald-800/20 font-mono">02</span>
-              <h4 className="text-xs font-extrabold text-emerald-950">
-                {language === 'hi' ? 'AI कंप्यूटर विज़न ग्रेडिंग' : 'Computer Vision Grading'}
-              </h4>
-              <p className="text-[11px] text-emerald-800/80 leading-relaxed">
-                {language === 'hi'
-                  ? 'फसल की तस्वीरों से एआई ग्रेडिंग व गुणवत्ता स्कोर तैयार होता है, जिससे FSSAI Grade-A प्रमाण पत्र मिलता है।'
-                  : 'AI scans upload photos for quality defects, issuing verified Grade-A digital certificates.'}
-              </p>
+            <div>
+              <p className="font-bold text-xs leading-tight">{t.roleFPO}</p>
+              <p className="text-[10px] opacity-80">{t.roleFPOSub}</p>
             </div>
+          </Link>
 
-            <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-900/10 space-y-2 relative">
-              <span className="text-2xl font-black text-emerald-800/20 font-mono">03</span>
-              <h4 className="text-xs font-extrabold text-emerald-950">
-                {language === 'hi' ? 'स्मार्ट एस्क्रो अनुबंध लॉक' : 'Smart Escrow Lock'}
-              </h4>
-              <p className="text-[11px] text-emerald-800/80 leading-relaxed">
-                {language === 'hi'
-                  ? 'खरीदार अग्रिम राशि एस्क्रो में जमा करता है। दोनों पक्षों के बीच न्यूनतम समर्थन मूल्य का समझौता सुरक्षित होता है।'
-                  : 'Buyer locks contract funds into banking escrow, guaranteeing full payment before truck dispatch.'}
-              </p>
+          <Link
+            href="/buyer"
+            onClick={() => setRole('BUYER')}
+            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'BUYER'
+                ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md'
+                : 'glass-card hover:border-emerald-800/30 text-emerald-950'
+              }`}
+          >
+            <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-700">
+              <ShoppingBag className="w-4 h-4" />
             </div>
-
-            <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-900/10 space-y-2 relative">
-              <span className="text-2xl font-black text-emerald-800/20 font-mono">04</span>
-              <h4 className="text-xs font-extrabold text-emerald-950">
-                {language === 'hi' ? 'ओटीपी डिलीवरी व त्वरित भुगतान' : 'OTP Delivery & Instant Payout'}
-              </h4>
-              <p className="text-[11px] text-emerald-800/80 leading-relaxed">
-                {language === 'hi'
-                  ? 'लॉजिस्टिक्स द्वारा माल पहुंचाने पर खरीदार ओटीपी देता है, और किसान के बैंक में तुरंत 100% राशि रिलीज हो जाती है।'
-                  : 'On OTP delivery verification, 100% of escrow funds are released to the farmer bank account instantly.'}
-              </p>
+            <div>
+              <p className="font-bold text-xs leading-tight">{t.roleBuyer}</p>
+              <p className="text-[10px] opacity-80">{t.roleBuyerSub}</p>
             </div>
-          </div>
-        </div>
+          </Link>
 
-        {/* 6 Specialized Persona Nodes Strip */}
-        <div className="space-y-4 pt-2">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold text-emerald-950 flex items-center gap-2">
-              <Layers className="w-5 h-5 text-amber-600" />
-              <span>{t.selectDashboardTitle || 'एकीकृत 6 हितधारक भूमिकाएँ (All 6 Roles)'}</span>
-            </h3>
-            <span className="text-xs text-emerald-800/60 font-semibold">{t.integratedRolesCount}</span>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            <Link
-              href="/farmer"
-              onClick={() => setRole('FARMER')}
-              className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${
-                role === 'FARMER'
-                  ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md ring-2 ring-amber-400/30'
-                  : 'bg-white/80 hover:bg-white border-emerald-900/15 text-emerald-950 shadow-xs'
+          <Link
+            href="/hub"
+            onClick={() => setRole('HUB_OPERATOR')}
+            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'HUB_OPERATOR'
+                ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md'
+                : 'glass-card hover:border-emerald-800/30 text-emerald-950'
               }`}
-            >
-              <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-700">
-                <UserCheck className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="font-bold text-xs leading-tight">{t.roleFarmer}</p>
-                <p className="text-[10px] opacity-80">{t.roleFarmerSub}</p>
-              </div>
-            </Link>
+          >
+            <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-700">
+              <Award className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="font-bold text-xs leading-tight">{t.roleHub}</p>
+              <p className="text-[10px] opacity-80">{t.roleHubSub}</p>
+            </div>
+          </Link>
 
-            <Link
-              href="/fpo"
-              onClick={() => setRole('FPO')}
-              className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${
-                role === 'FPO'
-                  ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md ring-2 ring-amber-400/30'
-                  : 'bg-white/80 hover:bg-white border-emerald-900/15 text-emerald-950 shadow-xs'
+          <Link
+            href="/transporter"
+            onClick={() => setRole('TRANSPORTER')}
+            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'TRANSPORTER'
+                ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md'
+                : 'glass-card hover:border-emerald-800/30 text-emerald-950'
               }`}
-            >
-              <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-700">
-                <Building2 className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="font-bold text-xs leading-tight">{t.roleFPO}</p>
-                <p className="text-[10px] opacity-80">{t.roleFPOSub}</p>
-              </div>
-            </Link>
+          >
+            <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-700">
+              <Truck className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="font-bold text-xs leading-tight">{t.roleTransporter}</p>
+              <p className="text-[10px] opacity-80">{t.roleTransporterSub}</p>
+            </div>
+          </Link>
 
-            <Link
-              href="/buyer"
-              onClick={() => setRole('BUYER')}
-              className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${
-                role === 'BUYER'
-                  ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md ring-2 ring-amber-400/30'
-                  : 'bg-white/80 hover:bg-white border-emerald-900/15 text-emerald-950 shadow-xs'
+          <Link
+            href="/admin"
+            onClick={() => setRole('ADMIN')}
+            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'ADMIN'
+                ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md'
+                : 'glass-card hover:border-emerald-800/30 text-emerald-950'
               }`}
-            >
-              <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-700">
-                <ShoppingBag className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="font-bold text-xs leading-tight">{t.roleBuyer}</p>
-                <p className="text-[10px] opacity-80">{t.roleBuyerSub}</p>
-              </div>
-            </Link>
-
-            <Link
-              href="/hub"
-              onClick={() => setRole('HUB_OPERATOR')}
-              className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${
-                role === 'HUB_OPERATOR'
-                  ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md ring-2 ring-amber-400/30'
-                  : 'bg-white/80 hover:bg-white border-emerald-900/15 text-emerald-950 shadow-xs'
-              }`}
-            >
-              <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-700">
-                <Award className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="font-bold text-xs leading-tight">{t.roleHub}</p>
-                <p className="text-[10px] opacity-80">{t.roleHubSub}</p>
-              </div>
-            </Link>
-
-            <Link
-              href="/transporter"
-              onClick={() => setRole('TRANSPORTER')}
-              className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${
-                role === 'TRANSPORTER'
-                  ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md ring-2 ring-amber-400/30'
-                  : 'bg-white/80 hover:bg-white border-emerald-900/15 text-emerald-950 shadow-xs'
-              }`}
-            >
-              <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-700">
-                <Truck className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="font-bold text-xs leading-tight">{t.roleTransporter}</p>
-                <p className="text-[10px] opacity-80">{t.roleTransporterSub}</p>
-              </div>
-            </Link>
-
-            <Link
-              href="/admin"
-              onClick={() => setRole('ADMIN')}
-              className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${
-                role === 'ADMIN'
-                  ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md ring-2 ring-amber-400/30'
-                  : 'bg-white/80 hover:bg-white border-emerald-900/15 text-emerald-950 shadow-xs'
-              }`}
-            >
-              <div className="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center text-red-700">
-                <ShieldCheck className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="font-bold text-xs leading-tight">{t.roleAdmin}</p>
-                <p className="text-[10px] opacity-80">{t.roleAdminSub}</p>
-              </div>
-            </Link>
-          </div>
+          >
+            <div className="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center text-red-700">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="font-bold text-xs leading-tight">{t.roleAdmin}</p>
+              <p className="text-[10px] opacity-80">{t.roleAdminSub}</p>
+            </div>
+          </Link>
         </div>
       </div>
 
       {/* Main Produce Marketplace */}
-      <div id="marketplace" className="space-y-6 pt-6">
+      <div id="marketplace" className="space-y-6 pt-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-emerald-900/10 pb-4">
           <div>
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 bg-amber-500/20 text-amber-900 font-extrabold text-[11px] rounded-full border border-amber-500/30">
-                {language === 'hi' ? '100% प्रत्यक्ष कृषि हाट' : 'Direct Farm Marketplace'}
+                {language === 'hi' ? 'किसान डेस्क से सीधा संकलन' : 'Direct from Farmer Desk'}
               </span>
               <span className="text-xs text-emerald-700 font-bold flex items-center gap-1">
                 <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                <span>{language === 'hi' ? 'FSSAI और कंप्यूटर विज़न प्रमाणित' : 'FSSAI & CV Certified'}</span>
+                <span>{language === 'hi' ? '2 से 6 फोटो सत्यापित' : '2-6 Photos Verified'}</span>
               </span>
             </div>
             <h2 className="text-2xl font-extrabold text-emerald-950 flex items-center gap-2 mt-1">
               <ShoppingBag className="w-6 h-6 text-amber-600" />
               <span>{t.marketplaceTitle}</span>
             </h2>
-            <p className="text-xs text-emerald-800/80">
-              {t.marketplaceSubtitle}
+            <p className="text-xs text-emerald-800/70">
+              {language === 'hi'
+                ? 'आपकी फसल सफलतापूर्वक आपकी फसल सूची में जोड़ दी गई है और अब यह प्लेटफ़ॉर्म पर उपलब्ध है।'
+                : 'Your crop has been added successfully to your crop list and is now available on the platform.'}
             </p>
           </div>
 
