@@ -32,7 +32,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
     setIsTranslatorOpen,
     supportedLanguages
   } = useLanguage();
-  const { role, setRole, userName } = useRole();
+  const { role, setRole, userName, isDeveloperMode } = useRole();
   const { user, isAuthenticated, openAuthModal, logout } = useAuth();
   const { itemCount, setIsCartOpen } = useCart();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -84,6 +84,12 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
         </div>
 
         <div className="flex items-center gap-3 text-xs">
+          {isDeveloperMode && (
+            <span className="px-2 py-0.5 bg-amber-500/25 text-amber-300 font-extrabold rounded-md text-[10px] border border-amber-400/40 flex items-center gap-1 shadow-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
+              ⚡ DEV GOD MODE (ALL ACCESS)
+            </span>
+          )}
           <span>
             सक्रिय भूमिका: <strong className="text-amber-300 font-bold">{userName ? `${userName} (${role.toUpperCase()})` : role.toUpperCase()}</strong>
           </span>
@@ -297,6 +303,34 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                       </span>
                     </div>
                   </div>
+
+                  {isDeveloperMode && (
+                    <div className="p-2 bg-amber-500/10 rounded-xl border border-amber-500/25 space-y-1.5">
+                      <p className="text-[10px] font-extrabold text-amber-300 flex items-center justify-between">
+                        <span>⚡ Role Simulator:</span>
+                        <span className="text-[9px] text-amber-200/60 font-mono font-normal">Active: {role}</span>
+                      </p>
+                      <div className="grid grid-cols-3 gap-1 text-[9px] font-bold">
+                        {(['FARMER', 'FPO', 'BUYER', 'HUB_OPERATOR', 'TRANSPORTER', 'ADMIN'] as const).map((r) => (
+                          <button
+                            key={r}
+                            type="button"
+                            onClick={() => {
+                              setRole(r);
+                              setShowProfileMenu(false);
+                            }}
+                            className={`px-1.5 py-1 rounded text-center transition ${
+                              role === r
+                                ? 'bg-amber-400 text-emerald-950 font-black shadow-xs'
+                                : 'bg-white/10 hover:bg-white/20 text-white'
+                            }`}
+                          >
+                            {r === 'HUB_OPERATOR' ? 'HUB' : r === 'TRANSPORTER' ? 'FLEET' : r}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   <button
                     onClick={() => {

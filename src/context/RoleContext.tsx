@@ -13,6 +13,7 @@ interface RoleContextType {
   userPhone: string;
   fpoId?: string;
   loginAs: (role: UserRole, id: string, name: string, phone: string, fpoId?: string) => void;
+  isDeveloperMode: boolean;
 }
 
 const RoleContext = createContext<RoleContextType | undefined>(undefined);
@@ -69,16 +70,19 @@ export function RoleProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('kisanbandhan_role', r);
   };
 
+  const isDeveloperMode = user?.role === 'ADMIN' || !!user?.email?.includes('dev') || !!user?.email?.includes('admin');
+
   return (
     <RoleContext.Provider
       value={{
-        role: user ? user.role : role,
+        role: isDeveloperMode ? role : (user ? user.role : role),
         setRole,
         userId: user ? user.id : userId,
         userName: user ? user.name : userName,
         userPhone,
         fpoId,
         loginAs,
+        isDeveloperMode,
       }}
     >
       {children}

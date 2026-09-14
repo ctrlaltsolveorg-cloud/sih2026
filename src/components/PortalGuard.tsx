@@ -105,8 +105,9 @@ export default function PortalGuard({
     );
   }
 
-  // 2. Authenticated but Wrong Role Screen (Admins are exempt)
-  const hasAccess = allowedRoles.includes(user.role) || user.role === 'ADMIN';
+  // 2. Authenticated but Wrong Role Screen (Admins and Devs are exempt)
+  const isDeveloper = user.role === 'ADMIN' || !!user.email?.toLowerCase().includes('dev') || !!user.email?.toLowerCase().includes('admin');
+  const hasAccess = allowedRoles.includes(user.role) || isDeveloper;
 
   if (!hasAccess) {
     const userRoleText = roleDisplayName[user.role] || { en: user.role, hi: user.role };
@@ -182,5 +183,30 @@ export default function PortalGuard({
   }
 
   // 3. Authenticated and Authorized
-  return <>{children}</>;
+  return (
+    <>
+      {isDeveloper && (
+        <div className="mb-4 p-2.5 px-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl flex flex-wrap items-center justify-between gap-2 text-xs backdrop-blur-sm shadow-xs">
+          <div className="flex items-center gap-2">
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+            </span>
+            <span className="font-extrabold text-amber-950">⚡ Developer & Collaborator Full Access Active</span>
+            <span className="text-[11px] text-amber-900/70 hidden sm:inline">• Portal: {portalName}</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-[11px] font-bold">
+            <span className="text-emerald-900 text-[10px] hidden md:inline">Jump To:</span>
+            <Link href="/farmer" className="px-2 py-0.5 rounded-lg bg-white/90 hover:bg-amber-100/60 border border-emerald-900/15 text-emerald-950 transition">🚜 Farmer</Link>
+            <Link href="/fpo" className="px-2 py-0.5 rounded-lg bg-white/90 hover:bg-amber-100/60 border border-emerald-900/15 text-emerald-950 transition">🏢 FPO</Link>
+            <Link href="/buyer" className="px-2 py-0.5 rounded-lg bg-white/90 hover:bg-amber-100/60 border border-emerald-900/15 text-emerald-950 transition">🛒 Buyer</Link>
+            <Link href="/hub" className="px-2 py-0.5 rounded-lg bg-white/90 hover:bg-amber-100/60 border border-emerald-900/15 text-emerald-950 transition">🔬 Hub</Link>
+            <Link href="/transporter" className="px-2 py-0.5 rounded-lg bg-white/90 hover:bg-amber-100/60 border border-emerald-900/15 text-emerald-950 transition">🚚 Fleet</Link>
+            <Link href="/admin" className="px-2 py-0.5 rounded-lg bg-white/90 hover:bg-amber-100/60 border border-emerald-900/15 text-emerald-950 transition">🏛️ Admin</Link>
+          </div>
+        </div>
+      )}
+      {children}
+    </>
+  );
 }

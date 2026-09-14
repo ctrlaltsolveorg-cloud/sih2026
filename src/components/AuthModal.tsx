@@ -29,6 +29,7 @@ export default function AuthModal() {
     signup,
     resetPassword,
     signInWithGoogle,
+    developerLogin,
   } = useAuth();
   const { language } = useLanguage();
 
@@ -190,7 +191,41 @@ export default function AuthModal() {
 
           {/* TAB 1: LOGIN */}
           {activeTab === 'login' && (
-            <form onSubmit={handleLoginSubmit} className="space-y-4">
+            <div className="space-y-4">
+              {/* Developer & Collaborator Master ID Card */}
+              <div className="p-3.5 bg-gradient-to-r from-amber-500/15 via-emerald-500/10 to-amber-500/15 rounded-2xl border-2 border-amber-500/35 space-y-2 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/25 text-amber-950 font-black text-[10px] uppercase tracking-wider border border-amber-500/40">
+                    <Sparkles className="w-3 h-3 text-amber-600" />
+                    <span>{language === 'hi' ? 'डेवलपर व सहयोगी मास्टर ID' : 'Developer & Collaborator ID'}</span>
+                  </span>
+                  <span className="text-[10px] font-mono text-emerald-900 bg-white/90 px-2 py-0.5 rounded-md font-extrabold border border-emerald-900/10">
+                    ALL 6 PORTALS
+                  </span>
+                </div>
+
+                <p className="text-[11px] text-emerald-950/85 leading-snug">
+                  {language === 'hi'
+                    ? 'डेवलपर्स और कोलैबोरेटर्स के लिए 1-क्लिक में पूरा पोर्टल (किसान, बायर, FPO, हब, ट्रांसपोर्टर, एडमिन) अनलॉक करें।'
+                    : '1-Click God Mode: Instant universal access to test and analyze all 6 stakeholder portals without restrictions.'}
+                </p>
+
+                <button
+                  type="button"
+                  onClick={developerLogin}
+                  className="w-full py-2.5 bg-[#062215] hover:bg-[#0F3826] text-amber-300 font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition border border-amber-400/40 active:scale-[0.99]"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  <span>{language === 'hi' ? '⚡ 1-क्लिक डेवलपर मास्टर लॉगिन (फुल एक्सेस)' : '⚡ 1-Click Developer Master Login (Full Access)'}</span>
+                </button>
+
+                <div className="flex items-center justify-between text-[10px] text-emerald-950/75 font-mono px-1">
+                  <span>ID: <code className="text-emerald-900 font-bold bg-white/60 px-1 rounded">dev@kisanbandhan.ai</code></span>
+                  <span>Pass: <code className="text-emerald-900 font-bold bg-white/60 px-1 rounded">dev</code></span>
+                </div>
+              </div>
+
+              <form onSubmit={handleLoginSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-emerald-950 mb-1">
                   {language === 'hi' ? 'ईमेल पता (Email Address)' : 'Email Address'}
@@ -300,7 +335,17 @@ export default function AuthModal() {
                     }}
                     className="p-2 bg-white hover:bg-amber-100/60 border border-emerald-900/10 rounded-xl text-left truncate text-emerald-950 transition"
                   >
-                    🔬 Rajesh (Hub inspector)
+                    🔬 Rajesh (Hub Inspector)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEmail('dev@kisanbandhan.ai');
+                      setPassword('dev');
+                    }}
+                    className="p-2 bg-amber-50 hover:bg-amber-100/80 border border-amber-500/30 rounded-xl text-left truncate text-amber-950 transition font-black"
+                  >
+                    ⚡ Dev (Full Access)
                   </button>
                 </div>
               </div>
@@ -332,6 +377,7 @@ export default function AuthModal() {
                 <span>{language === 'hi' ? 'गूगल (Google) से लॉगिन करें' : 'Sign In with Google'}</span>
               </button>
             </form>
+            </div>
           )}
 
           {/* TAB 2: SIGN UP */}

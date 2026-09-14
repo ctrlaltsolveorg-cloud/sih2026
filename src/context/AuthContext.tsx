@@ -26,6 +26,7 @@ interface AuthContextType {
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ success: boolean; message?: string; error?: string }>;
   signInWithGoogle: () => Promise<void>;
+  developerLogin: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -161,14 +162,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { success: true };
       }
 
-      // Demo Seed Users Matching
+      // Demo Seed Users & Developer Accounts Matching
       const seedAccounts: Record<string, { id: string; name: string; role: UserRole; phone: string }> = {
+        'dev@kisanbandhan.ai': { id: 'u_dev_master', name: 'Piyush Kumar (Lead Dev & Collaborator)', role: 'ADMIN', phone: '9999999999' },
+        'developer@kisanbandhan.ai': { id: 'u_dev_master', name: 'Developer & Collaborator (Full Access)', role: 'ADMIN', phone: '9999999999' },
+        'piyush@kisanbandhan.ai': { id: 'u_dev_master', name: 'Piyush Kumar (Lead Dev)', role: 'ADMIN', phone: '9999999999' },
+        'dev': { id: 'u_dev_master', name: 'Developer & Collaborator', role: 'ADMIN', phone: '9999999999' },
+        'admin@kisanbandhan.ai': { id: 'u_admin_1', name: 'Ministry Governance Admin', role: 'ADMIN', phone: '9000000000' },
         'ramesh.patil@kisanbandhan.ai': { id: 'u_farmer_1', name: 'Ramesh Patil', role: 'FARMER', phone: '9876543210' },
         'sanjay.fpo@kisanbandhan.ai': { id: 'u_fpo_1', name: 'Sanjay Deshmukh', role: 'FPO', phone: '9876543219' },
         'annapurna@kisanbandhan.ai': { id: 'u_buyer_2', name: 'Annapurna Hotel & Catering', role: 'BUYER', phone: '9822233344' },
         'rajesh.hub@kisanbandhan.ai': { id: 'u_hub_1', name: 'Rajesh Kulkarni', role: 'HUB_OPERATOR', phone: '9900088877' },
         'vikram.logistics@kisanbandhan.ai': { id: 'u_partner_1', name: 'Vikram Shinde Fleet', role: 'TRANSPORTER', phone: '9900011122' },
-        'admin@kisanbandhan.ai': { id: 'u_admin_1', name: 'Ministry Governance Admin', role: 'ADMIN', phone: '9000000000' },
       };
 
       if (seedAccounts[cleanEmail]) {
@@ -222,6 +227,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       // 3. Check demo seed accounts
       const seedAccounts: Record<string, string> = {
+        'dev@kisanbandhan.ai': 'dev',
+        'developer@kisanbandhan.ai': 'dev',
+        'piyush@kisanbandhan.ai': 'dev',
+        'dev': 'dev',
         'ramesh.patil@kisanbandhan.ai': 'Kisan#9824!Agri',
         'sanjay.fpo@kisanbandhan.ai': 'Kisan#9824!Agri',
         'annapurna@kisanbandhan.ai': 'Kisan#9824!Agri',
@@ -231,7 +240,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       };
 
       if (seedAccounts[cleanEmail]) {
-        if (pass === seedAccounts[cleanEmail] || pass.length >= 4) {
+        if (
+          cleanEmail.includes('dev') ||
+          cleanEmail.includes('piyush') ||
+          pass === seedAccounts[cleanEmail] ||
+          pass.length >= 3
+        ) {
           return { success: true };
         }
         return { success: false, error: 'गलत पासवर्ड! (Incorrect Password)' };
@@ -406,6 +420,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const developerLogin = () => {
+    const devUser: AuthUser = {
+      id: 'u_dev_master',
+      email: 'dev@kisanbandhan.ai',
+      name: 'Piyush Kumar (Lead Dev & Collaborator)',
+      role: 'ADMIN',
+      phone: '9999999999',
+    };
+    setUser(devUser);
+    localStorage.setItem('kisanbandhan_manual_login', 'true');
+    localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(devUser));
+    closeAuthModal();
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -421,6 +449,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         logout,
         resetPassword,
         signInWithGoogle,
+        developerLogin,
       }}
     >
       {children}
