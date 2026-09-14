@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedFarmer, getLocalizedLocation, getLocalizedCropName } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
+import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import PortalGuard from '@/components/PortalGuard';
 import BulmaProductCard from '@/components/BulmaProductCard';
@@ -52,22 +53,96 @@ export default function BuyerDashboardPage() {
   const [farmerProduce, setFarmerProduce] = useState<any[]>([]);
   const [loadingProduce, setLoadingProduce] = useState(true);
 
-  const [buyerOrders] = useState([
-    {
-      id: 301,
-      farmer_name: 'रामेश्वर यादव',
-      delivery_address: 'नासिक हब से पुणे प्रेषित',
-      total_amount_paise: 4140000, // ₹41,400.00
-      status: 'परिवहन में',
-    },
-    {
-      id: 302,
-      farmer_name: 'सुरेश पाटिल',
-      delivery_address: 'इन्दौर हब से सीधा पिकअप',
-      total_amount_paise: 2250000, // ₹22,500.00
-      status: 'सफलतापूर्वक हस्तांतरित',
-    },
-  ]);
+  const { user } = useAuth();
+  const [buyerOrders, setBuyerOrders] = useState<any[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem('kb_buyer_active_orders');
+        if (stored) return JSON.parse(stored);
+      } catch (e) {}
+    }
+    return [];
+  });
+  const [loadingOrders, setLoadingOrders] = useState(false);
+  const [activeVerifyOrder, setActiveVerifyOrder] = useState<any | null>(null);
+  const [verifyOtpInput, setVerifyOtpInput] = useState('');
+  const [verifyingOtp, setVerifyingOtp] = useState(false);
+  const [verifyMessage, setVerifyMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  const fetchOrders = async () => {
+    try {
+      const activeUserId = user?.id || 'u_buyer_1';
+      const res = await fetch(`/api/v1/orders?userId=${activeUserId}&role=BUYER`);
+      const data = await res.json();
+      if (data.success && Array.isArray(data.orders)) {
+        setBuyerOrders((prev) => {
+          const apiIds = new Set(data.orders.map((o: any) => o.id));
+          const localOnly = prev.filter((o) => !apiIds.has(o.id));
+          const combined = [...data.orders, ...localOnly];
+          try {
+            localStorage.setItem('kb_buyer_active_orders', JSON.stringify(combined));
+          } catch (e) {}
+          return combined;
+        });
+      }
+    } catch (e) {
+      console.error('Error fetching buyer orders:', e);
+    } finally {
+      setLoadingOrders(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrders();
+    const handleOrderUpdate = () => fetchOrders();
+    window.addEventListener('kb_order_updated', handleOrderUpdate);
+
+    if (typeof window !== 'undefined' && window.location.hash.includes('order')) {
+      setTimeout(() => {
+        const el = document.getElementById('active-orders');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 350);
+    }
+
+    return () => window.removeEventListener('kb_order_updated', handleOrderUpdate);
+  }, [user]);
+
+  const handleVerifyOtp = async (orderId: string, otpType: 'pickup' | 'delivery') => {
+    if (!verifyOtpInput.trim()) return;
+    setVerifyingOtp(true);
+    setVerifyMessage(null);
+
+    try {
+      const res = await fetch('/api/v1/orders/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId,
+          otpType,
+          enteredOtp: verifyOtpInput.trim(),
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'OTP सत्यापन असफल रहा।');
+      }
+
+      setVerifyMessage({ type: 'success', text: data.message });
+      fetchOrders();
+      setTimeout(() => {
+        setActiveVerifyOrder(null);
+        setVerifyOtpInput('');
+        setVerifyMessage(null);
+      }, 1500);
+    } catch (err: any) {
+      setVerifyMessage({ type: 'error', text: err.message });
+    } finally {
+      setVerifyingOtp(false);
+    }
+  };
 
   // Load produce from Farmer Desk (DB + localStorage)
   useEffect(() => {
@@ -434,52 +509,138 @@ export default function BuyerDashboardPage() {
         {/* Active Orders & Recurring Contracts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
           {/* Active Orders */}
-          <div className="space-y-4">
+          <div id="active-orders" className="space-y-4 scroll-mt-24">
             <h2 className="text-xl font-extrabold text-emerald-950 flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-amber-600" />
               <span>{t.buyerActiveOrdersHeader}</span>
             </h2>
 
             <div className="space-y-4">
-              {buyerOrders.map((ord) => (
-                <div key={ord.id} className="glass-card p-5 rounded-2xl space-y-3 border border-emerald-900/10">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-emerald-800">
-                      {language === 'hi' ? 'ऑर्डर #' : 'Order #'}{ord.id}
-                    </span>
-                    <span className="text-[10px] px-2.5 py-0.5 bg-emerald-900 text-amber-200 font-bold rounded-full">
-                      {ord.status === 'परिवहन में'
-                        ? (language === 'hi' ? 'परिवहन में' : 'In Transit')
-                        : (language === 'hi' ? 'सफलतापूर्वक हस्तांतरित' : 'Successfully Delivered')}
-                    </span>
-                  </div>
-
-                  <h3 className="font-extrabold text-base text-emerald-950">
-                    {language === 'hi' ? 'किसान: ' : 'Farmer: '}{getLocalizedFarmer(ord.farmer_name, language)}
-                  </h3>
-                  <p className="text-xs text-emerald-800/80 flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                    <span>
-                      {ord.delivery_address === 'नासिक हब से पुणे प्रेषित'
-                        ? (language === 'hi' ? 'नासिक हब से पुणे प्रेषित' : 'Dispatched from Nashik Hub to Pune')
-                        : (language === 'hi' ? 'इन्दौर हब से सीधा पिकअप' : 'Direct Pickup from Indore Hub')}
-                    </span>
-                  </p>
-
-                  <div className="pt-3 border-t border-emerald-900/10 flex items-center justify-between">
-                    <div className="text-base font-extrabold text-amber-800">
-                      ₹{(ord.total_amount_paise / 100).toFixed(2)}{' '}
-                      <span className="text-[10px] text-emerald-700 font-normal">
-                        ({ord.total_amount_paise} {t.paiseSuffix})
-                      </span>
-                    </div>
-
-                    <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">
-                      {language === 'hi' ? 'GPS लाइव ट्रैकिंग' : 'GPS Live Tracking'}
-                    </span>
-                  </div>
+              {loadingOrders ? (
+                <div className="p-8 text-center text-emerald-800/60 font-medium text-sm glass-card rounded-2xl">
+                  सक्रिय ऑर्डर लोड हो रहे हैं... (Loading live orders...)
                 </div>
-              ))}
+              ) : buyerOrders.length === 0 ? (
+                <div className="p-8 text-center glass-card rounded-2xl space-y-2 border border-emerald-900/10">
+                  <ShoppingBag className="w-10 h-10 text-emerald-800/40 mx-auto" />
+                  <p className="font-bold text-sm text-emerald-950">कोई सक्रिय ऑर्डर नहीं मिला</p>
+                  <p className="text-xs text-emerald-800/70">बाज़ार से ताज़ा फसल चुनें और कार्ट से सुरक्षित एस्क्रो ऑर्डर दें।</p>
+                </div>
+              ) : (
+                buyerOrders.map((ord) => {
+                  const isDelivered = ord.status === 'Delivered';
+                  const isOutForDelivery = ord.status === 'Out for Delivery' || ord.status === 'Picked Up';
+                  return (
+                    <div key={ord.id} className="glass-card p-5 rounded-2xl space-y-3.5 border border-emerald-900/10 shadow-sm hover:shadow-md transition">
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <span className="text-xs font-mono font-bold text-emerald-800">
+                          {ord.id}
+                        </span>
+                        <span className={`text-[10px] px-2.5 py-0.5 font-bold rounded-full ${
+                          isDelivered 
+                            ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' 
+                            : isOutForDelivery 
+                              ? 'bg-amber-100 text-amber-950 border border-amber-300 animate-pulse'
+                              : 'bg-emerald-900 text-amber-200'
+                        }`}>
+                          {isDelivered 
+                            ? (language === 'hi' ? '✓ सफलतापूर्वक हस्तांतरित' : '✓ Delivered & Verified') 
+                            : isOutForDelivery 
+                              ? (language === 'hi' ? '🚚 परिवहन में (Out for Delivery)' : '🚚 Out for Delivery') 
+                              : (language === 'hi' ? 'ऑर्डर दर्ज (Placed)' : 'Order Placed')}
+                        </span>
+                      </div>
+
+                      <h3 className="font-extrabold text-base text-emerald-950">
+                        {language === 'hi' ? 'किसान: ' : 'Farmer: '}{ord.farmer_name || 'किसान (Registered Farmer)'}
+                      </h3>
+
+                      {ord.items && ord.items.length > 0 && (
+                        <div className="bg-emerald-50/60 p-2.5 rounded-xl text-xs space-y-1 text-emerald-900">
+                          {ord.items.map((it: any, idx: number) => (
+                            <div key={idx} className="flex justify-between font-medium">
+                              <span>{it.crop_name} ({it.quantity} {it.unit})</span>
+                              <span className="font-bold">₹{((it.quantity * it.unit_price_paise) / 100).toFixed(2)}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Detailed Delivery Destination */}
+                      <div className="p-2.5 bg-emerald-50/70 rounded-xl border border-emerald-900/10 text-xs text-emerald-950 space-y-1">
+                        <div className="flex items-center justify-between font-bold">
+                          <span className="flex items-center gap-1 text-emerald-900">
+                            <MapPin className="w-3.5 h-3.5 text-amber-600" />
+                            डिलीवरी पता: {ord.shipping?.fullName || ord.recipient_name || ord.buyer_name || 'क्रेता'}
+                          </span>
+                          <span className="text-[10px] px-2 py-0.5 bg-white rounded-full border border-emerald-200 text-emerald-800">
+                            {ord.shipping?.addressType === 'WORK' ? '🏢 ऑफिस/दुकान' : ord.shipping?.addressType === 'MANDI_SHOP' ? '🏪 थोक मंडी' : '🏠 घर (Home)'}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-emerald-800 leading-snug">
+                          {ord.shipping?.flatBuilding || ord.flat_building ? (
+                            <>
+                              {ord.shipping?.flatBuilding || ord.flat_building}, {ord.shipping?.areaStreet || ord.area_street}
+                              {(ord.shipping?.landmark || ord.landmark) && `, लैंडमार्क: ${ord.shipping?.landmark || ord.landmark}`}
+                              <br />
+                              <span className="font-bold text-emerald-900">
+                                डाकघर: {ord.shipping?.postOffice || ord.post_office || '-'}, {ord.shipping?.district || ord.district || 'Pune'}, {ord.shipping?.state || ord.state || 'Maharashtra'} — {ord.shipping?.pincode || ord.pin_code || '411014'}
+                              </span>
+                            </>
+                          ) : (
+                            ord.delivery_address || 'पुणे डिलीवरी संकलन हब'
+                          )}
+                        </p>
+                      </div>
+
+                      {/* Zero-Trust Delivery OTP Card */}
+                      <div className="p-3 bg-amber-500/10 border border-amber-600/30 rounded-xl space-y-1">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5 text-xs font-extrabold text-amber-950">
+                            <ShieldCheck className="w-4 h-4 text-amber-700" />
+                            <span>डिलीवरी सत्यापन OTP:</span>
+                          </div>
+                          <span className="font-mono text-base font-black px-2.5 py-0.5 bg-white border border-amber-300 rounded-lg text-emerald-950 tracking-wider">
+                            {ord.delivery_otp || '----'}
+                          </span>
+                        </div>
+                        <p className="text-[10px] text-amber-900/90 leading-tight">
+                          {isDelivered 
+                            ? '✓ यह OTP सफलतापूर्वक सत्यापित हो चुका है। भुगतान किसान को हस्तांतरित कर दिया गया है।'
+                            : '⚠️ सुरक्षा नियम: डिलीवरी एजेंट को यह 4-अंकीय कोड केवल तभी बताएं जब आपको फसल सही सलामत मिल जाए।'}
+                        </p>
+                      </div>
+
+                      <div className="pt-2 border-t border-emerald-900/10 flex items-center justify-between flex-wrap gap-2">
+                        <div className="text-base font-extrabold text-amber-800">
+                          ₹{(ord.total_amount_paise / 100).toFixed(2)}{' '}
+                          <span className="text-[10px] text-emerald-700 font-normal">
+                            ({ord.total_amount_paise} {t.paiseSuffix})
+                          </span>
+                        </div>
+
+                        {!isDelivered ? (
+                          <button
+                            onClick={() => {
+                              setActiveVerifyOrder(ord);
+                              setVerifyOtpInput(ord.delivery_otp || '');
+                              setVerifyMessage(null);
+                            }}
+                            className="text-xs font-bold bg-[#0F3826] text-amber-50 px-3.5 py-1.5 rounded-xl hover:bg-emerald-900 shadow-sm transition flex items-center gap-1"
+                          >
+                            <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
+                            <span>हैंडओवर सत्यापित करें (Verify)</span>
+                          </button>
+                        ) : (
+                          <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-lg">
+                            {language === 'hi' ? 'एस्क्रो भुगतान सेटल्ड ✓' : 'Escrow Settled ✓'}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </div>
 
@@ -654,6 +815,95 @@ export default function BuyerDashboardPage() {
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        )}
+
+        {/* Delivery Handover OTP Verification Modal */}
+        {activeVerifyOrder && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
+            <div className="bg-[#FAF5EB] max-w-md w-full rounded-3xl p-6 border border-emerald-900/20 shadow-2xl space-y-4">
+              <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-emerald-700" />
+                  <h3 className="font-extrabold text-base text-emerald-950">डिलीवरी हैंडओवर सत्यापन</h3>
+                </div>
+                <button
+                  onClick={() => setActiveVerifyOrder(null)}
+                  className="p-1 hover:bg-emerald-100 rounded-full text-emerald-800"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-xs text-emerald-900/80">
+                  ऑर्डर <strong className="font-mono text-emerald-950">#{activeVerifyOrder.id}</strong> के लिए डिलीवरी एजेंट को देने वाला 4-अंकीय OTP:
+                </p>
+                <div className="p-3 bg-amber-500/15 rounded-xl border border-amber-300/60 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] text-amber-900 font-bold block">डिलीवरी एजेंट को देने वाला कोड:</span>
+                    <span className="text-2xl font-mono font-black tracking-widest text-emerald-950">
+                      {activeVerifyOrder.delivery_otp || '----'}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setVerifyOtpInput(activeVerifyOrder.delivery_otp || '')}
+                    className="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-amber-950 rounded-lg text-xs font-bold transition shadow-sm"
+                  >
+                    Auto-Fill
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-emerald-950">
+                  डिलीवरी एजेंट द्वारा दर्ज किया जाने वाला 4-अंकीय OTP:
+                </label>
+                <input
+                  type="text"
+                  maxLength={4}
+                  value={verifyOtpInput}
+                  onChange={(e) => setVerifyOtpInput(e.target.value.replace(/\D/g, ''))}
+                  placeholder="• • • •"
+                  className="w-full text-center text-3xl font-mono tracking-[0.4em] p-3 rounded-xl border-2 border-emerald-900/30 bg-white font-extrabold text-emerald-950 focus:border-emerald-700 outline-none shadow-inner"
+                />
+              </div>
+
+              {verifyMessage && (
+                <div
+                  className={`p-3 rounded-xl text-xs font-medium text-center ${
+                    verifyMessage.type === 'success'
+                      ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
+                      : 'bg-red-100 text-red-900 border border-red-300'
+                  }`}
+                >
+                  {verifyMessage.text}
+                </div>
+              )}
+
+              <p className="text-[11px] text-emerald-800/80 leading-relaxed bg-emerald-50 p-2.5 rounded-xl border border-emerald-900/10">
+                🔒 <strong>सुरक्षा एस्क्रो तंत्र:</strong> यह OTP दर्ज करने के बाद ही ऑर्डर को पूर्ण (Delivered) माना जाएगा और एस्क्रो से किसान को भुगतान रिलीज होगा।
+              </p>
+
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setActiveVerifyOrder(null)}
+                  className="flex-1 py-3 border border-emerald-900/20 text-emerald-900 font-bold rounded-xl text-xs hover:bg-emerald-50 transition"
+                >
+                  रद्द करें
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleVerifyOtp(activeVerifyOrder.id, 'delivery')}
+                  disabled={verifyingOtp || verifyOtpInput.length !== 4}
+                  className="flex-1 py-3 bg-[#0F3826] text-amber-50 font-bold rounded-xl text-xs hover:bg-emerald-900 disabled:opacity-50 transition shadow-lg flex items-center justify-center gap-1.5"
+                >
+                  {verifyingOtp ? 'सत्यापित हो रहा है...' : 'सत्यापित करें एवं भुगतान जारी करें'}
+                </button>
+              </div>
             </div>
           </div>
         )}

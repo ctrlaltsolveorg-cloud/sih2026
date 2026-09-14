@@ -54,7 +54,10 @@ import {
   ExternalLink,
   Edit3,
   Save,
-  RefreshCw
+  RefreshCw,
+  User,
+  Phone,
+  MapPin
 } from 'lucide-react';
 
 export default function FarmerDashboardPage() {
@@ -119,6 +122,14 @@ export default function FarmerDashboardPage() {
   const [myListings, setMyListings] = useState<any[]>([]);
   const [isSeedingAll, setIsSeedingAll] = useState(false);
   const [seedStatusMessage, setSeedStatusMessage] = useState<string | null>(null);
+
+  // Live Farmer Orders & Pickup OTP State
+  const [farmerOrders, setFarmerOrders] = useState<any[]>([]);
+  const [loadingOrders, setLoadingOrders] = useState(false);
+  const [activePickupOrder, setActivePickupOrder] = useState<any | null>(null);
+  const [pickupOtpInput, setPickupOtpInput] = useState('');
+  const [verifyingPickup, setVerifyingPickup] = useState(false);
+  const [pickupMessage, setPickupMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // Filtered catalog items for quick-picker
   const filteredCatalogItems = useMemo(() => {
@@ -249,8 +260,62 @@ export default function FarmerDashboardPage() {
     }
   };
 
+  const loadFarmerOrders = async () => {
+    try {
+      setLoadingOrders(true);
+      const res = await fetch(`/api/v1/orders?userId=${encodeURIComponent(user?.id || 'u_farmer_1')}&role=FARMER`);
+      const data = await res.json();
+      if (data.success && Array.isArray(data.orders)) {
+        setFarmerOrders(data.orders);
+      }
+    } catch (e) {
+      console.error('Error loading farmer orders:', e);
+    } finally {
+      setLoadingOrders(false);
+    }
+  };
+
+  const handleVerifyPickup = async (orderId: string) => {
+    if (!pickupOtpInput.trim()) return;
+    setVerifyingPickup(true);
+    setPickupMessage(null);
+
+    try {
+      const res = await fetch('/api/v1/orders/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId,
+          otpType: 'pickup',
+          enteredOtp: pickupOtpInput.trim(),
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'पिकअप OTP सत्यापन असफल रहा।');
+      }
+
+      setPickupMessage({ type: 'success', text: data.message });
+      loadFarmerOrders();
+      setTimeout(() => {
+        setActivePickupOrder(null);
+        setPickupOtpInput('');
+        setPickupMessage(null);
+      }, 1500);
+    } catch (err: any) {
+      setPickupMessage({ type: 'error', text: err.message });
+    } finally {
+      setVerifyingPickup(false);
+    }
+  };
+
   useEffect(() => {
     loadCrops();
+    loadFarmerOrders();
+    const handleOrderUpdate = () => loadFarmerOrders();
+    window.addEventListener('kb_order_updated', handleOrderUpdate);
+    return () => window.removeEventListener('kb_order_updated', handleOrderUpdate);
   }, [user?.id]);
 
   const triggerSuccessSignal = (
@@ -880,11 +945,161 @@ export default function FarmerDashboardPage() {
             <span className="text-[11px] text-purple-700 font-medium">100 सब्जियाँ • 100 फल • 100 दालें • 52 अनाज</span>
           </div>
 
-          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-blue-600">
-            <span className="text-xs font-bold text-emerald-800">{t.statSmartContracts}</span>
-            <div className="text-2xl font-extrabold text-blue-700">3 {language === 'hi' ? 'अनुबंध' : 'Contracts'}</div>
-            <span className="text-[11px] text-blue-600 font-medium">{t.statEscrowProtected}</span>
+        </div>
+
+        {/* ===================================================
+            SECTION: INCOMING BUYER ORDERS & SECURE PICKUP OTP
+            =================================================== */}
+        <div className="glass-card p-6 rounded-3xl border border-emerald-900/10 shadow-lg space-y-4 bg-gradient-to-r from-emerald-900/5 via-white to-amber-500/5">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-emerald-900/10 pb-3">
+            <div className="flex items-center gap-2">
+              <ShoppingBag className="w-5 h-5 text-emerald-800" />
+              <h2 className="text-lg font-extrabold text-emerald-950">
+                {language === 'hi' ? 'सक्रिय खरीद आदेश एवं सुरक्षित पिकअप सत्यापन' : 'Active Buyer Orders & Secure Pickup Dispatch'}
+              </h2>
+              <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full">
+                {farmerOrders.length} {language === 'hi' ? 'ऑर्डर' : 'Orders'}
+              </span>
+            </div>
+            <span className="text-xs text-emerald-700 font-medium flex items-center gap-1">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              {language === 'hi' ? 'शून्य-जोखिम हैंडओवर OTP' : 'Zero-Risk Pickup Handover'}
+            </span>
           </div>
+
+          {loadingOrders ? (
+            <div className="p-6 text-center text-xs text-emerald-800 font-medium">
+              लोड हो रहा है... (Loading orders...)
+            </div>
+          ) : farmerOrders.length === 0 ? (
+            <div className="p-6 text-center text-xs text-emerald-800/70">
+              अभी कोई लंबित पिकअप ऑर्डर नहीं है। जैसे ही कोई खरीदार आपकी फसल खरीदेगा, उसका पिकअप OTP यहाँ दिखेगा।
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {farmerOrders.map((ord) => {
+                const isPickedUp = ord.status === 'Out for Delivery' || ord.status === 'Delivered';
+                return (
+                  <div key={ord.id} className="p-4 bg-white rounded-2xl border border-emerald-900/10 shadow-sm space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-mono font-bold text-emerald-800">#{ord.id}</span>
+                      <span className={`text-[10px] px-2 py-0.5 font-bold rounded-full ${
+                        isPickedUp ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-900 animate-pulse'
+                      }`}>
+                        {isPickedUp ? '✓ पिकअप संपन्न' : 'लंबित पिकअप (Pending Pickup)'}
+                      </span>
+                    </div>
+
+                    {/* Buyer & Destination Address Card */}
+                    <div className="p-3 bg-emerald-50/70 rounded-xl border border-emerald-900/10 space-y-1.5 text-xs text-emerald-950">
+                      <div className="flex items-center justify-between">
+                        <span className="font-extrabold flex items-center gap-1.5 text-emerald-950">
+                          <User className="w-3.5 h-3.5 text-emerald-700" />
+                          {ord.shipping?.fullName || ord.recipient_name || ord.buyer_name || 'क्रेता'}
+                        </span>
+                        <span className="text-[10px] px-2 py-0.5 bg-white border border-emerald-200 rounded-full font-bold text-emerald-800">
+                          {ord.shipping?.addressType === 'WORK' ? '🏢 दुकान/ऑफिस' : ord.shipping?.addressType === 'MANDI_SHOP' ? '🏪 थोक मंडी' : '🏠 घर (Home)'}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-[11px] text-emerald-900">
+                        <a
+                          href={`tel:${ord.shipping?.mobileNumber || ord.recipient_phone || ord.buyer_phone || ''}`}
+                          className="flex items-center gap-1 font-bold text-emerald-800 hover:underline"
+                        >
+                          <Phone className="w-3 h-3 text-emerald-600" />
+                          +91 {ord.shipping?.mobileNumber || ord.recipient_phone || ord.buyer_phone || '9811122233'}
+                        </a>
+                        {(ord.shipping?.altPhone || ord.alt_phone) && (
+                          <span className="text-[10px] text-emerald-700/80">
+                            (Alt: +91 {ord.shipping?.altPhone || ord.alt_phone})
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="text-[11px] text-emerald-900/90 leading-tight space-y-0.5 pt-1.5 border-t border-emerald-900/10">
+                        <p className="flex items-start gap-1">
+                          <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                          <span>
+                            {ord.shipping?.flatBuilding || ord.flat_building ? (
+                              <>
+                                <strong>{ord.shipping?.flatBuilding || ord.flat_building}</strong>, {ord.shipping?.areaStreet || ord.area_street}
+                              </>
+                            ) : (
+                              ord.delivery_address
+                            )}
+                          </span>
+                        </p>
+                        {(ord.shipping?.landmark || ord.landmark) && (
+                          <p className="pl-4 text-[10px] text-emerald-800">
+                            <strong>लैंडमार्क:</strong> {ord.shipping?.landmark || ord.landmark}
+                          </p>
+                        )}
+                        <p className="pl-4 text-[10px] font-bold text-amber-950">
+                          {ord.shipping?.postOffice || ord.post_office ? `डाकघर: ${ord.shipping?.postOffice || ord.post_office}, ` : ''}
+                          {ord.shipping?.district || ord.district || 'Pune'}, {ord.shipping?.state || ord.state || 'Maharashtra'} — {ord.shipping?.pincode || ord.pin_code || '411014'}
+                        </p>
+                        {(ord.shipping?.deliveryInstructions || ord.delivery_instructions) && (
+                          <p className="pl-4 text-[10px] italic text-emerald-700">
+                            💬 "{ord.shipping?.deliveryInstructions || ord.delivery_instructions}"
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {ord.items && ord.items.length > 0 && (
+                      <div className="bg-emerald-50/50 p-2 rounded-lg text-[11px] space-y-0.5 text-emerald-900">
+                        {ord.items.map((it: any, i: number) => (
+                          <div key={i} className="flex justify-between">
+                            <span>{it.crop_name}</span>
+                            <span className="font-bold">{it.quantity} {it.unit}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Farmer Pickup OTP Box */}
+                    <div className="p-2.5 bg-amber-500/15 border border-amber-300 rounded-xl space-y-0.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold text-amber-950">ड्राइवर को देने वाला पिकअप OTP:</span>
+                        <span className="font-mono text-sm font-black text-emerald-950 bg-white px-2 py-0.5 rounded border border-amber-300 tracking-wider">
+                          {ord.pickup_otp || '----'}
+                        </span>
+                      </div>
+                      <p className="text-[9px] text-amber-900 leading-tight">
+                        {isPickedUp 
+                          ? '✓ माल वाहन में लोड हो चुका है।' 
+                          : '⚠️ माल गाड़ी में चढ़ाने के बाद ही ड्राइवर को यह कोड बताएं।'}
+                      </p>
+                    </div>
+
+                    <div className="pt-2 border-t border-emerald-900/10 flex items-center justify-between">
+                      <span className="text-xs font-extrabold text-amber-800">
+                        ₹{(ord.total_amount_paise / 100).toFixed(2)}
+                      </span>
+                      {!isPickedUp ? (
+                        <button
+                          onClick={() => {
+                            setActivePickupOrder(ord);
+                            setPickupOtpInput(ord.pickup_otp || '');
+                            setPickupMessage(null);
+                          }}
+                          className="px-2.5 py-1 bg-[#0F3826] text-amber-50 rounded-lg text-xs font-bold hover:bg-emerald-900 transition flex items-center gap-1"
+                        >
+                          <Check className="w-3 h-3 text-amber-400" />
+                          <span>पिकअप सत्यापित करें</span>
+                        </button>
+                      ) : (
+                        <span className="text-[11px] text-emerald-700 font-bold">
+                          परिवहन में (In Transit)
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* ===================================================
@@ -2257,6 +2472,95 @@ export default function FarmerDashboardPage() {
                   </div>
                 </div>
               </form>
+            </div>
+          </div>
+        )}
+
+        {/* Farmer Pickup OTP Verification Modal */}
+        {activePickupOrder && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
+            <div className="bg-[#FAF5EB] max-w-md w-full rounded-3xl p-6 border border-emerald-900/20 shadow-2xl space-y-4">
+              <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-emerald-700" />
+                  <h3 className="font-extrabold text-base text-emerald-950">खेत गेट पिकअप सत्यापन</h3>
+                </div>
+                <button
+                  onClick={() => setActivePickupOrder(null)}
+                  className="p-1 hover:bg-emerald-100 rounded-full text-emerald-800"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-xs text-emerald-900/80">
+                  ऑर्डर <strong className="font-mono text-emerald-950">#{activePickupOrder.id}</strong> के लिए आपका पिकअप सुरक्षा कोड:
+                </p>
+                <div className="p-3 bg-amber-500/15 rounded-xl border border-amber-300/60 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] text-amber-900 font-bold block">ड्राइवर को देने वाला कोड:</span>
+                    <span className="text-2xl font-mono font-black tracking-widest text-emerald-950">
+                      {activePickupOrder.pickup_otp || '----'}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setPickupOtpInput(activePickupOrder.pickup_otp || '')}
+                    className="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-amber-950 rounded-lg text-xs font-bold transition shadow-sm"
+                  >
+                    Auto-Fill
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-emerald-950">
+                  ड्राइवर द्वारा दर्ज किया जाने वाला 4-अंकीय पिकअप OTP:
+                </label>
+                <input
+                  type="text"
+                  maxLength={4}
+                  value={pickupOtpInput}
+                  onChange={(e) => setPickupOtpInput(e.target.value.replace(/\D/g, ''))}
+                  placeholder="• • • •"
+                  className="w-full text-center text-3xl font-mono tracking-[0.4em] p-3 rounded-xl border-2 border-emerald-900/30 bg-white font-extrabold text-emerald-950 focus:border-emerald-700 outline-none shadow-inner"
+                />
+              </div>
+
+              {pickupMessage && (
+                <div
+                  className={`p-3 rounded-xl text-xs font-medium text-center ${
+                    pickupMessage.type === 'success'
+                      ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
+                      : 'bg-red-100 text-red-900 border border-red-300'
+                  }`}
+                >
+                  {pickupMessage.text}
+                </div>
+              )}
+
+              <p className="text-[11px] text-emerald-800/80 leading-relaxed bg-emerald-50 p-2.5 rounded-xl border border-emerald-900/10">
+                🚚 <strong>पिकअप पुष्टि:</strong> ड्राइवर के यह कोड सत्यापित करते ही ऑर्डर 'Out for Delivery' मार्क हो जाएगा।
+              </p>
+
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setActivePickupOrder(null)}
+                  className="flex-1 py-3 border border-emerald-900/20 text-emerald-900 font-bold rounded-xl text-xs hover:bg-emerald-50 transition"
+                >
+                  रद्द करें
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleVerifyPickup(activePickupOrder.id)}
+                  disabled={verifyingPickup || pickupOtpInput.length !== 4}
+                  className="flex-1 py-3 bg-[#0F3826] text-amber-50 font-bold rounded-xl text-xs hover:bg-emerald-900 disabled:opacity-50 transition shadow-lg flex items-center justify-center gap-1.5"
+                >
+                  {verifyingPickup ? 'सत्यापित हो रहा है...' : 'पिकअप सत्यापित करें'}
+                </button>
+              </div>
             </div>
           </div>
         )}

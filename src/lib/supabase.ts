@@ -3,10 +3,27 @@ import { createClient } from '@supabase/supabase-js';
 const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qtldwcgzzroapkepttti.supabase.co';
 const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0bGR3Y2d6enJvYXBrZXB0dHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNjg4MTMsImV4cCI6MjA1NTc0NDgxM30.default_placeholder';
 
-// Sanitize placeholder suffix if user hasn't set valid JWT
-const sanitizedKey = rawKey.replace(/\.default_placeholder$/, '');
+// Use service role key on server if available, fallback to anon key
+const serverKey = typeof window === 'undefined' ? (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || rawKey) : rawKey;
+const sanitizedKey = (serverKey || '').replace(/\.default_placeholder$/, '');
 
-export const supabase = createClient(rawUrl, sanitizedKey);
+export const supabase = createClient(rawUrl, sanitizedKey, {
+  auth: {
+    persistSession: typeof window !== 'undefined',
+    autoRefreshToken: typeof window !== 'undefined',
+  },
+});
+
+export const supabaseAdmin = createClient(
+  rawUrl,
+  (process.env.SUPABASE_SERVICE_ROLE_KEY || sanitizedKey).replace(/\.default_placeholder$/, ''),
+  {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  }
+);
 
 /**
  * Generate semantic vector embedding for crop description / query

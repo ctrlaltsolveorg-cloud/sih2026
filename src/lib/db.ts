@@ -330,6 +330,15 @@ function seedData(db: Database.Database) {
     insertUser.run('u_farmer_2', 'Harpreet Singh', '9876543211', 'harpreet@kisanbandhan.ai', 'FARMER', 'Khanna', 'Ludhiana', 'Punjab', 'G.T. Road, Khanna, Ludhiana, PB 141401');
     insertFarmer.run('u_farmer_2', 'Green Field Farms', null, 15.0, 'VERIFIED', 'HDFC0005678', 'HDFC0005678');
 
+    insertUser.run('u_farmer_3', 'Suresh Gaikwad', '9876543212', 'suresh.gaikwad@kisanbandhan.ai', 'FARMER', 'Baramati', 'Pune', 'Maharashtra', 'Baramati Agro Hub, Pune, MH 413102');
+    insertFarmer.run('u_farmer_3', 'Gaikwad Fruit Orchards', null, 12.0, 'VERIFIED', 'MAHB0001122', 'MAHB0001122');
+
+    insertUser.run('u_farmer_4', 'Ananya Roy', '9876543213', 'ananya.roy@kisanbandhan.ai', 'FARMER', 'Singur', 'Hooghly', 'West Bengal', 'Singur Krishi Mandi, Hooghly, WB 712409');
+    insertFarmer.run('u_farmer_4', 'Bengal Green Organics', null, 6.5, 'VERIFIED', 'PUNB0003344', 'PUNB0003344');
+
+    insertUser.run('u_farmer_5', 'Rajesh Choudhary', '9876543214', 'rajesh.farmer@kisanbandhan.ai', 'FARMER', 'Chomu', 'Jaipur', 'Rajasthan', 'Chomu Mandi Link Road, Jaipur, RJ 303702');
+    insertFarmer.run('u_farmer_5', 'Marwar Spices & Pulses', null, 20.0, 'VERIFIED', 'BARB0005566', 'BARB0005566');
+
     // Buyer
     insertUser.run('u_buyer_1', 'Priya Sharma (Consumer)', '9811122233', 'priya@kisanbandhan.ai', 'BUYER', '', 'Pune', 'Maharashtra', 'Flat 402, Green Acres, Viman Nagar, Pune 411014');
     insertUser.run('u_buyer_2', 'Annapurna Hotel & Catering', '9822233344', 'annapurna@kisanbandhan.ai', 'BUYER', '', 'Pune', 'Maharashtra', 'Sector 17, Swargate, Pune 411002');
