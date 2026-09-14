@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
+import { sendWhatsAppOrderSlip } from '@/lib/whatsapp';
 
 export const dynamic = 'force-dynamic';
 
@@ -99,7 +100,16 @@ export async function GET(request: Request) {
     const items = db.prepare('SELECT * FROM order_items WHERE order_id = ?').all(row.id) as any[];
     const result = formatIvrOrderResponse(row, items);
 
-    return NextResponse.json(result);
+    const shouldSendWhatsApp = searchParams.get('whatsapp') === 'true';
+    let whatsappResult = null;
+    if (shouldSendWhatsApp && result.phone) {
+      whatsappResult = await sendWhatsAppOrderSlip(result.phone, result);
+    }
+
+    return NextResponse.json({
+      ...result,
+      whatsapp_dispatch: whatsappResult,
+    });
   } catch (err: any) {
     return NextResponse.json({ success: false, error: err.message }, { status: 500 });
   }
@@ -164,7 +174,16 @@ export async function POST(request: Request) {
     const items = db.prepare('SELECT * FROM order_items WHERE order_id = ?').all(row.id) as any[];
     const result = formatIvrOrderResponse(row, items);
 
-    return NextResponse.json(result);
+    const shouldSendWhatsApp = body.send_whatsapp === true || body.whatsapp === true;
+    let whatsappResult = null;
+    if (shouldSendWhatsApp && result.phone) {
+      whatsappResult = await sendWhatsAppOrderSlip(result.phone, result);
+    }
+
+    return NextResponse.json({
+      ...result,
+      whatsapp_dispatch: whatsappResult,
+    });
   } catch (err: any) {
     return NextResponse.json({ success: false, error: err.message }, { status: 500 });
   }
