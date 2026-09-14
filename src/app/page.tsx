@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import BulmaProductCard from '@/components/BulmaProductCard';
+import HeroCarousel from '@/components/HeroCarousel';
 import { FULL_CROP_CATALOG } from '@/lib/cropCatalogData';
 
 interface Listing {
@@ -206,140 +207,36 @@ export default function HomePage() {
 
   return (
     <div className="space-y-10">
-      {/* Full-width Open Hero Section with Edge-to-Edge Farm Background */}
-      <div className="relative -mx-4 sm:-mx-8 lg:-mx-12 -mt-6 pt-6 sm:pt-8 pb-16 px-4 sm:px-8 lg:px-12 overflow-hidden text-amber-50">
-        {/* Full-bleed Background Farm Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105 transition-transform duration-1000 ease-out pointer-events-none"
-          style={{ backgroundImage: "url('/images/hero_farm_bg.jpg')" }}
-        />
-        {/* Contrast overlay — rich dark emerald over text, clear vibrant farm imagery across right, ZERO white fade */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#03140D]/92 via-[#051E13]/75 to-[#08291B]/45 pointer-events-none" />
-        <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-
-        {/* Ambient Glows */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 max-w-7xl mx-auto space-y-8">
-          {/* Live Mandi Agmarknet Ticker */}
-          <div className="w-full bg-[#051C12]/70 backdrop-blur-md text-amber-100 rounded-2xl py-2 px-4 shadow-sm overflow-hidden border border-white/10 flex items-center gap-3">
-            <div className="flex items-center gap-2 text-xs font-bold text-amber-400 shrink-0 bg-amber-500/15 px-3 py-1 rounded-lg border border-amber-400/20">
-              <TrendingUp className="w-3.5 h-3.5" />
-              <span>{t.liveMandiTicker}</span>
-            </div>
-            <div className="overflow-hidden relative w-full">
-              <div className="animate-marquee whitespace-nowrap flex gap-8 text-xs">
-                {tickerItems.concat(tickerItems).map((item, idx) => (
-                  <span key={idx} className="inline-flex items-center gap-2 font-medium">
-                    <span className="text-amber-50">{getLocalizedCropName(item.crop, language)}</span>
-                    <span className="font-mono text-amber-300">{language === 'hi' ? item.price : item.price.replace('/किग्रा', '/kg')}</span>
-                    <span className="text-emerald-400 text-[11px] font-bold">{item.trend}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Hero Content — Open, Breathable & Minimal */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-4">
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/25 text-xs font-semibold backdrop-blur-sm shadow-xs">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>SIH 2026 PS 26033 • किसान दिवस समर्पित प्रत्यक्ष कृषि मंच</span>
-              </div>
-
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight drop-shadow-md">
-                {t.heroTitle}
-              </h1>
-
-              <p className="text-sm sm:text-base text-amber-100/90 leading-relaxed max-w-2xl font-normal drop-shadow-xs">
-                {t.heroDesc}
-              </p>
-
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <a
-                  href="#marketplace"
-                  className="px-7 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl shadow-xl transition-all duration-200 flex items-center gap-2 text-sm hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <ShoppingBag className="w-4 h-4" />
-                  <span>{t.heroCTA}</span>
-                </a>
-
-                <div className="px-4 py-3 bg-white/10 backdrop-blur-md border border-white/15 rounded-xl text-xs text-amber-200 flex items-center gap-2.5 shadow-sm">
-                  <PhoneCall className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span>
-                    <strong className="text-amber-300">टोल-फ्री IVR वॉयस हेल्पलाइन: 1800-KISAN-AI</strong> (कीपैड फोन फसल पंजीकरण)
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Clean Transparent Glass Stat Cards — Authentic, Minimal & Grounded */}
-            <div className="lg:col-span-5 grid grid-cols-2 gap-3.5">
-              <div className="p-5 bg-black/20 hover:bg-black/25 backdrop-blur-md rounded-2xl border border-white/20 hover:border-amber-400/40 text-center space-y-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_8px_24px_rgba(0,0,0,0.3)] transition-all duration-300 animate-float-slow relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
-                <div className="text-3xl sm:text-4xl font-black text-amber-400 font-mono tracking-tight drop-shadow-md">
-                  0%
-                </div>
-                <div className="text-xs sm:text-sm text-white font-extrabold drop-shadow-xs">
-                  {t.statMiddlemen}
-                </div>
-                <p className="text-[11px] text-amber-100/85 leading-tight">
-                  {t.statMiddlemenDesc}
-                </p>
-              </div>
-
-              <div className="p-5 bg-black/20 hover:bg-black/25 backdrop-blur-md rounded-2xl border border-white/20 hover:border-emerald-400/40 text-center space-y-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_8px_24px_rgba(0,0,0,0.3)] transition-all duration-300 animate-float-delay relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
-                <div className="text-3xl sm:text-4xl font-black text-emerald-300 font-mono tracking-tight drop-shadow-md">
-                  99.4%
-                </div>
-                <div className="text-xs sm:text-sm text-white font-extrabold drop-shadow-xs">
-                  {t.statCVGrading}
-                </div>
-                <p className="text-[11px] text-amber-100/85 leading-tight">
-                  {t.statCVGradingDesc}
-                </p>
-              </div>
-
-              <div className="p-5 bg-black/20 hover:bg-black/25 backdrop-blur-md rounded-2xl border border-white/20 hover:border-amber-400/40 text-center space-y-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_8px_24px_rgba(0,0,0,0.3)] transition-all duration-300 animate-float-delay relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
-                <div className="text-3xl sm:text-4xl font-black text-amber-400 font-mono tracking-tight drop-shadow-md">
-                  6 AI
-                </div>
-                <div className="text-xs sm:text-sm text-white font-extrabold drop-shadow-xs">
-                  {t.statAIEngines}
-                </div>
-                <p className="text-[11px] text-amber-100/85 leading-tight">
-                  {t.statAIEnginesDesc}
-                </p>
-              </div>
-
-              <div className="p-5 bg-black/20 hover:bg-black/25 backdrop-blur-md rounded-2xl border border-white/20 hover:border-emerald-400/40 text-center space-y-1.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_8px_24px_rgba(0,0,0,0.3)] transition-all duration-300 animate-float-slow relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
-                <div className="text-2xl sm:text-3xl font-black text-emerald-300 font-mono tracking-tight drop-shadow-md">
-                  IVR/SMS
-                </div>
-                <div className="text-xs sm:text-sm text-white font-extrabold drop-shadow-xs">
-                  {t.statNoInternet}
-                </div>
-                <p className="text-[11px] text-amber-100/85 leading-tight">
-                  {t.statNoInternetDesc}
-                </p>
-              </div>
-            </div>
+      {/* Live Mandi Agmarknet Ticker */}
+      <div className="w-full bg-[#0F3826] dark:bg-[#071F14] text-amber-100 rounded-2xl py-2.5 px-4 shadow-md overflow-hidden border border-emerald-800/40 flex items-center gap-3">
+        <div className="flex items-center gap-2 text-xs font-bold text-amber-400 shrink-0 bg-emerald-950/80 px-3 py-1 rounded-lg border border-amber-400/20">
+          <TrendingUp className="w-3.5 h-3.5" />
+          <span>{t.liveMandiTicker}</span>
+        </div>
+        <div className="overflow-hidden relative w-full">
+          <div className="animate-marquee whitespace-nowrap flex gap-8 text-xs">
+            {tickerItems.concat(tickerItems).map((item, idx) => (
+              <span key={idx} className="inline-flex items-center gap-2 font-medium">
+                <span className="text-amber-50">{getLocalizedCropName(item.crop, language)}</span>
+                <span className="font-mono text-amber-300">{language === 'hi' ? item.price : item.price.replace('/किग्रा', '/kg')}</span>
+                <span className="text-emerald-400 text-[11px] font-bold">{item.trend}</span>
+              </span>
+            ))}
           </div>
         </div>
       </div>
 
+      {/* Hero Banner Carousel Section with Agriculture Imagery & Navigation Controls */}
+      <HeroCarousel />
+
       {/* 6 Persona Dynamic Switcher Bar */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-emerald-950 flex items-center gap-2">
-            <Layers className="w-5 h-5 text-amber-600" />
+          <h2 className="text-xl font-bold text-emerald-950 dark:text-emerald-100 flex items-center gap-2">
+            <Layers className="w-5 h-5 text-amber-600 dark:text-amber-400" />
             <span>{t.selectDashboardTitle}</span>
           </h2>
-          <span className="text-xs text-emerald-800/60">{t.integratedRolesCount}</span>
+          <span className="text-xs text-emerald-800/60 dark:text-emerald-300/70">{t.integratedRolesCount}</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -347,8 +244,8 @@ export default function HomePage() {
             href="/farmer"
             onClick={() => setRole('FARMER')}
             className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'FARMER'
-                ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 text-emerald-950'
+                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
+                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
               }`}
           >
             <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-700">
@@ -364,8 +261,8 @@ export default function HomePage() {
             href="/fpo"
             onClick={() => setRole('FPO')}
             className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'FPO'
-                ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 text-emerald-950'
+                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
+                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
               }`}
           >
             <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-700">
@@ -381,8 +278,8 @@ export default function HomePage() {
             href="/buyer"
             onClick={() => setRole('BUYER')}
             className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'BUYER'
-                ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 text-emerald-950'
+                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
+                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
               }`}
           >
             <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-700">
@@ -398,8 +295,8 @@ export default function HomePage() {
             href="/hub"
             onClick={() => setRole('HUB_OPERATOR')}
             className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'HUB_OPERATOR'
-                ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 text-emerald-950'
+                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
+                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
               }`}
           >
             <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-700">
@@ -415,8 +312,8 @@ export default function HomePage() {
             href="/transporter"
             onClick={() => setRole('TRANSPORTER')}
             className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'TRANSPORTER'
-                ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 text-emerald-950'
+                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
+                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
               }`}
           >
             <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-700">
@@ -432,8 +329,8 @@ export default function HomePage() {
             href="/admin"
             onClick={() => setRole('ADMIN')}
             className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'ADMIN'
-                ? 'bg-[#0F3826] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 text-emerald-950'
+                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
+                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
               }`}
           >
             <div className="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center text-red-700">
@@ -449,28 +346,28 @@ export default function HomePage() {
 
       {/* Main Produce Marketplace */}
       <div id="marketplace" className="space-y-6 pt-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-emerald-900/10 pb-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-emerald-900/10 dark:border-emerald-500/20 pb-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 bg-amber-500/20 text-amber-900 font-extrabold text-[11px] rounded-full border border-amber-500/30">
+              <span className="px-2.5 py-0.5 bg-amber-500/20 text-amber-900 dark:text-amber-300 font-extrabold text-[11px] rounded-full border border-amber-500/30">
                 {language === 'hi' ? 'किसान डेस्क से सीधा संकलन' : 'Direct from Farmer Desk'}
               </span>
-              <span className="text-xs text-emerald-700 font-bold flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <span className="text-xs text-emerald-700 dark:text-emerald-300 font-bold flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 <span>{language === 'hi' ? '2 से 6 फोटो सत्यापित' : '2-6 Photos Verified'}</span>
               </span>
             </div>
-            <h2 className="text-2xl font-extrabold text-emerald-950 flex items-center gap-2 mt-1">
-              <ShoppingBag className="w-6 h-6 text-amber-600" />
+            <h2 className="text-2xl font-extrabold text-emerald-950 dark:text-emerald-50 flex items-center gap-2 mt-1">
+              <ShoppingBag className="w-6 h-6 text-amber-600 dark:text-amber-400" />
               <span>{t.marketplaceTitle}</span>
             </h2>
-            <p className="text-xs text-emerald-800/70">
+            <p className="text-xs text-emerald-800/70 dark:text-emerald-300/80">
               {t.marketplaceSubtitle}
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-emerald-900 bg-white px-3 py-1.5 rounded-xl border border-emerald-900/15 shadow-sm">
+            <span className="text-xs font-bold text-emerald-900 dark:text-emerald-200 bg-white dark:bg-[#07170f] px-3 py-1.5 rounded-xl border border-emerald-900/15 dark:border-emerald-500/20 shadow-sm">
               {filteredListings.length} {language === 'hi' ? 'फसलें उपलब्ध' : 'Produce Listed'}
             </span>
           </div>
@@ -480,13 +377,13 @@ export default function HomePage() {
         <div className="space-y-3">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Category Navigation Pills */}
-            <div className="flex items-center gap-1.5 bg-white p-1 rounded-2xl border border-emerald-900/15 shadow-sm overflow-x-auto">
+            <div className="flex items-center gap-1.5 bg-white dark:bg-[#07170f] p-1 rounded-2xl border border-emerald-900/15 dark:border-emerald-500/20 shadow-sm overflow-x-auto">
               <button
                 type="button"
                 onClick={() => setSelectedCropCategory('All')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'All'
                     ? 'bg-[#0F3826] text-amber-100 shadow'
-                    : 'text-emerald-950 hover:bg-emerald-50'
+                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
                 {language === 'hi' ? 'सभी ' : 'All '}
@@ -497,7 +394,7 @@ export default function HomePage() {
                 onClick={() => setSelectedCropCategory('Vegetables')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Vegetables'
                     ? 'bg-[#0F3826] text-amber-100 shadow'
-                    : 'text-emerald-950 hover:bg-emerald-50'
+                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
                 {language === 'hi' ? '+100 सब्जियाँ' : '+100 Vegetables'}
@@ -508,7 +405,7 @@ export default function HomePage() {
                 onClick={() => setSelectedCropCategory('Fruits')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Fruits'
                     ? 'bg-[#0F3826] text-amber-100 shadow'
-                    : 'text-emerald-950 hover:bg-emerald-50'
+                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
                 {language === 'hi' ? '+100 फल' : '+100 Fruits'}
@@ -519,7 +416,7 @@ export default function HomePage() {
                 onClick={() => setSelectedCropCategory('Pulses')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Pulses'
                     ? 'bg-[#0F3826] text-amber-100 shadow'
-                    : 'text-emerald-950 hover:bg-emerald-50'
+                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
                 {language === 'hi' ? '+100 दालें' : '+100 Pulses'}
@@ -530,7 +427,7 @@ export default function HomePage() {
                 onClick={() => setSelectedCropCategory('Grains')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Grains'
                     ? 'bg-[#0F3826] text-amber-100 shadow'
-                    : 'text-emerald-950 hover:bg-emerald-50'
+                    : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
                 {language === 'hi' ? '+50 अनाज' : '+50 Grains'}
@@ -539,7 +436,7 @@ export default function HomePage() {
 
             {/* Real-time Search Box */}
             <div className="relative min-w-[240px] sm:w-80">
-              <Search className="w-4 h-4 absolute left-3.5 top-3 text-emerald-800/50" />
+              <Search className="w-4 h-4 absolute left-3.5 top-3 text-emerald-800/50 dark:text-emerald-400/60" />
               <input
                 type="text"
                 placeholder={
@@ -549,12 +446,12 @@ export default function HomePage() {
                 }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-white border border-emerald-900/20 rounded-2xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm font-medium"
+                className="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-2xl text-xs text-emerald-950 dark:text-white placeholder-emerald-800/40 dark:placeholder-emerald-300/40 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm font-medium"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-2.5 text-xs text-emerald-800 hover:text-emerald-950"
+                  className="absolute right-3 top-2.5 text-xs text-emerald-800 dark:text-emerald-300 hover:text-emerald-950 dark:hover:text-white"
                 >
                   ✕
                 </button>
@@ -564,15 +461,15 @@ export default function HomePage() {
 
           {/* Secondary Quality Filters */}
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold text-emerald-900/70">
+            <span className="text-[11px] font-bold text-emerald-900/70 dark:text-emerald-300/70">
               {language === 'hi' ? 'गुणवत्ता फिल्टर:' : 'Quality Filter:'}
             </span>
-            <div className="flex items-center gap-1.5 bg-emerald-900/5 p-1 rounded-xl border border-emerald-900/10 text-xs">
+            <div className="flex items-center gap-1.5 bg-emerald-900/5 dark:bg-emerald-950/40 p-1 rounded-xl border border-emerald-900/10 dark:border-emerald-500/20 text-xs">
               <button
                 onClick={() => setFilter('all')}
                 className={`px-3 py-1 rounded-lg font-bold transition ${filter === 'all'
                     ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                    : 'text-emerald-900 hover:bg-emerald-100/50'
+                    : 'text-emerald-900 dark:text-emerald-200 hover:bg-emerald-100/50 dark:hover:bg-emerald-900/40'
                   }`}
               >
                 {t.filterAll}
@@ -581,7 +478,7 @@ export default function HomePage() {
                 onClick={() => setFilter('gradeA')}
                 className={`px-3 py-1 rounded-lg font-bold transition ${filter === 'gradeA'
                     ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                    : 'text-emerald-900 hover:bg-emerald-100/50'
+                    : 'text-emerald-900 dark:text-emerald-200 hover:bg-emerald-100/50 dark:hover:bg-emerald-900/40'
                   }`}
               >
                 {t.filterGradeA}
@@ -590,7 +487,7 @@ export default function HomePage() {
                 onClick={() => setFilter('organic')}
                 className={`px-3 py-1 rounded-lg font-bold transition ${filter === 'organic'
                     ? 'bg-[#0F3826] text-amber-50 shadow-sm'
-                    : 'text-emerald-900 hover:bg-emerald-100/50'
+                    : 'text-emerald-900 dark:text-emerald-200 hover:bg-emerald-100/50 dark:hover:bg-emerald-900/40'
                   }`}
               >
                 {t.filterOrganic}

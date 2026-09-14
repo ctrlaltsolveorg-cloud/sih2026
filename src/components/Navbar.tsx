@@ -7,6 +7,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { useRole } from '@/context/RoleContext';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
+import { useTheme } from '@/context/ThemeContext';
 import UserAvatar from './UserAvatar';
 import {
   Leaf,
@@ -17,6 +18,8 @@ import {
   Languages,
   ChevronDown,
   Check,
+  Sun,
+  Moon,
   ShieldCheck
 } from 'lucide-react';
 
@@ -36,6 +39,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
   const { role, setRole, userName, isDeveloperMode } = useRole();
   const { user, isAuthenticated, openAuthModal, logout } = useAuth();
   const { itemCount, setIsCartOpen } = useCart();
+  const { theme, resolvedTheme, toggleTheme } = useTheme();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -74,14 +78,14 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
     supportedLanguages[0];
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#03140D]/90 backdrop-blur-xl border-b border-white/10 shadow-lg text-amber-50 transition-colors">
+    <header className="sticky top-0 z-40 w-full bg-[#FAF5EB]/95 dark:bg-[#07170f]/95 backdrop-blur-md border-b border-emerald-900/10 dark:border-emerald-500/20 shadow-sm transition-colors duration-200">
       {/* Top Banner */}
-      <div className="bg-[#020A06]/95 text-amber-200/90 text-[11px] py-1 px-4 sm:px-8 border-b border-white/5 flex items-center justify-between">
-        <div className="flex items-center gap-2 font-medium">
+      <div className="bg-[#0F3826] dark:bg-[#040e09] text-amber-200 text-xs py-1 px-4 sm:px-8 border-b border-emerald-800/40 flex items-center justify-between">
+        <div className="flex items-center gap-2">
           <span className="px-2 py-0.5 bg-amber-500/20 text-amber-300 font-extrabold rounded-md text-[10px] border border-amber-400/30">
             SIH 2026 PS 26033
           </span>
-          <span className="truncate hidden sm:inline text-amber-100/80">{t.subTitle}</span>
+          <span className="truncate hidden sm:inline text-amber-100">{t.subTitle}</span>
         </div>
 
         <div className="flex items-center gap-3 text-xs">
@@ -92,7 +96,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             </span>
           )}
           <span>
-            सक्रिय भूमिका: <strong className="text-amber-300 font-bold">{userName ? `${userName} (${role.toUpperCase()})` : role.toUpperCase()}</strong>
+            {language === 'hi' ? 'सक्रिय भूमिका:' : 'Active Role:'} <strong className="text-amber-300">{userName ? `${userName} (${role})` : role}</strong>
           </span>
         </div>
       </div>
@@ -101,108 +105,140 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
       <div className="w-full px-4 sm:px-8 lg:px-12 py-3 flex items-center justify-between gap-3">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600/30 to-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-400 shadow-inner group-hover:scale-105 transition">
-            <Leaf className="w-5 h-5 fill-amber-400 text-amber-400" />
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-amber-200 shadow-md group-hover:scale-105 transition">
+            <Leaf className="w-5 h-5 fill-amber-300" />
           </div>
           <div>
-            <h1 className="font-extrabold text-xl text-white leading-none tracking-tight">
+            <h1 className="font-extrabold text-xl text-emerald-950 dark:text-amber-100 leading-none tracking-tight">
               {t.appName}
             </h1>
-            <span className="text-[10px] text-amber-400/90 font-medium leading-none">
+            <span className="text-[10px] text-amber-800 dark:text-amber-400 font-semibold leading-none">
               किसान दिवस एग्री-टेक मंच
             </span>
           </div>
         </Link>
 
         {/* Desktop 6 Role Nav Links */}
-        <nav className="hidden xl:flex items-center gap-1 bg-white/5 backdrop-blur-sm p-1 rounded-2xl border border-white/10 text-xs font-semibold">
+        <nav className="hidden xl:flex items-center gap-1 bg-emerald-900/5 dark:bg-emerald-950/60 p-1 rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20 text-xs font-bold">
           <Link
             href="/"
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'text-amber-100/80 hover:text-white hover:bg-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navHome}
           </Link>
+
           <Link
             href="/farmer"
             onClick={() => setRole('FARMER')}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/farmer'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'text-amber-100/80 hover:text-white hover:bg-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navFarmer}
           </Link>
+
           <Link
             href="/fpo"
             onClick={() => setRole('FPO')}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/fpo'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'text-amber-100/80 hover:text-white hover:bg-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navFPO}
           </Link>
+
           <Link
             href="/buyer"
             onClick={() => setRole('BUYER')}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/buyer'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'text-amber-100/80 hover:text-white hover:bg-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navBuyer}
           </Link>
+
           <Link
             href="/hub"
             onClick={() => setRole('HUB_OPERATOR')}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/hub'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'text-amber-100/80 hover:text-white hover:bg-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navHub}
           </Link>
+
           <Link
             href="/transporter"
             onClick={() => setRole('TRANSPORTER')}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/transporter'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'text-amber-100/80 hover:text-white hover:bg-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navTransporter}
           </Link>
+
           <Link
             href="/admin"
             onClick={() => setRole('ADMIN')}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/admin'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'text-amber-100/80 hover:text-white hover:bg-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40'
             }`}
           >
             {t.navAdmin}
           </Link>
         </nav>
 
-        {/* Right Buttons: India Translator + 11-Language Dropdown + User Profile + Cart */}
+        {/* Right Buttons: Theme Toggle + India Translator + 11-Language Dropdown + User Profile + Orders + Cart */}
         <div className="flex items-center gap-2 shrink-0">
+          {/* Theme Toggle Button (Sun / Moon) */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            id="theme-toggle-btn"
+            aria-label={resolvedTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            title={
+              resolvedTheme === 'dark'
+                ? (language === 'hi' ? 'लाइट मोड चालू करें' : 'Switch to Light Mode')
+                : (language === 'hi' ? 'डार्क मोड चालू करें' : 'Switch to Dark Mode')
+            }
+            className="px-2.5 sm:px-3 py-1.5 bg-white/90 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 text-emerald-950 dark:text-amber-300 border border-emerald-900/15 dark:border-emerald-500/30 font-extrabold rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition transform active:scale-95"
+          >
+            {resolvedTheme === 'dark' ? (
+              <>
+                <Sun className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                <span className="hidden md:inline">{language === 'hi' ? 'लाइट' : 'Light'}</span>
+              </>
+            ) : (
+              <>
+                <Moon className="w-3.5 h-3.5 text-emerald-800 dark:text-amber-400" />
+                <span className="hidden md:inline">{language === 'hi' ? 'डार्क' : 'Dark'}</span>
+              </>
+            )}
+          </button>
+
           {/* India Translator Launch Button */}
           <button
             onClick={() => setIsTranslatorOpen(true)}
-            className="px-2.5 sm:px-3 py-1.5 bg-white/10 hover:bg-white/15 text-amber-200 border border-white/15 font-bold rounded-xl text-xs flex items-center gap-1.5 backdrop-blur-md shadow-xs transition"
+            className="px-2.5 sm:px-3 py-1.5 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-emerald-800/10 hover:bg-amber-500/30 text-emerald-950 dark:text-amber-200 border border-amber-600/30 dark:border-amber-500/30 font-extrabold rounded-xl text-xs flex items-center gap-1.5 shadow-xs transition"
             title={t.translatorTitle || 'India Multi-Language Translator'}
           >
-            <Languages className="w-3.5 h-3.5 text-amber-400" />
+            <Languages className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
             <span className="hidden md:inline">{t.translatorBtn || '🇮🇳 India Translator'}</span>
             <span className="md:hidden">🇮🇳</span>
           </button>
@@ -211,22 +247,22 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-              className="px-2.5 sm:px-3 py-1.5 bg-white/10 hover:bg-white/15 text-white border border-white/15 font-bold rounded-xl text-xs flex items-center gap-1.5 backdrop-blur-md shadow-xs transition"
+              className="px-2.5 sm:px-3 py-1.5 bg-white/90 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 text-emerald-950 dark:text-emerald-100 border border-emerald-900/15 dark:border-emerald-500/30 font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
               aria-label="Select Indian Language"
             >
-              <Globe className="w-3.5 h-3.5 text-emerald-400" />
+              <Globe className="w-3.5 h-3.5 text-emerald-800 dark:text-emerald-300" />
               <span className="font-extrabold">{currentLangMeta.flagEmoji} {currentLangMeta.nativeName}</span>
-              <ChevronDown className="w-3.5 h-3.5 text-amber-200/70" />
+              <ChevronDown className="w-3.5 h-3.5 text-emerald-800/60 dark:text-emerald-300/60" />
             </button>
 
             {/* Dropdown Menu */}
             {isLangDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-64 sm:w-72 bg-[#051C12]/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/15 py-2 z-50 animate-fadeIn text-white">
-                <div className="px-3 py-1.5 border-b border-white/10 flex items-center justify-between">
-                  <span className="text-[11px] font-extrabold text-amber-200 uppercase tracking-wider">
+              <div className="absolute right-0 mt-2 w-64 sm:w-72 bg-white dark:bg-[#0c2217] rounded-2xl shadow-2xl border border-emerald-900/15 dark:border-emerald-500/30 py-2 z-50 animate-fadeIn">
+                <div className="px-3 py-1.5 border-b border-emerald-900/10 dark:border-emerald-500/20 flex items-center justify-between">
+                  <span className="text-[11px] font-extrabold text-emerald-950 dark:text-emerald-100 uppercase tracking-wider">
                     {t.selectLanguage || 'भाषा चुनें'} (11 Languages)
                   </span>
-                  <span className="text-[10px] text-amber-300 font-bold bg-amber-500/20 px-1.5 py-0.5 rounded border border-amber-500/30">
+                  <span className="text-[10px] text-amber-700 dark:text-amber-300 font-bold bg-amber-100 dark:bg-amber-950/80 px-1.5 py-0.5 rounded">
                     Pan-India
                   </span>
                 </div>
@@ -243,15 +279,15 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                         }}
                         className={`w-full px-3 py-2 text-left text-xs flex items-center justify-between transition ${
                           isSelected
-                            ? 'bg-amber-500/20 text-amber-300 font-bold border-l-2 border-amber-400'
-                            : 'hover:bg-white/10 text-white/90'
+                            ? 'bg-[#0F3826] text-amber-50 font-bold'
+                            : 'hover:bg-emerald-50 dark:hover:bg-emerald-900/50 text-emerald-950 dark:text-emerald-100'
                         }`}
                       >
                         <div className="flex items-center gap-2">
                           <span className="text-sm">{lang.flagEmoji}</span>
                           <div>
                             <div className="font-bold leading-tight">{lang.nativeName}</div>
-                            <div className={`text-[10px] ${isSelected ? 'text-amber-200/80' : 'text-amber-100/60'}`}>
+                            <div className={`text-[10px] ${isSelected ? 'text-amber-200/80' : 'text-emerald-800/60 dark:text-emerald-300/60'}`}>
                               {lang.name} • {lang.region}
                             </div>
                           </div>
@@ -263,15 +299,15 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                   })}
                 </div>
 
-                <div className="px-3 pt-2 mt-1 border-t border-white/10 text-center">
+                <div className="px-3 pt-2 mt-1 border-t border-emerald-900/10 dark:border-emerald-500/20 text-center">
                   <button
                     onClick={() => {
                       setIsLangDropdownOpen(false);
                       setIsTranslatorOpen(true);
                     }}
-                    className="text-[11px] text-amber-300 hover:text-amber-200 font-bold flex items-center justify-center gap-1 w-full py-1 hover:bg-white/10 rounded-lg transition"
+                    className="text-[11px] text-emerald-800 dark:text-emerald-300 hover:text-emerald-950 dark:hover:text-emerald-100 font-bold flex items-center justify-center gap-1 w-full py-1 hover:bg-emerald-50 dark:hover:bg-emerald-900/40 rounded-lg transition"
                   >
-                    <Languages className="w-3 h-3 text-amber-400" />
+                    <Languages className="w-3 h-3 text-amber-600 dark:text-amber-400" />
                     <span>{t.translatorTitle || 'AI Translator'}</span>
                   </button>
                 </div>
@@ -284,61 +320,33 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             <div className="relative">
               <button
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                className="flex items-center gap-2 p-1.5 bg-white/10 hover:bg-white/15 border border-white/15 rounded-2xl shadow-xs transition"
+                className="flex items-center gap-2 p-1.5 bg-white/80 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 border border-emerald-900/15 dark:border-emerald-500/30 rounded-2xl shadow-sm transition"
               >
                 <UserAvatar name={user.name} size="sm" />
-                <span className="text-xs font-bold text-white max-w-[90px] truncate hidden md:inline">
+                <span className="text-xs font-extrabold text-emerald-950 dark:text-emerald-100 max-w-[90px] truncate hidden md:inline">
                   {user.name}
                 </span>
               </button>
 
               {showProfileMenu && (
-                <div className="absolute right-0 mt-2 w-56 bg-[#051C12]/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/15 p-3 z-50 animate-fadeIn space-y-2 text-white">
-                  <div className="flex items-center gap-3 p-2 bg-white/5 rounded-xl border border-white/10">
+                <div className="absolute right-0 mt-2 w-56 bg-[#FAF5EB] dark:bg-[#0c2217] rounded-2xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 p-3 z-50 animate-fadeIn space-y-2">
+                  <div className="flex items-center gap-3 p-2 bg-emerald-900/5 dark:bg-emerald-950/60 rounded-xl border border-emerald-900/10 dark:border-emerald-500/20">
                     <UserAvatar name={user.name} size="md" />
                     <div className="overflow-hidden">
-                      <p className="text-xs font-extrabold text-white truncate">{user.name}</p>
-                      <p className="text-[10px] text-amber-100/70 truncate">{user.email}</p>
-                      <span className="inline-block mt-0.5 text-[9px] font-bold px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded-md border border-amber-500/30">
+                      <p className="text-xs font-extrabold text-emerald-950 dark:text-amber-100 truncate">{user.name}</p>
+                      <p className="text-[10px] text-emerald-800/70 dark:text-emerald-300/70 truncate">{user.email}</p>
+                      <span className="inline-block mt-0.5 text-[9px] font-bold px-2 py-0.5 bg-amber-500/20 text-amber-900 dark:text-amber-300 rounded-md border border-amber-500/30">
                         {user.role}
                       </span>
                     </div>
                   </div>
-
-                  {isDeveloperMode && (
-                    <div className="p-2 bg-amber-500/10 rounded-xl border border-amber-500/25 space-y-1.5">
-                      <p className="text-[10px] font-extrabold text-amber-300 flex items-center justify-between">
-                        <span>⚡ Role Simulator:</span>
-                        <span className="text-[9px] text-amber-200/60 font-mono font-normal">Active: {role}</span>
-                      </p>
-                      <div className="grid grid-cols-3 gap-1 text-[9px] font-bold">
-                        {(['FARMER', 'FPO', 'BUYER', 'HUB_OPERATOR', 'TRANSPORTER', 'ADMIN'] as const).map((r) => (
-                          <button
-                            key={r}
-                            type="button"
-                            onClick={() => {
-                              setRole(r);
-                              setShowProfileMenu(false);
-                            }}
-                            className={`px-1.5 py-1 rounded text-center transition ${
-                              role === r
-                                ? 'bg-amber-400 text-emerald-950 font-black shadow-xs'
-                                : 'bg-white/10 hover:bg-white/20 text-white'
-                            }`}
-                          >
-                            {r === 'HUB_OPERATOR' ? 'HUB' : r === 'TRANSPORTER' ? 'FLEET' : r}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
 
                   <button
                     onClick={() => {
                       logout();
                       setShowProfileMenu(false);
                     }}
-                    className="w-full py-2 px-3 bg-red-500/20 hover:bg-red-500/30 text-red-200 font-bold rounded-xl text-xs flex items-center justify-center gap-2 border border-red-500/30 transition"
+                    className="w-full py-2 px-3 bg-red-100 dark:bg-red-950/60 hover:bg-red-200 dark:hover:bg-red-900/60 text-red-900 dark:text-red-200 font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition"
                   >
                     <LogOut className="w-3.5 h-3.5" />
                     <span>{language === 'hi' ? 'लॉगआउट (Log Out)' : 'Log Out'}</span>
@@ -349,7 +357,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
           ) : (
             <button
               onClick={() => openAuthModal('login')}
-              className="px-3.5 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl text-xs flex items-center gap-1.5 shadow-md hover:shadow-amber-500/20 transition shrink-0"
+              className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl text-xs flex items-center gap-1.5 shadow-md transition shrink-0"
             >
               <LogIn className="w-4 h-4" />
               <span className="hidden sm:inline">{language === 'hi' ? 'लॉगिन' : 'Log In'}</span>
@@ -359,22 +367,22 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
           {/* Orders Quick Nav */}
           <Link
             href="/buyer#active-orders"
-            className="hidden sm:flex px-3 py-2 bg-emerald-900/60 hover:bg-emerald-800 text-amber-200 hover:text-amber-100 font-bold rounded-xl border border-white/10 shadow-sm transition items-center gap-1.5 text-xs shrink-0"
+            className="hidden sm:flex px-3 py-2 bg-emerald-900/10 dark:bg-emerald-950/80 hover:bg-emerald-900/20 dark:hover:bg-emerald-900 text-emerald-950 dark:text-amber-200 font-bold rounded-xl border border-emerald-900/15 dark:border-emerald-500/30 shadow-xs transition items-center gap-1.5 text-xs shrink-0"
             title="सक्रिय ऑर्डर ट्रैक करें"
           >
-            <ShieldCheck className="w-4 h-4 text-amber-400" />
+            <ShieldCheck className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <span>{language === 'hi' ? 'मेरे ऑर्डर' : 'My Orders'}</span>
           </Link>
 
           {/* Cart Trigger Button */}
           <button
             onClick={handleCartClick}
-            className="relative px-3 sm:px-4 py-2 bg-emerald-800/80 hover:bg-emerald-700/80 text-amber-50 font-bold rounded-xl border border-white/15 shadow-md transition flex items-center gap-2 text-xs shrink-0 backdrop-blur-md"
+            className="relative px-3 sm:px-4 py-2 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl shadow-md transition flex items-center gap-2 text-xs shrink-0"
           >
             <ShoppingBag className="w-4 h-4 text-amber-400" />
             <span className="hidden sm:inline">{language === 'hi' ? 'टोकरी' : 'Cart'}</span>
             {itemCount > 0 && (
-              <span className="w-5 h-5 bg-amber-500 text-emerald-950 font-extrabold text-[10px] rounded-full flex items-center justify-center border-2 border-[#03140D]">
+              <span className="w-5 h-5 bg-amber-500 text-emerald-950 font-extrabold text-[10px] rounded-full flex items-center justify-center border-2 border-[#0F3826]">
                 {itemCount}
               </span>
             )}
@@ -383,80 +391,86 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
       </div>
 
       {/* Mobile / Tablet Horizontal Role Navigation Strip */}
-      <div className="xl:hidden border-t border-white/10 bg-[#020A06]/95 px-4 py-2 overflow-x-auto no-scrollbar">
-        <nav className="flex items-center gap-1.5 min-w-max text-xs font-semibold">
+      <div className="xl:hidden border-t border-emerald-900/10 dark:border-emerald-500/20 bg-emerald-900/5 dark:bg-[#07170f] px-4 py-2 overflow-x-auto no-scrollbar">
+        <nav className="flex items-center gap-1.5 min-w-max text-xs font-bold">
           <Link
             href="/"
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'bg-white/5 text-amber-100/80 hover:bg-white/10 border border-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navHome}
           </Link>
+
           <Link
             href="/farmer"
             onClick={() => setRole('FARMER')}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/farmer'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'bg-white/5 text-amber-100/80 hover:bg-white/10 border border-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navFarmer}
           </Link>
+
           <Link
             href="/fpo"
             onClick={() => setRole('FPO')}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/fpo'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'bg-white/5 text-amber-100/80 hover:bg-white/10 border border-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navFPO}
           </Link>
+
           <Link
             href="/buyer"
             onClick={() => setRole('BUYER')}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/buyer'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'bg-white/5 text-amber-100/80 hover:bg-white/10 border border-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navBuyer}
           </Link>
+
           <Link
             href="/hub"
             onClick={() => setRole('HUB_OPERATOR')}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/hub'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'bg-white/5 text-amber-100/80 hover:bg-white/10 border border-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navHub}
           </Link>
+
           <Link
             href="/transporter"
             onClick={() => setRole('TRANSPORTER')}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/transporter'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'bg-white/5 text-amber-100/80 hover:bg-white/10 border border-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navTransporter}
           </Link>
+
           <Link
             href="/admin"
             onClick={() => setRole('ADMIN')}
             className={`px-3 py-1.5 rounded-xl transition ${
               pathname === '/admin'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold shadow-xs'
-                : 'bg-white/5 text-amber-100/80 hover:bg-white/10 border border-white/10'
+                ? 'bg-[#0F3826] text-amber-50 shadow-sm'
+                : 'bg-white/70 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 hover:bg-white dark:hover:bg-emerald-900 border border-transparent dark:border-emerald-500/20'
             }`}
           >
             {t.navAdmin}

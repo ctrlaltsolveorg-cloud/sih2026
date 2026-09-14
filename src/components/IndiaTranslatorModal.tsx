@@ -224,7 +224,7 @@ export default function IndiaTranslatorModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-emerald-950/70 backdrop-blur-md animate-fadeIn">
-      <div className="w-full max-w-2xl bg-[#FAF5EB] rounded-3xl shadow-2xl border border-emerald-900/20 overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="w-full max-w-2xl bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 overflow-hidden flex flex-col max-h-[90vh] text-[#1A2E26] dark:text-[#E2E8F0] transition-colors duration-200">
         {/* Modal Top Header */}
         <div className="bg-[#0F3826] text-amber-50 p-5 flex items-center justify-between shadow-md">
           <div className="flex items-center gap-3">
@@ -258,17 +258,17 @@ export default function IndiaTranslatorModal() {
         {/* Modal Body */}
         <div className="p-5 overflow-y-auto space-y-5 flex-1">
           {/* Language Selection Row */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-emerald-900/5 p-3 rounded-2xl border border-emerald-900/10">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-emerald-900/5 dark:bg-emerald-950/50 p-3 rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20">
             {/* Source Lang */}
             <div className="w-full sm:w-5/12 space-y-1">
-              <label className="text-[11px] font-bold text-emerald-900 flex items-center gap-1.5">
-                <Globe2 className="w-3.5 h-3.5 text-amber-600" />
+              <label className="text-[11px] font-bold text-emerald-900 dark:text-emerald-200 flex items-center gap-1.5">
+                <Globe2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 <span>{t.sourceLangLabel}</span>
               </label>
               <select
                 value={sourceLang}
                 onChange={(e) => setSourceLang(e.target.value as Language)}
-                className="w-full px-3 py-2 bg-white border border-emerald-900/15 rounded-xl text-xs font-bold text-emerald-950 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-700"
+                className="w-full px-3 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl text-xs font-bold text-emerald-950 dark:text-emerald-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-700"
               >
                 {supportedLanguages.map((l) => (
                   <option key={l.code} value={l.code}>
@@ -281,22 +281,22 @@ export default function IndiaTranslatorModal() {
             {/* Swap Button */}
             <button
               onClick={handleSwap}
-              className="p-2.5 bg-white hover:bg-emerald-50 text-emerald-900 border border-emerald-900/15 rounded-xl shadow-sm transition hover:scale-105"
+              className="p-2.5 bg-white dark:bg-[#07170f] hover:bg-emerald-50 dark:hover:bg-emerald-900/40 text-emerald-900 dark:text-emerald-200 border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl shadow-sm transition hover:scale-105"
               title={t.swapLanguages}
             >
-              <ArrowRightLeft className="w-4 h-4 text-amber-700" />
+              <ArrowRightLeft className="w-4 h-4 text-amber-700 dark:text-amber-400" />
             </button>
 
             {/* Target Lang */}
             <div className="w-full sm:w-5/12 space-y-1">
-              <label className="text-[11px] font-bold text-emerald-900 flex items-center gap-1.5">
-                <Globe2 className="w-3.5 h-3.5 text-emerald-700" />
+              <label className="text-[11px] font-bold text-emerald-900 dark:text-emerald-200 flex items-center gap-1.5">
+                <Globe2 className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
                 <span>{t.targetLangLabel}</span>
               </label>
               <select
                 value={targetLang}
                 onChange={(e) => setTargetLang(e.target.value as Language)}
-                className="w-full px-3 py-2 bg-white border border-emerald-900/15 rounded-xl text-xs font-bold text-emerald-950 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-700"
+                className="w-full px-3 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl text-xs font-bold text-emerald-950 dark:text-emerald-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-700"
               >
                 {supportedLanguages.map((l) => (
                   <option key={l.code} value={l.code}>
@@ -309,8 +309,8 @@ export default function IndiaTranslatorModal() {
 
           {/* Quick Preset Phrases */}
           <div className="space-y-2">
-            <span className="text-[11px] font-extrabold text-emerald-900 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <span className="text-[11px] font-extrabold text-emerald-900 dark:text-emerald-200 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
               <span>{t.quickAgriPhrasesTitle}</span>
             </span>
             <div className="flex flex-wrap gap-1.5">
@@ -324,7 +324,7 @@ export default function IndiaTranslatorModal() {
                 <button
                   key={idx}
                   onClick={() => handleSelectPreset(item.key)}
-                  className="px-2.5 py-1 bg-white hover:bg-emerald-100/70 text-emerald-950 border border-emerald-900/10 rounded-lg text-[11px] font-semibold transition shadow-xs"
+                  className="px-2.5 py-1 bg-white dark:bg-[#07170f] hover:bg-emerald-100/70 dark:hover:bg-emerald-900/50 text-emerald-950 dark:text-emerald-100 border border-emerald-900/10 dark:border-emerald-500/20 rounded-lg text-[11px] font-semibold transition shadow-xs"
                 >
                   {item.label}
                 </button>
@@ -335,16 +335,16 @@ export default function IndiaTranslatorModal() {
           {/* Input & Output Translation Panels */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Input Box */}
-            <div className="flex flex-col space-y-2 bg-white p-3.5 rounded-2xl border border-emerald-900/10 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-emerald-900 font-bold border-b border-emerald-900/5 pb-2">
+            <div className="flex flex-col space-y-2 bg-white dark:bg-[#07170f] p-3.5 rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20 shadow-sm">
+              <div className="flex items-center justify-between text-xs text-emerald-900 dark:text-emerald-200 font-bold border-b border-emerald-900/5 dark:border-emerald-500/10 pb-2">
                 <span className="flex items-center gap-1">
-                  <MessageSquare className="w-3.5 h-3.5 text-amber-600" />
+                  <MessageSquare className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                   <span>{SUPPORTED_LANGUAGES.find(l => l.code === sourceLang)?.nativeName}</span>
                 </span>
                 {inputText && (
                   <button
                     onClick={() => { setInputText(''); setOutputText(''); }}
-                    className="text-[10px] text-red-600 hover:underline flex items-center gap-1"
+                    className="text-[10px] text-red-600 dark:text-red-400 hover:underline flex items-center gap-1"
                   >
                     <RotateCcw className="w-3 h-3" /> {t.btnClear}
                   </button>
@@ -355,17 +355,17 @@ export default function IndiaTranslatorModal() {
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 placeholder={t.inputPlaceholder}
-                className="w-full h-28 resize-none text-xs text-emerald-950 placeholder:text-emerald-900/40 focus:outline-none font-medium leading-relaxed bg-transparent"
+                className="w-full h-28 resize-none text-xs text-emerald-950 dark:text-emerald-100 placeholder:text-emerald-900/40 dark:placeholder:text-emerald-300/40 focus:outline-none font-medium leading-relaxed bg-transparent"
               />
 
-              <div className="flex items-center justify-between pt-2 border-t border-emerald-900/5">
+              <div className="flex items-center justify-between pt-2 border-t border-emerald-900/5 dark:border-emerald-500/10">
                 <button
                   onClick={() => handleSpeak(inputText, sourceLang)}
                   disabled={!inputText}
-                  className="p-1.5 text-emerald-800 hover:text-emerald-950 disabled:opacity-30 transition"
+                  className="p-1.5 text-emerald-800 dark:text-emerald-300 hover:text-emerald-950 dark:hover:text-emerald-100 disabled:opacity-30 transition"
                   title={t.btnListen}
                 >
-                  <Volume2 className={`w-4 h-4 ${isSpeaking ? 'animate-pulse text-amber-600' : ''}`} />
+                  <Volume2 className={`w-4 h-4 ${isSpeaking ? 'animate-pulse text-amber-600 dark:text-amber-400' : ''}`} />
                 </button>
 
                 <button
@@ -380,36 +380,36 @@ export default function IndiaTranslatorModal() {
             </div>
 
             {/* Output Box */}
-            <div className="flex flex-col space-y-2 bg-emerald-900/5 p-3.5 rounded-2xl border border-emerald-900/10 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-emerald-900 font-bold border-b border-emerald-900/5 pb-2">
+            <div className="flex flex-col space-y-2 bg-emerald-900/5 dark:bg-emerald-950/50 p-3.5 rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20 shadow-sm">
+              <div className="flex items-center justify-between text-xs text-emerald-900 dark:text-emerald-200 font-bold border-b border-emerald-900/5 dark:border-emerald-500/10 pb-2">
                 <span className="flex items-center gap-1">
-                  <Leaf className="w-3.5 h-3.5 text-emerald-700" />
+                  <Leaf className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
                   <span>{SUPPORTED_LANGUAGES.find(l => l.code === targetLang)?.nativeName}</span>
                 </span>
                 {outputText && (
                   <button
                     onClick={handleCopy}
-                    className="text-[10px] text-emerald-800 font-bold hover:underline flex items-center gap-1"
+                    className="text-[10px] text-emerald-800 dark:text-emerald-300 font-bold hover:underline flex items-center gap-1"
                   >
-                    {copied ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                    {copied ? <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3 h-3" />}
                     <span>{copied ? t.copiedNotice : t.btnCopy}</span>
                   </button>
                 )}
               </div>
 
-              <div className="w-full h-28 overflow-y-auto text-xs text-emerald-950 font-bold leading-relaxed whitespace-pre-wrap">
+              <div className="w-full h-28 overflow-y-auto text-xs text-emerald-950 dark:text-emerald-100 font-bold leading-relaxed whitespace-pre-wrap">
                 {outputText || (
-                  <span className="text-emerald-900/40 font-normal italic">
+                  <span className="text-emerald-900/40 dark:text-emerald-300/40 font-normal italic">
                     {t.translatedOutputPlaceholder}
                   </span>
                 )}
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-emerald-900/5">
+              <div className="flex items-center justify-between pt-2 border-t border-emerald-900/5 dark:border-emerald-500/10">
                 <button
                   onClick={() => handleSpeak(outputText, targetLang)}
                   disabled={!outputText}
-                  className="p-1.5 text-emerald-800 hover:text-emerald-950 disabled:opacity-30 transition"
+                  className="p-1.5 text-emerald-800 dark:text-emerald-300 hover:text-emerald-950 dark:hover:text-emerald-100 disabled:opacity-30 transition"
                   title={t.btnListen}
                 >
                   <Volume2 className="w-4 h-4" />
@@ -417,7 +417,7 @@ export default function IndiaTranslatorModal() {
 
                 <button
                   onClick={() => handleApplySiteLanguage(targetLang)}
-                  className="text-[11px] text-amber-800 hover:text-amber-950 font-extrabold flex items-center gap-1 transition"
+                  className="text-[11px] text-amber-800 dark:text-amber-400 hover:text-amber-950 dark:hover:text-amber-300 font-extrabold flex items-center gap-1 transition"
                 >
                   <span>वेबसाइट भाषा बनाएं (Set Site Lang)</span>
                 </button>

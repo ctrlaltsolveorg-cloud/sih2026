@@ -370,28 +370,28 @@ export default function BuyerDashboardPage() {
 
         {/* Metrics Row */}
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-emerald-700">
-            <span className="text-xs font-bold text-emerald-800">{t.buyerStatTotalPurchase}</span>
-            <div className="text-2xl font-extrabold text-emerald-950">₹63,900.00</div>
-            <span className="text-[11px] text-emerald-700 font-bold">{t.buyerStatMandiSavings}</span>
+          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-emerald-700 dark:border-l-emerald-400">
+            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{t.buyerStatTotalPurchase}</span>
+            <div className="text-2xl font-extrabold text-emerald-950 dark:text-white">₹63,900.00</div>
+            <span className="text-[11px] text-emerald-700 dark:text-emerald-400 font-bold">{t.buyerStatMandiSavings}</span>
           </div>
 
-          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-amber-600">
-            <span className="text-xs font-bold text-emerald-800">{t.buyerStatActiveOrders}</span>
-            <div className="text-2xl font-extrabold text-amber-800">{buyerOrders.length} {language === 'hi' ? 'ऑर्डर' : 'Orders'}</div>
-            <span className="text-[11px] text-amber-700 font-medium">{t.buyerStatGPSLogistics}</span>
+          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-amber-600 dark:border-l-amber-400">
+            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{t.buyerStatActiveOrders}</span>
+            <div className="text-2xl font-extrabold text-amber-800 dark:text-amber-300">{buyerOrders.length} {language === 'hi' ? 'ऑर्डर' : 'Orders'}</div>
+            <span className="text-[11px] text-amber-700 dark:text-amber-400 font-medium">{t.buyerStatGPSLogistics}</span>
           </div>
 
-          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-purple-600">
-            <span className="text-xs font-bold text-emerald-800">{language === 'hi' ? 'सीधे किसान लॉट्स' : 'Direct Farmer Lots'}</span>
-            <div className="text-2xl font-extrabold text-purple-900">{farmerProduce.length} {language === 'hi' ? 'ताज़ा लॉट' : 'Fresh Lots'}</div>
-            <span className="text-[11px] text-purple-700 font-medium">{language === 'hi' ? 'किसान डेस्क से लाइव' : 'Live from Farmer Desk'}</span>
+          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-purple-600 dark:border-l-purple-400">
+            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{language === 'hi' ? 'सीधे किसान लॉट्स' : 'Direct Farmer Lots'}</span>
+            <div className="text-2xl font-extrabold text-purple-900 dark:text-purple-300">{farmerProduce.length} {language === 'hi' ? 'ताज़ा लॉट' : 'Fresh Lots'}</div>
+            <span className="text-[11px] text-purple-700 dark:text-purple-400 font-medium">{language === 'hi' ? 'किसान डेस्क से लाइव' : 'Live from Farmer Desk'}</span>
           </div>
 
-          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-blue-600">
-            <span className="text-xs font-bold text-emerald-800">{t.buyerStatRecurringContracts}</span>
-            <div className="text-2xl font-extrabold text-blue-700">2 {language === 'hi' ? 'अनुबंध' : 'Contracts'}</div>
-            <span className="text-[11px] text-blue-600 font-medium">{t.buyerStatFPOGuarantee}</span>
+          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-blue-600 dark:border-l-blue-400">
+            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{t.buyerStatRecurringContracts}</span>
+            <div className="text-2xl font-extrabold text-blue-700 dark:text-blue-300">2 {language === 'hi' ? 'अनुबंध' : 'Contracts'}</div>
+            <span className="text-[11px] text-blue-600 dark:text-blue-400 font-medium">{t.buyerStatFPOGuarantee}</span>
           </div>
         </div>
 
@@ -399,21 +399,21 @@ export default function BuyerDashboardPage() {
             DIRECT FARMER PRODUCE PROCUREMENT BOARD (BULMA CARDS)
             =================================================== */}
         <div className="space-y-6" id="buyer-produce-board">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-emerald-900/10 pb-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-emerald-900/10 dark:border-emerald-500/20 pb-4">
             <div>
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 bg-emerald-900 text-amber-300 font-extrabold text-[11px] rounded-full">
+                <span className="px-2.5 py-0.5 bg-emerald-900 dark:bg-emerald-800 text-amber-300 font-extrabold text-[11px] rounded-full border border-emerald-700/50">
                   {language === 'hi' ? 'किसान डेस्क से सीधा संकलन' : 'Direct from Farmer Desk'}
                 </span>
-                <span className="text-xs text-amber-700 font-bold flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
+                <span className="text-xs text-amber-700 dark:text-amber-400 font-bold flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
                   <span>{language === 'hi' ? '2-6 फोटो सत्यापित' : '2-6 Photos Verified'}</span>
                 </span>
               </div>
-              <h2 className="text-2xl font-extrabold text-emerald-950 mt-1">
+              <h2 className="text-2xl font-extrabold text-emerald-950 dark:text-emerald-50 mt-1">
                 {language === 'hi' ? 'ताज़ा कृषि उत्पाद बोर्ड' : 'Live Produce Procurement Board'}
               </h2>
-              <p className="text-xs text-emerald-800/70">
+              <p className="text-xs text-emerald-800/70 dark:text-emerald-300/80">
                 {language === 'hi'
                   ? 'आपकी फसल सफलतापूर्वक आपकी फसल सूची में जोड़ दी गई है और अब यह प्लेटफ़ॉर्म पर उपलब्ध है।'
                   : 'Your crop has been added successfully to your crop list and is now available on the platform.'}
@@ -427,7 +427,7 @@ export default function BuyerDashboardPage() {
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="px-3.5 py-2 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm cursor-pointer hover:border-emerald-800 transition"
+                  className="px-3.5 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-emerald-100 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm cursor-pointer hover:border-emerald-800 transition"
                 >
                   <option value="All">{language === 'hi' ? '🌐 सभी श्रेणियां' : '🌐 All Categories'}</option>
                   <option value="Vegetables">{language === 'hi' ? '🥦 सब्जियाँ (Vegetables)' : '🥦 Vegetables'}</option>
@@ -437,8 +437,8 @@ export default function BuyerDashboardPage() {
                 </select>
               </div>
 
-              <span className="text-xs font-bold text-emerald-900 bg-white px-3 py-2 rounded-xl border border-emerald-900/15 shadow-sm flex items-center gap-1.5 whitespace-nowrap">
-                <Tractor className="w-4 h-4 text-amber-600" />
+              <span className="text-xs font-bold text-emerald-900 dark:text-emerald-200 bg-white dark:bg-[#07170f] px-3 py-2 rounded-xl border border-emerald-900/15 dark:border-emerald-500/30 shadow-sm flex items-center gap-1.5 whitespace-nowrap">
+                <Tractor className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                 <span>
                   {filteredProduce.length} {language === 'hi' ? 'किसान फसलें' : 'Farmer Crop(s)'}
                 </span>
@@ -446,7 +446,7 @@ export default function BuyerDashboardPage() {
 
               {/* Real-time Search Box */}
               <div className="relative min-w-[180px] sm:w-64">
-                <Search className="w-4 h-4 absolute left-3.5 top-2.5 text-emerald-800/50" />
+                <Search className="w-4 h-4 absolute left-3.5 top-2.5 text-emerald-800/50 dark:text-emerald-400/60" />
                 <input
                   type="text"
                   placeholder={
@@ -456,12 +456,12 @@ export default function BuyerDashboardPage() {
                   }
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm font-medium"
+                  className="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-white placeholder-emerald-800/40 dark:placeholder-emerald-300/40 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm font-medium"
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-3 top-2 text-xs text-emerald-800 hover:text-emerald-950"
+                    className="absolute right-3 top-2 text-xs text-emerald-800 dark:text-emerald-300 hover:text-emerald-950 dark:hover:text-white"
                   >
                     ✕
                   </button>
@@ -538,14 +538,14 @@ export default function BuyerDashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
           {/* Active Orders */}
           <div id="active-orders" className="space-y-4 scroll-mt-24">
-            <h2 className="text-xl font-extrabold text-emerald-950 flex items-center gap-2">
-              <ShoppingBag className="w-5 h-5 text-amber-600" />
+            <h2 className="text-xl font-extrabold text-emerald-950 dark:text-emerald-50 flex items-center gap-2">
+              <ShoppingBag className="w-5 h-5 text-amber-600 dark:text-amber-400" />
               <span>{t.buyerActiveOrdersHeader}</span>
             </h2>
 
             <div className="space-y-4">
               {loadingOrders ? (
-                <div className="p-8 text-center text-emerald-800/60 font-medium text-sm glass-card rounded-2xl">
+                <div className="p-8 text-center text-emerald-800/60 dark:text-emerald-300/70 font-medium text-sm glass-card rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20">
                   सक्रिय ऑर्डर लोड हो रहे हैं... (Loading live orders...)
                 </div>
               ) : buyerOrders.length === 0 ? (
@@ -705,46 +705,46 @@ export default function BuyerDashboardPage() {
 
           {/* Recurring Contracts */}
           <div className="space-y-4">
-            <h2 className="text-xl font-extrabold text-emerald-950 flex items-center gap-2">
-              <FileText className="w-5 h-5 text-amber-600" />
+            <h2 className="text-xl font-extrabold text-emerald-950 dark:text-emerald-50 flex items-center gap-2">
+              <FileText className="w-5 h-5 text-amber-600 dark:text-amber-400" />
               <span>{t.buyerRecurringContractsHeader}</span>
             </h2>
 
             <div className="space-y-4">
-              <div className="glass-card p-5 rounded-2xl space-y-3 border border-emerald-900/10">
+              <div className="glass-card p-5 rounded-2xl space-y-3 border border-emerald-900/10 dark:border-emerald-500/20">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-extrabold text-sm text-emerald-950">
+                  <h3 className="font-extrabold text-sm text-emerald-950 dark:text-emerald-50">
                     {language === 'hi' ? 'साप्ताहिक टमाटर आपूर्ति अनुबंध' : 'Weekly Fresh Tomato Supply Contract'}
                   </h3>
-                  <span className="text-[10px] px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-full">
+                  <span className="text-[10px] px-2.5 py-0.5 bg-emerald-100 dark:bg-emerald-900/80 text-emerald-800 dark:text-emerald-200 dark:border dark:border-emerald-500/30 font-bold rounded-full">
                     {language === 'hi' ? 'सक्रिय' : 'Active'}
                   </span>
                 </div>
-                <p className="text-xs text-emerald-800/80">
+                <p className="text-xs text-emerald-800/80 dark:text-emerald-200">
                   {language === 'hi'
                     ? '100 किग्रा ताज़ा टमाटर प्रत्येक सोमवार और गुरुवार नासिक FPO हब से सीधा वितरण।'
                     : '100 kg Fresh Tomatoes dispatched every Monday & Thursday directly from Nashik FPO Hub.'}
                 </p>
-                <button className="w-full py-2 bg-emerald-900/10 hover:bg-emerald-900/20 text-emerald-950 font-bold rounded-xl text-xs transition">
+                <button className="w-full py-2 bg-emerald-900/10 dark:bg-emerald-800/40 hover:bg-emerald-900/20 dark:hover:bg-emerald-700/50 text-emerald-950 dark:text-emerald-100 dark:border dark:border-emerald-500/30 font-bold rounded-xl text-xs transition">
                   {language === 'hi' ? 'अनुबंध की शर्तें देखें (एस्क्रौ सुरक्षा)' : 'View Contract Terms (Escrow Protection)'}
                 </button>
               </div>
 
-              <div className="glass-card p-5 rounded-2xl space-y-3 border border-emerald-900/10">
+              <div className="glass-card p-5 rounded-2xl space-y-3 border border-emerald-900/10 dark:border-emerald-500/20">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-extrabold text-sm text-emerald-950">
+                  <h3 className="font-extrabold text-sm text-emerald-950 dark:text-emerald-50">
                     {language === 'hi' ? 'मासिक शरबाती गेहूं आपूर्ति अनुबंध' : 'Monthly Sharbati Wheat Supply Contract'}
                   </h3>
-                  <span className="text-[10px] px-2.5 py-0.5 bg-amber-100 text-amber-800 font-bold rounded-full">
+                  <span className="text-[10px] px-2.5 py-0.5 bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 dark:border dark:border-amber-500/30 font-bold rounded-full">
                     {language === 'hi' ? 'नवीनीकरण हेतु तैयार' : 'Ready for Renewal'}
                   </span>
                 </div>
-                <p className="text-xs text-emerald-800/80">
+                <p className="text-xs text-emerald-800/80 dark:text-emerald-200">
                   {language === 'hi'
                     ? '500 किग्रा शरबाती गेहूं उज्जैन साइलो हब से प्रत्यक्ष मासिक प्रेषण।'
                     : '500 kg Sharbati Wheat monthly dispatch directly from Ujjain Silo Hub.'}
                 </p>
-                <button className="w-full py-2 bg-[#0F3826] text-amber-50 hover:bg-emerald-900 font-bold rounded-xl text-xs shadow transition">
+                <button className="w-full py-2 bg-[#0F3826] dark:bg-emerald-700 text-amber-50 hover:bg-emerald-900 dark:hover:bg-emerald-600 font-bold rounded-xl text-xs shadow transition">
                   {language === 'hi' ? 'अनुबंध नवीनीकृत करें' : 'Renew Contract'}
                 </button>
               </div>
@@ -755,14 +755,14 @@ export default function BuyerDashboardPage() {
         {/* Modal for Posting Bulk Requirement */}
         {showAddReqModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
-            <div className="bg-[#FAF5EB] rounded-3xl p-6 w-full max-w-lg shadow-2xl border border-emerald-900/20 space-y-4">
-              <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
-                <h3 className="font-extrabold text-lg text-emerald-950">
+            <div className="bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl p-6 w-full max-w-lg shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 text-[#1A2E26] dark:text-[#E2E8F0] space-y-4">
+              <div className="flex items-center justify-between border-b border-emerald-900/10 dark:border-emerald-500/20 pb-3">
+                <h3 className="font-extrabold text-lg text-emerald-950 dark:text-emerald-50">
                   {language === 'hi' ? 'थोक आवश्यकता प्रस्ताव भेजें' : 'Post Bulk Demand Requirement'}
                 </h3>
                 <button
                   onClick={() => setShowAddReqModal(false)}
-                  className="p-1 hover:bg-emerald-100 rounded-full text-emerald-800"
+                  className="p-1 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 rounded-full text-emerald-800 dark:text-emerald-300 transition"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -770,10 +770,10 @@ export default function BuyerDashboardPage() {
 
               <form onSubmit={handlePostRequirement} className="space-y-4">
                 {/* Buyer Name & Contact Input Row */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-amber-50/90 p-3 rounded-2xl border border-amber-200/80 shadow-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-amber-50/90 dark:bg-emerald-950/60 p-3 rounded-2xl border border-amber-200/80 dark:border-emerald-500/30 shadow-sm">
                   <div>
-                    <label className="block text-xs font-bold text-emerald-950 mb-1 flex items-center gap-1.5">
-                      <User className="w-3.5 h-3.5 text-amber-700" />
+                    <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1 flex items-center gap-1.5">
+                      <User className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
                       <span>{language === 'hi' ? 'नाम (Name)' : 'Name'}</span>
                     </label>
                     <input
@@ -782,13 +782,13 @@ export default function BuyerDashboardPage() {
                       value={buyerName}
                       onChange={(e) => setBuyerName(e.target.value)}
                       placeholder={language === 'hi' ? 'उदा. रमेश ट्रेडिंग / नाम' : 'e.g. Ramesh Traders / Name'}
-                      className="w-full px-3.5 py-2 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
+                      className="w-full px-3.5 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-white placeholder-emerald-800/40 dark:placeholder-emerald-300/40 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-emerald-950 mb-1 flex items-center gap-1.5">
-                      <Phone className="w-3.5 h-3.5 text-emerald-700" />
+                    <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1 flex items-center gap-1.5">
+                      <Phone className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
                       <span>{language === 'hi' ? 'संपर्क (Contact)' : 'Contact'}</span>
                     </label>
                     <input
@@ -797,13 +797,13 @@ export default function BuyerDashboardPage() {
                       value={buyerContact}
                       onChange={(e) => setBuyerContact(e.target.value)}
                       placeholder="+91 98765 43210"
-                      className="w-full px-3.5 py-2 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-mono"
+                      className="w-full px-3.5 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-white placeholder-emerald-800/40 dark:placeholder-emerald-300/40 focus:outline-none focus:ring-2 focus:ring-amber-500 font-mono"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-emerald-950 mb-1">
+                  <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
                     {language === 'hi' ? 'फसल का नाम' : 'Crop Name'}
                   </label>
                   <input
@@ -811,13 +811,13 @@ export default function BuyerDashboardPage() {
                     required
                     value={cropName}
                     onChange={(e) => setCropName(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3.5 py-2.5 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-emerald-950 mb-1">
+                    <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
                       {language === 'hi' ? 'आवश्यक मात्रा (किग्रा)' : 'Required Quantity (kg)'}
                     </label>
                     <input
@@ -825,12 +825,12 @@ export default function BuyerDashboardPage() {
                       required
                       value={requiredQty}
                       onChange={(e) => setRequiredQty(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      className="w-full px-3.5 py-2.5 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-emerald-950 mb-1">
+                    <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
                       {language === 'hi' ? 'अधिकतम दर (₹/किग्रा)' : 'Max Price Rate (₹/kg)'}
                     </label>
                     <input
@@ -839,13 +839,13 @@ export default function BuyerDashboardPage() {
                       required
                       value={maxPriceRs}
                       onChange={(e) => setMaxPriceRs(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      className="w-full px-3.5 py-2.5 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-emerald-950 mb-1">
+                  <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
                     {language === 'hi' ? 'डिलीवरी स्थान / हब' : 'Delivery Location / Hub'}
                   </label>
                   <input
@@ -853,7 +853,7 @@ export default function BuyerDashboardPage() {
                     required
                     value={deliveryLoc}
                     onChange={(e) => setDeliveryLoc(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3.5 py-2.5 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </div>
 
@@ -861,7 +861,7 @@ export default function BuyerDashboardPage() {
                   <button
                     type="button"
                     onClick={() => setShowAddReqModal(false)}
-                    className="flex-1 py-3 bg-emerald-100 hover:bg-emerald-200 text-emerald-950 font-bold rounded-xl text-xs transition"
+                    className="flex-1 py-3 bg-emerald-100 dark:bg-emerald-900/50 hover:bg-emerald-200 dark:hover:bg-emerald-900 text-emerald-950 dark:text-emerald-200 font-bold rounded-xl text-xs transition"
                   >
                     {language === 'hi' ? 'रद्द करें' : 'Cancel'}
                   </button>

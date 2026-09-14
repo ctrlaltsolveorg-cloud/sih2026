@@ -277,7 +277,7 @@ export default function CartDrawer() {
       {/* 1. SLIDE-OVER CART DRAWER */}
       {isCartOpen && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm transition-opacity animate-fadeIn">
-          <div className="w-full max-w-md bg-[#FAF5EB] h-full shadow-2xl flex flex-col border-l border-emerald-900/10">
+          <div className="w-full max-w-md bg-[#FAF5EB] dark:bg-[#081710] text-[#1A2E26] dark:text-[#E2E8F0] h-full shadow-2xl flex flex-col border-l border-emerald-900/10 dark:border-emerald-500/20 transition-colors duration-200">
             {/* Header */}
             <div className="p-5 bg-[#0F3826] text-amber-50 flex items-center justify-between shadow-md shrink-0">
               <div className="flex items-center gap-3">
@@ -304,12 +304,12 @@ export default function CartDrawer() {
             {/* Scrollable Cart Items Body */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
               {cart.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-emerald-800/60 text-center py-16">
-                  <div className="w-16 h-16 bg-emerald-900/5 rounded-full flex items-center justify-center mb-3">
-                    <ShoppingBag className="w-8 h-8 text-emerald-800/40" />
+                <div className="h-full flex flex-col items-center justify-center text-emerald-800/60 dark:text-emerald-400/60 text-center py-16">
+                  <div className="w-16 h-16 bg-emerald-900/5 dark:bg-emerald-900/40 rounded-full flex items-center justify-center mb-3">
+                    <ShoppingBag className="w-8 h-8 text-emerald-800/40 dark:text-emerald-300/60" />
                   </div>
-                  <p className="font-bold text-emerald-950 text-base mb-1">आपकी टोकरी खाली है</p>
-                  <p className="text-xs text-emerald-800/70 max-w-xs">
+                  <p className="font-bold text-emerald-950 dark:text-amber-100 text-base mb-1">आपकी टोकरी खाली है</p>
+                  <p className="text-xs text-emerald-800/70 dark:text-emerald-300/70 max-w-xs">
                     मंडी और खेत से ताज़ा फ़सलें जोड़ने के लिए मार्केटप्लेस में जाएं।
                   </p>
                 </div>
@@ -319,44 +319,44 @@ export default function CartDrawer() {
                   return (
                     <div
                       key={item.listingId}
-                      className="p-3.5 bg-white rounded-2xl border border-emerald-900/10 shadow-sm flex items-center justify-between gap-3 hover:border-emerald-900/25 transition"
+                      className="p-3.5 bg-white dark:bg-[#0d2218] rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20 shadow-sm flex items-center justify-between gap-3 hover:border-emerald-900/25 transition"
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-bold text-sm text-emerald-950 truncate">
+                          <span className="font-bold text-sm text-emerald-950 dark:text-amber-100 truncate">
                             {getLocalizedCropName(item.cropName, language)}
                           </span>
-                          <span className="text-[10px] px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full font-medium shrink-0">
+                          <span className="text-[10px] px-2 py-0.5 bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 rounded-full font-medium shrink-0">
                             {getLocalizedGrade(item.grade, language)}
                           </span>
                         </div>
-                        <p className="text-xs text-emerald-800/70 mb-1 truncate">
+                        <p className="text-xs text-emerald-800/70 dark:text-emerald-300/70 mb-1 truncate">
                           किसान: {item.farmerName} • {item.location}
                         </p>
                         <div className="flex items-center gap-3 text-xs font-semibold">
-                          <span className="text-emerald-900">
+                          <span className="text-emerald-900 dark:text-emerald-200">
                             ₹{(item.pricePaisePerKg / 100).toFixed(2)}/kg
                           </span>
-                          <span className="text-amber-800 font-bold">
+                          <span className="text-amber-800 dark:text-amber-300 font-bold">
                             कुल: ₹{(itemTotalPaise / 100).toFixed(2)}
                           </span>
                         </div>
                       </div>
 
                       <div className="flex flex-col items-end gap-2 shrink-0">
-                        <div className="flex items-center border border-emerald-900/20 rounded-lg overflow-hidden bg-emerald-50/50">
+                        <div className="flex items-center border border-emerald-900/20 dark:border-emerald-500/30 rounded-lg overflow-hidden bg-emerald-50/50 dark:bg-emerald-950/60">
                           <button
                             onClick={() => updateQuantity(item.listingId, item.quantityKg - 50)}
-                            className="px-2 py-1 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition"
+                            className="px-2 py-1 text-xs font-bold text-emerald-800 dark:text-emerald-200 hover:bg-emerald-100 dark:hover:bg-emerald-900 transition"
                           >
                             -
                           </button>
-                          <span className="px-2 text-xs font-bold text-emerald-950 min-w-[45px] text-center">
+                          <span className="px-2 text-xs font-bold text-emerald-950 dark:text-emerald-100 min-w-[45px] text-center">
                             {item.quantityKg}kg
                           </span>
                           <button
                             onClick={() => updateQuantity(item.listingId, item.quantityKg + 50)}
-                            className="px-2 py-1 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition"
+                            className="px-2 py-1 text-xs font-bold text-emerald-800 dark:text-emerald-200 hover:bg-emerald-100 dark:hover:bg-emerald-900 transition"
                           >
                             +
                           </button>
@@ -376,8 +376,8 @@ export default function CartDrawer() {
 
               {/* Trust Badge */}
               {cart.length > 0 && (
-                <div className="p-3 bg-amber-500/10 border border-amber-600/20 rounded-xl text-xs text-amber-950 flex items-center gap-2.5">
-                  <ShieldCheck className="w-5 h-5 text-amber-700 shrink-0" />
+                <div className="p-3 bg-amber-500/10 border border-amber-600/20 rounded-xl text-xs text-amber-950 dark:text-amber-200 flex items-center gap-2.5">
+                  <ShieldCheck className="w-5 h-5 text-amber-700 dark:text-amber-400 shrink-0" />
                   <span>
                     <strong>100% शून्य-जोखिम एस्क्रो:</strong> डिलीवरी के समय OTP सत्यापन के बाद ही किसान को भुगतान रिलीज़ किया जाएगा।
                   </span>
@@ -387,23 +387,23 @@ export default function CartDrawer() {
 
             {/* Bottom Summary & Checkout Trigger (Always Visible & Accessible) */}
             {cart.length > 0 && (
-              <div className="p-4 bg-white/95 border-t border-emerald-900/10 space-y-3 shadow-xl shrink-0">
-                <div className="space-y-1.5 text-xs text-emerald-900">
+              <div className="p-4 bg-white/95 dark:bg-[#0d2218] border-t border-emerald-900/10 dark:border-emerald-500/20 space-y-3 shadow-xl shrink-0">
+                <div className="space-y-1.5 text-xs text-emerald-900 dark:text-emerald-200">
                   <div className="flex justify-between">
-                    <span className="text-emerald-800/80">फ़सल उप-कुल (Subtotal):</span>
+                    <span className="text-emerald-800/80 dark:text-emerald-300/80">फ़सल उप-कुल (Subtotal):</span>
                     <span className="font-semibold">₹{(subtotalPaise / 100).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-emerald-800/80">स्मार्ट लॉजिस्टिक्स शुल्क (4%):</span>
+                    <span className="text-emerald-800/80 dark:text-emerald-300/80">स्मार्ट लॉजिस्टिक्स शुल्क (4%):</span>
                     <span className="font-semibold">₹{(logisticsFeePaise / 100).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-emerald-800/80">जीएसटी (GST Exemption):</span>
-                    <span className="font-semibold text-emerald-700">₹0.00 (कृषि छूट)</span>
+                    <span className="text-emerald-800/80 dark:text-emerald-300/80">जीएसटी (GST Exemption):</span>
+                    <span className="font-semibold text-emerald-700 dark:text-emerald-400">₹0.00 (कृषि छूट)</span>
                   </div>
-                  <div className="pt-2 border-t border-dashed border-emerald-900/20 flex justify-between text-base font-bold text-emerald-950">
+                  <div className="pt-2 border-t border-dashed border-emerald-900/20 dark:border-emerald-500/20 flex justify-between text-base font-bold text-emerald-950 dark:text-emerald-100">
                     <span>कुल देय राशि (Total):</span>
-                    <span className="text-amber-800 text-lg">₹{(totalPaise / 100).toFixed(2)}</span>
+                    <span className="text-amber-800 dark:text-amber-300 text-lg">₹{(totalPaise / 100).toFixed(2)}</span>
                   </div>
                 </div>
 
