@@ -83,21 +83,28 @@ export async function createOrder(input: CreateOrderInput) {
 
   // Ensure buyer existence in users table or auto-register under their exact user.id
   let actualBuyerId = buyerId || 'u_buyer_1';
-  const buyerUser = db.prepare('SELECT id, name FROM users WHERE id = ?').get(actualBuyerId);
+  let buyerUser = db.prepare('SELECT id, name FROM users WHERE id = ?').get(actualBuyerId);
   if (!buyerUser) {
     try {
       db.prepare(`
-        INSERT OR IGNORE INTO users (id, name, phone, email, role, address)
-        VALUES (?, ?, ?, ?, 'BUYER', ?)
+        INSERT OR IGNORE INTO users (id, name, phone, email, role, village, district, state, address)
+        VALUES (?, ?, ?, ?, 'BUYER', ?, ?, ?, ?)
       `).run(
         actualBuyerId,
-        input.buyerName || shipping?.fullName || 'Verified Buyer',
-        input.buyerPhone || shipping?.mobileNumber || '9811122233',
+        input.buyerName || shipping?.fullName || 'Piyush Kumar',
+        input.buyerPhone || shipping?.mobileNumber || '9999999999',
         input.buyerEmail || `${actualBuyerId}@kisanbandhan.ai`,
+        shipping?.postOffice || 'Viman Nagar',
+        shipping?.district || 'Pune',
+        shipping?.state || 'Maharashtra',
         canonicalAddress.trim()
       );
+      buyerUser = db.prepare('SELECT id, name FROM users WHERE id = ?').get(actualBuyerId);
     } catch (e) {
       console.warn('Auto-registering buyer user row notice:', e);
+    }
+    if (!buyerUser) {
+      actualBuyerId = 'u_buyer_1';
     }
   }
 
@@ -116,7 +123,7 @@ export async function createOrder(input: CreateOrderInput) {
       if (listing.location) pickupLocation = listing.location;
     }
   }
-  if (!actualFarmerId) {
+  if (!actualFarmerId || !db.prepare('SELECT id FROM users WHERE id = ?').get(actualFarmerId)) {
     actualFarmerId = 'u_farmer_1';
   }
 

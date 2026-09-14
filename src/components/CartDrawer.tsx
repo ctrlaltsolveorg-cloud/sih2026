@@ -217,13 +217,13 @@ export default function CartDrawer() {
 
       const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to place order');
+      if (!res.ok || data.success === false) {
+        throw new Error(data.message || data.error || 'Failed to place order');
       }
 
-      setPlacedOrderId(data.order?.id || `ord_${Date.now()}`);
-      setContractId(data.order?.contract_id || `KB-ESCROW-${Math.random().toString(36).substring(2, 9).toUpperCase()}`);
-      setDeliveryOtpCode(data.order?.delivery_otp || '4829');
+      setPlacedOrderId(data.orderId || data.order?.id || `ord_${Date.now()}`);
+      setContractId(data.smartContractHash || data.order?.contract_id || `KB-ESCROW-${Math.random().toString(36).substring(2, 9).toUpperCase()}`);
+      setDeliveryOtpCode(data.deliveryOtp || data.order?.delivery_otp || '4829');
 
       // Local storage active orders cache for 0ms refresh hydration
       try {
