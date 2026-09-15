@@ -88,6 +88,7 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
   ];
 
   const totalSlides = slides.length;
+  const [isPaused, setIsPaused] = useState(false);
 
   const goToNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % totalSlides);
@@ -101,8 +102,18 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
     setCurrentIndex(idx);
   };
 
+  // Auto-play interval: slides automatically every 4 seconds
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      goToNext();
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isPaused, goToNext]);
+
   // Touch handlers for mobile swipe gesture
   const handleTouchStart = (e: React.TouchEvent) => {
+    setIsPaused(true);
     touchStartX.current = e.targetTouches[0].clientX;
   };
 
@@ -111,6 +122,7 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
   };
 
   const handleTouchEnd = () => {
+    setIsPaused(false);
     if (!touchStartX.current || !touchEndX.current) return;
     const distance = touchStartX.current - touchEndX.current;
     const isLeftSwipe = distance > 45;
@@ -127,7 +139,11 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
   };
 
   return (
-    <div className="-mx-4 sm:-mx-8 lg:-mx-12 relative overflow-hidden text-amber-50 group my-2">
+    <div 
+      className="-mx-4 sm:-mx-8 lg:-mx-12 relative overflow-hidden text-amber-50 group my-2"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       {/* Full-Bleed Hero Section with Photo in Background */}
       <div
         className="relative min-h-[500px] sm:min-h-[540px] lg:min-h-[500px] flex items-center"
