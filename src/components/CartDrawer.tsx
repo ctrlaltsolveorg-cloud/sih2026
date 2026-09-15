@@ -119,19 +119,51 @@ export default function CartDrawer() {
   const totalPaise = subtotalPaise + logisticsFeePaise;
 
   const validateShippingForm = () => {
-    if (!shippingForm.fullName.trim()) return 'कृपया प्राप्तकर्ता का पूरा नाम दर्ज करें (Recipient Name is mandatory)';
+    if (!shippingForm.fullName.trim()) {
+      return language === 'hi'
+        ? 'कृपया प्राप्तकर्ता का पूरा नाम दर्ज करें (Recipient Name is mandatory)'
+        : 'Please enter recipient full name (Mandatory)';
+    }
     if (!shippingForm.mobileNumber.trim() || shippingForm.mobileNumber.replace(/\D/g, '').length < 10) {
-      return 'कृपया 10-अंकीय वैध मोबाइल नंबर दर्ज करें (Valid 10-digit mobile is mandatory)';
+      return language === 'hi'
+        ? 'कृपया 10-अंकीय वैध मोबाइल नंबर दर्ज करें (Valid 10-digit mobile is mandatory)'
+        : 'Please enter a valid 10-digit mobile number';
     }
     if (!shippingForm.pincode.trim() || shippingForm.pincode.replace(/\D/g, '').length !== 6) {
-      return 'कृपया 6-अंकीय वैध पिन कोड दर्ज करें (Valid 6-digit PIN code is mandatory)';
+      return language === 'hi'
+        ? 'कृपया 6-अंकीय वैध पिन कोड दर्ज करें (Valid 6-digit PIN code is mandatory)'
+        : 'Please enter a valid 6-digit PIN code';
     }
-    if (!shippingForm.flatBuilding.trim()) return 'कृपया मकान / फ्लैट / बिल्डिंग विवरण दर्ज करें (Flat/House No is mandatory)';
-    if (!shippingForm.areaStreet.trim()) return 'कृपया सड़क / मोहल्ला / क्षेत्र दर्ज करें (Street/Area is mandatory)';
-    if (!shippingForm.landmark.trim()) return 'कृपया नजदीकी लैंडमार्क दर्ज करें (Landmark is mandatory)';
-    if (!shippingForm.postOffice.trim()) return 'कृपया डाकघर / कस्बा दर्ज करें (Post Office is mandatory)';
-    if (!shippingForm.district.trim()) return 'कृपया शहर / जिला दर्ज करें (District/City is mandatory)';
-    if (!shippingForm.state.trim()) return 'कृपया राज्य चुनें (State is mandatory)';
+    if (!shippingForm.flatBuilding.trim()) {
+      return language === 'hi'
+        ? 'कृपया मकान / फ्लैट / बिल्डिंग विवरण दर्ज करें (Flat/House No is mandatory)'
+        : 'Please enter flat / building / house details (Mandatory)';
+    }
+    if (!shippingForm.areaStreet.trim()) {
+      return language === 'hi'
+        ? 'कृपया सड़क / मोहल्ला / क्षेत्र दर्ज करें (Street/Area is mandatory)'
+        : 'Please enter street / area / locality (Mandatory)';
+    }
+    if (!shippingForm.landmark.trim()) {
+      return language === 'hi'
+        ? 'कृपया नजदीकी लैंडमार्क दर्ज करें (Landmark is mandatory)'
+        : 'Please enter nearby landmark (Mandatory)';
+    }
+    if (!shippingForm.postOffice.trim()) {
+      return language === 'hi'
+        ? 'कृपया डाकघर / कस्बा दर्ज करें (Post Office is mandatory)'
+        : 'Please enter post office / town (Mandatory)';
+    }
+    if (!shippingForm.district.trim()) {
+      return language === 'hi'
+        ? 'कृपया शहर / जिला दर्ज करें (District/City is mandatory)'
+        : 'Please enter district / city (Mandatory)';
+    }
+    if (!shippingForm.state.trim()) {
+      return language === 'hi'
+        ? 'कृपया राज्य चुनें (State is mandatory)'
+        : 'Please select state (Mandatory)';
+    }
     return null;
   };
 
@@ -161,7 +193,11 @@ export default function CartDrawer() {
   // Step 2 Confirm & Place Order
   const handleConfirmCheckout = async () => {
     if (!userConfirmedIdentity) {
-      setCheckoutError('कृपया आदेश की पुष्टि के लिए नियम व पहचान सत्यापन चेकबॉक्स पर टिक करें।');
+      setCheckoutError(
+        language === 'hi'
+          ? 'कृपया आदेश की पुष्टि के लिए नियम व पहचान सत्यापन चेकबॉक्स पर टिक करें।'
+          : 'Please check the confirmation box to verify identity and place order.'
+      );
       return;
     }
 
@@ -379,7 +415,10 @@ export default function CartDrawer() {
                 <div className="p-3 bg-amber-500/10 border border-amber-600/20 rounded-xl text-xs text-amber-950 dark:text-amber-200 flex items-center gap-2.5">
                   <ShieldCheck className="w-5 h-5 text-amber-700 dark:text-amber-400 shrink-0" />
                   <span>
-                    <strong>100% शून्य-जोखिम एस्क्रो:</strong> डिलीवरी के समय OTP सत्यापन के बाद ही किसान को भुगतान रिलीज़ किया जाएगा।
+                    <strong>{language === 'hi' ? '100% शून्य-जोखिम एस्क्रो:' : '100% Zero-Risk Escrow:'}</strong>{' '}
+                    {language === 'hi'
+                      ? 'डिलीवरी के समय OTP सत्यापन के बाद ही किसान को भुगतान रिलीज़ किया जाएगा।'
+                      : 'Payment is securely held in escrow and released to the farmer only upon delivery OTP verification.'}
                   </span>
                 </div>
               )}
@@ -390,19 +429,27 @@ export default function CartDrawer() {
               <div className="p-4 bg-white/95 dark:bg-[#0d2218] border-t border-emerald-900/10 dark:border-emerald-500/20 space-y-3 shadow-xl shrink-0">
                 <div className="space-y-1.5 text-xs text-emerald-900 dark:text-emerald-200">
                   <div className="flex justify-between">
-                    <span className="text-emerald-800/80 dark:text-emerald-300/80">फ़सल उप-कुल (Subtotal):</span>
+                    <span className="text-emerald-800/80 dark:text-emerald-300/80">
+                      {language === 'hi' ? 'फ़सल उप-कुल (Subtotal):' : 'Crop Subtotal:'}
+                    </span>
                     <span className="font-semibold">₹{(subtotalPaise / 100).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-emerald-800/80 dark:text-emerald-300/80">स्मार्ट लॉजिस्टिक्स शुल्क (4%):</span>
+                    <span className="text-emerald-800/80 dark:text-emerald-300/80">
+                      {language === 'hi' ? 'स्मार्ट लॉजिस्टिक्स शुल्क (4%):' : 'Smart Logistics Fee (4%):'}
+                    </span>
                     <span className="font-semibold">₹{(logisticsFeePaise / 100).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-emerald-800/80 dark:text-emerald-300/80">जीएसटी (GST Exemption):</span>
-                    <span className="font-semibold text-emerald-700 dark:text-emerald-400">₹0.00 (कृषि छूट)</span>
+                    <span className="text-emerald-800/80 dark:text-emerald-300/80">
+                      {language === 'hi' ? 'जीएसटी (GST Exemption):' : 'GST Exemption:'}
+                    </span>
+                    <span className="font-semibold text-emerald-700 dark:text-emerald-400">
+                      {language === 'hi' ? '₹0.00 (कृषि छूट)' : '₹0.00 (Agri Exemption)'}
+                    </span>
                   </div>
                   <div className="pt-2 border-t border-dashed border-emerald-900/20 dark:border-emerald-500/20 flex justify-between text-base font-bold text-emerald-950 dark:text-emerald-100">
-                    <span>कुल देय राशि (Total):</span>
+                    <span>{language === 'hi' ? 'कुल देय राशि (Total):' : 'Total Payable:'}</span>
                     <span className="text-amber-800 dark:text-amber-300 text-lg">₹{(totalPaise / 100).toFixed(2)}</span>
                   </div>
                 </div>
@@ -413,14 +460,14 @@ export default function CartDrawer() {
                     className="w-full py-3.5 bg-[#0F3826] text-amber-50 font-bold rounded-xl shadow-lg hover:bg-emerald-900 transition flex items-center justify-center gap-2 text-sm"
                   >
                     <LogIn className="w-4 h-4 text-amber-400" />
-                    <span>लॉगिन करें और ऑर्डर दें</span>
+                    <span>{language === 'hi' ? 'लॉगिन करें और ऑर्डर दें' : 'Login & Place Order'}</span>
                   </button>
                 ) : (
                   <button
                     onClick={handleProceedToCheckout}
                     className="w-full py-3.5 bg-[#0F3826] text-amber-50 font-extrabold rounded-xl shadow-lg hover:bg-emerald-900 transition flex items-center justify-center gap-2 text-sm active:scale-[0.99]"
                   >
-                    <span>ऑर्डर आगे बढ़ाएं (डिलीवरी विवरण भरें)</span>
+                    <span>{language === 'hi' ? 'ऑर्डर आगे बढ़ाएं (डिलीवरी विवरण भरें)' : 'Proceed to Checkout (Shipping Details)'}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 )}
@@ -433,23 +480,23 @@ export default function CartDrawer() {
       {/* 2. DEDICATED FULL CHECKOUT & ADDRESS MODAL (FLIPKART / AMAZON STYLE POPUP) */}
       {isCheckoutModalOpen && (
         <div className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-md animate-fadeIn">
-          <div className="bg-[#FAF5EB] rounded-3xl max-w-2xl w-full shadow-2xl border-2 border-emerald-800/20 text-emerald-950 flex flex-col max-h-[92vh] overflow-hidden">
+          <div className="bg-[#FAF5EB] dark:bg-[#0c1f15] rounded-3xl max-w-2xl w-full shadow-2xl border-2 border-emerald-800/20 dark:border-emerald-600/30 text-emerald-950 dark:text-emerald-50 flex flex-col max-h-[92vh] overflow-hidden transition-colors">
             {/* Modal Header */}
-            <div className="p-4 sm:p-5 bg-[#0F3826] text-amber-50 flex items-center justify-between shrink-0 shadow-md">
+            <div className="p-4 sm:p-5 bg-[#0F3826] dark:bg-[#07170f] text-amber-50 flex items-center justify-between shrink-0 shadow-md">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-amber-500/20 rounded-xl">
                   <Truck className="w-5 h-5 text-amber-400" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-base sm:text-lg leading-tight">
-                    {checkoutStep === 'ADDRESS' && 'डिलीवरी पता एवं संपर्क विवरण'}
-                    {checkoutStep === 'CONFIRM' && 'ऑर्डर समीक्षा एवं पुष्टि'}
-                    {checkoutStep === 'SUCCESS' && 'ऑर्डर सफलतापूर्वक निष्पादित!'}
+                  <h3 className="font-extrabold text-base sm:text-lg leading-tight text-amber-50">
+                    {checkoutStep === 'ADDRESS' && (language === 'hi' ? 'डिलीवरी पता एवं संपर्क विवरण' : 'Delivery Address & Contact Details')}
+                    {checkoutStep === 'CONFIRM' && (language === 'hi' ? 'ऑर्डर समीक्षा एवं पुष्टि' : 'Order Review & Confirmation')}
+                    {checkoutStep === 'SUCCESS' && (language === 'hi' ? 'ऑर्डर सफलतापूर्वक निष्पादित!' : 'Order Placed Successfully!')}
                   </h3>
                   <p className="text-xs text-amber-200/80">
-                    {checkoutStep === 'ADDRESS' && 'चरण 1/2: सभी आवश्यक विवरण दर्ज करें'}
-                    {checkoutStep === 'CONFIRM' && 'चरण 2/2: विवरण की पुनः जांच करें और सुरक्षित लॉक करें'}
-                    {checkoutStep === 'SUCCESS' && 'शून्य-जोखिम एस्क्रो अनुबंध सक्रिय'}
+                    {checkoutStep === 'ADDRESS' && (language === 'hi' ? 'चरण 1/2: सभी आवश्यक विवरण दर्ज करें' : 'Step 1/2: Enter all shipping & contact information')}
+                    {checkoutStep === 'CONFIRM' && (language === 'hi' ? 'चरण 2/2: विवरण की पुनः जांच करें और सुरक्षित लॉक करें' : 'Step 2/2: Verify details and lock escrow protection')}
+                    {checkoutStep === 'SUCCESS' && (language === 'hi' ? 'शून्य-जोखिम एस्क्रो अनुबंध सक्रिय' : 'Zero-Risk Escrow Contract Active')}
                   </p>
                 </div>
               </div>
@@ -457,7 +504,7 @@ export default function CartDrawer() {
               {checkoutStep !== 'SUCCESS' && (
                 <button
                   onClick={() => setIsCheckoutModalOpen(false)}
-                  className="p-2 hover:bg-emerald-800 rounded-full transition text-amber-100"
+                  className="p-2 hover:bg-emerald-800 dark:hover:bg-emerald-900 rounded-full transition text-amber-100"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -470,42 +517,47 @@ export default function CartDrawer() {
               {checkoutStep === 'ADDRESS' && (
                 <div className="space-y-4">
                   {/* Order Quick Summary Banner */}
-                  <div className="p-3 bg-emerald-900/5 rounded-2xl border border-emerald-900/10 flex items-center justify-between text-xs">
-                    <span className="text-emerald-900 font-medium">
-                      कुल वस्तुएं: <strong>{cart.length} फ़सलें ({cart.reduce((a, b) => a + b.quantityKg, 0)} kg)</strong>
+                  <div className="p-3 bg-emerald-900/5 dark:bg-emerald-900/30 rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20 flex items-center justify-between text-xs">
+                    <span className="text-emerald-900 dark:text-emerald-200 font-medium">
+                      {language === 'hi' ? 'कुल वस्तुएं:' : 'Total Items:'}{' '}
+                      <strong>
+                        {cart.length} {language === 'hi' ? 'फ़सलें' : 'Crops'} ({cart.reduce((a, b) => a + b.quantityKg, 0)} kg)
+                      </strong>
                     </span>
-                    <span className="text-sm font-extrabold text-amber-900">
-                      कुल देय राशि: ₹{(totalPaise / 100).toFixed(2)}
+                    <span className="text-sm font-extrabold text-amber-900 dark:text-amber-300">
+                      {language === 'hi' ? 'कुल देय राशि:' : 'Total Payable:'} ₹{(totalPaise / 100).toFixed(2)}
                     </span>
                   </div>
 
                   {/* Flipkart / Amazon Section Title */}
-                  <div className="flex items-center justify-between border-b border-emerald-900/10 pb-2">
-                    <span className="text-xs sm:text-sm font-black text-emerald-950 flex items-center gap-1.5">
-                      <MapPin className="w-4 h-4 text-amber-600" />
-                      <span>डिलीवरी का पूरा पता (Delivery Postal Details)</span>
+                  <div className="flex items-center justify-between border-b border-emerald-900/10 dark:border-emerald-500/20 pb-2">
+                    <span className="text-xs sm:text-sm font-black text-emerald-950 dark:text-emerald-100 flex items-center gap-1.5">
+                      <MapPin className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                      <span>{language === 'hi' ? 'डिलीवरी का पूरा पता (Delivery Postal Details)' : 'Delivery Postal Details'}</span>
                     </span>
-                    <span className="text-[11px] text-red-600 font-bold">* सभी फ़ील्ड्स अनिवार्य हैं</span>
+                    <span className="text-[11px] text-red-600 dark:text-red-400 font-bold">
+                      {language === 'hi' ? '* सभी फ़ील्ड्स अनिवार्य हैं' : '* All fields are mandatory'}
+                    </span>
                   </div>
 
                   {/* Row 1: Full Name & Primary Mobile */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-emerald-900 mb-1">
-                        प्राप्तकर्ता का पूरा नाम *
+                      <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1">
+                        {language === 'hi' ? 'प्राप्तकर्ता का पूरा नाम *' : 'Recipient Full Name *'}
                       </label>
                       <input
                         type="text"
                         value={shippingForm.fullName}
                         onChange={(e) => setShippingForm({ ...shippingForm, fullName: e.target.value })}
-                        placeholder="उदा. पीयूष कुमार"
-                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 font-medium"
+                        placeholder={language === 'hi' ? 'उदा. पीयूष कुमार' : 'e.g. Piyush Kumar'}
+                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-emerald-900 mb-1">
-                        10-अंकीय प्राथमिक मोबाइल नंबर *
+                      <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1">
+                        {language === 'hi' ? '10-अंकीय प्राथमिक मोबाइल नंबर *' : '10-Digit Primary Mobile Number *'}
                       </label>
                       <input
                         type="tel"
@@ -515,7 +567,7 @@ export default function CartDrawer() {
                           setShippingForm({ ...shippingForm, mobileNumber: e.target.value.replace(/\D/g, '') })
                         }
                         placeholder="9876543210"
-                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 font-medium"
+                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
                   </div>
@@ -523,8 +575,8 @@ export default function CartDrawer() {
                   {/* Row 2: Alternate Mobile & PIN Code */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-emerald-900 mb-1">
-                        वैकल्पिक मोबाइल नंबर (Optional)
+                      <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1">
+                        {language === 'hi' ? 'वैकल्पिक मोबाइल नंबर (Optional)' : 'Alternate Mobile (Optional)'}
                       </label>
                       <input
                         type="tel"
@@ -533,14 +585,14 @@ export default function CartDrawer() {
                         onChange={(e) =>
                           setShippingForm({ ...shippingForm, altPhone: e.target.value.replace(/\D/g, '') })
                         }
-                        placeholder="उदा. 9811122233"
-                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 font-medium"
+                        placeholder={language === 'hi' ? 'उदा. 9811122233' : 'e.g. 9811122233'}
+                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-emerald-900 mb-1">
-                        पिन कोड (6-Digit PIN Code) *
+                      <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1">
+                        {language === 'hi' ? 'पिन कोड (6-Digit PIN Code) *' : 'PIN Code (6-Digit PIN Code) *'}
                       </label>
                       <input
                         type="text"
@@ -549,8 +601,8 @@ export default function CartDrawer() {
                         onChange={(e) =>
                           setShippingForm({ ...shippingForm, pincode: e.target.value.replace(/\D/g, '') })
                         }
-                        placeholder="उदा. 411014"
-                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 font-mono font-bold"
+                        placeholder="411014"
+                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-mono font-bold placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
                   </div>
@@ -558,28 +610,28 @@ export default function CartDrawer() {
                   {/* Row 3: Flat / House No. & Street / Area */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-emerald-900 mb-1">
-                        मकान / फ्लैट / भवन / फर्म संख्या *
+                      <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1">
+                        {language === 'hi' ? 'मकान / फ्लैट / भवन / फर्म संख्या *' : 'Flat / House / Building / Firm No. *'}
                       </label>
                       <input
                         type="text"
                         value={shippingForm.flatBuilding}
                         onChange={(e) => setShippingForm({ ...shippingForm, flatBuilding: e.target.value })}
-                        placeholder="उदा. फ्लैट 402, ग्रीन एकर्स अपार्टमेंट"
-                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 font-medium"
+                        placeholder={language === 'hi' ? 'उदा. फ्लैट 402, ग्रीन एकर्स अपार्टमेंट' : 'e.g. Flat 402, Green Acres Apt'}
+                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-emerald-900 mb-1">
-                        सड़क / मोहल्ला / गाँव / सेक्टर *
+                      <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1">
+                        {language === 'hi' ? 'सड़क / मोहल्ला / गाँव / सेक्टर *' : 'Street / Locality / Sector *'}
                       </label>
                       <input
                         type="text"
                         value={shippingForm.areaStreet}
                         onChange={(e) => setShippingForm({ ...shippingForm, areaStreet: e.target.value })}
-                        placeholder="उदा. विमान नगर मुख्य मार्ग, क्लोवर पार्क"
-                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 font-medium"
+                        placeholder={language === 'hi' ? 'उदा. विमान नगर मुख्य मार्ग, क्लोवर पार्क' : 'e.g. Viman Nagar Main Road'}
+                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
                   </div>
@@ -587,28 +639,28 @@ export default function CartDrawer() {
                   {/* Row 4: Landmark & Post Office */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-emerald-900 mb-1">
-                        प्रमुख पहचान स्थल (Landmark) *
+                      <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1">
+                        {language === 'hi' ? 'प्रमुख पहचान स्थल (Landmark) *' : 'Landmark *'}
                       </label>
                       <input
                         type="text"
                         value={shippingForm.landmark}
                         onChange={(e) => setShippingForm({ ...shippingForm, landmark: e.target.value })}
-                        placeholder="उदा. सिम्बायोसिस इंटरनेशनल स्कूल के पास"
-                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 font-medium"
+                        placeholder={language === 'hi' ? 'उदा. सिम्बायोसिस के पास' : 'e.g. Near Symbiosis Campus'}
+                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-emerald-900 mb-1">
-                        डाकघर / कस्बा (Post Office / Town) *
+                      <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1">
+                        {language === 'hi' ? 'डाकघर / कस्बा (Post Office / Town) *' : 'Post Office / Town *'}
                       </label>
                       <input
                         type="text"
                         value={shippingForm.postOffice}
                         onChange={(e) => setShippingForm({ ...shippingForm, postOffice: e.target.value })}
-                        placeholder="उदा. विमान नगर पोस्ट ऑफिस"
-                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 font-medium"
+                        placeholder={language === 'hi' ? 'उदा. विमान नगर पोस्ट ऑफिस' : 'e.g. Viman Nagar Post Office'}
+                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
                   </div>
@@ -616,29 +668,29 @@ export default function CartDrawer() {
                   {/* Row 5: District & State */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-emerald-900 mb-1">
-                        जिला / शहर (District / City) *
+                      <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1">
+                        {language === 'hi' ? 'जिला / शहर (District / City) *' : 'District / City *'}
                       </label>
                       <input
                         type="text"
                         value={shippingForm.district}
                         onChange={(e) => setShippingForm({ ...shippingForm, district: e.target.value })}
-                        placeholder="उदा. पुणे"
-                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 font-medium"
+                        placeholder={language === 'hi' ? 'उदा. पुणे' : 'e.g. Pune'}
+                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-emerald-900 mb-1">
-                        राज्य (State) *
+                      <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1">
+                        {language === 'hi' ? 'राज्य (State) *' : 'State *'}
                       </label>
                       <select
                         value={shippingForm.state}
                         onChange={(e) => setShippingForm({ ...shippingForm, state: e.target.value })}
-                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 font-medium cursor-pointer"
+                        className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium cursor-pointer"
                       >
                         {INDIAN_STATES.map((st) => (
-                          <option key={st} value={st}>
+                          <option key={st} value={st} className="dark:bg-[#132c1e] dark:text-emerald-100">
                             {st}
                           </option>
                         ))}
@@ -648,8 +700,8 @@ export default function CartDrawer() {
 
                   {/* Row 6: Address Type Selector */}
                   <div>
-                    <label className="block text-xs font-bold text-emerald-900 mb-1.5">
-                      पते का प्रकार (Address Type):
+                    <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1.5">
+                      {language === 'hi' ? 'पते का प्रकार (Address Type):' : 'Address Type:'}
                     </label>
                     <div className="grid grid-cols-3 gap-2">
                       <button
@@ -657,12 +709,12 @@ export default function CartDrawer() {
                         onClick={() => setShippingForm({ ...shippingForm, addressType: 'HOME' })}
                         className={`p-2.5 rounded-xl border text-center font-bold text-xs flex items-center justify-center gap-1.5 transition ${
                           shippingForm.addressType === 'HOME'
-                            ? 'bg-emerald-800 text-amber-50 border-emerald-900 shadow-sm'
-                            : 'bg-white text-emerald-900 border-emerald-900/20 hover:bg-emerald-50'
+                            ? 'bg-emerald-800 dark:bg-emerald-700 text-amber-50 border-emerald-900 shadow-sm'
+                            : 'bg-white dark:bg-[#132c1e] text-emerald-900 dark:text-emerald-200 border-emerald-900/20 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                         }`}
                       >
                         <Home className="w-4 h-4" />
-                        <span>घर (Home)</span>
+                        <span>{language === 'hi' ? 'घर (Home)' : 'Home'}</span>
                       </button>
 
                       <button
@@ -670,12 +722,12 @@ export default function CartDrawer() {
                         onClick={() => setShippingForm({ ...shippingForm, addressType: 'WORK' })}
                         className={`p-2.5 rounded-xl border text-center font-bold text-xs flex items-center justify-center gap-1.5 transition ${
                           shippingForm.addressType === 'WORK'
-                            ? 'bg-emerald-800 text-amber-50 border-emerald-900 shadow-sm'
-                            : 'bg-white text-emerald-900 border-emerald-900/20 hover:bg-emerald-50'
+                            ? 'bg-emerald-800 dark:bg-emerald-700 text-amber-50 border-emerald-900 shadow-sm'
+                            : 'bg-white dark:bg-[#132c1e] text-emerald-900 dark:text-emerald-200 border-emerald-900/20 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                         }`}
                       >
                         <Building2 className="w-4 h-4" />
-                        <span>दुकान/ऑफिस (Work)</span>
+                        <span>{language === 'hi' ? 'दुकान/ऑफिस (Work)' : 'Work / Office'}</span>
                       </button>
 
                       <button
@@ -683,34 +735,34 @@ export default function CartDrawer() {
                         onClick={() => setShippingForm({ ...shippingForm, addressType: 'MANDI_SHOP' })}
                         className={`p-2.5 rounded-xl border text-center font-bold text-xs flex items-center justify-center gap-1.5 transition ${
                           shippingForm.addressType === 'MANDI_SHOP'
-                            ? 'bg-emerald-800 text-amber-50 border-emerald-900 shadow-sm'
-                            : 'bg-white text-emerald-900 border-emerald-900/20 hover:bg-emerald-50'
+                            ? 'bg-emerald-800 dark:bg-emerald-700 text-amber-50 border-emerald-900 shadow-sm'
+                            : 'bg-white dark:bg-[#132c1e] text-emerald-900 dark:text-emerald-200 border-emerald-900/20 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                         }`}
                       >
                         <Store className="w-4 h-4" />
-                        <span>थोक मंडी (Mandi)</span>
+                        <span>{language === 'hi' ? 'थोक मंडी (Mandi)' : 'Wholesale Mandi'}</span>
                       </button>
                     </div>
                   </div>
 
                   {/* Row 7: Special Delivery Instructions */}
                   <div>
-                    <label className="block text-xs font-bold text-emerald-900 mb-1">
-                      विशेष डिलीवरी निर्देश (Delivery Instructions - Optional):
+                    <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1">
+                      {language === 'hi' ? 'विशेष डिलीवरी निर्देश (Delivery Instructions - Optional):' : 'Special Delivery Instructions (Optional):'}
                     </label>
                     <input
                       type="text"
                       value={shippingForm.deliveryInstructions}
                       onChange={(e) => setShippingForm({ ...shippingForm, deliveryInstructions: e.target.value })}
-                      placeholder="उदा. पहुंचने से 10 मिनट पहले कॉल करें; पिछले गेट पर माल उतारें"
-                      className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 font-medium"
+                      placeholder={language === 'hi' ? 'उदा. पहुंचने से 10 मिनट पहले कॉल करें' : 'e.g. Call 10 mins before arrival; deliver at gate'}
+                      className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                     />
                   </div>
 
                   {/* Row 8: Payment Method Selection */}
-                  <div className="pt-2 border-t border-emerald-900/10">
-                    <label className="block text-xs font-bold text-emerald-900 mb-1.5">
-                      भुगतान का तरीका (Payment Method):
+                  <div className="pt-2 border-t border-emerald-900/10 dark:border-emerald-500/20">
+                    <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1.5">
+                      {language === 'hi' ? 'भुगतान का तरीका (Payment Method):' : 'Payment Method:'}
                     </label>
                     <div className="grid grid-cols-2 gap-3">
                       <button
@@ -718,13 +770,15 @@ export default function CartDrawer() {
                         onClick={() => setPaymentMethod('UPI')}
                         className={`p-3 rounded-xl border text-left flex flex-col transition ${
                           paymentMethod === 'UPI'
-                            ? 'bg-emerald-800 text-amber-50 border-emerald-900 shadow-sm'
-                            : 'bg-white text-emerald-900 border-emerald-900/20 hover:bg-emerald-50'
+                            ? 'bg-emerald-800 dark:bg-emerald-700 text-amber-50 border-emerald-900 shadow-sm'
+                            : 'bg-white dark:bg-[#132c1e] text-emerald-900 dark:text-emerald-200 border-emerald-900/20 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                         }`}
                       >
-                        <span className="font-extrabold text-xs sm:text-sm">एस्क्रो UPI (Zero-Risk)</span>
-                        <span className={`text-[11px] ${paymentMethod === 'UPI' ? 'text-amber-200' : 'text-emerald-700/80'}`}>
-                          डिलीवरी OTP सत्यापन पर ही रिलीज़
+                        <span className="font-extrabold text-xs sm:text-sm">
+                          {language === 'hi' ? 'एस्क्रो UPI (Zero-Risk)' : 'Escrow UPI (Zero-Risk)'}
+                        </span>
+                        <span className={`text-[11px] ${paymentMethod === 'UPI' ? 'text-amber-200' : 'text-emerald-700/80 dark:text-emerald-400/80'}`}>
+                          {language === 'hi' ? 'डिलीवरी OTP सत्यापन पर ही रिलीज़' : 'Released only upon Delivery OTP verification'}
                         </span>
                       </button>
 
@@ -733,13 +787,15 @@ export default function CartDrawer() {
                         onClick={() => setPaymentMethod('COD')}
                         className={`p-3 rounded-xl border text-left flex flex-col transition ${
                           paymentMethod === 'COD'
-                            ? 'bg-emerald-800 text-amber-50 border-emerald-900 shadow-sm'
-                            : 'bg-white text-emerald-900 border-emerald-900/20 hover:bg-emerald-50'
+                            ? 'bg-emerald-800 dark:bg-emerald-700 text-amber-50 border-emerald-900 shadow-sm'
+                            : 'bg-white dark:bg-[#132c1e] text-emerald-900 dark:text-emerald-200 border-emerald-900/20 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                         }`}
                       >
-                        <span className="font-extrabold text-xs sm:text-sm">कैश ऑन डिलीवरी (COD)</span>
-                        <span className={`text-[11px] ${paymentMethod === 'COD' ? 'text-amber-200' : 'text-emerald-700/80'}`}>
-                          सामान मिलने पर भुगतान + OTP
+                        <span className="font-extrabold text-xs sm:text-sm">
+                          {language === 'hi' ? 'कैश ऑन डिलीवरी (COD)' : 'Cash on Delivery (COD)'}
+                        </span>
+                        <span className={`text-[11px] ${paymentMethod === 'COD' ? 'text-amber-200' : 'text-emerald-700/80 dark:text-emerald-400/80'}`}>
+                          {language === 'hi' ? 'सामान मिलने पर भुगतान + OTP' : 'Pay on Delivery + OTP verification'}
                         </span>
                       </button>
                     </div>
@@ -747,8 +803,8 @@ export default function CartDrawer() {
 
                   {/* Validation Error Alert */}
                   {checkoutError && (
-                    <div className="p-3 bg-red-100 border border-red-300 rounded-xl text-xs text-red-800 font-semibold flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                    <div className="p-3 bg-red-100 dark:bg-red-950/50 border border-red-300 dark:border-red-700/60 rounded-xl text-xs text-red-800 dark:text-red-200 font-semibold flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0 text-red-600 dark:text-red-400" />
                       <span>{checkoutError}</span>
                     </div>
                   )}
@@ -758,98 +814,110 @@ export default function CartDrawer() {
               {/* STEP 2: REVIEW & CONFIRMATION MODAL CARD */}
               {checkoutStep === 'CONFIRM' && (
                 <div className="space-y-4">
-                  <div className="p-4 bg-white rounded-2xl border border-emerald-900/15 shadow-sm space-y-2.5 text-xs">
-                    <div className="flex items-center justify-between border-b border-emerald-900/10 pb-2">
-                      <span className="font-extrabold text-emerald-950 text-sm flex items-center gap-1.5">
-                        <User className="w-4 h-4 text-emerald-700" />
+                  <div className="p-4 bg-white dark:bg-[#132c1e] rounded-2xl border border-emerald-900/15 dark:border-emerald-500/30 shadow-sm space-y-2.5 text-xs text-emerald-950 dark:text-emerald-100">
+                    <div className="flex items-center justify-between border-b border-emerald-900/10 dark:border-emerald-500/20 pb-2">
+                      <span className="font-extrabold text-emerald-950 dark:text-emerald-100 text-sm flex items-center gap-1.5">
+                        <User className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                         {shippingForm.fullName}
                       </span>
-                      <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-900 text-[11px] font-bold rounded-full">
+                      <span className="px-2.5 py-0.5 bg-emerald-100 dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-200 text-[11px] font-bold rounded-full">
                         {shippingForm.addressType === 'HOME'
-                          ? '🏠 घर (HOME)'
+                          ? (language === 'hi' ? '🏠 घर (HOME)' : '🏠 HOME')
                           : shippingForm.addressType === 'WORK'
-                          ? '🏢 ऑफिस (WORK)'
-                          : '🏪 थोक मंडी'}
+                          ? (language === 'hi' ? '🏢 ऑफिस (WORK)' : '🏢 WORK')
+                          : (language === 'hi' ? '🏪 थोक मंडी' : '🏪 MANDI')}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-4 text-emerald-900 font-semibold">
+                    <div className="flex items-center gap-4 text-emerald-900 dark:text-emerald-200 font-semibold">
                       <span className="flex items-center gap-1">
-                        <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                        <Phone className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                         +91 {shippingForm.mobileNumber}
                       </span>
                       {shippingForm.altPhone && (
-                        <span className="text-emerald-700">
-                          वैकल्पिक: +91 {shippingForm.altPhone}
+                        <span className="text-emerald-700 dark:text-emerald-400">
+                          {language === 'hi' ? 'वैकल्पिक:' : 'Alt:'} +91 {shippingForm.altPhone}
                         </span>
                       )}
                     </div>
 
-                    <div className="pt-1 text-emerald-950 space-y-1 font-medium leading-relaxed">
+                    <div className="pt-1 text-emerald-950 dark:text-emerald-100 space-y-1 font-medium leading-relaxed">
                       <p>{shippingForm.flatBuilding}, {shippingForm.areaStreet}</p>
-                      <p><strong className="text-emerald-900">लैंडमार्क:</strong> {shippingForm.landmark}</p>
-                      <p><strong className="text-emerald-900">डाकघर:</strong> {shippingForm.postOffice}</p>
-                      <p className="font-bold text-amber-900 text-sm">
+                      <p><strong className="text-emerald-900 dark:text-emerald-300">{language === 'hi' ? 'लैंडमार्क:' : 'Landmark:'}</strong> {shippingForm.landmark}</p>
+                      <p><strong className="text-emerald-900 dark:text-emerald-300">{language === 'hi' ? 'डाकघर:' : 'Post Office:'}</strong> {shippingForm.postOffice}</p>
+                      <p className="font-bold text-amber-900 dark:text-amber-300 text-sm">
                         {shippingForm.district}, {shippingForm.state} — {shippingForm.pincode}
                       </p>
                     </div>
 
                     {shippingForm.deliveryInstructions && (
-                      <div className="p-2.5 bg-emerald-50 rounded-xl text-xs text-emerald-800 flex items-center gap-1.5 border border-emerald-200/60">
-                        <FileText className="w-4 h-4 text-emerald-600 shrink-0" />
-                        <span><strong>निर्देश:</strong> {shippingForm.deliveryInstructions}</span>
+                      <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/60 rounded-xl text-xs text-emerald-800 dark:text-emerald-200 flex items-center gap-1.5 border border-emerald-200/60 dark:border-emerald-700/50">
+                        <FileText className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                        <span><strong>{language === 'hi' ? 'निर्देश:' : 'Instructions:'}</strong> {shippingForm.deliveryInstructions}</span>
                       </div>
                     )}
                   </div>
 
                   {/* Items & Smart Contract Summary */}
-                  <div className="p-4 bg-amber-500/10 rounded-2xl border border-amber-600/30 text-xs space-y-2 text-amber-950">
-                    <div className="font-bold text-amber-900 flex items-center gap-1.5">
+                  <div className="p-4 bg-amber-500/10 dark:bg-amber-950/30 rounded-2xl border border-amber-600/30 dark:border-amber-600/40 text-xs space-y-2 text-amber-950 dark:text-amber-100">
+                    <div className="font-bold text-amber-900 dark:text-amber-300 flex items-center gap-1.5">
                       <ShieldAlert className="w-4 h-4" />
-                      <span>फ़सल एवं सुरक्षित एस्क्रो सारांश</span>
+                      <span>{language === 'hi' ? 'फ़सल एवं सुरक्षित एस्क्रो सारांश' : 'Produce & Escrow Protection Summary'}</span>
                     </div>
-                    <div className="space-y-1.5 bg-white/90 p-3 rounded-xl border border-amber-300">
+                    <div className="space-y-1.5 bg-white/95 dark:bg-[#11271b] p-3 rounded-xl border border-amber-300 dark:border-amber-700/50 text-emerald-950 dark:text-emerald-100">
                       {cart.map((it, idx) => (
                         <div key={idx} className="flex justify-between text-xs">
                           <span>{getLocalizedCropName(it.cropName, language)} ({it.quantityKg}kg)</span>
                           <span className="font-bold">₹{((it.quantityKg * it.pricePaisePerKg) / 100).toFixed(2)}</span>
                         </div>
                       ))}
-                      <div className="flex justify-between text-xs text-emerald-800">
-                        <span>लॉजिस्टिक्स व एक्सप्रेस प्रेषण (4%):</span>
+                      <div className="flex justify-between text-xs text-emerald-800 dark:text-emerald-300">
+                        <span>{language === 'hi' ? 'लॉजिस्टिक्स व एक्सप्रेस प्रेषण (4%):' : 'Logistics & Express Freight (4%):'}</span>
                         <span className="font-bold">₹{(logisticsFeePaise / 100).toFixed(2)}</span>
                       </div>
-                      <div className="pt-2 border-t border-amber-200 flex justify-between font-extrabold text-sm text-emerald-950">
-                        <span>कुल देय राशि (Total Amount):</span>
-                        <span className="text-amber-900 text-base">₹{(totalPaise / 100).toFixed(2)}</span>
+                      <div className="pt-2 border-t border-amber-200 dark:border-amber-700/50 flex justify-between font-extrabold text-sm text-emerald-950 dark:text-emerald-100">
+                        <span>{language === 'hi' ? 'कुल देय राशि (Total Amount):' : 'Total Payable Amount:'}</span>
+                        <span className="text-amber-900 dark:text-amber-300 text-base">₹{(totalPaise / 100).toFixed(2)}</span>
                       </div>
                     </div>
-                    <p className="text-xs text-amber-900">
-                      भुगतान माध्यम:{' '}
+                    <p className="text-xs text-amber-900 dark:text-amber-300 font-medium">
+                      {language === 'hi' ? 'भुगतान माध्यम:' : 'Payment Method:'}{' '}
                       <strong>
-                        {paymentMethod === 'UPI' ? 'सुरक्षित एस्क्रो UPI (Held in Escrow)' : 'कैश ऑन डिलीवरी (COD)'}
+                        {paymentMethod === 'UPI'
+                          ? (language === 'hi' ? 'सुरक्षित एस्क्रो UPI (Held in Escrow)' : 'Secure Escrow UPI (Held in Escrow)')
+                          : (language === 'hi' ? 'कैश ऑन डिलीवरी (COD)' : 'Cash on Delivery (COD)')}
                       </strong>
                     </p>
                   </div>
 
                   {/* Confirmation Checkbox */}
-                  <label className="flex items-start gap-2.5 p-3.5 bg-emerald-50 rounded-xl border border-emerald-300 cursor-pointer">
+                  <label className="flex items-start gap-2.5 p-3.5 bg-emerald-50 dark:bg-[#11271b] rounded-xl border border-emerald-300 dark:border-emerald-700/60 cursor-pointer hover:border-emerald-400 transition">
                     <input
                       type="checkbox"
                       checked={userConfirmedIdentity}
                       onChange={(e) => setUserConfirmedIdentity(e.target.checked)}
-                      className="mt-0.5 rounded text-emerald-800 focus:ring-emerald-700 w-4 h-4 cursor-pointer"
+                      className="mt-0.5 rounded text-emerald-800 dark:text-emerald-400 focus:ring-emerald-700 w-4 h-4 cursor-pointer shrink-0"
                     />
-                    <span className="text-xs text-emerald-950 leading-snug">
-                      मैं पुष्टि करता/करती हूँ कि प्राप्तकर्ता <strong>{shippingForm.fullName}</strong> (+91{' '}
-                      {shippingForm.mobileNumber}) का डिलीवरी पता पूर्ण व सही है। यह ऑर्डर किसान पोर्टल पर लाइव प्रेषित
-                      किया जाए और मेरे खाते (<span className="font-mono text-emerald-800">{user?.id}</span>) में दर्ज हो।
+                    <span className="text-xs text-emerald-950 dark:text-emerald-100 leading-snug">
+                      {language === 'hi' ? (
+                        <>
+                          मैं पुष्टि करता/करती हूँ कि प्राप्तकर्ता <strong>{shippingForm.fullName}</strong> (+91{' '}
+                          {shippingForm.mobileNumber}) का डिलीवरी पता पूर्ण व सही है। यह ऑर्डर किसान पोर्टल पर लाइव प्रेषित
+                          किया जाए और मेरे खाते (<span className="font-mono font-bold text-emerald-800 dark:text-emerald-300">{user?.id}</span>) में दर्ज हो।
+                        </>
+                      ) : (
+                        <>
+                          I confirm that the recipient <strong>{shippingForm.fullName}</strong> (+91{' '}
+                          {shippingForm.mobileNumber}) and delivery address are verified and accurate. Place this order live on
+                          the Farmer Portal and register it under my account (<span className="font-mono font-bold text-emerald-800 dark:text-emerald-300">{user?.id}</span>).
+                        </>
+                      )}
                     </span>
                   </label>
 
                   {checkoutError && (
-                    <div className="p-3 bg-red-100 border border-red-300 rounded-xl text-xs text-red-800 font-semibold flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                    <div className="p-3 bg-red-100 dark:bg-red-950/50 border border-red-300 dark:border-red-700/60 rounded-xl text-xs text-red-800 dark:text-red-200 font-semibold flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0 text-red-600 dark:text-red-400" />
                       <span>{checkoutError}</span>
                     </div>
                   )}
@@ -859,64 +927,78 @@ export default function CartDrawer() {
               {/* STEP 3: ORDER SUCCESS & ESCROW OTP */}
               {checkoutStep === 'SUCCESS' && (
                 <div className="py-4 text-center space-y-4">
-                  <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-700 animate-bounce">
+                  <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/60 rounded-full flex items-center justify-center mx-auto text-emerald-700 dark:text-emerald-300 animate-bounce">
                     <CheckCircle2 className="w-10 h-10" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-extrabold text-emerald-950 mb-1">सुरक्षित एस्क्रो ऑर्डर निष्पादित!</h3>
-                    <p className="text-xs text-emerald-800/80">
-                      ऑर्डर ID: <span className="font-mono font-bold text-emerald-900">{placedOrderId}</span>
+                    <h3 className="text-xl font-extrabold text-emerald-950 dark:text-emerald-100 mb-1">
+                      {language === 'hi' ? 'सुरक्षित एस्क्रो ऑर्डर निष्पादित!' : 'Escrow Order Executed Successfully!'}
+                    </h3>
+                    <p className="text-xs text-emerald-800/80 dark:text-emerald-300/80">
+                      {language === 'hi' ? 'ऑर्डर ID:' : 'Order ID:'}{' '}
+                      <span className="font-mono font-bold text-emerald-900 dark:text-emerald-200">{placedOrderId}</span>
                     </p>
                   </div>
 
                   {/* Zero-Trust Delivery OTP Box */}
-                  <div className="w-full bg-amber-500/10 border-2 border-amber-600/30 rounded-2xl p-4 text-left shadow-sm">
+                  <div className="w-full bg-amber-500/10 dark:bg-amber-950/30 border-2 border-amber-600/30 dark:border-amber-600/40 rounded-2xl p-4 text-left shadow-sm">
                     <div className="flex items-center gap-2 mb-2">
-                      <ShieldCheck className="w-5 h-5 text-amber-700" />
-                      <span className="font-extrabold text-xs uppercase tracking-wider text-amber-950">
-                        डिलीवरी सत्यापन कोड (Delivery Handover OTP)
+                      <ShieldCheck className="w-5 h-5 text-amber-700 dark:text-amber-400" />
+                      <span className="font-extrabold text-xs uppercase tracking-wider text-amber-950 dark:text-amber-200">
+                        {language === 'hi' ? 'डिलीवरी सत्यापन कोड (Delivery Handover OTP)' : 'Delivery Handover OTP Code'}
                       </span>
                     </div>
-                    <div className="bg-white rounded-xl p-3 border border-amber-300 text-center mb-2 shadow-inner">
-                      <span className="text-3xl font-mono font-black tracking-[0.3em] text-emerald-950">
+                    <div className="bg-white dark:bg-[#132c1e] rounded-xl p-3 border border-amber-300 dark:border-amber-700/50 text-center mb-2 shadow-inner">
+                      <span className="text-3xl font-mono font-black tracking-[0.3em] text-emerald-950 dark:text-emerald-100">
                         {deliveryOtpCode || '4829'}
                       </span>
                     </div>
-                    <p className="text-xs text-amber-950 leading-relaxed">
-                      <strong className="text-amber-900">सुरक्षा निर्देश:</strong> यह 4-अंकीय OTP डिलीवरी एजेंट को{' '}
-                      <strong>केवल तभी बताएं जब आप फसल का वजन और गुणवत्ता जांच लें</strong>। आपके OTP सत्यापित करने के
-                      बाद ही एस्क्रो से किसान को भुगतान रिलीज़ होगा।
+                    <p className="text-xs text-amber-950 dark:text-amber-200 leading-relaxed">
+                      <strong className="text-amber-900 dark:text-amber-300">{language === 'hi' ? 'सुरक्षा निर्देश:' : 'Security Directive:'}</strong>{' '}
+                      {language === 'hi'
+                        ? 'यह 4-अंकीय OTP डिलीवरी एजेंट को केवल तभी बताएं जब आप फसल का वजन और गुणवत्ता जांच लें। आपके OTP सत्यापित करने के बाद ही एस्क्रो से किसान को भुगतान रिलीज़ होगा।'
+                        : 'Share this 4-digit OTP with the delivery agent only after verifying produce quantity and quality. Escrow payment will be released to the farmer upon OTP confirmation.'}
                     </p>
                   </div>
 
-                  <div className="p-3.5 bg-emerald-900/5 rounded-xl border border-emerald-900/10 w-full text-left text-xs space-y-1.5 font-mono">
-                    <p className="text-emerald-900 font-bold">स्मार्ट कॉन्ट्रैक्ट ID: {contractId}</p>
-                    <p className="text-emerald-800">
-                      भुगतान स्थिति: <span className="text-amber-700 font-bold">एस्क्रो में सुरक्षित लॉक (Held in Escrow)</span>
+                  <div className="p-3.5 bg-emerald-900/5 dark:bg-emerald-900/30 rounded-xl border border-emerald-900/10 dark:border-emerald-500/20 w-full text-left text-xs space-y-1.5 font-mono text-emerald-950 dark:text-emerald-200">
+                    <p className="text-emerald-900 dark:text-emerald-100 font-bold">
+                      {language === 'hi' ? 'स्मार्ट कॉन्ट्रैक्ट ID:' : 'Smart Contract ID:'} {contractId}
                     </p>
-                    <p className="text-emerald-800">किसान पोर्टल: <span className="text-emerald-700 font-bold">सक्रिय खरीद आदेश में प्रेषित</span></p>
+                    <p className="text-emerald-800 dark:text-emerald-300">
+                      {language === 'hi' ? 'भुगतान स्थिति:' : 'Payment Status:'}{' '}
+                      <span className="text-amber-700 dark:text-amber-300 font-bold">
+                        {language === 'hi' ? 'एस्क्रो में सुरक्षित लॉक (Held in Escrow)' : 'Locked in Escrow'}
+                      </span>
+                    </p>
+                    <p className="text-emerald-800 dark:text-emerald-300">
+                      {language === 'hi' ? 'किसान पोर्टल:' : 'Farmer Portal:'}{' '}
+                      <span className="text-emerald-700 dark:text-emerald-400 font-bold">
+                        {language === 'hi' ? 'सक्रिय खरीद आदेश में प्रेषित' : 'Transmitted to live procurement board'}
+                      </span>
+                    </p>
                   </div>
                 </div>
               )}
             </div>
 
             {/* Modal Sticky Footer Actions */}
-            <div className="p-4 bg-white border-t border-emerald-900/10 flex items-center justify-between gap-3 shrink-0">
+            <div className="p-4 bg-white dark:bg-[#07170f] border-t border-emerald-900/10 dark:border-emerald-500/20 flex items-center justify-between gap-3 shrink-0">
               {checkoutStep === 'ADDRESS' && (
                 <>
                   <button
                     type="button"
                     onClick={() => setIsCheckoutModalOpen(false)}
-                    className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded-xl text-xs sm:text-sm transition"
+                    className="px-4 py-2.5 bg-gray-100 dark:bg-[#132c1e] hover:bg-gray-200 dark:hover:bg-emerald-900/40 text-gray-800 dark:text-emerald-200 font-bold rounded-xl text-xs sm:text-sm transition"
                   >
-                    टोकरी पर वापस (Back)
+                    {language === 'hi' ? 'टोकरी पर वापस (Back)' : 'Back to Cart'}
                   </button>
                   <button
                     type="button"
                     onClick={handleReviewOrder}
-                    className="px-6 py-2.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-extrabold rounded-xl text-xs sm:text-sm shadow-lg transition flex items-center gap-2 ml-auto"
+                    className="px-6 py-2.5 bg-[#0F3826] dark:bg-emerald-700 hover:bg-emerald-900 dark:hover:bg-emerald-600 text-amber-50 font-extrabold rounded-xl text-xs sm:text-sm shadow-lg transition flex items-center gap-2 ml-auto"
                   >
-                    <span>समीक्षा एवं पुष्टि करें (Review Order)</span>
+                    <span>{language === 'hi' ? 'समीक्षा एवं पुष्टि करें (Review Order)' : 'Review & Confirm Order'}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </>
@@ -927,23 +1009,23 @@ export default function CartDrawer() {
                   <button
                     type="button"
                     onClick={() => setCheckoutStep('ADDRESS')}
-                    className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5"
+                    className="px-4 py-2.5 bg-gray-100 dark:bg-[#132c1e] hover:bg-gray-200 dark:hover:bg-emerald-900/40 text-gray-800 dark:text-emerald-200 font-bold rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5"
                   >
                     <ChevronLeft className="w-4 h-4" />
-                    <span>पता बदलें (Edit Address)</span>
+                    <span>{language === 'hi' ? 'पता बदलें (Edit Address)' : 'Edit Address'}</span>
                   </button>
                   <button
                     type="button"
                     onClick={handleConfirmCheckout}
                     disabled={isSubmitting || !userConfirmedIdentity}
-                    className="px-6 py-2.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-100 font-extrabold rounded-xl text-xs sm:text-sm shadow-lg transition flex items-center gap-2 ml-auto disabled:opacity-50"
+                    className="px-6 py-2.5 bg-[#0F3826] dark:bg-emerald-700 hover:bg-emerald-900 dark:hover:bg-emerald-600 text-amber-100 font-extrabold rounded-xl text-xs sm:text-sm shadow-lg transition flex items-center gap-2 ml-auto disabled:opacity-50"
                   >
                     {isSubmitting ? (
-                      <span>ऑर्डर निष्पादित हो रहा है...</span>
+                      <span>{language === 'hi' ? 'ऑर्डर निष्पादित हो रहा है...' : 'Processing order...'}</span>
                     ) : (
                       <>
                         <Check className="w-4 h-4 text-emerald-400" />
-                        <span>✓ पुष्टि करें एवं ऑर्डर दें</span>
+                        <span>{language === 'hi' ? '✓ पुष्टि करें एवं ऑर्डर दें' : '✓ Confirm & Place Order'}</span>
                       </>
                     )}
                   </button>
@@ -954,9 +1036,9 @@ export default function CartDrawer() {
                 <button
                   type="button"
                   onClick={handleFinishAndGoToDashboard}
-                  className="w-full py-3 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-sm shadow-lg transition flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-[#0F3826] dark:bg-emerald-700 hover:bg-emerald-900 dark:hover:bg-emerald-600 text-amber-50 font-bold rounded-xl text-sm shadow-lg transition flex items-center justify-center gap-2"
                 >
-                  <span>पूर्ण करें एवं डैशबोर्ड में देखें (View Orders Dashboard)</span>
+                  <span>{language === 'hi' ? 'पूर्ण करें एवं डैशबोर्ड में देखें (View Orders Dashboard)' : 'Complete & View Orders Dashboard'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               )}
