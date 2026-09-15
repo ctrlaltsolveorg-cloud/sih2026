@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS public.product_listings (
     id TEXT PRIMARY KEY,
     farmer_id TEXT NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
     fpo_id TEXT,
-    crop_name TEXT NOT NULL,
+    -- Supported Categories: 'Vegetables', 'Fruits', 'Grains', 'Pulses', 'Seeds', 'Spices', 'Dairy', 'Herbs', 'Cash Crops', 'Flowers'
     category TEXT NOT NULL DEFAULT 'Vegetables',
     quantity_available INTEGER NOT NULL DEFAULT 500,
     unit TEXT NOT NULL DEFAULT 'kg',
