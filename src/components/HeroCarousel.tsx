@@ -127,10 +127,10 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
   };
 
   return (
-    <div className="w-full space-y-3">
-      {/* Banner Box with Smooth Cross-Fade Slides */}
+    <div className="-mx-4 sm:-mx-8 lg:-mx-12 relative overflow-hidden text-amber-50 group my-2">
+      {/* Full-Bleed Hero Section with Photo in Background */}
       <div
-        className="relative overflow-hidden rounded-3xl text-amber-50 shadow-2xl border border-amber-500/30 group"
+        className="relative min-h-[500px] sm:min-h-[540px] lg:min-h-[500px] flex items-center"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -138,132 +138,131 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
         aria-roledescription="carousel"
         aria-label="KisanBandhan Agriculture Hero Carousel"
       >
-        {/* Slides Container */}
-        <div className="relative min-h-[480px] sm:min-h-[520px] lg:min-h-[460px] flex items-center">
-          {slides.map((slide, idx) => {
-            const isActive = idx === currentIndex;
-            const isHindi = language === 'hi';
+        {/* Slides with Photo in Background */}
+        {slides.map((slide, idx) => {
+          const isActive = idx === currentIndex;
+          const isHindi = language === 'hi';
 
-            return (
+          return (
+            <div
+              key={slide.id}
+              aria-hidden={!isActive}
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                isActive ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none z-0'
+              }`}
+            >
+              {/* Photo directly in background spanning full width */}
               <div
-                key={slide.id}
-                aria-hidden={!isActive}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                  isActive ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none z-0'
+                className={`absolute inset-0 bg-cover bg-center bg-no-repeat transform transition-transform duration-1000 ease-out ${
+                  isActive ? 'scale-105' : 'scale-100'
                 }`}
-              >
-                {/* Background Image with subtle scale */}
-                <div
-                  className={`absolute inset-0 bg-cover bg-center bg-no-repeat transform transition-transform duration-1000 ease-out ${
-                    isActive ? 'scale-105' : 'scale-100'
-                  }`}
-                  style={{ backgroundImage: `url('${slide.image}')` }}
-                />
+                style={{ backgroundImage: `url('${slide.image}')` }}
+              />
 
-                {/* Dark Gradient and Protective Vignette Layer for maximum readability */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#041a10]/95 via-[#07281c]/85 to-[#051e14]/92" />
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-500/20 via-transparent to-black/60" />
+              {/* Cinematic Dark Gradient Layers for perfect contrast */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#041a10]/95 via-[#07281c]/80 to-[#051e14]/90" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#FAF5EB] dark:from-[#07170f] via-transparent to-transparent opacity-95" />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-500/20 via-transparent to-black/60" />
 
-                {/* Ambient Glows */}
-                <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
+              {/* Ambient Glows */}
+              <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
 
-                {/* Content Overlay */}
-                <div className="relative z-10 h-full flex items-center p-6 sm:p-10 lg:p-12">
-                  <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    {/* Left Column: Heading, Description & CTA */}
-                    <div className="lg:col-span-7 space-y-5 sm:space-y-6">
-                      {/* Tag / Badge */}
-                      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs font-semibold backdrop-blur-sm shadow-sm">
-                        <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                        <span>{isHindi ? slide.badgeHi : slide.badgeEn}</span>
-                      </div>
-
-                      {/* Main Title */}
-                      <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-amber-50 leading-tight drop-shadow-md">
-                        {isHindi ? slide.titleHi : slide.titleEn}
-                      </h1>
-
-                      {/* Description */}
-                      <p className="text-xs sm:text-sm lg:text-base text-amber-100/90 leading-relaxed max-w-2xl drop-shadow-sm font-normal">
-                        {isHindi ? slide.descHi : slide.descEn}
-                      </p>
-
-                      {/* Action Buttons */}
-                      <div className="flex flex-wrap items-center gap-3 pt-2">
-                        {/* CTA 1: Explore Products */}
-                        <a
-                          href="#marketplace"
-                          onClick={onExploreClick}
-                          className="px-5 sm:px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl shadow-lg hover:shadow-amber-500/30 transition-all flex items-center gap-2 text-xs sm:text-sm active:scale-95"
-                          id="hero-carousel-explore-cta"
-                        >
-                          <ShoppingBag className="w-4 h-4" />
-                          <span>{isHindi ? slide.ctaPrimaryHi : slide.ctaPrimaryEn}</span>
-                        </a>
-
-                        {/* CTA 2: Register as Farmer */}
-                        <Link
-                          href="/farmer"
-                          className="px-5 sm:px-6 py-3 bg-emerald-800/80 hover:bg-emerald-700 text-amber-100 border border-amber-400/40 font-bold rounded-xl shadow-md transition-all flex items-center gap-2 text-xs sm:text-sm active:scale-95 backdrop-blur-sm"
-                          id="hero-carousel-register-cta"
-                        >
-                          <Sprout className="w-4 h-4 text-amber-400" />
-                          <span>{isHindi ? slide.ctaSecondaryHi : slide.ctaSecondaryEn}</span>
-                        </Link>
-
-                        {/* Toll-free IVR Voice badge */}
-                        <div className="w-full sm:w-auto px-3.5 py-2.5 bg-emerald-950/90 border border-amber-500/30 rounded-xl text-[11px] sm:text-xs text-amber-200 flex items-center gap-2 shadow-inner">
-                          <PhoneCall className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                          <span>
-                            <strong className="text-amber-300">1800-KISAN-AI</strong> (Toll-Free IVR Helpline)
-                          </span>
-                        </div>
-                      </div>
+              {/* Content Overlay */}
+              <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 flex items-center py-10 sm:py-16">
+                <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                  {/* Left Column: Heading, Description & CTA */}
+                  <div className="lg:col-span-7 space-y-5 sm:space-y-6">
+                    {/* Tag / Badge */}
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs font-semibold backdrop-blur-sm shadow-sm">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                      <span>{isHindi ? slide.badgeHi : slide.badgeEn}</span>
                     </div>
 
-                    {/* Right Column: Platform Proof & Live Trust Metrics */}
-                    <div className="lg:col-span-5 grid grid-cols-2 gap-3 sm:gap-4">
-                      <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-amber-400/60 hover:bg-[#072417]/85 transition">
-                        <div className="text-2xl sm:text-3xl font-extrabold text-amber-400">0%</div>
-                        <div className="text-xs text-amber-100 font-medium">{t.statMiddlemen || 'बिचौलिए (Middlemen)'}</div>
-                        <p className="text-[10px] text-amber-200/70">{t.statMiddlemenDesc || 'सीधा बैंक अंतरण'}</p>
-                      </div>
+                    {/* Main Title */}
+                    <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-amber-50 leading-tight drop-shadow-md">
+                      {isHindi ? slide.titleHi : slide.titleEn}
+                    </h1>
 
-                      <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-emerald-400/60 hover:bg-[#072417]/85 transition">
-                        <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400">99.4%</div>
-                        <div className="text-xs text-amber-100 font-medium">{t.statCVGrading || 'AI ग्रेडिंग सटीकता'}</div>
-                        <p className="text-[10px] text-amber-200/70">{t.statCVGradingDesc || 'कंप्यूटर विज़न लैब'}</p>
-                      </div>
+                    {/* Description */}
+                    <p className="text-xs sm:text-sm lg:text-base text-amber-100/90 leading-relaxed max-w-2xl drop-shadow-sm font-normal">
+                      {isHindi ? slide.descHi : slide.descEn}
+                    </p>
 
-                      <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-amber-400/60 hover:bg-[#072417]/85 transition">
-                        <div className="text-2xl sm:text-3xl font-extrabold text-amber-400">6 AI</div>
-                        <div className="text-xs text-amber-100 font-medium">{t.statAIEngines || 'इंजन एकीकृत'}</div>
-                        <p className="text-[10px] text-amber-200/70">{t.statAIEnginesDesc || 'मूल्य, मार्ग व गुणवत्ता'}</p>
-                      </div>
+                    {/* Action Buttons */}
+                    <div className="flex flex-wrap items-center gap-3 pt-2">
+                      {/* CTA 1: Explore Products */}
+                      <a
+                        href="#marketplace"
+                        onClick={onExploreClick}
+                        className="px-5 sm:px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl shadow-lg hover:shadow-amber-500/30 transition-all flex items-center gap-2 text-xs sm:text-sm active:scale-95"
+                        id="hero-carousel-explore-cta"
+                      >
+                        <ShoppingBag className="w-4 h-4" />
+                        <span>{isHindi ? slide.ctaPrimaryHi : slide.ctaPrimaryEn}</span>
+                      </a>
 
-                      <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-emerald-400/60 text-center space-y-1 shadow-lg hover:bg-[#072417]/85 transition">
-                        <div className="text-xl sm:text-2xl font-extrabold text-emerald-400">IVR/SMS</div>
-                        <div className="text-xs text-amber-100 font-medium">{t.statNoInternet || 'बिना इंटरनेट'}</div>
-                        <p className="text-[10px] text-amber-200/70">{t.statNoInternetDesc || 'कीपैड फोन सपोर्ट'}</p>
+                      {/* CTA 2: Register as Farmer */}
+                      <Link
+                        href="/farmer"
+                        className="px-5 sm:px-6 py-3 bg-emerald-800/80 hover:bg-emerald-700 text-amber-100 border border-amber-400/40 font-bold rounded-xl shadow-md transition-all flex items-center gap-2 text-xs sm:text-sm active:scale-95 backdrop-blur-sm"
+                        id="hero-carousel-register-cta"
+                      >
+                        <Sprout className="w-4 h-4 text-amber-400" />
+                        <span>{isHindi ? slide.ctaSecondaryHi : slide.ctaSecondaryEn}</span>
+                      </Link>
+
+                      {/* Toll-free IVR Voice badge */}
+                      <div className="w-full sm:w-auto px-3.5 py-2.5 bg-emerald-950/90 border border-amber-500/30 rounded-xl text-[11px] sm:text-xs text-amber-200 flex items-center gap-2 shadow-inner">
+                        <PhoneCall className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                        <span>
+                          <strong className="text-amber-300">1800-KISAN-AI</strong> (Toll-Free IVR Helpline)
+                        </span>
                       </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column: Platform Proof & Live Trust Metrics */}
+                  <div className="lg:col-span-5 grid grid-cols-2 gap-3 sm:gap-4">
+                    <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-amber-400/60 hover:bg-[#072417]/85 transition">
+                      <div className="text-2xl sm:text-3xl font-extrabold text-amber-400">0%</div>
+                      <div className="text-xs text-amber-100 font-medium">{t.statMiddlemen || 'बिचौलिए (Middlemen)'}</div>
+                      <p className="text-[10px] text-amber-200/70">{t.statMiddlemenDesc || 'सीधा बैंक अंतरण'}</p>
+                    </div>
+
+                    <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-emerald-400/60 hover:bg-[#072417]/85 transition">
+                      <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400">99.4%</div>
+                      <div className="text-xs text-amber-100 font-medium">{t.statCVGrading || 'AI ग्रेडिंग सटीकता'}</div>
+                      <p className="text-[10px] text-amber-200/70">{t.statCVGradingDesc || 'कंप्यूटर विज़न लैब'}</p>
+                    </div>
+
+                    <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-amber-400/60 hover:bg-[#072417]/85 transition">
+                      <div className="text-2xl sm:text-3xl font-extrabold text-amber-400">6 AI</div>
+                      <div className="text-xs text-amber-100 font-medium">{t.statAIEngines || 'इंजन एकीकृत'}</div>
+                      <p className="text-[10px] text-amber-200/70">{t.statAIEnginesDesc || 'मूल्य, मार्ग व गुणवत्ता'}</p>
+                    </div>
+
+                    <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-emerald-400/60 text-center space-y-1 shadow-lg hover:bg-[#072417]/85 transition">
+                      <div className="text-xl sm:text-2xl font-extrabold text-emerald-400">IVR/SMS</div>
+                      <div className="text-xs text-amber-100 font-medium">{t.statNoInternet || 'बिना इंटरनेट'}</div>
+                      <p className="text-[10px] text-amber-200/70">{t.statNoInternetDesc || 'कीपैड फोन सपोर्ट'}</p>
                     </div>
                   </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
 
         {/* Previous Arrow Button */}
         <button
           type="button"
           onClick={goToPrev}
           aria-label="Previous Slide"
-          className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/40 hover:bg-black/70 text-amber-200 hover:text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-110 active:scale-95 shadow-lg"
+          className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/80 text-amber-200 hover:text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-110 active:scale-95 shadow-xl"
           id="hero-carousel-prev"
         >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ChevronLeft className="w-6 h-6" />
         </button>
 
         {/* Next Arrow Button */}
@@ -271,42 +270,42 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
           type="button"
           onClick={goToNext}
           aria-label="Next Slide"
-          className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/40 hover:bg-black/70 text-amber-200 hover:text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-110 active:scale-95 shadow-lg"
+          className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/80 text-amber-200 hover:text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-110 active:scale-95 shadow-xl"
           id="hero-carousel-next"
         >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ChevronRight className="w-6 h-6" />
         </button>
-      </div>
 
-      {/* Manual Navigation Dots Below the Banner */}
-      <div 
-        className="flex items-center justify-center gap-1.5 pt-2 pb-1"
-        role="tablist"
-        aria-label="Hero carousel pagination"
-      >
-        {slides.map((slide, index) => {
-          const isActive = index === currentIndex;
-          return (
-            <button
-              key={slide.id}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              aria-label={`Slide ${index + 1} of ${totalSlides}`}
-              title={language === 'hi' ? slide.titleHi : slide.titleEn}
-              onClick={() => goToSlide(index)}
-              className="p-2 cursor-pointer focus:outline-none group"
-            >
-              <span
-                className={`block transition-all duration-300 rounded-full ${
-                  isActive
-                    ? 'w-7 h-2.5 bg-emerald-600 dark:bg-amber-400 shadow-md ring-2 ring-emerald-500/30'
-                    : 'w-2.5 h-2.5 bg-emerald-900/30 dark:bg-emerald-200/40 group-hover:bg-emerald-600 group-hover:scale-125 dark:group-hover:bg-amber-400'
-                }`}
-              />
-            </button>
-          );
-        })}
+        {/* Manual Navigation Dots at Bottom */}
+        <div 
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10"
+          role="tablist"
+          aria-label="Hero carousel pagination"
+        >
+          {slides.map((slide, index) => {
+            const isActive = index === currentIndex;
+            return (
+              <button
+                key={slide.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-label={`Slide ${index + 1} of ${totalSlides}`}
+                title={language === 'hi' ? slide.titleHi : slide.titleEn}
+                onClick={() => goToSlide(index)}
+                className="p-1 cursor-pointer focus:outline-none group"
+              >
+                <span
+                  className={`block transition-all duration-300 rounded-full ${
+                    isActive
+                      ? 'w-7 h-2 bg-amber-400 shadow-md ring-2 ring-amber-400/40'
+                      : 'w-2 h-2 bg-white/40 group-hover:bg-white/80 group-hover:scale-125'
+                  }`}
+                />
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
