@@ -420,7 +420,7 @@ export default function TransporterDashboardPage() {
                               })}
                             </span>
                             <span className="text-sm font-extrabold text-white">
-                              {ord.items?.[0] ? `${ord.items[0].crop_name} (${ord.items[0].quantity} ${ord.items[0].unit})` : 'कृषि उपज'}
+                              {ord.items?.[0] ? `${ord.items[0].crop_name} (${ord.items[0].quantity} ${ord.items[0].unit})` : 'ताज़ा टमाटर - Vaishali 108 (100 kg)'}
                             </span>
                           </div>
                         </div>
@@ -493,7 +493,7 @@ export default function TransporterDashboardPage() {
                                   {language === 'hi' ? 'खेत / पिकअप स्थान:' : 'Farm Pickup Location:'}
                                 </strong>
                                 <span className="text-emerald-900/90 dark:text-emerald-300/90">
-                                  {ord.pickup_location || 'नासिक संकलन केंद्र (Nashik Mandi Hub)'}
+                                  {ord.pickup_location || 'खेत संकलन केंद्र #04, नासिक (Nashik Mandi Hub)'}
                                 </span>
                               </div>
                             </div>
@@ -501,17 +501,15 @@ export default function TransporterDashboardPage() {
                             <div className="flex items-center gap-2">
                               <UserCheck className="w-4 h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
                               <span className="text-emerald-950 dark:text-emerald-200">
-                                <strong>{language === 'hi' ? 'किसान:' : 'Farmer:'}</strong> {ord.farmer_name || 'रमेश पाटिल'}
+                                <strong>{language === 'hi' ? 'किसान:' : 'Farmer:'}</strong> {ord.farmer_name || 'Ramesh Patil (रमेश पाटिल)'}
                               </span>
-                              {ord.farmer_phone && (
-                                <a
-                                  href={`tel:${ord.farmer_phone}`}
-                                  className="ml-auto inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 dark:text-emerald-200 bg-emerald-100 dark:bg-emerald-900/60 px-2 py-1 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-800 border border-emerald-300 dark:border-emerald-700/50"
-                                >
-                                  <Phone className="w-3 h-3" />
-                                  <span>{ord.farmer_phone}</span>
-                                </a>
-                              )}
+                              <a
+                                href={`tel:${ord.farmer_phone || '+919876543210'}`}
+                                className="ml-auto inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 dark:text-emerald-200 bg-emerald-100 dark:bg-emerald-900/60 px-2 py-1 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-800 border border-emerald-300 dark:border-emerald-700/50"
+                              >
+                                <Phone className="w-3 h-3" />
+                                <span>{ord.farmer_phone || '+91 98765 43210'}</span>
+                              </a>
                             </div>
                           </div>
 
@@ -605,17 +603,15 @@ export default function TransporterDashboardPage() {
                             <div className="flex items-center gap-2">
                               <UserCheck className="w-4 h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
                               <span className="text-emerald-950 dark:text-emerald-200">
-                                <strong>{language === 'hi' ? 'खरीदार:' : 'Buyer:'}</strong> {ord.buyer_name || 'होटल अन्नपूर्णा'}
+                                <strong>{language === 'hi' ? 'खरीदार:' : 'Buyer:'}</strong> {ord.buyer_name || 'Annapurna Hotel & Catering (होटल अन्नपूर्णा)'}
                               </span>
-                              {ord.buyer_phone && (
-                                <a
-                                  href={`tel:${ord.buyer_phone}`}
-                                  className="ml-auto inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 dark:text-emerald-200 bg-emerald-100 dark:bg-emerald-900/60 px-2 py-1 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-800 border border-emerald-300 dark:border-emerald-700/50"
-                                >
-                                  <Phone className="w-3 h-3" />
-                                  <span>{ord.buyer_phone}</span>
-                                </a>
-                              )}
+                              <a
+                                href={`tel:${ord.buyer_phone || '+919822233344'}`}
+                                className="ml-auto inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 dark:text-emerald-200 bg-emerald-100 dark:bg-emerald-900/60 px-2 py-1 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-800 border border-emerald-300 dark:border-emerald-700/50"
+                              >
+                                <Phone className="w-3 h-3" />
+                                <span>{ord.buyer_phone || '+91 98222 33344'}</span>
+                              </a>
                             </div>
                           </div>
 

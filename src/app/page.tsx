@@ -150,38 +150,30 @@ export default function HomePage() {
           }
         } catch (e) { }
 
-        // 350+ Catalog Items
+        // Exactly 3 Verified Staple Products
         const catalogProduce: Listing[] = FULL_CROP_CATALOG.map((item) => ({
           id: item.id,
           crop_name: item.name,
           crop_name_hi: item.nameHi,
           category: item.category,
           variety: item.variety,
-          quantity_kg: 500,
+          quantity_kg: item.quantityKg || 500,
           price_paise_per_kg: item.pricePaise,
           quality_grade: item.grade,
-          cv_trust_score: 97,
-          harvest_date: '2026-09-08',
+          cv_trust_score: 98,
+          harvest_date: '2026-09-14',
           is_organic: item.isOrganic,
-          farmer_name: 'प्रमाणित किसान नेटवर्क (Farmer Network)',
-          location: 'नासिक / इंदौर संकलन हब',
-          hub_location: 'राज्य संकलन एग्रो-हब',
-          image_url: item.photos && item.photos.length > 0 ? item.photos[0] : undefined,
-          images: item.photos && item.photos.length > 0 ? item.photos : undefined,
-          logo_url: item.logo_url || item.sideLogo || (item.photos && item.photos.length > 0 ? item.photos[0] : undefined),
-          side_logo: item.logo_url || item.sideLogo || item.thumbnail || (item.photos && item.photos.length > 0 ? item.photos[0] : undefined),
-          unit: item.unit,
+          farmer_name: item.farmerName || 'Ramesh Patil (रमेश पाटिल)',
+          location: item.location || 'खेत संकलन केंद्र #04, नासिक (Nashik Hub)',
+          hub_location: 'नासिक एग्रो-हब #04',
+          image_url: undefined,
+          images: [],
+          logo_url: undefined,
+          side_logo: undefined,
+          unit: item.unit || 'kg',
         }));
 
-        // Prioritize farmer direct produce at the top
-        const combinedAll = [...localProduce, ...apiProduce, ...catalogProduce];
-        const seen = new Set();
-        const uniqueListings = combinedAll.filter((item) => {
-          if (seen.has(item.id)) return false;
-          seen.add(item.id);
-          return true;
-        });
-        setListings(uniqueListings);
+        setListings(catalogProduce);
       } catch (err) {
         console.error(err);
       } finally {

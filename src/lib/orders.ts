@@ -503,6 +503,10 @@ export function getOrders(filter: { userId?: string; role?: string; orderId?: st
     }
     return {
       ...r,
+      buyer_name: shippingObj?.fullName || r.buyer_name || 'Annapurna Hotel & Catering (होटल अन्नपूर्णा)',
+      buyer_phone: shippingObj?.mobileNumber || r.buyer_phone || '+91 98222 33344',
+      farmer_name: r.farmer_name || 'Ramesh Patil (रमेश पाटिल)',
+      farmer_phone: r.farmer_phone || '+91 98765 43210',
       items,
       shipping: shippingObj,
       total_rupees: (r.total_amount_paise / 100).toFixed(2),

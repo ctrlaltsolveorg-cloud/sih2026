@@ -20,17 +20,68 @@ export interface CropListingInput {
 }
 
 /**
- * Fetch all active crop listings from SQLite (for public marketplace)
+ * Ensure exactly 3 verified staple products and their verified farmers exist in DB
+ */
+export function ensureStapleProductsSeeded(db: any) {
+  try {
+    // 1. Ensure verified farmers exist
+    db.prepare(`
+      INSERT OR REPLACE INTO users (id, name, phone, email, role, village, district, state, address)
+      VALUES 
+      ('u_farmer_1', 'Ramesh Patil (रमेश पाटिल)', '+91 98765 43210', 'ramesh.patil@kisanbandhan.ai', 'FARMER', 'Pimplgaon', 'Nashik', 'Maharashtra', 'खेत संकलन केंद्र #04, नासिक (Nashik Hub, Maharashtra)'),
+      ('u_farmer_2', 'Harpreet Singh (हरप्रीत सिंह)', '+91 98765 43211', 'harpreet@kisanbandhan.ai', 'FARMER', 'Pimplgaon Hub', 'Nashik', 'Maharashtra', 'पिंपलगांव मंडी हब, नासिक (Pimplgaon Mandi Hub, Nashik)'),
+      ('u_farmer_3', 'Suresh Gaikwad (सुरेश गायकवाड़)', '+91 98765 43212', 'suresh.gaikwad@kisanbandhan.ai', 'FARMER', 'Sehore Mandi', 'Sehore', 'Madhya Pradesh', 'सीहोर कृषि मंडी हब, मध्य प्रदेश (Sehore Mandi Hub, MP)')
+    `).run();
+
+    // 2. Ensure buyers exist
+    db.prepare(`
+      INSERT OR REPLACE INTO users (id, name, phone, email, role, village, district, state, address)
+      VALUES 
+      ('u_buyer_1', 'Priya Sharma (प्रिया शर्मा)', '+91 98111 22233', 'priya.buyer@kisanbandhan.ai', 'BUYER', 'Viman Nagar', 'Pune', 'Maharashtra', 'Sector 4, Viman Nagar, Pune, Maharashtra 411014'),
+      ('u_buyer_2', 'Annapurna Hotel & Catering (होटल अन्नपूर्णा)', '+91 98222 33344', 'annapurna@kisanbandhan.ai', 'BUYER', 'Swargate', 'Pune', 'Maharashtra', 'Annapurna Hotel & Catering, Swargate, Pune 411002'),
+      ('u_partner_1', 'Vikram Shinde Fleet (विक्रम शिंदे)', '+91 99000 11122', 'vikram.logistics@kisanbandhan.ai', 'TRANSPORTER', 'Hadapsar', 'Pune', 'Maharashtra', 'Kisan Express Logistics Hub, Pune')
+    `).run();
+
+    // 3. Ensure the 3 verified products exist
+    db.prepare(`
+      INSERT OR REPLACE INTO product_listings (
+        id, farmer_id, crop_name, category, quantity_available, unit, price_paise, mandi_retail_price_paise, grade, harvest_date, image_url, location, district, status
+      ) VALUES 
+      ('prod_tomato_1', 'u_farmer_1', 'Tomato (Vaishali 108)', 'Vegetables', 500, 'kg', 3450, 4200, 'उच्चतम श्रेणी A+', '2026-09-14', '', 'खेत संकलन केंद्र #04, नासिक (Nashik Hub, Maharashtra)', 'Nashik', 'ACTIVE'),
+      ('prod_onion_1', 'u_farmer_2', 'Onion (Nashik Red)', 'Vegetables', 800, 'kg', 2800, 3500, 'ग्रेड A+ (निर्यात गुणवत्ता)', '2026-09-14', '', 'पिंपलगांव मंडी हब, नासिक (Pimplgaon Mandi Hub, Nashik)', 'Nashik', 'ACTIVE'),
+      ('prod_wheat_1', 'u_farmer_3', 'Wheat (Sharbati Gold)', 'Grains', 1200, 'kg', 3800, 4600, 'प्रीमियम ग्रेड A', '2026-09-14', '', 'सीहोर कृषि मंडी हब, मध्य प्रदेश (Sehore Mandi Hub, MP)', 'Sehore', 'ACTIVE')
+    `).run();
+
+    // 4. Ensure ord_501 order item exists so transporter shows real crop details
+    try {
+      const orderItem = db.prepare('SELECT id FROM order_items WHERE order_id = ?').get('ord_501');
+      if (!orderItem) {
+        db.prepare(`
+          INSERT INTO order_items (order_id, listing_id, crop_name, quantity, unit, unit_price_paise)
+          VALUES ('ord_501', 'prod_tomato_1', 'Tomato (Vaishali 108)', 100, 'kg', 3450)
+        `).run();
+      }
+    } catch (e) {}
+
+  } catch (e) {
+    console.warn('Notice seeding staple products:', e);
+  }
+}
+
+/**
+ * Fetch exactly the 3 verified staple crop listings from SQLite
  */
 export function getAllCrops() {
   const db = getDb();
+  ensureStapleProductsSeeded(db);
   return db
     .prepare(
       `
-    SELECT l.*, u.name as farmer_name 
+    SELECT l.*, u.name as farmer_name, u.phone as farmer_phone
     FROM product_listings l
     LEFT JOIN users u ON l.farmer_id = u.id
-    ORDER BY l.created_at DESC
+    WHERE l.id IN ('prod_tomato_1', 'prod_onion_1', 'prod_wheat_1')
+    ORDER BY l.id ASC
   `
     )
     .all();
@@ -41,10 +92,11 @@ export function getAllCrops() {
  */
 export function getCropsByFarmer(farmerId: string) {
   const db = getDb();
+  ensureStapleProductsSeeded(db);
   return db
     .prepare(
       `
-    SELECT l.*, u.name as farmer_name 
+    SELECT l.*, u.name as farmer_name, u.phone as farmer_phone
     FROM product_listings l
     LEFT JOIN users u ON l.farmer_id = u.id
     WHERE l.farmer_id = ?

@@ -152,24 +152,16 @@ export default function BulmaProductCard({
     <>
       <div className="bulma-card group" id={`produce-card-${id}`}>
         {/* ===================================================
-            UPPER SECTION: Product Name & Side Image Logo
+            UPPER SECTION: Product Name & Category Emblem
             =================================================== */}
         <div className="card-header-custom">
           <div className="bulma-media">
-            {/* Side Image Logo / Crop Emblem */}
+            {/* Category Emblem */}
             <div className="bulma-media-left">
               <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-amber-500/40 shadow-md bg-gradient-to-br from-[#0F3826] to-[#072115] shrink-0 flex items-center justify-center">
-                {sideLogoUrl ? (
-                  <img
-                    src={sideLogoUrl}
-                    alt="Crop Logo"
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition duration-300"
-                  />
-                ) : (
-                  <div className="flex items-center justify-center w-full h-full">
-                    {renderCategoryBadgeIcon(category)}
-                  </div>
-                )}
+                <div className="flex items-center justify-center w-full h-full">
+                  {renderCategoryBadgeIcon(category)}
+                </div>
                 <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 bg-emerald-500 border border-white rounded-full" />
               </div>
             </div>
@@ -216,95 +208,6 @@ export default function BulmaProductCard({
             </div>
           </div>
         </div>
-
-        {/* ===================================================
-            MIDDLE SECTION: 2 to 6 Photos Gallery via Farmer Insert (Rendered only when photos exist)
-            =================================================== */}
-        {photoList.length > 0 && (
-          <div className="card-image group/photo">
-            {/* Main Photo Display */}
-            <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-emerald-950">
-              <img
-                src={activePhoto}
-                alt={`${crop_name} photo ${activePhotoIdx + 1}`}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
-
-              {/* Mandatory 2-6 Photo Counter Pill */}
-              <div className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md text-amber-200 text-[11px] font-bold px-2.5 py-1 rounded-full border border-white/20 flex items-center gap-1 shadow-lg">
-                <span>{language === 'hi' ? 'तस्वीर ' : 'Photo '}</span>
-                <span className="text-white font-extrabold">{activePhotoIdx + 1} / {photoList.length}</span>
-                <span className="text-[9px] text-emerald-300 ml-1 font-mono">
-                  {language === 'hi' ? '(2-6 अनिवार्य)' : '(2-6 verified)'}
-                </span>
-              </div>
-
-              {/* Organic Badge on Photo */}
-              {is_organic === 1 && (
-                <div className="absolute top-2.5 right-2.5 bg-emerald-700/90 backdrop-blur-md text-emerald-100 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-emerald-300/30 flex items-center gap-1 shadow">
-                  <CheckCircle2 className="w-3 h-3 text-emerald-300" />
-                  <span>{language === 'hi' ? '100% जैविक' : '100% Organic'}</span>
-                </div>
-              )}
-
-              {/* Expand / Lightbox Trigger */}
-              <button
-                onClick={() => setShowLightbox(true)}
-                className="absolute bottom-2.5 right-2.5 p-1.5 rounded-lg bg-black/60 hover:bg-black/80 text-white/90 transition backdrop-blur-sm shadow"
-                title="Full Screen Photo View"
-              >
-                <Maximize2 className="w-4 h-4" />
-              </button>
-
-              {/* Photo Navigation Arrows */}
-              {photoList.length > 1 && (
-                <>
-                  <button
-                    onClick={handlePrevPhoto}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition shadow backdrop-blur-sm opacity-90 sm:opacity-0 group-hover/photo:opacity-100"
-                    aria-label="Previous Photo"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={handleNextPhoto}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition shadow backdrop-blur-sm opacity-90 sm:opacity-0 group-hover/photo:opacity-100"
-                    aria-label="Next Photo"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                </>
-              )}
-            </div>
-
-            {/* Middle Photo Thumbnails Strip (2 to 6 Photos) */}
-            <div className="bg-[#0F3826] px-3 py-2 flex items-center justify-center gap-2 border-t border-white/10">
-              <span className="text-[10px] text-amber-200/80 font-bold uppercase tracking-wider mr-1 hidden sm:inline">
-                {language === 'hi' ? 'गैलरी:' : 'Gallery:'}
-              </span>
-              {photoList.map((photo, pIdx) => (
-                <button
-                  key={pIdx}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActivePhotoIdx(pIdx);
-                  }}
-                  className={`relative w-8 h-8 sm:w-9 sm:h-9 rounded-lg overflow-hidden border-2 transition-all shrink-0 ${
-                    activePhotoIdx === pIdx
-                      ? 'border-amber-400 scale-110 shadow-lg ring-2 ring-amber-400/40'
-                      : 'border-white/30 opacity-70 hover:opacity-100'
-                  }`}
-                >
-                  <img src={photo} alt={`Thumb ${pIdx + 1}`} className="w-full h-full object-cover" />
-                  <span className="absolute bottom-0 right-0 bg-black/70 text-[8px] text-white px-0.5 font-bold leading-none">
-                    {pIdx + 1}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* ===================================================
             NICHE SECTION (Bottom): Detailed Product Specifications
@@ -420,67 +323,6 @@ export default function BulmaProductCard({
       </div>
 
       {/* ===================================================
-          PHOTO LIGHTBOX MODAL (Full Screen Inspection of 2-6 Photos)
-          =================================================== */}
-      {showLightbox && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-fadeIn">
-          <div className="relative max-w-4xl w-full flex flex-col items-center">
-            <button
-              onClick={() => setShowLightbox(false)}
-              className="absolute -top-12 right-0 p-2 text-white hover:text-amber-400 bg-white/10 rounded-full transition"
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            <div className="relative w-full max-h-[75vh] flex items-center justify-center overflow-hidden rounded-2xl bg-black border border-white/20">
-              <img
-                src={activePhoto}
-                alt="Full View"
-                className="max-h-[70vh] max-w-full object-contain"
-              />
-
-              {photoList.length > 1 && (
-                <>
-                  <button
-                    onClick={handlePrevPhoto}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/70 hover:bg-black text-white transition"
-                  >
-                    <ChevronLeft className="w-6 h-6" />
-                  </button>
-                  <button
-                    onClick={handleNextPhoto}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/70 hover:bg-black text-white transition"
-                  >
-                    <ChevronRight className="w-6 h-6" />
-                  </button>
-                </>
-              )}
-            </div>
-
-            {/* Thumbnail Strip inside Lightbox */}
-            <div className="flex items-center gap-3 mt-4">
-              {photoList.map((photo, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActivePhotoIdx(idx)}
-                  className={`w-14 h-14 rounded-xl overflow-hidden border-2 transition ${
-                    activePhotoIdx === idx
-                      ? 'border-amber-400 scale-105 ring-2 ring-amber-400/50'
-                      : 'border-white/30 opacity-60 hover:opacity-100'
-                  }`}
-                >
-                  <img src={photo} alt={`Preview ${idx + 1}`} className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-            <p className="text-xs text-amber-200 mt-2 font-mono">
-              {language === 'hi' ? 'तस्वीर' : 'Photo'} {activePhotoIdx + 1} / {photoList.length} (किसान द्वारा सत्यापित)
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* ===================================================
           PRODUCT DETAILS MODAL (Full Specifications)
           =================================================== */}
       {showDetailsModal && (
@@ -488,7 +330,9 @@ export default function BulmaProductCard({
           <div className="bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl p-6 w-full max-w-lg shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-emerald-900/10 dark:border-emerald-500/20 pb-3">
               <div className="flex items-center gap-3">
-                <img src={sideLogoUrl} alt="Logo" className="w-10 h-10 rounded-xl object-cover border border-amber-500" />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0F3826] border border-amber-500 text-amber-300">
+                  {renderCategoryBadgeIcon(category)}
+                </div>
                 <div>
                   <h3 className="font-extrabold text-lg text-emerald-950 dark:text-amber-100">
                     {getLocalizedCropName(crop_name, language)}
@@ -504,23 +348,6 @@ export default function BulmaProductCard({
               >
                 <X className="w-5 h-5" />
               </button>
-            </div>
-
-            {/* Photos Preview in Modal */}
-            <div>
-              <span className="text-xs font-bold text-emerald-900 dark:text-emerald-200 block mb-1">
-                {language === 'hi' ? 'किसान द्वारा अपलोड की गई 2-6 तस्वीरें:' : 'Farmer Inserted Photos (2 to 6 verified):'}
-              </span>
-              <div className="grid grid-cols-3 gap-2">
-                {photoList.map((ph, idx) => (
-                  <div key={idx} className="relative h-20 rounded-xl overflow-hidden border border-emerald-900/20 dark:border-emerald-500/30">
-                    <img src={ph} alt="Crop Angle" className="w-full h-full object-cover" />
-                    <span className="absolute bottom-1 right-1 bg-black/70 text-[9px] text-white px-1 rounded font-mono">
-                      #{idx + 1}
-                    </span>
-                  </div>
-                ))}
-              </div>
             </div>
 
             {/* Details Table */}
