@@ -1,172 +1,210 @@
-# 🌾 KisanBandhan AI (किसानबंधन)
+# KisanBandhan AI
 
-## Direct Farm-to-Fork Intelligence & Fair-Trade Infrastructure
-
-**Built with Pride for Smart India Hackathon 2026 — Problem Statement 26033**  
-*Ministry of Consumer Affairs, Food & Public Distribution | Government of India*
-
-[![Production Live](https://img.shields.io/badge/Production-Live%20on%20Vercel-0F3826?style=for-the-badge&logo=vercel&logoColor=white)](https://sih2026-smoky.vercel.app)
-[![Next.js 14](https://img.shields.io/badge/Next.js%2014-App%20Router-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Strict%20Type%20Safe-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vernacular Support](https://img.shields.io/badge/Vernacular-11%20Indian%20Languages-D97706?style=for-the-badge&logo=google-translate&logoColor=white)](#core-pillars-what-makes-kisanbandhan-smart)
-[![License](https://img.shields.io/badge/License-MIT-emerald?style=for-the-badge)](LICENSE)
-
-[🌐 Explore Live Production App](https://sih2026-smoky.vercel.app) • [📖 Architecture](#system-architecture) • [🚀 Quickstart](#getting-started)
+## Direct Farm-to-Buyer Digital Agriculture Platform
+Smart India Hackathon 2026 | Problem Statement 26033  
+Ministry of Consumer Affairs, Food and Public Distribution | Government of India  
+Live Production: https://kisanbandhan.vercel.app  
+Repository: https://github.com/ctrlaltsolveorg-cloud/sih2026.git  
 
 ---
 
-## The Human Story: Why KisanBandhan Exists
+## Executive Summary
 
-In a nation where over **140 million families depend on agriculture**, our अन्नदाता (food providers) often wake up at 3:00 AM, load their harvest onto shared vehicles, and travel dozens of kilometers to local mandis — only to face:
+KisanBandhan AI is an open agri-tech platform designed to eliminate commission-based intermediaries from Indian agricultural supply chains. In conventional agricultural markets (mandis), farmers lose between 30% and 45% of their gross revenue to unverified brokers, arbitrary quality deductions, and delayed settlements. At the same time, post-harvest perishability accounts for up to 18% of produce loss during transit.
 
-- **Predatory Middlemen Commissions (up to 30-45%):** Farmers take the production risks, yet brokers capture the bulk of the margin.
-- **Subjective Quality Deductions:** Produce is downgraded arbitrarily by visual guesswork, leaving farmers with pennies on the rupee.
-- **The Smartphone Barrier:** Over **60% of marginalized smallholders** still use basic feature phones without reliable 4G data.
-- **Language & Dialect Gaps:** A farmer writing *"baigan"*, *"began"*, or speaking in their regional dialect is excluded by rigid English-only software.
-
-> **Our Mission:**  
-> **KisanBandhan AI** connects the soil of Bharat directly with institutional bulk buyers, food processors, and consumers. We replace middlemen with mathematical fairness, computer vision quality verification, and multimodal vernacular accessibility.
-
----
-
-## Core Pillars: What Makes KisanBandhan Smart
-
-### 1. Farmer Desk & Fair Price AI Engine
-
-- **Fair Price AI:** Computes live fair market value using real-time Agmarknet mandi trends, dynamic harvest supply, and transportation costs — ensuring farmers never sell below production costs.
-- **Smart 7,000+ Crop Catalog:** Instant auto-suggestions across 352 unique produce varieties with interactive photo selector dropdowns.
-- **Flexible Photo Verification:** Optional crop photo upload with real-time thumbnail preview directly from the farm.
-
-### 2. Computer Vision Quality Grading
-
-- Objective optical inspection replaces arbitrary hand-picking deductions.
-- Inspects size uniformity, surface defect percentages, and color vibrancy to assign verifiable **Grade A+, A, B, or C** ratings certified under FSSAI standards.
-
-### 3. Virtual Lot Aggregation for FPOs
-
-- Empowers smallholder farmers holding 50kg–200kg yields to virtually aggregate into **500kg+ commercial lots**.
-- Unlocks wholesale corporate buying contracts without needing expensive physical warehousing.
-
-### 4. 11 Indian Languages & Probabilistic Fuzzy Matcher
-
-- Supports **11 Indian languages** (Hindi, English, Punjabi, Marathi, Gujarati, Bengali, Telugu, Tamil, Kannada, Malayalam, Odia).
-- **Phonetic Dialect & Typo Matcher:** Understands regional accents and spelling mistakes:
-  - `"baigan"`, `"began"`, `"bagan"`, `"baingan"` are automatically recognized as **बैंगन (Eggplant / Brinjal)** with 98% confidence.
-  - `"tmatar"`, `"tamater"` are auto-resolved to **टमाटर (Fresh Tomatoes)**.
-  - Zero cognitive barrier for rural users.
-
-### 5. 1800-KISAN-AI: Feature-Phone Keypad IVR
-
-- No smartphone? No problem.
-- Farmers can simply dial **1800-KISAN-AI** from any basic keypad phone, press `1` for Tomato, `2` for Onion, speak their quantity, and receive an instant SMS contract confirmation.
-
-### 6. Strict Role Isolation & Escrow Security
-
-- Dedicated portal guards (`PortalGuard.tsx`) isolate 6 distinct stakeholder workflows.
-- Buyers cannot checkout without authenticating; payment is locked in transparent smart escrow and only released upon transporter OTP & Hub QR handover verification.
+Our platform replaces traditional middlemen with software-driven protocols:
+1. Direct farmer-to-buyer transactions with zero commission fees.
+2. Dual-stage cryptographic OTP verification that enforces physical custody handshakes at both farm pickup and buyer dropoff.
+3. Objective computer vision quality scoring to prevent arbitrary visual downgrading.
+4. Multilingual voice and text access (including a toll-free IVR helpline) so that non-smartphone users are not excluded.
+5. An integrated settlement architecture supporting both digital escrow releases and cash-on-delivery reconciliation.
 
 ---
 
-## The 6 Stakeholder Portals
+## How the Application Operates: End-to-End Workflow
 
-| Portal | Route | Primary Role & Capabilities |
-| :--- | :--- | :--- |
-| **Farmer Desk** | [`/farmer`](https://sih2026-smoky.vercel.app/farmer) | List harvest, Fair Price AI guidance, multi-image upload, crop ledger. |
-| **Direct Buyer** | [`/buyer`](https://sih2026-smoky.vercel.app/buyer) | Browse verified lots, place recurring bulk procurement contracts, track orders. |
-| **FPO Cooperative** | [`/fpo`](https://sih2026-smoky.vercel.app/fpo) | Aggregate member harvests into high-margin bulk batches, lock lots. |
-| **Quality Hub** | [`/hub`](https://sih2026-smoky.vercel.app/hub) | Computer Vision AI grading, moisture & blemish scan, Hub QR tagging. |
-| **Transporter Fleet** | [`/transporter`](https://sih2026-smoky.vercel.app/transporter) | Route optimization, multi-hub pickups, OTP handover & delivery verification. |
-| **Mandi Governance** | [`/admin`](https://sih2026-smoky.vercel.app/admin) | National MSP enforcement, real-time APMC price ticker, grievance redressal. |
+The lifecycle of an order moves across four continuous operational phases involving six distinct stakeholder roles.
 
----
+```
+[Phase 1: Listing]
+Farmer (Web / Voice IVR) -> Produce Catalog -> AI Fair Price & CV Grading
 
-## System Architecture
+[Phase 2: Discovery & Order]
+Direct Buyer -> Browse Lots / Cart Checkout -> Dual-OTP Generation (Pickup + Delivery)
 
-```mermaid
-flowchart TD
-    subgraph Access["1. Omnichannel Access Layer"]
-        A1["Modern Web App Next.js 14"]
-        A2["Feature Phone IVR 1800-KISAN-AI"]
-        A3["11-Language Translator Modal"]
-    end
-
-    subgraph Intelligence["2. Intelligent Processing Core"]
-        B1["Fair Price AI Agmarknet plus MSP"]
-        B2["Computer Vision Grading Engine"]
-        B3["Probabilistic and Phonetic Fuzzy Matcher"]
-        B4["FPO Virtual Lot Aggregator"]
-    end
-
-    subgraph Security["3. Security and Governance"]
-        C1["PortalGuard Role-Based Access Control"]
-        C2["Smart Escrow Payment Vault"]
-        C3["Transporter OTP and Hub QR Verification"]
-    end
-
-    subgraph Storage["4. Hybrid Ledger Storage"]
-        D1["PostgreSQL / Supabase Distributed"]
-        D2["High-Throughput SQLite WAL Engine"]
-        D3["In-Memory Vector and Translation Cache"]
-    end
-
-    Access --> Intelligence
-    Intelligence --> Security
-    Security --> Storage
+[Phase 3: Logistics & Custody]
+Transporter Fleet -> Accept Delivery -> Stage 1 Farm Handshake (Farmer OTP)
+                                             |
+                                   Produce In-Transit
+                                             |
+[Phase 4: Settlement]
+Buyer Inspection -> Cash Checkpoint -> Stage 2 Dropoff Handshake (Buyer OTP)
+                                             |
+                              Escrow Released / Order Closed
 ```
 
+### Phase 1: Farm-Gate Listing and AI Pre-Grading
+A farmer or local cooperative uploads produce details including crop variety, harvest date, quantity, and optional field photographs. For farmers without internet connectivity or smartphones, the toll-free IVR voice pipeline (1800-KISAN-AI) processes spoken regional inputs and creates listings through server-side speech transcription. 
+
+Before listing public publication:
+- The Computer Vision Quality Engine analyzes produce imagery for size uniformity, color distribution, and surface blemishes, generating a provisional trust score (Grade A+, A, B, or C).
+- The Fair Price Engine pulls regional Agmarknet wholesale rates, distance to nearest consumption hubs, and seasonal volume trends to recommend an optimal floor price.
+
+### Phase 2: Marketplace Discovery and Order Commitment
+Commercial buyers (such as hotels, catering networks, food processing units, and retail aggregators) browse certified lots through a search interface that supports both English and Hindi. When a buyer places an order:
+- An atomic database record is committed.
+- The platform calculates the delivery fee based on hub-to-destination mileage.
+- The system immediately provisions two separate secret four-digit verification keys:
+  - Pickup OTP: Assigned exclusively to the farmer.
+  - Delivery OTP: Assigned exclusively to the buyer.
+- If the payment method is digital, funds are held in an escrow buffer. If cash-on-delivery is chosen, a physical collection checkpoint is attached to the transporter manifest.
+
+### Phase 3: Transporter Assignment and Stage 1 Farm Handshake
+Available delivery tasks appear on the Transporter Fleet portal. Transporters see pickup coordinates, drop locations, net freight earnings, and AI route recommendations designed to minimize fuel burn across multi-stop runs.
+- A transporter accepts the job and drives to the farm or collection center.
+- After the produce is loaded, the farmer provides their 4-digit Pickup OTP.
+- The transporter submits this OTP in the application. Once verified by the backend, the shipment status transitions to `IN_TRANSIT`.
+- Crucially, the transporter cannot trigger the in-transit state unilaterally; physical confirmation from the farmer is mandatory.
+
+### Phase 4: Buyer Inspection, Cash Handling, and Stage 2 Delivery Handshake
+Upon arrival at the destination:
+- If the transaction is cash-on-delivery, the transporter must check a legal collection confirmation box after receiving the physical cash. Until this box is checked, the delivery OTP input field remains disabled.
+- The buyer physically inspects the delivered produce.
+- The buyer shares their secret 4-digit Delivery OTP with the transporter.
+- The transporter submits the OTP. The server verifies the token against the original order record.
+- On successful match:
+  - The delivery status updates to `DELIVERED`.
+  - For escrow orders, release triggers are executed toward the farmer's bank account.
+  - For cash orders, the transporter's ledger is debited for collection liability.
+  - An immutable audit trail is saved in the database.
+
 ---
 
-## Technology Stack
+## Security Architecture and Anti-Fraud Mechanisms
 
-- **Framework:** Next.js 14 (App Router, Server Components & Dynamic Edge APIs)
-- **Language:** TypeScript (Strict Null Checks, 100% Type-Safe)
-- **Styling:** Tailwind CSS + Custom Bulma Responsive Agricultural Media Cards
-- **Database:** Supabase PostgreSQL + SQLite WAL Hybrid Engine
-- **Vernacular Translation:** Custom Multi-Modal Translation Pipeline + Google GTX Neural Translator + MyMemory Memory Fallback
-- **Audio & IVR:** Web Speech API + Interactive Telephony Dialpad Emulator
-- **Icons & Visuals:** Lucide React, Curated Unsplash Agriculture CDN, Canvas Confetti
-- **Deployment:** Vercel Global Edge Network with CI/CD Auto-Sync Workflows
+Systemic fraud is the primary reason why agricultural commerce platforms fail in real-world conditions. KisanBandhan AI enforces security at the data, workflow, and transaction layers.
+
+### 1. Dual-Stage Cryptographic OTP Handshakes
+- Zero Ghost Pickups: A transporter cannot mark an order as picked up without the farmer entering or sharing their pickup OTP on-site.
+- Zero Ghost Deliveries: A transporter cannot mark an order as delivered without the buyer providing their unique delivery OTP after receiving the goods.
+- Possession Separation: The transporter never has visibility into either OTP before physical arrival. Both OTPs are generated on the server and sent only to the respective endpoints (farmer device and buyer device).
+
+### 2. State-Locked Idempotency and Race Condition Protection
+- All state transitions (`Placed` -> `Accepted` -> `In Transit` -> `Delivered`) are executed using atomic SQL transactions.
+- Concurrent requests cannot double-claim a delivery task or double-spend an escrow authorization.
+
+### 3. Role-Based Access Isolation (PortalGuard)
+- The application separates access into six explicit user roles:
+  - Farmer (`/farmer`)
+  - Direct Buyer (`/buyer`)
+  - FPO Aggregator (`/fpo`)
+  - Quality Hub Inspector (`/hub`)
+  - Transporter Fleet (`/transporter`)
+  - Governance Administrator (`/admin`)
+- Routes are protected by authentication guards. Transporters cannot edit crop pricing, buyers cannot manipulate delivery checkpoints, and farmers cannot self-certify inspection logs.
+
+### 4. Hybrid Cloud Database Resilience
+- The system employs a dual-tier storage strategy:
+  - Local SQLite WAL (Write-Ahead Logging) database for ultra-low latency operational transactions, atomic locking, and offline edge reliability.
+  - Asynchronous synchronization with Supabase PostgreSQL for cloud backup, multi-device sync, and governance audits.
+- If cloud network latency spikes in rural areas, local operational handlers maintain transaction integrity without stalling the driver or farmer.
 
 ---
 
-## Getting Started
+## The Six Specialized Portals
 
-Follow these steps to run the complete KisanBandhan AI platform locally on your machine:
+| Portal | URL Path | Core Functions |
+| :--- | :--- | :--- |
+| Farmer Desk | `/farmer` | Direct lot listing, Agmarknet fair price guidance, crop ledger, camera photo upload. |
+| Direct Buyer | `/buyer` | Real-time catalog browsing, shopping cart, escrow or COD checkout, live order tracking. |
+| FPO Aggregator | `/fpo` | Virtual aggregation of smallholder yields (50kg lots) into commercial bulk batches (500kg+). |
+| Quality Hub | `/hub` | Standardized intake inspection, moisture and blemish testing, CV grade confirmation, batch QR stamping. |
+| Transporter Fleet | `/transporter` | Available delivery acceptance, Stage 1 pickup verification, Stage 2 dropoff and COD collection. |
+| Mandi Governance | `/admin` | National price monitoring, minimum support price enforcement, transaction audit log, grievance resolution. |
 
-### 1. Clone the Repository
+---
 
+## The Six Integrated AI Engines
+
+1. AI Fair Price Engine: Ingests historical wholesale mandi prices, local supply volume, and seasonal factors to compute an objective price band per crop variety, protecting farmers from forced distress sales.
+2. AI Computer Vision Quality Engine: Evaluates uploaded harvest photographs for surface defect percentages, color consistency, and size variance, predicting commercial grade ratings before physical dispatch.
+3. AI Perishability and Waste Risk Engine: Evaluates crop shelf-life against ambient temperature, humidity, and transit distance to flag shipments at risk of spoilage and prioritize immediate transport dispatch.
+4. AI Multi-Stop Route Optimizer: Analyzes farmer pickup locations and buyer clusters to sequence multi-point routes, reducing overall mileage by up to 24% and lowering per-kilogram freight costs.
+5. AI Vernacular Translation Engine: Provides bi-directional English and Hindi localization across produce names, technical specifications, and interface elements to eliminate language barriers.
+6. AI Semantic Vector Crop Search: Allows buyers to search using conversational natural language (e.g., "high quality organic onions under thirty rupees") without exact keyword matching.
+
+---
+
+## Honest Technical Limitations and Realistic Mitigations
+
+When evaluating real-world deployments in rural India, practical operational constraints must be addressed directly:
+
+| Current Limitation | Root Cause | Practical Workaround / Mitigation |
+| :--- | :--- | :--- |
+| Rural Camera Hardware Variance | Budget smartphones produce varied lighting, low resolution, and focal blur that can skew computer vision confidence scores. | The on-farm CV rating is treated as provisional. Final grading is certified at the nearest physical Mandi Hub (`/hub`) using standardized hardware. |
+| Regulatory Escrow Banking Integration | Production automated escrow payouts require scheduled commercial banking APIs (e.g., ICICI e-Collections or Razorpay Escrow) governed by RBI licensing frameworks. | The platform implements complete state-machine escrow logic, payment webhooks, and ledger tracking in code. Production staging simulates bank settlement webhooks pending commercial banking tie-ups. |
+| In-Transit IoT Telemetry | Continuous real-time cold chain monitoring requires retrofitting physical temperature and humidity IoT sensors into commercial carrier trucks. | The platform currently models perishability risk mathematically using ambient meteorological data combined with route duration estimates. |
+| Deep Rural Network Dead Zones | Remote farms frequently experience complete mobile network dropouts, preventing real-time web portal access. | The toll-free IVR telephony pipeline operates over 2G voice channels, and fallback SMS OTP protocols allow confirmation without requiring active mobile data. |
+
+---
+
+## Phase 2 Roadmap and Scale Strategy
+
+1. ONDC Federation: Integrate the platform with the Open Network for Digital Commerce (ONDC) protocol as a verified Seller Network Participant, enabling farmer listings to automatically propagate to major commercial buyer apps.
+2. Satellite NDVI Remote Sensing: Integrate European Space Agency Sentinel-2 satellite imagery into the FPO portal to monitor vegetative health indices and forecast crop harvest volumes four weeks in advance.
+3. Formal Forward Contracts: Enable corporate buyers and farmer cooperatives to execute legally binding digital advance purchase contracts with digital signature verification.
+4. Hardware IoT Gateways: Deploy low-cost Bluetooth Low Energy (BLE) temperature loggers inside transport crates for end-to-end perishable tracking.
+
+---
+
+## Technical Stack
+
+- Frontend Framework: Next.js 14 (App Router, Server and Client Components)
+- Programming Language: TypeScript (Strict mode enabled)
+- Styling: Custom Tailwind CSS and responsive design utilities with unified dark and light mode support
+- Core Database: SQLite with Write-Ahead Logging (WAL) for local atomic transactions
+- Cloud Database: Supabase PostgreSQL for distributed storage and remote synchronization
+- Telephony & Voice: Web Speech API integration and simulated IVR telephony gateway (1800-KISAN-AI)
+- Production Hosting: Vercel Global Edge Network with continuous integration
+
+---
+
+## Local Development Setup
+
+### Prerequisites
+- Node.js version 18.17.0 or higher
+- npm version 9.0.0 or higher
+
+### Installation Steps
+
+1. Clone the repository:
 ```bash
 git clone https://github.com/ctrlaltsolveorg-cloud/sih2026.git
 cd sih2026
 ```
 
-### 2. Install Dependencies
-
+2. Install project dependencies:
 ```bash
 npm install
 ```
 
-### 3. Setup Environment Variables
-
+3. Configure environment variables:
 Create a `.env.local` file in the root directory:
-
 ```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 NEXT_PUBLIC_APP_NAME="KisanBandhan AI"
 NEXT_PUBLIC_APP_VERSION="1.0.0"
 ```
 
-### 4. Run Development Server
-
+4. Run the development server:
 ```bash
 npm run dev
 ```
+Open your browser at `http://localhost:3000`.
 
-Open your browser and navigate to **[http://localhost:3000](http://localhost:3000)**.
-
-### 5. Build for Production
-
+5. Build and validate production bundle:
 ```bash
 npm run build
 npm start
@@ -174,15 +212,9 @@ npm start
 
 ---
 
-## 🤝 Contributing & Team
+## Project Governance and Contributors
 
-We welcome contributions from agricultural scientists, developers, and designers passionate about uplifting rural Bharat.
-
-- **Lead Developer & Architect:** Piyush Kumar & Team CtrlAltSolve
-- **Collaborators:** Khushboo Kumari & Abhishek Kumar Singh
-- **Hackathon:** Smart India Hackathon 2026 (Problem Statement 26033)
-
----
-
-> **“जय जवान, जय किसान, जय विज्ञान, जय अनुसंधान”**  
-> *Empowering the hands that feed our nation.*
+- Lead Developer and Architect: Piyush Kumar (Team CtrlAltSolve)
+- Engineering Collaborators: Khushboo Kumari, Abhishek Kumar Singh
+- Submission Category: Smart India Hackathon 2026 (Problem Statement 26033)
+- License: MIT Open Source License
