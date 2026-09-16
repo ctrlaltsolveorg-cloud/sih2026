@@ -192,28 +192,29 @@ export default function HomePage() {
   });
 
   return (
-    <div className="space-y-10">
-      {/* Live Mandi Agmarknet Ticker */}
-      <div className="w-full bg-[#0F3826] dark:bg-[#071F14] text-amber-100 rounded-2xl py-2.5 px-4 shadow-md overflow-hidden border border-emerald-800/40 flex items-center gap-3">
-        <div className="flex items-center gap-2 text-xs font-bold text-amber-400 shrink-0 bg-emerald-950/80 px-3 py-1 rounded-lg border border-amber-400/20">
-          <TrendingUp className="w-3.5 h-3.5" />
-          <span>{t.liveMandiTicker}</span>
-        </div>
-        <div className="overflow-hidden relative w-full">
-          <div className="animate-marquee whitespace-nowrap flex gap-8 text-xs">
-            {tickerItems.concat(tickerItems).map((item, idx) => (
-              <span key={idx} className="inline-flex items-center gap-2 font-medium">
-                <span className="text-amber-50">{getLocalizedCropName(item.crop, language)}</span>
-                <span className="font-mono text-amber-300">{language === 'hi' ? item.price : item.price.replace('/किग्रा', '/kg')}</span>
-                <span className="text-emerald-400 text-[11px] font-bold">{item.trend}</span>
-              </span>
-            ))}
+    <div className="space-y-8 sm:space-y-10">
+      {/* Hero Banner Carousel Section with Agriculture Imagery, Navigation Controls & Floating Live Mandi Ticker */}
+      <HeroCarousel
+        tickerSlot={
+          <div className="w-full bg-[#072014]/65 dark:bg-[#03100a]/75 backdrop-blur-md text-amber-100 rounded-2xl py-2 px-3 sm:px-4 shadow-[0_8px_30px_rgba(0,0,0,0.35)] overflow-hidden border border-white/15 dark:border-emerald-500/25 flex items-center gap-3 transition-all hover:bg-[#072014]/75">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400 shrink-0 bg-emerald-950/85 px-2.5 py-1 rounded-xl border border-amber-400/25 shadow-xs">
+              <TrendingUp className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+              <span>{t.liveMandiTicker}</span>
+            </div>
+            <div className="overflow-hidden relative w-full">
+              <div className="animate-marquee whitespace-nowrap flex gap-8 text-xs">
+                {tickerItems.concat(tickerItems).map((item, idx) => (
+                  <span key={idx} className="inline-flex items-center gap-2 font-medium">
+                    <span className="text-amber-50">{getLocalizedCropName(item.crop, language)}</span>
+                    <span className="font-mono text-amber-300 font-bold">{language === 'hi' ? item.price : item.price.replace('/किग्रा', '/kg')}</span>
+                    <span className="text-emerald-400 text-[11px] font-bold">{item.trend}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      {/* Hero Banner Carousel Section with Agriculture Imagery & Navigation Controls */}
-      <HeroCarousel />
+        }
+      />
 
 
       {/* Main Produce Marketplace */}

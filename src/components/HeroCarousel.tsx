@@ -19,9 +19,10 @@ import {
 
 interface HeroCarouselProps {
   onExploreClick?: () => void;
+  tickerSlot?: React.ReactNode;
 }
 
-export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
+export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouselProps) {
   const { t, language } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
@@ -140,13 +141,13 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
 
   return (
     <div 
-      className="-mx-4 sm:-mx-8 lg:-mx-12 relative overflow-hidden text-amber-50 group my-2"
+      className="-mx-4 sm:-mx-8 lg:-mx-12 -mt-6 relative overflow-hidden text-amber-50 group mb-8"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* Full-Bleed Hero Section with Photo in Background */}
       <div
-        className="relative min-h-[500px] sm:min-h-[540px] lg:min-h-[500px] flex items-center"
+        className="relative min-h-[560px] sm:min-h-[580px] lg:min-h-[540px] flex items-center"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -154,6 +155,13 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
         aria-roledescription="carousel"
         aria-label="KisanBandhan Agriculture Hero Carousel"
       >
+        {/* Floating Live Mandi Ticker positioned at top over background image */}
+        {tickerSlot && (
+          <div className="absolute top-3 sm:top-4 left-0 right-0 z-30 max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pointer-events-auto">
+            {tickerSlot}
+          </div>
+        )}
+
         {/* Slides with Photo in Background */}
         {slides.map((slide, idx) => {
           const isActive = idx === currentIndex;
@@ -185,7 +193,7 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
               <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
 
               {/* Content Overlay */}
-              <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 flex items-center py-10 sm:py-16">
+              <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 flex items-center pt-20 sm:pt-22 pb-12 sm:pb-16">
                 <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                   {/* Left Column: Heading, Description & CTA */}
                   <div className="lg:col-span-7 space-y-5 sm:space-y-6">
