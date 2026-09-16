@@ -24,7 +24,7 @@ export default function Footer() {
 
         <div>
           <h4 className="font-bold text-amber-50 mb-3 text-sm flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-amber-400" /> {t.aiEnginesCore || 'AI इंजन कोर (6 AI Engines)'}
+            <Cpu className="w-4 h-4 text-amber-400" /> {t.aiEnginesCore || 'AI Engine Core (6 AI Engines)'}
           </h4>
           <ul className="space-y-1.5 text-xs text-amber-200/70">
             <li>• Fair Price AI (Mandi MSP + Quality)</li>
@@ -38,7 +38,7 @@ export default function Footer() {
 
         <div>
           <h4 className="font-bold text-amber-50 mb-3 text-sm flex items-center gap-2">
-            <Shield className="w-4 h-4 text-emerald-400" /> {t.userRolesFooter || 'उपयोगकर्ता भूमिकाएं (6 Personas)'}
+            <Shield className="w-4 h-4 text-emerald-400" /> {t.userRolesFooter || 'User Roles (6 Personas)'}
           </h4>
           <ul className="space-y-1.5 text-xs text-amber-200/70">
             <li>• {t.roleFarmer} ({t.roleFarmerSub || 'IVR/SMS + Fair Price'})</li>
@@ -52,12 +52,12 @@ export default function Footer() {
 
         <div>
           <h4 className="font-bold text-amber-50 mb-3 text-sm flex items-center gap-2">
-            <Activity className="w-4 h-4 text-amber-400" /> {t.helplineTitle || 'हेल्पलाइन एवं सहायता'}
+            <Activity className="w-4 h-4 text-amber-400" /> {t.helplineTitle || 'Helpline & Support'}
           </h4>
           <div className="p-3 bg-emerald-900/40 rounded-xl border border-emerald-800/40 text-xs space-y-1">
-            <p className="font-bold text-amber-300">{t.helplineDesc || 'किसान टोल-फ्री IVR हेल्पलाइन'}:</p>
+            <p className="font-bold text-amber-300">{t.helplineDesc || 'Farmer Toll-Free IVR Helpline'}:</p>
             <p className="text-sm font-mono text-amber-100 font-extrabold">1800-KISAN-AI (1800-54726-24)</p>
-            <p className="text-[11px] text-emerald-300/80">{t.allIndiaLangs247 || '24x7 हिंदी एवं क्षेत्रीय भाषाओं में उपलब्ध'}</p>
+            <p className="text-[11px] text-emerald-300/80">{t.allIndiaLangs247 || 'Available 24x7 in English, Hindi & Regional Languages'}</p>
           </div>
         </div>
       </div>

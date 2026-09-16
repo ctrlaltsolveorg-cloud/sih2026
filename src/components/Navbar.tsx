@@ -121,7 +121,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               {t.appName}
             </h1>
             <span className="text-[10px] text-amber-800 dark:text-amber-400 font-semibold leading-none">
-              किसान दिवस एग्री-टेक मंच
+              {t.subTitle || 'Kisan Diwas Agri-Tech Platform'}
             </span>
           </div>
         </Link>
