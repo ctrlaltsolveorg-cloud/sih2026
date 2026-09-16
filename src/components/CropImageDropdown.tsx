@@ -50,22 +50,29 @@ export default function CropImageDropdown({
     return allPool.find((item) => item.id === selectedId) || allPool[0] || FULL_CROP_CATALOG[0];
   }, [selectedId, allPool]);
 
-  // Click outside to close
+  // Click outside to close (handles mouse & touch events safely + clears timer)
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    let focusTimer: NodeJS.Timeout;
+
+    function handleClickOutside(event: MouseEvent | TouchEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     }
+
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
       // Focus search input on open
-      setTimeout(() => {
+      focusTimer = setTimeout(() => {
         searchInputRef.current?.focus();
       }, 50);
     }
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+      clearTimeout(focusTimer);
     };
   }, [isOpen]);
 
@@ -140,13 +147,17 @@ export default function CropImageDropdown({
                   <span>{language === 'hi' ? 'अनलिस्टेड (352 में नहीं)' : 'Unlisted (Not in 352)'}</span>
                 </span>
               )}
-              <span className="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-emerald-900 text-amber-200 uppercase tracking-wide">
-                {categoryEmoji[selectedCrop.category] || '🌱'} {getLocalizedCategory(selectedCrop.category, language)}
-              </span>
-              <span className="text-[11px] font-bold text-amber-700 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-md">
-                {selectedCrop.variety}
-              </span>
-              {selectedCrop.isOrganic === 1 && (
+              {selectedCrop?.category && (
+                <span className="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-emerald-900 text-amber-200 uppercase tracking-wide">
+                  {categoryEmoji[selectedCrop.category] || '🌱'} {getLocalizedCategory(selectedCrop.category, language)}
+                </span>
+              )}
+              {selectedCrop?.variety && (
+                <span className="text-[11px] font-bold text-amber-700 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-md">
+                  {selectedCrop.variety}
+                </span>
+              )}
+              {selectedCrop?.isOrganic === 1 && (
                 <span className="text-[10px] font-extrabold text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded">
                   100% {language === 'hi' ? 'जैविक' : 'Organic'}
                 </span>
@@ -154,13 +165,13 @@ export default function CropImageDropdown({
             </div>
 
             <h4 className="font-black text-sm sm:text-base text-emerald-950 truncate mt-0.5">
-              {selectedCrop.nameHi} <span className="text-emerald-800/80 font-bold text-xs sm:text-sm">({selectedCrop.name})</span>
+              {selectedCrop?.nameHi || selectedCrop?.name || ''} <span className="text-emerald-800/80 font-bold text-xs sm:text-sm">({selectedCrop?.name || ''})</span>
             </h4>
 
             <div className="flex items-center gap-2 text-xs font-bold text-emerald-900 mt-0.5">
-              <span className="text-amber-800 font-extrabold">₹{selectedCrop.priceRupees}/{selectedCrop.unit}</span>
+              <span className="text-amber-800 font-extrabold">₹{selectedCrop?.priceRupees || 0}/{selectedCrop?.unit || 'kg'}</span>
               <span className="text-emerald-900/30">•</span>
-              <span className="text-[11px] text-emerald-700 font-semibold">{selectedCrop.grade}</span>
+              <span className="text-[11px] text-emerald-700 font-semibold">{selectedCrop?.grade || 'A+'}</span>
             </div>
           </div>
         </div>
