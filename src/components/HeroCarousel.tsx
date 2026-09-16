@@ -8,8 +8,6 @@ import {
   ShoppingBag,
   UserPlus,
   PhoneCall,
-  ChevronLeft,
-  ChevronRight,
   Sprout,
   ShieldCheck,
   TrendingUp,
@@ -270,27 +268,6 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
           );
         })}
 
-        {/* Previous Arrow Button */}
-        <button
-          type="button"
-          onClick={goToPrev}
-          aria-label="Previous Slide"
-          className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/80 text-amber-200 hover:text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-110 active:scale-95 shadow-xl"
-          id="hero-carousel-prev"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-
-        {/* Next Arrow Button */}
-        <button
-          type="button"
-          onClick={goToNext}
-          aria-label="Next Slide"
-          className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-black/80 text-amber-200 hover:text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-110 active:scale-95 shadow-xl"
-          id="hero-carousel-next"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
 
         {/* Manual Navigation Dots at Bottom */}
         <div 
