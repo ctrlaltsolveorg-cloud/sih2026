@@ -240,30 +240,38 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
                     </div>
                   </div>
 
-                  {/* Right Column: Platform Proof & Live Trust Metrics */}
-                  <div className="lg:col-span-5 grid grid-cols-2 gap-3 sm:gap-4">
-                    <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-amber-400/60 hover:bg-[#072417]/85 transition">
-                      <div className="text-2xl sm:text-3xl font-extrabold text-amber-400">0%</div>
-                      <div className="text-xs text-amber-100 font-medium">{t.statMiddlemen || 'बिचौलिए (Middlemen)'}</div>
-                      <p className="text-[10px] text-amber-200/70">{t.statMiddlemenDesc || 'सीधा बैंक अंतरण'}</p>
+                  {/* Right Column: Platform Proof & Live Trust Metrics with True Glassmorphism */}
+                  <div className="lg:col-span-5 grid grid-cols-2 gap-3.5 sm:gap-4">
+                    {/* Card 1: 0% Middlemen */}
+                    <div className="group/card relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-white/[0.08] dark:bg-white/[0.05] backdrop-blur-xl backdrop-saturate-150 border border-white/20 dark:border-white/15 shadow-[0_8px_30px_rgba(0,0,0,0.35)] ring-1 ring-inset ring-white/10 hover:bg-white/[0.14] hover:border-amber-400/50 hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] hover:scale-[1.02] transition-all duration-300 text-center space-y-1.5">
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-transparent pointer-events-none" />
+                      <div className="relative z-10 text-3xl sm:text-4xl font-black text-amber-300 drop-shadow-sm tracking-tight">0%</div>
+                      <div className="relative z-10 text-xs text-white font-semibold tracking-wide">{t.statMiddlemen || 'बिचौलिए (Middlemen)'}</div>
+                      <p className="relative z-10 text-[10px] text-amber-200/80 font-medium">{t.statMiddlemenDesc || 'सीधा बैंक अंतरण'}</p>
                     </div>
 
-                    <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-emerald-400/60 hover:bg-[#072417]/85 transition">
-                      <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400">99.4%</div>
-                      <div className="text-xs text-amber-100 font-medium">{t.statCVGrading || 'AI ग्रेडिंग सटीकता'}</div>
-                      <p className="text-[10px] text-amber-200/70">{t.statCVGradingDesc || 'कंप्यूटर विज़न लैब'}</p>
+                    {/* Card 2: 99.4% CV Grading */}
+                    <div className="group/card relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-white/[0.08] dark:bg-white/[0.05] backdrop-blur-xl backdrop-saturate-150 border border-white/20 dark:border-white/15 shadow-[0_8px_30px_rgba(0,0,0,0.35)] ring-1 ring-inset ring-white/10 hover:bg-white/[0.14] hover:border-emerald-400/50 hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] hover:scale-[1.02] transition-all duration-300 text-center space-y-1.5">
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-transparent pointer-events-none" />
+                      <div className="relative z-10 text-3xl sm:text-4xl font-black text-emerald-300 drop-shadow-sm tracking-tight">99.4%</div>
+                      <div className="relative z-10 text-xs text-white font-semibold tracking-wide">{t.statCVGrading || 'AI ग्रेडिंग सटीकता'}</div>
+                      <p className="relative z-10 text-[10px] text-emerald-200/80 font-medium">{t.statCVGradingDesc || 'कंप्यूटर विज़न लैब'}</p>
                     </div>
 
-                    <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-amber-500/30 text-center space-y-1 shadow-lg hover:border-amber-400/60 hover:bg-[#072417]/85 transition">
-                      <div className="text-2xl sm:text-3xl font-extrabold text-amber-400">6 AI</div>
-                      <div className="text-xs text-amber-100 font-medium">{t.statAIEngines || 'इंजन एकीकृत'}</div>
-                      <p className="text-[10px] text-amber-200/70">{t.statAIEnginesDesc || 'मूल्य, मार्ग व गुणवत्ता'}</p>
+                    {/* Card 3: 6 AI Engines */}
+                    <div className="group/card relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-white/[0.08] dark:bg-white/[0.05] backdrop-blur-xl backdrop-saturate-150 border border-white/20 dark:border-white/15 shadow-[0_8px_30px_rgba(0,0,0,0.35)] ring-1 ring-inset ring-white/10 hover:bg-white/[0.14] hover:border-amber-400/50 hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] hover:scale-[1.02] transition-all duration-300 text-center space-y-1.5">
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-transparent pointer-events-none" />
+                      <div className="relative z-10 text-3xl sm:text-4xl font-black text-amber-300 drop-shadow-sm tracking-tight">6 AI</div>
+                      <div className="relative z-10 text-xs text-white font-semibold tracking-wide">{t.statAIEngines || 'इंजन एकीकृत'}</div>
+                      <p className="relative z-10 text-[10px] text-amber-200/80 font-medium">{t.statAIEnginesDesc || 'मूल्य, मार्ग व गुणवत्ता'}</p>
                     </div>
 
-                    <div className="p-4 sm:p-5 bg-[#072417]/70 backdrop-blur-md rounded-2xl border border-emerald-400/60 text-center space-y-1 shadow-lg hover:bg-[#072417]/85 transition">
-                      <div className="text-xl sm:text-2xl font-extrabold text-emerald-400">IVR/SMS</div>
-                      <div className="text-xs text-amber-100 font-medium">{t.statNoInternet || 'बिना इंटरनेट'}</div>
-                      <p className="text-[10px] text-amber-200/70">{t.statNoInternetDesc || 'कीपैड फोन सपोर्ट'}</p>
+                    {/* Card 4: IVR/SMS Offline */}
+                    <div className="group/card relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-white/[0.08] dark:bg-white/[0.05] backdrop-blur-xl backdrop-saturate-150 border border-white/20 dark:border-white/15 shadow-[0_8px_30px_rgba(0,0,0,0.35)] ring-1 ring-inset ring-white/10 hover:bg-white/[0.14] hover:border-emerald-400/50 hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] hover:scale-[1.02] transition-all duration-300 text-center space-y-1.5">
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-transparent pointer-events-none" />
+                      <div className="relative z-10 text-2xl sm:text-3xl font-black text-emerald-300 drop-shadow-sm tracking-tight">IVR/SMS</div>
+                      <div className="relative z-10 text-xs text-white font-semibold tracking-wide">{t.statNoInternet || 'बिना इंटरनेट'}</div>
+                      <p className="relative z-10 text-[10px] text-emerald-200/80 font-medium">{t.statNoInternetDesc || 'कीपैड फोन सपोर्ट'}</p>
                     </div>
                   </div>
                 </div>
