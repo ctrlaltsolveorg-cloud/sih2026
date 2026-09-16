@@ -167,7 +167,22 @@ export default function HomePage() {
           unit: item.unit || 'kg',
         }));
 
-        setListings(catalogProduce);
+        // Prioritize:
+        // 1. Newly created / active crops from Supabase API (apiProduce)
+        // 2. Custom crops in localStorage (localProduce)
+        // 3. Default staple catalog crops (catalogProduce)
+        const combined = [...apiProduce, ...localProduce, ...catalogProduce];
+        const seen = new Set();
+        const uniqueListings: Listing[] = [];
+        for (const item of combined) {
+          const key = String(item.id || item.crop_name);
+          if (!seen.has(key)) {
+            seen.add(key);
+            uniqueListings.push(item);
+          }
+        }
+
+        setListings(uniqueListings);
       } catch (err) {
         console.error(err);
       } finally {
@@ -175,6 +190,14 @@ export default function HomePage() {
       }
     }
     fetchProduce();
+
+    const handleCropAdded = () => fetchProduce();
+    window.addEventListener('kb_crop_added', handleCropAdded);
+    window.addEventListener('storage', handleCropAdded);
+    return () => {
+      window.removeEventListener('kb_crop_added', handleCropAdded);
+      window.removeEventListener('storage', handleCropAdded);
+    };
   }, []);
 
   const filteredListings = listings.filter((item) => {

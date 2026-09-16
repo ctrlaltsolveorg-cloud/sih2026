@@ -821,6 +821,10 @@ export default function FarmerDashboardPage() {
 
       setIsSubmitting(false);
       setShowAddModal(false);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('kb_crop_added'));
+        window.dispatchEvent(new Event('storage'));
+      }
       triggerSuccessSignal({
         cropName,
         cropNameHi: cropNameHi || cropName,
