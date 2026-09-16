@@ -165,13 +165,28 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
                 isActive ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none z-0'
               }`}
             >
-              {/* Photo directly in background spanning full width */}
-              <div
-                className={`absolute inset-0 bg-cover bg-center bg-no-repeat transform transition-transform duration-1000 ease-out ${
-                  isActive ? 'scale-105' : 'scale-100'
-                }`}
-                style={{ backgroundImage: `url('${slide.image}')` }}
-              />
+              {/* Photo directly in background spanning full width and full height */}
+              <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+                <img
+                  src={slide.image}
+                  alt={isHindi ? slide.titleHi : slide.titleEn}
+                  className={`w-full h-full object-cover object-center transform transition-transform duration-1000 ease-out ${
+                    isActive ? 'scale-105' : 'scale-100'
+                  }`}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    minWidth: '100%',
+                    minHeight: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                  }}
+                  loading={idx === 0 ? 'eager' : 'lazy'}
+                />
+              </div>
 
               {/* Cinematic Dark Gradient Layers for perfect contrast */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#041a10]/95 via-[#07281c]/80 to-[#051e14]/90" />
