@@ -2,7 +2,6 @@ import { getDb } from './db';
 import { supabase } from './supabase';
 import { getOrFetchCropTranslation } from './translator';
 import { getCropPhotosByName } from './cropImageMatcher';
-import { FULL_CROP_CATALOG } from './cropCatalogData';
 
 export interface CropListingInput {
   cropName: string;
@@ -729,148 +728,14 @@ export async function seedDefaultKisanAllProducts() {
     console.error('Supabase user upsert error:', err);
   }
 
-  // 3. Prepare product listings upsert statement
-  const upsertListingStmt = db.prepare(`
-    INSERT INTO product_listings (
-      id, farmer_id, fpo_id, crop_name, category, quantity_available, unit,
-      price_paise, mandi_retail_price_paise, grade, harvest_date, organic_certified,
-      image_url, logo_url, location, district, status
-    ) VALUES (
-      ?, ?, ?, ?, ?, ?, ?,
-      ?, ?, ?, ?, ?,
-      ?, ?, ?, ?, ?
-    )
-    ON CONFLICT(id) DO UPDATE SET
-      farmer_id = excluded.farmer_id,
-      fpo_id = excluded.fpo_id,
-      quantity_available = excluded.quantity_available,
-      price_paise = excluded.price_paise,
-      mandi_retail_price_paise = excluded.mandi_retail_price_paise,
-      image_url = excluded.image_url,
-      logo_url = excluded.logo_url,
-      location = excluded.location,
-      district = excluded.district,
-      status = 'ACTIVE'
-  `);
-
-  const harvestDate = new Date().toISOString().split('T')[0];
-  const supaRecords: any[] = [];
-  const farmerProductCounts: Record<string, { name: string; count: number; crops: string[] }> = {};
-
-  DEFAULT_REGISTERED_FARMERS.forEach((f) => {
-    farmerProductCounts[f.id] = { name: f.name, count: 0, crops: [] };
-  });
-
-  // Assign crops smartly across the 5 default registered farmers
-  db.transaction(() => {
-    let vegIdx = 0;
-    let fruitIdx = 0;
-    let pulseIdx = 0;
-    let grainIdx = 0;
-
-    for (const item of FULL_CROP_CATALOG) {
-      const listingId = `lst_kisan_${item.id}`;
-      const photos = item.photos && item.photos.length > 0 ? item.photos : [item.thumbnail];
-      const imageUrlJson = JSON.stringify(photos);
-      const logoUrl = item.logo_url || item.sideLogo || photos[0];
-      const pricePaise = item.pricePaise || Math.round((item.priceRupees || 30) * 100);
-      const mandiPricePaise = Math.round(pricePaise * 1.25);
-
-      // Distribute crops realistically:
-      // - Vegetables: Ramesh Patil (Nashik, first half) & Ananya Roy (Bengal, second half)
-      // - Grains: Harpreet Singh (Khanna / Punjab)
-      // - Fruits: Suresh Gaikwad (Pune / Baramati) & Ramesh Patil (grapes/oranges)
-      // - Pulses: Ananya Roy (first half) & Rajesh Choudhary (Rajasthan, second half)
-      // - Seeds/Spices: Rajesh Choudhary (Jaipur / Rajasthan)
-      let assignedFarmer = DEFAULT_REGISTERED_FARMERS[0]; // default u_farmer_1
-
-      if (item.category === 'Vegetables') {
-        assignedFarmer = vegIdx % 2 === 0 ? DEFAULT_REGISTERED_FARMERS[0] : DEFAULT_REGISTERED_FARMERS[3]; // Ramesh (0) or Ananya (3)
-        vegIdx++;
-      } else if (item.category === 'Grains') {
-        assignedFarmer = DEFAULT_REGISTERED_FARMERS[1]; // Harpreet Singh (1)
-        grainIdx++;
-      } else if (item.category === 'Fruits') {
-        assignedFarmer = fruitIdx % 3 === 0 ? DEFAULT_REGISTERED_FARMERS[0] : DEFAULT_REGISTERED_FARMERS[2]; // Ramesh (0) or Suresh Gaikwad (2)
-        fruitIdx++;
-      } else if (item.category === 'Pulses') {
-        assignedFarmer = pulseIdx % 2 === 0 ? DEFAULT_REGISTERED_FARMERS[3] : DEFAULT_REGISTERED_FARMERS[4]; // Ananya (3) or Rajesh (4)
-        pulseIdx++;
-      } else {
-        // Seeds / Spices
-        assignedFarmer = DEFAULT_REGISTERED_FARMERS[4]; // Rajesh Choudhary (4)
-      }
-
-      upsertListingStmt.run(
-        listingId,
-        assignedFarmer.id,
-        assignedFarmer.fpoId,
-        item.name,
-        item.category,
-        500,
-        item.unit || 'kg',
-        pricePaise,
-        mandiPricePaise,
-        item.grade || 'उच्चतम श्रेणी A+',
-        harvestDate,
-        item.isOrganic ? 1 : 0,
-        imageUrlJson,
-        logoUrl,
-        assignedFarmer.location,
-        assignedFarmer.district,
-        'ACTIVE'
-      );
-
-      supaRecords.push({
-        id: listingId,
-        farmer_id: assignedFarmer.id,
-        farmer_name: assignedFarmer.name,
-        crop_name: item.name,
-        category: item.category,
-        quantity_available: 500,
-        unit: item.unit || 'kg',
-        price_paise: pricePaise,
-        mandi_retail_price_paise: mandiPricePaise,
-        grade: item.grade || 'उच्चतम श्रेणी A+',
-        harvest_date: harvestDate,
-        organic_certified: item.isOrganic ? 1 : 0,
-        location: assignedFarmer.location,
-        district: assignedFarmer.district,
-        status: 'ACTIVE',
-        image_url: imageUrlJson,
-        logo_url: logoUrl,
-      });
-
-      farmerProductCounts[assignedFarmer.id].count++;
-      if (farmerProductCounts[assignedFarmer.id].crops.length < 5) {
-        farmerProductCounts[assignedFarmer.id].crops.push(item.name);
-      }
-    }
-  })();
-
-  // 4. Sync in batches of 50 to Supabase `product_listings` table
-  let supabaseSyncedCount = 0;
-  try {
-    const chunkSize = 50;
-    for (let i = 0; i < supaRecords.length; i += chunkSize) {
-      const chunk = supaRecords.slice(i, i + chunkSize);
-      const { error } = await supabase.from('product_listings').upsert(chunk, { onConflict: 'id' });
-      if (!error) {
-        supabaseSyncedCount += chunk.length;
-      }
-    }
-  } catch (err: any) {
-    console.error('Supabase batch upsert error:', err);
-  }
+  // 3. Ensure staple products are seeded in SQLite
+  ensureStapleProductsSeeded(db);
 
   return {
     success: true,
-    totalProductsSeeded: FULL_CROP_CATALOG.length,
-    supabaseSyncedCount,
     supaUserSyncCount,
     registeredUsersCount: ALL_DEFAULT_USERS.length,
-    farmerProductBreakdown: farmerProductCounts,
-    message: `Successfully seeded all ${FULL_CROP_CATALOG.length} catalog products across ${DEFAULT_REGISTERED_FARMERS.length} registered default farmers in both SQLite and Supabase!`,
+    message: `Default farmers and staple products verified in SQLite and Supabase!`,
   };
 }
 

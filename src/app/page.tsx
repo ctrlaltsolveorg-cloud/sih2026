@@ -17,7 +17,6 @@ import {
 import Link from 'next/link';
 import BulmaProductCard from '@/components/BulmaProductCard';
 import HeroCarousel from '@/components/HeroCarousel';
-import { FULL_CROP_CATALOG } from '@/lib/cropCatalogData';
 import { getCropLogoUrl, getCropPhotosByName } from '@/lib/cropImageMatcher';
 
 interface Listing {
@@ -145,39 +144,8 @@ export default function HomePage() {
           }
         } catch (e) { }
 
-        // Exactly 3 Verified Staple Products
-        const catalogProduce: Listing[] = FULL_CROP_CATALOG.map((item) => {
-          const verifiedPhotos = item.photos && item.photos.length > 0 ? item.photos : getCropPhotosByName(item.name);
-          const verifiedLogo = item.sideLogo || item.thumbnail || getCropLogoUrl(item.name);
-
-          return {
-            id: item.id,
-            crop_name: item.name,
-            crop_name_hi: item.nameHi,
-            category: item.category,
-            variety: item.variety,
-            quantity_kg: item.quantityKg || 500,
-            price_paise_per_kg: item.pricePaise,
-            quality_grade: item.grade,
-            cv_trust_score: 98,
-            harvest_date: '2026-09-14',
-            is_organic: item.isOrganic,
-            farmer_name: item.farmerName || 'Ramesh Patil',
-            location: item.location || 'Farm Collection Center #04, Nashik Hub',
-            hub_location: 'Nashik Agro-Hub #04',
-            image_url: verifiedLogo || verifiedPhotos[0],
-            images: verifiedPhotos,
-            logo_url: verifiedLogo,
-            side_logo: verifiedLogo,
-            unit: item.unit || 'kg',
-          };
-        });
-
-        // Prioritize:
-        // 1. Newly created / active crops from Supabase API (apiProduce)
-        // 2. Custom crops in localStorage (localProduce)
-        // 3. Default staple catalog crops (catalogProduce)
-        const combined = [...apiProduce, ...localProduce, ...catalogProduce];
+        // Real active produce from Supabase API & Local Storage
+        const combined = [...apiProduce, ...localProduce];
         const seen = new Set();
         const uniqueListings: Listing[] = [];
         for (const item of combined) {

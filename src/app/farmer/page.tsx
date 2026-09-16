@@ -8,23 +8,7 @@ import { useRole } from '@/context/RoleContext';
 import { useAuth } from '@/context/AuthContext';
 import PortalGuard from '@/components/PortalGuard';
 import BulmaProductCard from '@/components/BulmaProductCard';
-import CropImageDropdown from '@/components/CropImageDropdown';
-import {
-  FULL_CROP_CATALOG,
-  VEGETABLES_CATALOG,
-  FRUITS_CATALOG,
-  PULSES_CATALOG,
-  SEEDS_CATALOG,
-  GRAINS_CATALOG,
-  CATALOG_STATS,
-  CatalogCropItem,
-  CropCategory,
-  ALL_AGRICULTURAL_CATEGORIES,
-  createCustomCatalogItem,
-  saveCustomCatalogItem,
-  deleteCustomCatalogItem,
-  getStoredCustomCatalogItems
-} from '@/lib/cropCatalogData';
+import { CropCategory, ALL_AGRICULTURAL_CATEGORIES } from '@/lib/cropCategories';
 
 import {
   matchCropImagesByName,
@@ -53,7 +37,6 @@ import {
   ArrowRight,
   Search,
   Check,
-  Layers,
   ShoppingBag,
   ExternalLink,
   Edit3,
@@ -71,7 +54,6 @@ export default function FarmerDashboardPage() {
   const { userName } = useRole();
   const { user, verifyCredentials } = useAuth();
 
-  const [showAddModal, setShowAddModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [ivrResponse, setIvrResponse] = useState<string | null>(null);
   const [selectedKeypad, setSelectedKeypad] = useState('1');
@@ -100,10 +82,8 @@ export default function FarmerDashboardPage() {
   const [farmerActiveSection, setFarmerActiveSection] = useState<'products' | 'orders'>('products');
   const [showInlineAddForm, setShowInlineAddForm] = useState(false);
 
-  // Form states for adding/updating produce (Product Details + 2-6 Photos mandatory)
+  // Form states for adding/updating produce
   const [editingCropId, setEditingCropId] = useState<string | null>(null);
-  const [customCropSubMode, setCustomCropSubMode] = useState<'new' | 'update'>('new');
-  const [unlistedCategoryFilter, setUnlistedCategoryFilter] = useState<'All' | 'Vegetables' | 'Fruits' | 'Pulses' | 'Grains'>('All');
   const formContainerRef = useRef<HTMLDivElement>(null);
 
   const [cropName, setCropName] = useState('');
@@ -117,16 +97,10 @@ export default function FarmerDashboardPage() {
   const [location, setLocation] = useState('नासिक मंडी संकलन हब');
   const [isOrganic, setIsOrganic] = useState(false);
 
-  // Photos State (Optional, max 6 photos)
+  // Photos State
   const [photos, setPhotos] = useState<string[]>([]);
   const [urlInput, setUrlInput] = useState('');
   const [photoError, setPhotoError] = useState<string | null>(null);
-
-  // Catalog Fast-Autocomplete states
-  const [produceSourceMode, setProduceSourceMode] = useState<'catalog' | 'custom'>('catalog');
-  const [catalogTab, setCatalogTab] = useState<'All' | 'Vegetables' | 'Fruits' | 'Pulses' | 'Grains'>('Vegetables');
-  const [catalogSearch, setCatalogSearch] = useState('');
-  const [selectedCatalogId, setSelectedCatalogId] = useState<string>('veg_1');
 
   // User-isolated active listings
   const [myListings, setMyListings] = useState<any[]>([]);
@@ -140,63 +114,6 @@ export default function FarmerDashboardPage() {
   const [pickupOtpInput, setPickupOtpInput] = useState('');
   const [verifyingPickup, setVerifyingPickup] = useState(false);
   const [pickupMessage, setPickupMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-
-  // Filtered catalog items for quick-picker
-  const filteredCatalogItems = useMemo(() => {
-    let pool = FULL_CROP_CATALOG;
-    if (catalogTab !== 'All') {
-      pool = pool.filter((item) => item.category === catalogTab);
-    }
-    if (catalogSearch.trim()) {
-      const q = catalogSearch.toLowerCase();
-      pool = pool.filter(
-        (item) =>
-          item.name.toLowerCase().includes(q) ||
-          item.nameHi.includes(q) ||
-          item.variety.toLowerCase().includes(q)
-      );
-    }
-    return pool.slice(0, 30); // show top 30 for performance
-  }, [catalogTab, catalogSearch]);
-
-  // Unlisted custom crops (crops not in the 352 catalog or custom added)
-  const unlistedCustomCrops = useMemo(() => {
-    return myListings.filter((c) => {
-      if (c.isCustom) return true;
-      const name = (c.crop || c.crop_name || '').trim().toLowerCase();
-      const inCatalog = FULL_CROP_CATALOG.some(
-        (cat) => cat.name.toLowerCase() === name || (c.crop_name_hi && cat.nameHi === c.crop_name_hi)
-      );
-      return !inCatalog;
-    });
-  }, [myListings]);
-
-  // Convert unlisted custom crops to standard CatalogCropItem format for image dropdown
-  const customCatalogItems: CatalogCropItem[] = useMemo(() => {
-    return unlistedCustomCrops.map((c) => {
-      const pRupees = parseFloat(c.priceRupees) || (c.pricePaise ? c.pricePaise / 100 : 40);
-      const photoList: string[] = Array.isArray(c.photos) && c.photos.length > 0
-        ? c.photos
-        : (c.imageUrl ? [c.imageUrl] : []);
-
-      return createCustomCatalogItem({
-        id: String(c.id),
-        name: c.crop || c.crop_name,
-        nameHi: c.crop_name_hi || c.crop || c.crop_name,
-        category: c.category || 'Vegetables',
-        variety: c.variety || 'देसी / स्थानीय फसल (Local Harvest)',
-        priceRupees: pRupees,
-        unit: c.unit || 'kg',
-        grade: c.grade || 'उच्चतम श्रेणी A+',
-        isOrganic: c.isOrganic || (c.grade && (c.grade.includes('जैविक') || c.grade.includes('Organic')) ? 1 : 0),
-        photos: photoList,
-        farmerId: c.farmerId || user?.id,
-        farmerName: c.farmer_name || userName,
-        quantityKg: parseInt(c.qty || c.quantity_available) || 500,
-        location: c.location,
-      });
-    });
-  }, [unlistedCustomCrops, user?.id, userName]);
 
 
 
@@ -359,39 +276,6 @@ export default function FarmerDashboardPage() {
     }
   };
 
-  // Select item from 352+ Catalog or Unlisted Custom Produce
-  const handleSelectCatalogItem = (item: CatalogCropItem) => {
-    setSelectedCatalogId(item.id);
-    setCropName(item.name);
-    setCropNameHi(item.nameHi);
-    setCategory(item.category);
-    setVariety(item.variety);
-    setBasePriceRupees(String(item.priceRupees));
-    setUnit(item.unit);
-    setGrade(item.grade);
-    setIsOrganic(item.isOrganic === 1);
-    // Pre-fills with verified photo set (meets 2-6 mandatory photo rule!)
-    setPhotos([...item.photos]);
-    setPhotoError(null);
-
-    // If selected crop is unlisted custom produce (not in 352 catalog):
-    if (item.isCustom || item.id.startsWith('custom_')) {
-      const rawId = item.id.startsWith('custom_') ? item.id.replace('custom_', '') : item.id;
-      setEditingCropId(rawId);
-      setProduceSourceMode('custom');
-      setCustomCropSubMode('update');
-      if (item.quantityKg) setQuantityKg(String(item.quantityKg));
-      if (item.location) setLocation(item.location);
-      triggerSuccessSignal(
-        language === 'hi'
-          ? `✏️ अनलिस्टेड फसल "${item.nameHi || item.name}" संपादन मोड सक्रिय — बदलाव करें और 2-6 फोटो सहित अपडेट करें!`
-          : `✏️ Editing unlisted crop "${item.name}". Make updates with 2-6 photos!`
-      );
-    } else {
-      setEditingCropId(null);
-    }
-  };
-
   // Simple Crop Name Change without auto-photo generation
   const handleCropNameChange = (val: string) => {
     setCropName(val);
@@ -502,10 +386,8 @@ export default function FarmerDashboardPage() {
     setPhotoError(null);
   };
 
-  const handleStartCustomProduce = (cat?: 'Vegetables' | 'Fruits' | 'Pulses' | 'Grains') => {
+  const handleStartAddProduce = (cat?: CropCategory) => {
     setEditingCropId(null);
-    setProduceSourceMode('custom');
-    setCustomCropSubMode('new');
     if (cat) setCategory(cat);
     setCropName('');
     setCropNameHi('');
@@ -513,18 +395,12 @@ export default function FarmerDashboardPage() {
     setQuantityKg('500');
     setBasePriceRupees('40');
     setGrade('A+');
-    handleLoadSamplePhotosForCategory(cat || category);
-    triggerSuccessSignal(
-      language === 'hi'
-        ? 'नया अनलिस्टेड उत्पाद मोड सक्रिय — विवरण व 2-6 फोटो दर्ज करें'
-        : 'Custom Unlisted Produce mode active — enter details and 2-6 photos'
-    );
+    setShowInlineAddForm(true);
+    setTimeout(() => formContainerRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
   };
 
   const handleStartEditCrop = (crop: any) => {
     setEditingCropId(crop.id);
-    setProduceSourceMode('custom');
-    setCustomCropSubMode('update');
     setCropName(crop.crop || crop.crop_name || '');
     setCropNameHi(crop.crop_name_hi || '');
     setCategory(crop.category || 'Vegetables');
@@ -548,6 +424,7 @@ export default function FarmerDashboardPage() {
     }
     setPhotos(cropPhotos);
     setPhotoError(null);
+    setShowInlineAddForm(true);
 
     if (formContainerRef.current) {
       formContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -555,14 +432,13 @@ export default function FarmerDashboardPage() {
 
     triggerSuccessSignal(
       language === 'hi'
-        ? `✏️ फसल "${crop.crop || crop.crop_name}" संपादन मोड लोड हो गया। बदलाव करें और अपडेट करें!`
-        : `✏️ Editing "${crop.crop || crop.crop_name}". Make changes and update!`
+        ? `✏️ फसल "${crop.crop || crop.crop_name}" संपादन मोड सक्रिय`
+        : `✏️ Editing "${crop.crop || crop.crop_name}"`
     );
   };
 
   const handleCancelEdit = () => {
     setEditingCropId(null);
-    setCustomCropSubMode('new');
     setCropName('');
     setCropNameHi('');
     setVariety('देसी / स्थानीय फसल (Local Harvest)');
@@ -680,35 +556,15 @@ export default function FarmerDashboardPage() {
             updatedStored.unshift(updatedCrop);
           }
           localStorage.setItem('kb_custom_crops', JSON.stringify(updatedStored));
-
-          // Sync into custom CatalogCropItem store
-          saveCustomCatalogItem(
-            createCustomCatalogItem({
-              id: editingCropId,
-              name: cropName || 'अद्यतन फसल',
-              nameHi: cropNameHi,
-              category: category,
-              variety: variety,
-              priceRupees: parseFloat(basePriceRupees) || 34,
-              unit: unit,
-              grade: grade,
-              isOrganic: 0,
-              photos: photos,
-              farmerId: user?.id || 'u_farmer_1',
-              farmerName: user?.name || userName,
-              quantityKg: parseInt(quantityKg) || 500,
-              location: location,
-            })
-          );
         } catch (e) { }
 
         setIsSubmitting(false);
         setEditingCropId(null);
-        setShowAddModal(false);
+        setShowInlineAddForm(false);
         triggerSuccessSignal({
           cropName,
           cropNameHi: cropNameHi || cropName,
-          logo: FULL_CROP_CATALOG.find((item) => item.id === selectedCatalogId)?.sideLogo || photos[0],
+          logo: photos[0] || getCropLogoUrl(cropName),
           photos: photos.slice(0, 6),
           details: [category, variety, `${quantityKg} ${unit}`, grade, location],
         });
@@ -717,9 +573,8 @@ export default function FarmerDashboardPage() {
     }
 
     // ============================================
-    // BRANCH B: ADD NEW PRODUCE (CATALOG OR UNLISTED)
+    // BRANCH B: ADD NEW PRODUCE
     // ============================================
-    const isUnlistedNew = produceSourceMode === 'custom' || !FULL_CROP_CATALOG.some((c) => c.id === selectedCatalogId);
     const fallbackCrop = {
       id: String(Date.now()),
       crop: cropName || 'नयी फसल',
@@ -734,15 +589,15 @@ export default function FarmerDashboardPage() {
       grade: grade,
       location: location,
       status: 'सत्यापित फसल',
-      imageUrl: photos[0],
-      photos: photos,
+      imageUrl: photos[0] || getCropPhotosByName(cropName)[0],
+      photos: photos.length > 0 ? photos : getCropPhotosByName(cropName),
       unit: unit,
       farmerId: user?.id || 'u_farmer_1',
       farmer_name: user?.name || userName || 'किसान (Farmer)',
-      isOrganic: 0,
+      isOrganic: isOrganic ? 1 : 0,
       harvestDate: new Date().toISOString().split('T')[0],
       cvTrustScore: 98,
-      isCustom: isUnlistedNew,
+      isCustom: true,
     };
 
     let cropToAdd = fallbackCrop;
@@ -761,7 +616,7 @@ export default function FarmerDashboardPage() {
           farmerName: user?.name || userName,
           category: category,
           unit: unit,
-          images: photos, // 2 to 6 photos passed
+          images: photos,
         }),
       });
 
@@ -781,15 +636,15 @@ export default function FarmerDashboardPage() {
           grade: data.crop.grade || grade,
           location: data.crop.location,
           status: 'सत्यापित फसल',
-          imageUrl: photos[0],
-          photos: photos,
+          imageUrl: photos[0] || getCropPhotosByName(cropName)[0],
+          photos: photos.length > 0 ? photos : getCropPhotosByName(cropName),
           unit: unit,
           farmerId: user?.id || 'u_farmer_1',
           farmer_name: user?.name || userName || 'किसान (Farmer)',
-          isOrganic: 0,
+          isOrganic: isOrganic ? 1 : 0,
           harvestDate: new Date().toISOString().split('T')[0],
           cvTrustScore: 98,
-          isCustom: isUnlistedNew,
+          isCustom: true,
         };
       }
     } catch (err) {
@@ -801,31 +656,10 @@ export default function FarmerDashboardPage() {
       try {
         const stored = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
         localStorage.setItem('kb_custom_crops', JSON.stringify([cropToAdd, ...stored]));
-
-        if (isUnlistedNew) {
-          saveCustomCatalogItem(
-            createCustomCatalogItem({
-              id: cropToAdd.id,
-              name: cropName || 'नयी फसल',
-              nameHi: cropNameHi,
-              category: category,
-              variety: variety,
-              priceRupees: parseFloat(basePriceRupees) || 34,
-              unit: unit,
-              grade: grade,
-              isOrganic: 0,
-              photos: photos,
-              farmerId: user?.id || 'u_farmer_1',
-              farmerName: user?.name || userName,
-              quantityKg: parseInt(quantityKg) || 500,
-              location: location,
-            })
-          );
-        }
       } catch (e) { }
 
       setIsSubmitting(false);
-      setShowAddModal(false);
+      setShowInlineAddForm(false);
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new Event('kb_crop_added'));
         window.dispatchEvent(new Event('storage'));
@@ -833,7 +667,7 @@ export default function FarmerDashboardPage() {
       triggerSuccessSignal({
         cropName,
         cropNameHi: cropNameHi || cropName,
-        logo: FULL_CROP_CATALOG.find((item) => item.id === selectedCatalogId)?.sideLogo || photos[0],
+        logo: photos[0] || getCropLogoUrl(cropName),
         photos: photos.slice(0, 6),
         details: [category, variety, `${quantityKg} ${unit}`, grade, location],
       });
@@ -873,7 +707,6 @@ export default function FarmerDashboardPage() {
         const stored = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
         const filtered = stored.filter((item: any) => item.id !== id);
         localStorage.setItem('kb_custom_crops', JSON.stringify(filtered));
-        deleteCustomCatalogItem(id);
       } catch (e) { }
 
       try {
@@ -921,26 +754,23 @@ export default function FarmerDashboardPage() {
               </h1>
               <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
                 {language === 'hi'
-                  ? 'फसल जोड़ें (2 से 6 तस्वीरें अनिवार्य) और सीधे खरीदार पोर्टल (Buyer Desk) तक पहुँचाएं'
-                  : 'Add produce with 2-6 mandatory photos and broadcast directly to Buyer Desk'}
+                  ? 'फसल जोड़ें और सीधे खरीदार पोर्टल (Buyer Desk) तक पहुँचाएं'
+                  : 'Add produce and broadcast directly to Buyer Desk'}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
             <button
-              onClick={() => { setProduceSourceMode('custom'); setShowAddModal(true); }}
-              className="px-5 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-extrabold rounded-xl shadow-lg hover:from-emerald-500 hover:to-emerald-600 transition flex items-center gap-2 text-sm border border-emerald-400/30"
+              onClick={() => {
+                handleCancelEdit();
+                setShowInlineAddForm(true);
+                setTimeout(() => formContainerRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+              }}
+              className="px-5 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-extrabold rounded-xl shadow-lg hover:from-emerald-500 hover:to-emerald-600 transition flex items-center gap-2 text-sm border border-emerald-400/30 cursor-pointer"
             >
               <Plus className="w-4 h-4 text-amber-300" />
               <span>{language === 'hi' ? '+ नया उत्पाद जोड़ें' : '+ Add Product'}</span>
-            </button>
-            <button
-              onClick={() => { setProduceSourceMode('catalog'); setShowAddModal(true); }}
-              className="px-5 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 font-extrabold rounded-xl shadow-lg hover:from-amber-400 hover:to-amber-500 transition flex items-center gap-2 text-sm"
-            >
-              <Layers className="w-4 h-4" />
-              <span>{language === 'hi' ? '352+ कैटलॉग से चुनें' : '352+ Catalog Produce'}</span>
             </button>
           </div>
         </div>
@@ -1220,14 +1050,6 @@ export default function FarmerDashboardPage() {
                   )}
                 </button>
 
-                <button
-                  type="button"
-                  onClick={() => { setProduceSourceMode('catalog'); setShowAddModal(true); }}
-                  className="px-4 py-2.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-300 rounded-xl font-bold text-xs flex items-center gap-2 shadow"
-                >
-                  <Layers className="w-4 h-4 text-amber-400" />
-                  <span>{language === 'hi' ? '352+ कैटलॉग से चुनें' : '352+ Catalog'}</span>
-                </button>
               </div>
             </div>
 
@@ -1237,12 +1059,8 @@ export default function FarmerDashboardPage() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-emerald-900/10 pb-4">
             <div>
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 bg-amber-500/20 text-amber-900 font-extrabold text-[11px] rounded-full border border-amber-500/30">
-                  {language === 'hi' ? 'किसान डेस्क बोर्ड से खरीदार बोर्ड' : 'Farmer Desk Board to Buyer'}
-                </span>
-                <span className="text-xs text-emerald-700 font-bold flex items-center gap-1">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                  <span>{language === 'hi' ? '2 से 6 फोटो अनिवार्य' : '2-6 Photos Mandatory'}</span>
+                <span className="px-2.5 py-0.5 bg-emerald-700/20 text-emerald-900 font-extrabold text-[11px] rounded-full border border-emerald-700/30">
+                  {language === 'hi' ? 'किसान डेस्क' : 'Farmer Desk'}
                 </span>
                 {editingCropId && (
                   <span className="px-2.5 py-0.5 bg-amber-500 text-emerald-950 font-black text-[11px] rounded-full shadow-xs flex items-center gap-1">
@@ -1253,13 +1071,13 @@ export default function FarmerDashboardPage() {
               </div>
               <h2 className="text-xl sm:text-2xl font-extrabold text-emerald-950 mt-1">
                 {editingCropId
-                  ? (language === 'hi' ? `फसल अपडेट करें: "${cropName}"` : `Update Crop: "${cropName}"`)
-                  : (language === 'hi' ? 'फसल प्रविष्टि बोर्ड (Insert Produce to Buyer)' : 'Insert Produce to Buyer Desk')}
+                  ? (language === 'hi' ? `फसल विवरण अपडेट करें: "${cropName}"` : `Update Crop: "${cropName}"`)
+                  : (language === 'hi' ? 'नया उत्पाद जोड़ें (Add Produce)' : 'Register Produce')}
               </h2>
               <p className="text-xs text-emerald-800/70">
                 {language === 'hi'
-                  ? '352+ कैटलॉग से फसल चुनें या सब्जियाँ, फल, दालें, अनाज में से नया अनलिस्टेड उत्पाद जोड़ें और पूर्व दर्ज फसलों को तुरंत अपडेट करें।'
-                  : 'Select from 352+ catalog or add new unlisted produce (Vegetables, Fruits, Pulses, Grains) & update existing custom crops.'}
+                  ? 'अपनी फसल का विवरण दर्ज करें और सीधे खरीदार पोर्टल पर बिक्री शुरू करें।'
+                  : 'Enter crop details to publish directly to buyers across India.'}
               </p>
             </div>
 
@@ -1268,7 +1086,7 @@ export default function FarmerDashboardPage() {
                 <button
                   type="button"
                   onClick={handleCancelEdit}
-                  className="px-3.5 py-2 bg-red-100 hover:bg-red-200 text-red-800 rounded-xl font-bold text-xs flex items-center gap-1.5 transition"
+                  className="px-3.5 py-2 bg-red-100 hover:bg-red-200 text-red-800 rounded-xl font-bold text-xs flex items-center gap-1.5 transition cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                   <span>{language === 'hi' ? 'संपादन रद्द करें' : 'Cancel Edit'}</span>
@@ -1276,334 +1094,43 @@ export default function FarmerDashboardPage() {
               )}
               <button
                 type="button"
-                onClick={() => setShowAddModal(true)}
-                className="px-4 py-2.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-100 rounded-xl font-bold text-xs flex items-center gap-2 shadow"
+                onClick={() => {
+                  setShowInlineAddForm(false);
+                  if (editingCropId) handleCancelEdit();
+                }}
+                className="px-3.5 py-2 bg-gray-200 hover:bg-gray-300 text-emerald-950 rounded-xl font-bold text-xs flex items-center gap-1.5 transition cursor-pointer"
               >
-                <Plus className="w-4 h-4 text-amber-400" />
-                <span>{language === 'hi' ? 'विस्तृत मॉडल खोलें' : 'Open Full Screen Modal'}</span>
+                <X className="w-4 h-4" />
+                <span>{language === 'hi' ? 'फॉर्म बंद करें' : 'Close'}</span>
               </button>
             </div>
           </div>
 
-          {/* Produce Source Mode Switcher: 352+ Catalog vs Custom Unlisted Produce */}
-          <div className="flex items-center gap-2 p-1.5 bg-emerald-950/10 rounded-2xl border border-emerald-900/10 flex-wrap">
-            <button
-              type="button"
-              onClick={() => {
-                if (editingCropId) handleCancelEdit();
-                setProduceSourceMode('catalog');
-              }}
-              className={`px-4 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition ${produceSourceMode === 'catalog'
-                  ? 'bg-[#0F3826] text-amber-300 shadow-md ring-2 ring-amber-400/40'
-                  : 'text-emerald-950 hover:bg-emerald-100/70'
-                }`}
-            >
-              <Layers className="w-4 h-4 text-amber-500" />
-              <span>{language === 'hi' ? '1. कैटलॉग से चुनें (352+ फसलें)' : '1. Select from 352+ Catalog'}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleStartCustomProduce()}
-              className={`px-4 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition ${produceSourceMode === 'custom'
-                  ? 'bg-[#0F3826] text-amber-300 shadow-md ring-2 ring-amber-400/40'
-                  : 'text-emerald-950 hover:bg-emerald-100/70'
-                }`}
-            >
-              <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>
-                {language === 'hi'
-                  ? '2. ➕ कस्टम अनलिस्टेड उत्पाद (जो 352 कैटलॉग में नहीं है)'
-                  : '2. ➕ Custom Unlisted Produce (Not in 352 Catalog)'}
-              </span>
-            </button>
-          </div>
-
-          {/* Mode 1: Rich Image Dropdown for Catalog Produce */}
-          {produceSourceMode === 'catalog' ? (
-            <div className="bg-gradient-to-r from-emerald-950/5 via-amber-500/5 to-emerald-950/5 p-4 sm:p-6 rounded-2xl border border-amber-500/30 space-y-3 shadow-sm">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-emerald-900/10 pb-2.5">
+          {/* Active Editing Notification Banner */}
+          {editingCropId && (
+            <div className="p-3 bg-amber-400/20 border-2 border-amber-500/50 rounded-xl flex items-center justify-between gap-2 animate-fadeIn">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping shrink-0" />
                 <div>
-                  <span className="text-xs sm:text-sm font-black text-emerald-950 flex items-center gap-2">
-                    <Layers className="w-4 h-4 text-amber-600" />
-                    <span>
-                      {language === 'hi'
-                        ? 'फोटो सहित ड्रॉपडाउन लिस्ट से फसल चुनें (सब्जियाँ, फल, दालें, अनाज):'
-                        : 'Select Produce from Image Dropdown (Vegetables, Fruits, Pulses, Grains):'}
-                    </span>
+                  <span className="text-xs font-black text-emerald-950">
+                    {language === 'hi' ? '✏️ संपादन मोड सक्रिय:' : '✏️ Edit Mode Active:'}{' '}
+                    <span className="text-amber-900 underline">{cropName}</span> ({category})
                   </span>
-                  <p className="text-[11px] text-emerald-800/80 mt-0.5">
+                  <p className="text-[10px] text-emerald-900/70">
                     {language === 'hi'
-                      ? 'ड्रॉपडाउन खोलें, किसी भी फसल की तस्वीर व विवरण देखें और 1-क्लिक में 2-6 फोटो सहित ऑटोफिल करें।'
-                      : 'Open the image dropdown to preview real crop photos, varieties, and benchmark prices.'}
+                      ? 'नीचे दिए गए विवरण बदलकर "अपडेट करें" पर क्लिक करें।'
+                      : 'Update fields below and click "Update".'}
                   </p>
                 </div>
-
-                <div className="flex items-center gap-2 shrink-0">
-                  {unlistedCustomCrops.length > 0 && (
-                    <span className="text-[11px] font-extrabold text-emerald-900 bg-emerald-200/80 px-2.5 py-1 rounded-full border border-emerald-400">
-                      +{unlistedCustomCrops.length} {language === 'hi' ? 'अनलिस्टेड' : 'Custom'}
-                    </span>
-                  )}
-                  <span className="text-[11px] font-extrabold text-amber-900 bg-amber-200/80 px-3 py-1 rounded-full border border-amber-400 shrink-0">
-                    {CATALOG_STATS.totalCount} {language === 'hi' ? 'फसलें उपलब्ध' : 'Produce Ready'}
-                  </span>
-                </div>
               </div>
 
-              {/* Live Interactive Crop Image Dropdown with custom crops included */}
-              <CropImageDropdown
-                selectedId={selectedCatalogId}
-                onSelectCrop={handleSelectCatalogItem}
-                onEditCrop={(crop) => {
-                  const rawId = crop.id.startsWith('custom_') ? crop.id.replace('custom_', '') : crop.id;
-                  const found = myListings.find((l) => l.id === rawId || `custom_${l.id}` === crop.id);
-                  if (found) {
-                    handleStartEditCrop(found);
-                  } else {
-                    handleSelectCatalogItem(crop);
-                  }
-                }}
-                customCrops={customCatalogItems}
-              />
-            </div>
-          ) : (
-            /* Mode 2: Custom Unlisted Produce Management Hub (New + Update Function) */
-            <div className="space-y-4">
-              <div className="bg-gradient-to-r from-amber-500/15 via-emerald-900/10 to-amber-500/15 p-4 sm:p-5 rounded-2xl border-2 border-amber-500/40 space-y-3.5 shadow-sm">
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-amber-600" />
-                    <div>
-                      <h3 className="text-sm sm:text-base font-black text-emerald-950">
-                        {language === 'hi'
-                          ? 'कस्टम अनलिस्टेड फसल केंद्र (सब्जियाँ, फल, दालें, अनाज)'
-                          : 'Custom Unlisted Produce Hub (Vegetables, Fruits, Pulses, Grains)'}
-                      </h3>
-                      <p className="text-[11px] text-emerald-800/80">
-                        {language === 'hi'
-                          ? 'जो फसल 352 कैटलॉग में नहीं है उसे यहाँ नया जोड़ें अथवा पूर्व दर्ज अनलिस्टेड फसल का विवरण/फोटो अपडेट करें।'
-                          : 'Add new produce not in the 352 catalog or update details & photos of your unlisted crops.'}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleLoadSamplePhotosForCategory(category)}
-                      className="px-3 py-1.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-300 font-bold rounded-xl text-xs flex items-center gap-1.5 shadow"
-                    >
-                      <Camera className="w-3.5 h-3.5 text-amber-400" />
-                      <span>{language === 'hi' ? '✨ 3 फोटो ऑटो-सजेस्ट करें' : '✨ Auto-Suggest 3 Photos'}</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Sub-Mode Operation Switcher: [➕ 1. नया जोड़ें] or [✏️ 2. अपडेट / संपादित करें] */}
-                <div className="flex items-center gap-2 pt-1 border-t border-emerald-900/10 flex-wrap">
-                  <span className="text-[11px] font-extrabold text-emerald-950">
-                    {language === 'hi' ? 'कार्यविधि चुनें:' : 'Select Action:'}
-                  </span>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setCustomCropSubMode('new');
-                      if (editingCropId) handleCancelEdit();
-                    }}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition ${customCropSubMode === 'new' && !editingCropId
-                        ? 'bg-[#0F3826] text-amber-300 shadow font-black'
-                        : 'bg-white/80 hover:bg-white text-emerald-950 border border-emerald-900/15'
-                      }`}
-                  >
-                    <Plus className="w-3.5 h-3.5 text-amber-400" />
-                    <span>{language === 'hi' ? '➕ नया उत्पाद जोड़ें' : '➕ Add New Produce'}</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setCustomCropSubMode('update');
-                      if (unlistedCustomCrops.length > 0 && !editingCropId) {
-                        handleStartEditCrop(unlistedCustomCrops[0]);
-                      }
-                    }}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition ${customCropSubMode === 'update' || editingCropId !== null
-                        ? 'bg-[#0F3826] text-amber-300 shadow font-black ring-2 ring-amber-400/40'
-                        : 'bg-white/80 hover:bg-white text-emerald-950 border border-emerald-900/15'
-                      }`}
-                  >
-                    <Edit3 className="w-3.5 h-3.5 text-amber-400" />
-                    <span>
-                      {language === 'hi' ? '✏️ अनलिस्टेड फसल अपडेट करें' : '✏️ Update Unlisted Crop'} ({unlistedCustomCrops.length})
-                    </span>
-                  </button>
-                </div>
-
-                {/* 4 Category Quick Selection Pills for Unlisted Produce */}
-                <div className="space-y-1.5 pt-1 border-t border-emerald-900/10">
-                  <div className="flex items-center justify-between text-[11px] font-bold text-emerald-950">
-                    <span>{language === 'hi' ? 'श्रेणी चुनें (Select 4 Categories):' : 'Select Category:'}</span>
-                    <span className="text-amber-800 font-extrabold">{category}</span>
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCategory('Vegetables');
-                        if (!editingCropId) handleLoadSamplePhotosForCategory('Vegetables');
-                      }}
-                      className={`p-2 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 border transition ${category === 'Vegetables'
-                          ? 'bg-emerald-800 text-amber-200 border-amber-400 shadow'
-                          : 'bg-white/90 hover:bg-emerald-50 text-emerald-950 border-emerald-900/15'
-                        }`}
-                    >
-                      <span>🥦</span>
-                      <span>{language === 'hi' ? 'सब्जियाँ (Vegetables)' : 'Vegetables'}</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCategory('Fruits');
-                        if (!editingCropId) handleLoadSamplePhotosForCategory('Fruits');
-                      }}
-                      className={`p-2 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 border transition ${category === 'Fruits'
-                          ? 'bg-emerald-800 text-amber-200 border-amber-400 shadow'
-                          : 'bg-white/90 hover:bg-emerald-50 text-emerald-950 border-emerald-900/15'
-                        }`}
-                    >
-                      <span>🍎</span>
-                      <span>{language === 'hi' ? 'फल (Fruits)' : 'Fruits'}</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCategory('Pulses');
-                        if (!editingCropId) handleLoadSamplePhotosForCategory('Pulses');
-                      }}
-                      className={`p-2 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 border transition ${category === 'Pulses'
-                          ? 'bg-emerald-800 text-amber-200 border-amber-400 shadow'
-                          : 'bg-white/90 hover:bg-emerald-50 text-emerald-950 border-emerald-900/15'
-                        }`}
-                    >
-                      <span>🫘</span>
-                      <span>{language === 'hi' ? 'दालें / दलहन (Pulses)' : 'Pulses'}</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCategory('Grains');
-                        if (!editingCropId) handleLoadSamplePhotosForCategory('Grains');
-                      }}
-                      className={`p-2 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 border transition ${category === 'Grains'
-                          ? 'bg-emerald-800 text-amber-200 border-amber-400 shadow'
-                          : 'bg-white/90 hover:bg-emerald-50 text-emerald-950 border-emerald-900/15'
-                        }`}
-                    >
-                      <span>🌾</span>
-                      <span>{language === 'hi' ? 'अनाज (Grains)' : 'Grains'}</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Existing Unlisted Crops Fast Picker for Updating */}
-                {(customCropSubMode === 'update' || unlistedCustomCrops.length > 0) && (
-                  <div className="pt-2 border-t border-emerald-900/10 space-y-2">
-                    <div className="flex items-center justify-between flex-wrap gap-2 text-xs font-extrabold text-emerald-950">
-                      <span className="flex items-center gap-1.5">
-                        <Edit3 className="w-3.5 h-3.5 text-amber-600" />
-                        <span>{language === 'hi' ? 'अपडेट करने हेतु पंजीकृत अनलिस्टेड फसल चुनें:' : 'Pick Unlisted Crop to Update:'}</span>
-                      </span>
-                      <span className="text-[11px] text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded-md font-mono">
-                        {unlistedCustomCrops.length} {language === 'hi' ? 'फसलें' : 'Crops'}
-                      </span>
-                    </div>
-
-                    {unlistedCustomCrops.length === 0 ? (
-                      <div className="p-3 bg-white/60 rounded-xl text-center text-xs text-emerald-900/70">
-                        {language === 'hi'
-                          ? 'अभी तक कोई अनलिस्टेड फसल पंजीकृत नहीं है। ऊपर दिए गए फॉर्म से नयी फसल जोड़ें।'
-                          : 'No custom unlisted crops found yet. Add one using the form below.'}
-                      </div>
-                    ) : (
-                      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
-                        <button
-                          type="button"
-                          onClick={() => handleStartCustomProduce()}
-                          className="p-2.5 px-3.5 rounded-xl flex items-center gap-1.5 shrink-0 transition bg-amber-500 hover:bg-amber-400 text-emerald-950 font-black text-xs border border-amber-600 shadow-sm"
-                        >
-                          <Plus className="w-4 h-4" />
-                          <span>{language === 'hi' ? '➕ नयी अनलिस्टेड' : '➕ New Unlisted'}</span>
-                        </button>
-                        {unlistedCustomCrops.map((c) => {
-                          const isCurrentlyEditing = editingCropId === c.id;
-                          return (
-                            <button
-                              key={c.id}
-                              type="button"
-                              onClick={() => handleStartEditCrop(c)}
-                              className={`p-2 rounded-xl flex items-center gap-2 shrink-0 transition text-left border ${isCurrentlyEditing
-                                  ? 'bg-[#0F3826] text-amber-200 border-amber-400 ring-2 ring-amber-400/40 shadow'
-                                  : 'bg-white hover:bg-amber-50 text-emerald-950 border-emerald-900/20'
-                                }`}
-                            >
-                              <div className="w-8 h-8 rounded-lg bg-emerald-100/80 border border-emerald-900/15 flex items-center justify-center text-sm font-bold shrink-0">
-                                🌱
-                              </div>
-                              <div className="min-w-0 pr-1">
-                                <div className="font-extrabold text-xs truncate max-w-[130px]">
-                                  {c.crop || c.crop_name}
-                                </div>
-                                <div className="text-[10px] opacity-80 flex items-center gap-1">
-                                  <span>₹{c.priceRupees || (c.pricePaise ? c.pricePaise / 100 : 40)}</span>
-                                  <span>•</span>
-                                  <span>{c.category}</span>
-                                </div>
-                              </div>
-                              <span className={`px-1.5 py-0.5 rounded text-[10px] font-extrabold shrink-0 ${isCurrentlyEditing ? 'bg-amber-400 text-emerald-950' : 'bg-emerald-100 text-emerald-900'
-                                }`}>
-                                {isCurrentlyEditing ? 'Editing' : 'Update'}
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Active Editing Notification Banner */}
-                {editingCropId && (
-                  <div className="p-3 bg-amber-400/20 border-2 border-amber-500/50 rounded-xl flex items-center justify-between gap-2 animate-fadeIn">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping shrink-0" />
-                      <div>
-                        <span className="text-xs font-black text-emerald-950">
-                          {language === 'hi' ? '✏️ संपादन मोड सक्रिय:' : '✏️ Edit Mode Active:'}{' '}
-                          <span className="text-amber-900 underline">{cropName}</span> ({category})
-                        </span>
-                        <p className="text-[10px] text-emerald-900/70">
-                          {language === 'hi'
-                            ? 'नीचे दिए गए विवरण व फोटो बदलकर "फसल अपडेट करें" पर क्लिक करें।'
-                            : 'Update fields & photos below, then click "Update Crop" to sync with Buyer Desk.'}
-                        </p>
-                      </div>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={handleCancelEdit}
-                      className="px-2.5 py-1 bg-white hover:bg-red-50 text-red-700 font-extrabold text-[11px] rounded-lg border border-red-300 transition shrink-0"
-                    >
-                      {language === 'hi' ? 'रद्द करें' : 'Cancel'}
-                    </button>
-                  </div>
-                )}
-              </div>
+              <button
+                type="button"
+                onClick={handleCancelEdit}
+                className="px-2.5 py-1 bg-white hover:bg-red-50 text-red-700 font-extrabold text-[11px] rounded-lg border border-red-300 transition shrink-0 cursor-pointer"
+              >
+                {language === 'hi' ? 'रद्द करें' : 'Cancel'}
+              </button>
             </div>
           )}
 
@@ -2256,208 +1783,7 @@ export default function FarmerDashboardPage() {
           </div>
         )}
 
-        {/* Modal for Adding/Updating Produce (Alternative Popup Interface) */}
-        {showAddModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-fadeIn">
-            <div className="bg-[#FAF5EB] rounded-3xl p-6 w-full max-w-2xl shadow-2xl border border-emerald-900/20 space-y-4 max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 bg-emerald-700/20 text-emerald-900 font-extrabold text-[10px] rounded-full border border-emerald-700/30">
-                      {editingCropId ? (language === 'hi' ? '✏️ संपादन मोड' : '✏️ Edit Mode') : (language === 'hi' ? '➕ नयी फसल' : '➕ New Produce')}
-                    </span>
-                  </div>
-                  <h3 className="font-extrabold text-lg text-emerald-950 mt-0.5">
-                    {editingCropId
-                      ? (language === 'hi' ? 'फसल विवरण अपडेट करें' : 'Update Produce')
-                      : (language === 'hi' ? 'नयी फसल दर्ज करें' : 'Register Produce')}
-                  </h3>
-                  <p className="text-xs text-emerald-800/70">
-                    {language === 'hi'
-                      ? 'किसान पोर्टल से खरीदार डेस्क तक सीधा लिस्टिंग'
-                      : 'Direct listing from Farmer Desk to Buyer'}
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowAddModal(false);
-                    if (editingCropId) handleCancelEdit();
-                  }}
-                  className="p-1 hover:bg-emerald-100 rounded-full text-emerald-800"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
 
-              <form onSubmit={handleAddProduce} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold text-emerald-950 mb-1">
-                      {language === 'hi' ? 'फसल का नाम (Crop Name)' : 'Crop Name'}
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder={language === 'hi' ? 'उदा. टमाटर, प्याज, गेहूं, सरसों, जीरा...' : 'e.g. Tomato, Onion, Wheat, Mustard, Cumin...'}
-                      value={cropName}
-                      onChange={(e) => handleCropNameChange(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-emerald-950 mb-1">
-                      {language === 'hi' ? 'श्रेणी (Category)' : 'Category'}
-                    </label>
-                    <select
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value as CropCategory)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold"
-                    >
-                      {ALL_AGRICULTURAL_CATEGORIES.map((cat) => (
-                        <option key={cat.value} value={cat.value}>
-                          {language === 'hi' ? cat.labelHi : cat.labelEn}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold text-emerald-950 mb-1">
-                      {language === 'hi' ? 'किस्म / वैरायटी (Variety)' : 'Variety'}
-                    </label>
-                    <input
-                      type="text"
-                      placeholder={language === 'hi' ? 'उदा. देसी, हाइब्रिड, शरबाती...' : 'e.g. Desi, Hybrid, Sharbati...'}
-                      value={variety}
-                      onChange={(e) => setVariety(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-emerald-950 mb-1">
-                      {language === 'hi' ? 'मंडी / खेत संकलन स्थान (Hub Location)' : 'Hub Location'}
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold text-emerald-950 mb-1">
-                      {language === 'hi' ? 'उपलब्ध मात्रा (Quantity)' : 'Quantity'}
-                    </label>
-                    <div className="flex gap-1.5">
-                      <input
-                        type="number"
-                        required
-                        min="1"
-                        value={quantityKg}
-                        onChange={(e) => setQuantityKg(e.target.value)}
-                        className="w-full px-3 py-2 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500"
-                      />
-                      <select
-                        value={unit}
-                        onChange={(e) => setUnit(e.target.value)}
-                        className="px-2 py-2 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold"
-                      >
-                        <option value="kg">kg</option>
-                        <option value="quintal">quintal</option>
-                        <option value="packet">packet</option>
-                        <option value="dozen">dozen</option>
-                        <option value="piece">piece</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-emerald-950 mb-1">
-                      {language === 'hi' ? 'मूल्य दर प्रति इकाई (Price Rate ₹)' : 'Price Rate (₹)'}
-                    </label>
-                    <input
-                      type="number"
-                      step="0.5"
-                      min="1"
-                      required
-                      value={basePriceRupees}
-                      onChange={(e) => setBasePriceRupees(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-emerald-950 mb-1">
-                    {language === 'hi' ? 'गुणवत्ता ग्रेड (Grade)' : 'Quality Grade'}
-                  </label>
-                  <select
-                    value={grade}
-                    onChange={(e) => setGrade(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold"
-                  >
-                    <option value="A+">A+</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                  </select>
-                </div>
-
-                <div className="flex items-center justify-end gap-3 pt-3 border-t border-emerald-900/10">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowAddModal(false);
-                      if (editingCropId) handleCancelEdit();
-                    }}
-                    className="px-5 py-3 bg-gray-200 hover:bg-gray-300 text-emerald-950 font-bold rounded-2xl transition text-xs"
-                  >
-                    {language === 'hi' ? 'रद्द करें' : 'Cancel'}
-                  </button>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting || !cropName.trim() || !quantityKg || !basePriceRupees}
-                    className={`px-8 py-3 font-extrabold rounded-2xl shadow-xl transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed ${editingCropId
-                        ? 'bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-emerald-950 shadow-amber-500/20'
-                        : 'bg-gradient-to-r from-emerald-800 via-[#0F3826] to-emerald-950 hover:from-emerald-700 hover:to-emerald-900 text-amber-50'
-                      }`}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
-                        <span>
-                          {editingCropId
-                            ? (language === 'hi' ? 'अपडेट हो रहा है...' : 'Updating...')
-                            : (language === 'hi' ? 'दर्ज हो रहा है...' : 'Publishing...')}
-                        </span>
-                      </>
-                    ) : editingCropId ? (
-                      <>
-                        <Save className="w-4 h-4 text-emerald-950" />
-                        <span>{language === 'hi' ? 'अपडेट करें' : 'Update'}</span>
-                      </>
-                    ) : (
-                      <>
-                        <Plus className="w-4 h-4 text-amber-400" />
-                        <span>Publish</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
 
         {/* Farmer-Driver Secure Handshake Modal */}
         {handshakeModalOrder && (

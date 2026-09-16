@@ -5,7 +5,6 @@ import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedFarmer } from '@/lib/i18n';
 import PortalGuard from '@/components/PortalGuard';
 import { ShieldCheck, Sparkles, Activity, FileText, CheckCircle2, TrendingUp, Leaf, Award } from 'lucide-react';
-import { FULL_CROP_CATALOG } from '@/lib/cropCatalogData';
 import { getVerificationRegistry, setProduceVerification, ProduceVerificationRecord } from '@/lib/verifiedStore';
 import VerifiedBadge from '@/components/VerifiedBadge';
 
@@ -15,6 +14,7 @@ export default function AdminPage() {
   const [registry, setRegistry] = useState<Record<string, ProduceVerificationRecord>>(() =>
     getVerificationRegistry()
   );
+  const [apiCrops, setApiCrops] = useState<any[]>([]);
   const [customCrops, setCustomCrops] = useState<any[]>([]);
 
   React.useEffect(() => {
@@ -22,17 +22,26 @@ export default function AdminPage() {
       const stored = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
       setCustomCrops(stored);
     } catch (e) {}
+
+    fetch('/api/v1/crops')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.crops && Array.isArray(data.crops)) {
+          setApiCrops(data.crops);
+        }
+      })
+      .catch((e) => console.log('Admin crops fetch error:', e));
   }, []);
 
   const allAuditProduce = React.useMemo(() => {
     const list: any[] = [];
-    FULL_CROP_CATALOG.forEach((item) => {
+    apiCrops.forEach((item) => {
       list.push({
         id: item.id,
-        name: item.name,
-        nameHi: item.nameHi,
+        name: item.crop || item.crop_name,
+        nameHi: item.crop_name_hi,
         category: item.category,
-        farmerName: item.farmerName || 'Registered Kisan',
+        farmerName: item.farmer_name || item.farmerName || 'Registered Kisan',
         location: item.location || 'Mandi Hub',
       });
     });
@@ -49,7 +58,7 @@ export default function AdminPage() {
       }
     });
     return list;
-  }, [customCrops]);
+  }, [apiCrops, customCrops]);
 
   const handleToggleVerified = (cropId: string) => {
     const current = registry[cropId] || {
