@@ -47,6 +47,15 @@ export default function RootLayout({
                     document.documentElement.setAttribute('data-theme', 'light');
                     document.documentElement.style.colorScheme = 'light';
                   }
+
+                  // One-time purge of legacy local cached products, orders, and images
+                  if (!localStorage.getItem('kb_data_purged_v1')) {
+                    localStorage.removeItem('kb_custom_crops');
+                    localStorage.removeItem('kb_buyer_active_orders');
+                    localStorage.removeItem('kb_cart');
+                    localStorage.removeItem('kb_verified_produce_registry');
+                    localStorage.setItem('kb_data_purged_v1', '1');
+                  }
                 } catch (e) {}
               })();
             `,

@@ -424,23 +424,8 @@ function seedData(db: Database.Database) {
     // Admin
     insertUser.run('u_admin_1', 'Ministry Governance Admin', '9000000000', 'admin@kisanbandhan.ai', 'ADMIN', '', 'New Delhi', 'Delhi', 'Dept of Consumer Affairs, Krishi Bhawan, New Delhi');
 
-    // 2. Product Listings (Starts completely clean - populated by registered farmers)
-    // No mock seed products
-
-    // 3. Pooled Lots (FPO)
-    insertPooled.run('pool_101', 'fpo_nashik_1', 'Nashik Tomatoes (FPO Bulk Pool)', 5000, 2700, 34, 'POOLING');
-
-    // 4. Bulk Requirements (Buyer)
-    insertBulkReq.run('req_201', 'u_buyer_2', 'Tomatoes', 1000, 450, 2900, 'Swargate Hotel Hub, Pune', 'OPEN');
-
-    // 5. Orders
-    insertOrder.run('ord_501', 'u_buyer_2', 'u_farmer_1', 'fpo_nashik_1', 'Out for Delivery', 280000, 35000, 315000, 'Annapurna Hotel & Catering, Swargate, Pune 411002', 'BULK_HUB', 'COD', 'PENDING', 'Please deliver before 10 AM');
-
-    // 6. Deliveries
-    insertDelivery.run('del_701', 'ord_501', 'u_partner_1', 'Pimplgaon Mandi Hub, Nashik', 'Annapurna Hotel, Swargate, Pune', 'IN_TRANSIT', '4829', '9103', 1, 142.0, 180);
-
-    // 7. Hub Intakes
-    insertHub.run('intake_901', 'pool_101', 'u_hub_1', 'Fresh Nashik Tomatoes', 500, 'Grade A+', 0.96, 14, 'FSSAI_COMPLIANT_PASS', 'QR_HZN_90123', 'STORED');
+    // 2. Product Listings & Orders start completely clean - populated by real actions
+    // No mock seed products or orders
 
     // 8. Demand Forecasts
     insertForecast.run('Tomatoes', 'Nashik / Pune Region', 'Next 7 Days', 8500, 6200, 3000, 92, 'HIGH_DEMAND', 'Festival surge expected next week. Hotel demand up 35%. Recommended to list extra 2,000 kg for optimal profit.');

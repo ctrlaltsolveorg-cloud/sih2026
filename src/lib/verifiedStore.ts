@@ -12,36 +12,8 @@ export interface ProduceVerificationRecord {
 
 const STORAGE_KEY = 'kb_verified_produce_registry';
 
-// Default official verifications for the 3 primary catalog crops
-const DEFAULT_VERIFIED_MAP: Record<string, ProduceVerificationRecord> = {
-  prod_tomato_1: {
-    id: 'prod_tomato_1',
-    isVerified: true,
-    isOrganic: true,
-    grade: 'A+',
-    verifiedAt: '2026-09-14',
-    auditor: 'FSSAI & National Mandi Quality Board',
-    notes: '100% Organic certified farm lot with grade A+ premium audit pass.',
-  },
-  prod_onion_1: {
-    id: 'prod_onion_1',
-    isVerified: true,
-    isOrganic: false,
-    grade: 'A',
-    verifiedAt: '2026-09-15',
-    auditor: 'Nashik APMC Mandi Inspection Cell',
-    notes: 'Grade A export lot certified for zero chemical residue.',
-  },
-  prod_wheat_1: {
-    id: 'prod_wheat_1',
-    isVerified: true,
-    isOrganic: true,
-    grade: 'A+',
-    verifiedAt: '2026-09-15',
-    auditor: 'Madhya Pradesh Mandi Board Lab',
-    notes: '100% Organic certified Sharbati gold wheat with A+ high protein count.',
-  },
-};
+// Clean start - verifications populated by real auditor evaluations
+const DEFAULT_VERIFIED_MAP: Record<string, ProduceVerificationRecord> = {};
 
 export function getVerificationRegistry(): Record<string, ProduceVerificationRecord> {
   if (typeof window === 'undefined') return DEFAULT_VERIFIED_MAP;
