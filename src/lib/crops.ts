@@ -30,7 +30,10 @@ export function ensureStapleProductsSeeded(db: any) {
       VALUES 
       ('u_farmer_1', 'Ramesh Patil', '+91 98765 43210', 'ramesh.patil@kisanbandhan.ai', 'FARMER', 'Pimplgaon', 'Nashik', 'Maharashtra', 'Farm Collection Center #04, Nashik Hub, Maharashtra'),
       ('u_farmer_2', 'Harpreet Singh', '+91 98765 43211', 'harpreet@kisanbandhan.ai', 'FARMER', 'Pimplgaon Hub', 'Nashik', 'Maharashtra', 'Pimplgaon Mandi Hub, Nashik, Maharashtra'),
-      ('u_farmer_3', 'Suresh Gaikwad', '+91 98765 43212', 'suresh.gaikwad@kisanbandhan.ai', 'FARMER', 'Sehore Mandi', 'Sehore', 'Madhya Pradesh', 'Sehore Mandi Hub, Madhya Pradesh')
+      ('u_farmer_3', 'Suresh Gaikwad', '+91 98765 43212', 'suresh.gaikwad@kisanbandhan.ai', 'FARMER', 'Sehore Mandi', 'Sehore', 'Madhya Pradesh', 'Sehore Mandi Hub, Madhya Pradesh'),
+      ('u_farmer_ramkishan', 'Ramkishan Maurya (रामकिशन मौर्य)', '+91 98391 22334', 'ramkishan.farmer@kisanbandhan.ai', 'FARMER', 'Kaimganj Farm Hub', 'Farrukhabad', 'Uttar Pradesh', 'Kaimganj Cold Storage Mandi Road, Farrukhabad, UP 209502'),
+      ('u_farmer_gurpreet', 'Gurpreet Singh Sandhu (गुरप्रीत सिंह)', '+91 98140 33445', 'gurpreet.sandhu@kisanbandhan.ai', 'FARMER', 'Khanna Grain Mandi Hub', 'Ludhiana', 'Punjab', 'G.T. Road, Asia Largest Grain Mandi, Khanna, Punjab 141401'),
+      ('u_farmer_shivaji', 'Shivaji Rao Jadhav (शिवाजी राव जाधव)', '+91 98220 44556', 'shivaji.jadhav@kisanbandhan.ai', 'FARMER', 'Narayangaon Tomato Hub', 'Pune', 'Maharashtra', 'Pune-Nashik Highway, Narayangaon Krishi Upaj Mandi, Pune, MH 410504')
     `).run();
 
     // 2. Ensure buyers exist
@@ -42,14 +45,23 @@ export function ensureStapleProductsSeeded(db: any) {
       ('u_partner_1', 'Vikram Shinde Fleet', '+91 99000 11122', 'vikram.logistics@kisanbandhan.ai', 'TRANSPORTER', 'Hadapsar', 'Pune', 'Maharashtra', 'Kisan Express Logistics Hub, Pune')
     `).run();
 
-    // 3. Ensure the 3 verified products exist
+    // 3. Ensure verified products exist (including bulk farm storage photos)
     db.prepare(`
       INSERT OR REPLACE INTO product_listings (
         id, farmer_id, crop_name, category, quantity_available, unit, price_paise, mandi_retail_price_paise, grade, harvest_date, image_url, location, district, status
       ) VALUES 
-      ('prod_tomato_1', 'u_farmer_1', 'Tomato (Vaishali 108)', 'Vegetables', 500, 'kg', 3450, 4200, 'A+', '2026-09-14', '', 'Farm Collection Center #04, Nashik Hub', 'Nashik', 'ACTIVE'),
-      ('prod_onion_1', 'u_farmer_2', 'Onion (Nashik Red)', 'Vegetables', 800, 'kg', 2800, 3500, 'A', '2026-09-14', '', 'Pimplgaon Mandi Hub, Nashik', 'Nashik', 'ACTIVE'),
-      ('prod_wheat_1', 'u_farmer_3', 'Wheat (Sharbati Gold)', 'Grains', 1200, 'kg', 3800, 4600, 'A+', '2026-09-14', '', 'Sehore Mandi Hub, MP', 'Sehore', 'ACTIVE')
+      ('prod_tomato_1', 'u_farmer_1', 'Tomato (Vaishali 108)', 'Vegetables', 500, 'kg', 3450, 4200, 'A+', '2026-09-14', 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=1200&q=80', 'Farm Collection Center #04, Nashik Hub', 'Nashik', 'ACTIVE'),
+      ('prod_onion_1', 'u_farmer_2', 'Onion (Nashik Red)', 'Vegetables', 800, 'kg', 2800, 3500, 'A', '2026-09-14', 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=1200&q=80', 'Pimplgaon Mandi Hub, Nashik', 'Nashik', 'ACTIVE'),
+      ('prod_wheat_1', 'u_farmer_3', 'Wheat (Sharbati Gold)', 'Grains', 1200, 'kg', 3800, 4600, 'A+', '2026-09-14', 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=1200&q=80', 'Sehore Mandi Hub, MP', 'Sehore', 'ACTIVE'),
+      ('prod_aaloo_bulk_1', 'u_farmer_ramkishan', 'Potato / Aaloo (Kufri Pukhraj - Cold Storage Bulk)', 'Vegetables', 5000, 'kg', 1800, 2400, 'A+ (कोल्ड स्टोरेज)', '2026-09-15', 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=1200&q=80', 'Kaimganj Cold Storage Mandi, Farrukhabad', 'Farrukhabad', 'ACTIVE'),
+      ('prod_aaloo_baby_2', 'u_farmer_ramkishan', 'Baby Potato / Chhota Aaloo (Dum Aaloo Grade - Fresh Dig)', 'Vegetables', 2500, 'kg', 2200, 2800, 'A+ (ताज़ा खुदाई)', '2026-09-14', 'https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=1200&q=80', 'Kaimganj Cold Storage Mandi, Farrukhabad', 'Farrukhabad', 'ACTIVE'),
+      ('prod_pyaz_storage_3', 'u_farmer_ramkishan', 'Red Onion / Pyaz (Farm Storage Shed Bulk)', 'Vegetables', 4000, 'kg', 2600, 3400, 'A', '2026-09-13', 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=1200&q=80', 'Farrukhabad Agri Mandi Hub', 'Farrukhabad', 'ACTIVE'),
+      ('prod_gehun_bulk_1', 'u_farmer_gurpreet', 'Sharbati Wheat (शरबती प्रीमियम गेहूं - Warehouse Sacks Bulk)', 'Grains', 10000, 'kg', 3600, 4400, 'A+ (100% साफ दाना)', '2026-09-12', 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=1200&q=80', 'Khanna Grain Mandi Yard #14, Ludhiana', 'Ludhiana', 'ACTIVE'),
+      ('prod_basmati_bulk_2', 'u_farmer_gurpreet', '1121 Basmati Paddy Rice (बासमती धान - Mandi Harvest Pile)', 'Grains', 8000, 'kg', 4200, 5000, 'A+ एक्सपोर्ट क्वालिटी', '2026-09-14', 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1200&q=80', 'Khanna Grain Mandi Yard #14, Ludhiana', 'Ludhiana', 'ACTIVE'),
+      ('prod_sarson_bulk_3', 'u_farmer_gurpreet', 'Yellow Mustard Seeds / Sarson (पीली सरसों - Farm Sacks Bulk)', 'Seeds', 3000, 'kg', 5800, 6800, 'A+ (उच्च तेल प्रतिशत)', '2026-09-10', 'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=1200&q=80', 'Khanna Mandi Warehouse, Punjab', 'Ludhiana', 'ACTIVE'),
+      ('prod_tamatar_crates_1', 'u_farmer_shivaji', 'Red Tomato / Tamatar (Vaishali - Crates Stack Bulk Mandi)', 'Vegetables', 4500, 'kg', 3200, 4000, 'A+ ग्रेड (चमकदार लाल)', '2026-09-16', 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=1200&q=80', 'Narayangaon Krishi Mandi, Pune', 'Pune', 'ACTIVE'),
+      ('prod_mirch_bags_2', 'u_farmer_shivaji', 'Spicy Green Chilli (तीखी हरी मिर्च - Mesh Bags Bulk Wholesale)', 'Vegetables', 1800, 'kg', 4400, 5500, 'A+ तीव्र तीखापन', '2026-09-15', 'https://images.unsplash.com/photo-1588252303782-cb80119abd6d?auto=format&fit=crop&w=1200&q=80', 'Narayangaon Krishi Mandi, Pune', 'Pune', 'ACTIVE'),
+      ('prod_matar_crates_3', 'u_farmer_shivaji', 'Fresh Green Peas / Matar (मीठी हरी मटर - Farm Crates Harvest Bulk)', 'Vegetables', 2200, 'kg', 5200, 6500, 'A+ भरी हुई फली', '2026-09-16', 'https://images.unsplash.com/photo-1587735243615-c03f25aaff15?auto=format&fit=crop&w=1200&q=80', 'Narayangaon Mandi Yard, Pune', 'Pune', 'ACTIVE')
     `).run();
 
     // 4. Ensure ord_501 order item exists so transporter shows real crop details
@@ -541,6 +553,39 @@ export const DEFAULT_REGISTERED_FARMERS = [
     state: 'Rajasthan',
     address: 'Chomu Mandi Link Road, Jaipur, RJ 303702',
     location: 'चोमू कृषि मंडी हब (Chomu Mandi, Jaipur)',
+    fpoId: null,
+  },
+  {
+    id: 'u_farmer_ramkishan',
+    name: 'Ramkishan Maurya (रामकिशन मौर्य)',
+    phone: '9839122334',
+    email: 'ramkishan.farmer@kisanbandhan.ai',
+    district: 'Farrukhabad',
+    state: 'Uttar Pradesh',
+    address: 'Kaimganj Cold Storage Mandi Road, Farrukhabad, UP 209502',
+    location: 'कायमगंज आलू कोल्ड स्टोरेज (Farrukhabad Mandi Hub)',
+    fpoId: null,
+  },
+  {
+    id: 'u_farmer_gurpreet',
+    name: 'Gurpreet Singh Sandhu (गुरप्रीत सिंह)',
+    phone: '9814033445',
+    email: 'gurpreet.sandhu@kisanbandhan.ai',
+    district: 'Ludhiana',
+    state: 'Punjab',
+    address: 'G.T. Road, Asia Largest Grain Mandi, Khanna, Punjab 141401',
+    location: 'खन्ना थोक अनाज मंडी (Khanna Grain Mandi Yard #14)',
+    fpoId: null,
+  },
+  {
+    id: 'u_farmer_shivaji',
+    name: 'Shivaji Rao Jadhav (शिवाजी राव जाधव)',
+    phone: '9822044556',
+    email: 'shivaji.jadhav@kisanbandhan.ai',
+    district: 'Pune',
+    state: 'Maharashtra',
+    address: 'Pune-Nashik Highway, Narayangaon Krishi Upaj Mandi, Pune, MH 410504',
+    location: 'नारायणगांव टमाटर व सब्जी यार्ड (Narayangaon Hub, Pune)',
     fpoId: null,
   },
 ];
