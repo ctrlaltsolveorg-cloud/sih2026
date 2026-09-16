@@ -33,6 +33,7 @@ import {
 } from '@/lib/cropImageMatcher';
 import {
   Tractor,
+  Sprout,
   Plus,
   Sparkles,
   PhoneCall,
@@ -94,6 +95,10 @@ export default function FarmerDashboardPage() {
   const [showVerifyPass, setShowVerifyPass] = useState(false);
   const [isVerifyingDelete, setIsVerifyingDelete] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+
+  // 2 Main Sections: 'products' (My Products / मेरे उत्पाद) & 'orders' (Received Orders / आया हुआ Orders)
+  const [farmerActiveSection, setFarmerActiveSection] = useState<'products' | 'orders'>('products');
+  const [showInlineAddForm, setShowInlineAddForm] = useState(false);
 
   // Form states for adding/updating produce (Product Details + 2-6 Photos mandatory)
   const [editingCropId, setEditingCropId] = useState<string | null>(null);
@@ -924,6 +929,13 @@ export default function FarmerDashboardPage() {
 
           <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
             <button
+              onClick={() => { setProduceSourceMode('custom'); setShowAddModal(true); }}
+              className="px-5 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-extrabold rounded-xl shadow-lg hover:from-emerald-500 hover:to-emerald-600 transition flex items-center gap-2 text-sm border border-emerald-400/30"
+            >
+              <Plus className="w-4 h-4 text-amber-300" />
+              <span>{language === 'hi' ? '+ नया उत्पाद जोड़ें' : '+ Add Product'}</span>
+            </button>
+            <button
               onClick={() => { setProduceSourceMode('catalog'); setShowAddModal(true); }}
               className="px-5 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 font-extrabold rounded-xl shadow-lg hover:from-amber-400 hover:to-amber-500 transition flex items-center gap-2 text-sm"
             >
@@ -952,18 +964,61 @@ export default function FarmerDashboardPage() {
             <div className="text-2xl font-extrabold text-purple-900">{CATALOG_STATS.totalCount}+ {language === 'hi' ? 'किस्में' : 'Items'}</div>
             <span className="text-[11px] text-purple-700 font-medium">100 सब्जियाँ • 100 फल • 100 दालें • 52 अनाज</span>
           </div>
-
         </div>
 
         {/* ===================================================
-            SECTION: INCOMING BUYER ORDERS & SECURE PICKUP OTP
+            2 MAIN SECTIONS SWITCHER: "MY PRODUCTS" vs "आया हुआ ORDERS"
             =================================================== */}
-        <div className="glass-card p-6 rounded-3xl border border-emerald-900/10 shadow-lg space-y-4 bg-gradient-to-r from-emerald-900/5 via-white to-amber-500/5">
+        <div className="flex items-center justify-center p-2 bg-[#072417]/90 dark:bg-[#03140c]/95 backdrop-blur-xl rounded-3xl max-w-xl mx-auto border-2 border-amber-500/40 shadow-2xl">
+          <button
+            type="button"
+            id="tab-my-products"
+            onClick={() => setFarmerActiveSection('products')}
+            className={`flex-1 py-3.5 px-4 sm:px-6 rounded-2xl font-black text-sm sm:text-base flex items-center justify-center gap-2 sm:gap-3 transition-all cursor-pointer ${
+              farmerActiveSection === 'products'
+                ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-emerald-950 shadow-xl scale-[1.02] ring-2 ring-white/50'
+                : 'text-amber-100/90 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <Sprout className="w-5 h-5 text-emerald-950/80 shrink-0" />
+            <span>{language === 'hi' ? 'मेरे उत्पाद (My Products)' : 'My Products'}</span>
+            <span className={`px-2.5 py-0.5 text-xs rounded-full font-mono font-extrabold shadow-xs ${
+              farmerActiveSection === 'products' ? 'bg-emerald-950 text-amber-300' : 'bg-amber-500/25 text-amber-300'
+            }`}>
+              {myListings.length}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            id="tab-received-orders"
+            onClick={() => setFarmerActiveSection('orders')}
+            className={`flex-1 py-3.5 px-4 sm:px-6 rounded-2xl font-black text-sm sm:text-base flex items-center justify-center gap-2 sm:gap-3 transition-all cursor-pointer ${
+              farmerActiveSection === 'orders'
+                ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-emerald-950 shadow-xl scale-[1.02] ring-2 ring-white/50'
+                : 'text-amber-100/90 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <ShoppingBag className="w-5 h-5 text-emerald-950/80 shrink-0" />
+            <span>{language === 'hi' ? 'आया हुआ Orders' : 'Received Orders'}</span>
+            <span className={`px-2.5 py-0.5 text-xs rounded-full font-mono font-extrabold shadow-xs ${
+              farmerActiveSection === 'orders' ? 'bg-emerald-950 text-amber-300' : 'bg-amber-500/25 text-amber-300'
+            }`}>
+              {farmerOrders.length}
+            </span>
+          </button>
+        </div>
+
+        {/* ===================================================
+            SECTION 2: INCOMING BUYER ORDERS & SECURE PICKUP OTP
+            =================================================== */}
+        {farmerActiveSection === 'orders' && (
+        <div className="glass-card p-6 rounded-3xl border border-emerald-900/10 shadow-lg space-y-4 bg-gradient-to-r from-emerald-900/5 via-white to-amber-500/5 animate-fadeIn">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-emerald-900/10 pb-3">
             <div className="flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-emerald-800" />
               <h2 className="text-lg font-extrabold text-emerald-950">
-                {language === 'hi' ? 'सक्रिय खरीद आदेश एवं सुरक्षित पिकअप सत्यापन' : 'Active Buyer Orders & Secure Pickup Dispatch'}
+                {language === 'hi' ? 'आया हुआ Orders (Received Buyer Orders)' : 'Received Buyer Orders & Secure Pickup'}
               </h2>
               <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full">
                 {farmerOrders.length} {language === 'hi' ? 'ऑर्डर' : 'Orders'}
@@ -1131,11 +1186,74 @@ export default function FarmerDashboardPage() {
             </div>
           )}
         </div>
+        )}
 
         {/* ===================================================
-            INSERT SECTION: FAST PRODUCE REGISTRATION BOARD
+            SECTION 1: MY PRODUCTS (मेरे उत्पाद)
             =================================================== */}
-        <div ref={formContainerRef} className="glass-card p-6 sm:p-8 rounded-3xl border border-amber-500/30 space-y-6 bg-gradient-to-b from-white via-white to-amber-50/40 shadow-xl">
+        {farmerActiveSection === 'products' && (
+          <div className="space-y-6 animate-fadeIn">
+            {/* My Products Top Action Toolbar */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-emerald-950/40 p-5 rounded-3xl border border-emerald-900/15 shadow-md">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-emerald-100 dark:bg-emerald-900/60 rounded-2xl text-emerald-800 dark:text-emerald-300">
+                  <Sprout className="w-6 h-6" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-xl sm:text-2xl font-black text-emerald-950 dark:text-emerald-50">
+                      {language === 'hi' ? 'मेरे पंजीकृत उत्पाद (My Products)' : 'My Registered Products'}
+                    </h2>
+                    <span className="px-2.5 py-0.5 text-xs font-extrabold bg-emerald-100 text-emerald-900 rounded-full">
+                      {myListings.length} {language === 'hi' ? 'फसलें' : 'Items'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-emerald-800/70 dark:text-emerald-300/70 mt-0.5">
+                    {language === 'hi' 
+                      ? 'यहाँ आपके खेत की सभी फसलें सूचीबद्ध हैं। नया उत्पाद जोड़ने के लिए नीचे दिए गए बटन पर क्लिक करें।' 
+                      : 'All crops listed by you are managed here. Click "+ Add Product" to register new produce.'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
+                <button
+                  type="button"
+                  id="btn-add-new-product"
+                  onClick={() => setShowInlineAddForm(!showInlineAddForm)}
+                  className={`px-4 py-2.5 rounded-xl font-extrabold text-xs flex items-center gap-2 transition shadow-md cursor-pointer ${
+                    showInlineAddForm
+                      ? 'bg-red-600 text-white hover:bg-red-700'
+                      : 'bg-gradient-to-r from-emerald-600 to-emerald-700 text-white hover:from-emerald-500 hover:to-emerald-600 border border-emerald-400/30'
+                  }`}
+                >
+                  {showInlineAddForm ? (
+                    <>
+                      <X className="w-4 h-4" />
+                      <span>{language === 'hi' ? 'प्रविष्टि फॉर्म बंद करें' : 'Close Form'}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="w-4 h-4 text-amber-300" />
+                      <span>{language === 'hi' ? '+ नया उत्पाद जोड़ें' : '+ Add Product'}</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => { setProduceSourceMode('catalog'); setShowAddModal(true); }}
+                  className="px-4 py-2.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-300 rounded-xl font-bold text-xs flex items-center gap-2 shadow"
+                >
+                  <Layers className="w-4 h-4 text-amber-400" />
+                  <span>{language === 'hi' ? '352+ कैटलॉग से चुनें' : '352+ Catalog'}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Produce Registration Form (Visible when toggled or in Edit mode) */}
+            {(showInlineAddForm || editingCropId) && (
+              <div ref={formContainerRef} className="glass-card p-6 sm:p-8 rounded-3xl border border-amber-500/30 space-y-6 bg-gradient-to-b from-white via-white to-amber-50/40 shadow-xl animate-fadeIn">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-emerald-900/10 pb-4">
             <div>
               <div className="flex items-center gap-2">
@@ -1798,8 +1916,8 @@ export default function FarmerDashboardPage() {
               </button>
             </div>
           </form>
-
         </div>
+        )}
 
         {/* Feature Phone IVR Info Card */}
         <div className="glass-card p-6 rounded-3xl space-y-4 border border-amber-500/20">
@@ -2006,6 +2124,8 @@ export default function FarmerDashboardPage() {
           )}
 
         </div>
+        </div>
+        )}
 
         {/* Green Pulse Success Signal Toast */}
         {successSignal && (
