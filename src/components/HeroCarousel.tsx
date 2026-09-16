@@ -183,14 +183,9 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
                 style={{ backgroundImage: `url('${slide.image}')` }}
               />
 
-              {/* Cinematic Dark Gradient Layers for perfect contrast */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#041a10]/95 via-[#07281c]/80 to-[#051e14]/90" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#FAF5EB] dark:from-[#07170f] via-transparent to-transparent opacity-95" />
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-500/20 via-transparent to-black/60" />
-
-              {/* Ambient Glows */}
-              <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
+              {/* Clean, clear overlay with natural contrast and zero light flair */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-black/45" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#FAF5EB] dark:from-[#07170f] via-transparent to-transparent opacity-85" />
 
               {/* Content Overlay */}
               <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 flex items-center pt-20 sm:pt-22 pb-12 sm:pb-16">
