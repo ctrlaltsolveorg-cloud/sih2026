@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
 
-export type Theme = 'light' | 'dark' | 'system';
+export type Theme = 'light' | 'dark';
 export type ResolvedTheme = 'light' | 'dark';
 
 interface ThemeContextType {
@@ -17,86 +17,56 @@ const THEME_STORAGE_KEY = 'kb_theme';
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('system');
+  // Default theme is ALWAYS 'light' in any case
+  const [theme, setThemeState] = useState<Theme>('light');
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>('light');
   const [mounted, setMounted] = useState(false);
 
-  // Initialize theme from localStorage or system on client mount
+  // Initialize theme: only 'dark' if explicitly chosen by user, otherwise strictly 'light'
   useEffect(() => {
     setMounted(true);
     try {
       const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
-      if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system')) {
-        setThemeState(savedTheme);
+      if (savedTheme === 'dark') {
+        setThemeState('dark');
+        setResolvedTheme('dark');
       } else {
-        setThemeState('system');
+        setThemeState('light');
+        setResolvedTheme('light');
       }
     } catch {
-      setThemeState('system');
+      setThemeState('light');
+      setResolvedTheme('light');
     }
   }, []);
 
-  // Sync resolved theme whenever theme changes or system preference changes
+  // Sync resolved theme and document classes whenever theme changes
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-    const computeResolved = (currentTheme: Theme): ResolvedTheme => {
-      if (currentTheme === 'dark') return 'dark';
-      if (currentTheme === 'light') return 'light';
-      return mediaQuery.matches ? 'dark' : 'light';
-    };
-
-    const resolved = computeResolved(theme);
-    setResolvedTheme(resolved);
-
-    // Apply class to <html> element
     const root = document.documentElement;
-    if (resolved === 'dark') {
+    if (theme === 'dark') {
+      setResolvedTheme('dark');
       root.classList.add('dark');
       root.setAttribute('data-theme', 'dark');
       root.style.colorScheme = 'dark';
     } else {
+      setResolvedTheme('light');
       root.classList.remove('dark');
       root.setAttribute('data-theme', 'light');
       root.style.colorScheme = 'light';
     }
-
-    // System change listener when in 'system' mode
-    const handleSystemChange = (e: MediaQueryListEvent) => {
-      if (theme === 'system') {
-        const nextResolved: ResolvedTheme = e.matches ? 'dark' : 'light';
-        setResolvedTheme(nextResolved);
-        if (nextResolved === 'dark') {
-          root.classList.add('dark');
-          root.setAttribute('data-theme', 'dark');
-          root.style.colorScheme = 'dark';
-        } else {
-          root.classList.remove('dark');
-          root.setAttribute('data-theme', 'light');
-          root.style.colorScheme = 'light';
-        }
-      }
-    };
-
-    mediaQuery.addEventListener('change', handleSystemChange);
-    return () => mediaQuery.removeEventListener('change', handleSystemChange);
   }, [theme]);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
     try {
-      if (newTheme === 'system') {
-        localStorage.removeItem(THEME_STORAGE_KEY);
-      } else {
-        localStorage.setItem(THEME_STORAGE_KEY, newTheme);
-      }
+      localStorage.setItem(THEME_STORAGE_KEY, newTheme);
     } catch (e) {
       console.warn('Failed to save theme preference in localStorage:', e);
     }
   };
 
   const toggleTheme = () => {
-    // If current resolved is light, switch to dark, and vice versa
+    // Switch between light and dark
     const nextTheme: Theme = resolvedTheme === 'dark' ? 'light' : 'dark';
     setTheme(nextTheme);
   };

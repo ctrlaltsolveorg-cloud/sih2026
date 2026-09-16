@@ -31,8 +31,7 @@ export default function RootLayout({
               (function() {
                 try {
                   var storedTheme = localStorage.getItem('kb_theme');
-                  var supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  if (storedTheme === 'dark' || (!storedTheme && supportDarkMode)) {
+                  if (storedTheme === 'dark') {
                     document.documentElement.classList.add('dark');
                     document.documentElement.setAttribute('data-theme', 'dark');
                     document.documentElement.style.colorScheme = 'dark';

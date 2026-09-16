@@ -9,15 +9,9 @@ import {
   Sparkles,
   ShoppingBag,
   TrendingUp,
-  ShieldCheck,
   PhoneCall,
   CheckCircle,
   MapPin,
-  Award,
-  Layers,
-  Truck,
-  Building2,
-  UserCheck,
   Search
 } from 'lucide-react';
 import Link from 'next/link';
@@ -198,143 +192,30 @@ export default function HomePage() {
   });
 
   return (
-    <div className="space-y-10">
-      {/* Live Mandi Agmarknet Ticker */}
-      <div className="w-full bg-[#0F3826] dark:bg-[#071F14] text-amber-100 rounded-2xl py-2.5 px-4 shadow-md overflow-hidden border border-emerald-800/40 flex items-center gap-3">
-        <div className="flex items-center gap-2 text-xs font-bold text-amber-400 shrink-0 bg-emerald-950/80 px-3 py-1 rounded-lg border border-amber-400/20">
-          <TrendingUp className="w-3.5 h-3.5" />
-          <span>{t.liveMandiTicker}</span>
-        </div>
-        <div className="overflow-hidden relative w-full">
-          <div className="animate-marquee whitespace-nowrap flex gap-8 text-xs">
-            {tickerItems.concat(tickerItems).map((item, idx) => (
-              <span key={idx} className="inline-flex items-center gap-2 font-medium">
-                <span className="text-amber-50">{getLocalizedCropName(item.crop, language)}</span>
-                <span className="font-mono text-amber-300">{language === 'hi' ? item.price : item.price.replace('/किग्रा', '/kg')}</span>
-                <span className="text-emerald-400 text-[11px] font-bold">{item.trend}</span>
-              </span>
-            ))}
+    <div className="space-y-8 sm:space-y-10">
+      {/* Hero Banner Carousel Section with Agriculture Imagery, Navigation Controls & Floating Live Mandi Ticker */}
+      <HeroCarousel
+        tickerSlot={
+          <div className="w-full bg-[#072014]/65 dark:bg-[#03100a]/75 backdrop-blur-md text-amber-100 rounded-2xl py-2 px-3 sm:px-4 shadow-[0_8px_30px_rgba(0,0,0,0.35)] overflow-hidden border border-white/15 dark:border-emerald-500/25 flex items-center gap-3 transition-all hover:bg-[#072014]/75">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400 shrink-0 bg-emerald-950/85 px-2.5 py-1 rounded-xl border border-amber-400/25 shadow-xs">
+              <TrendingUp className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+              <span>{t.liveMandiTicker}</span>
+            </div>
+            <div className="overflow-hidden relative w-full">
+              <div className="animate-marquee whitespace-nowrap flex gap-8 text-xs">
+                {tickerItems.concat(tickerItems).map((item, idx) => (
+                  <span key={idx} className="inline-flex items-center gap-2 font-medium">
+                    <span className="text-amber-50">{getLocalizedCropName(item.crop, language)}</span>
+                    <span className="font-mono text-amber-300 font-bold">{language === 'hi' ? item.price : item.price.replace('/किग्रा', '/kg')}</span>
+                    <span className="text-emerald-400 text-[11px] font-bold">{item.trend}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        }
+      />
 
-      {/* Hero Banner Carousel Section with Agriculture Imagery & Navigation Controls */}
-      <HeroCarousel />
-
-      {/* 6 Persona Dynamic Switcher Bar */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-emerald-950 dark:text-emerald-100 flex items-center gap-2">
-            <Layers className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-            <span>{t.selectDashboardTitle}</span>
-          </h2>
-          <span className="text-xs text-emerald-800/60 dark:text-emerald-300/70">{t.integratedRolesCount}</span>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          <Link
-            href="/farmer"
-            onClick={() => setRole('FARMER')}
-            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'FARMER'
-                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
-              }`}
-          >
-            <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-700">
-              <UserCheck className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-xs leading-tight">{t.roleFarmer}</p>
-              <p className="text-[10px] opacity-80">{t.roleFarmerSub}</p>
-            </div>
-          </Link>
-
-          <Link
-            href="/fpo"
-            onClick={() => setRole('FPO')}
-            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'FPO'
-                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
-              }`}
-          >
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-700">
-              <Building2 className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-xs leading-tight">{t.roleFPO}</p>
-              <p className="text-[10px] opacity-80">{t.roleFPOSub}</p>
-            </div>
-          </Link>
-
-          <Link
-            href="/buyer"
-            onClick={() => setRole('BUYER')}
-            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'BUYER'
-                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
-              }`}
-          >
-            <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-700">
-              <ShoppingBag className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-xs leading-tight">{t.roleBuyer}</p>
-              <p className="text-[10px] opacity-80">{t.roleBuyerSub}</p>
-            </div>
-          </Link>
-
-          <Link
-            href="/hub"
-            onClick={() => setRole('HUB_OPERATOR')}
-            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'HUB_OPERATOR'
-                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
-              }`}
-          >
-            <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-700">
-              <Award className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-xs leading-tight">{t.roleHub}</p>
-              <p className="text-[10px] opacity-80">{t.roleHubSub}</p>
-            </div>
-          </Link>
-
-          <Link
-            href="/transporter"
-            onClick={() => setRole('TRANSPORTER')}
-            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'TRANSPORTER'
-                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
-              }`}
-          >
-            <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-700">
-              <Truck className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-xs leading-tight">{t.roleTransporter}</p>
-              <p className="text-[10px] opacity-80">{t.roleTransporterSub}</p>
-            </div>
-          </Link>
-
-          <Link
-            href="/admin"
-            onClick={() => setRole('ADMIN')}
-            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'ADMIN'
-                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
-              }`}
-          >
-            <div className="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center text-red-700">
-              <ShieldCheck className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-xs leading-tight">{t.roleAdmin}</p>
-              <p className="text-[10px] opacity-80">{t.roleAdminSub}</p>
-            </div>
-          </Link>
-        </div>
-      </div>
 
       {/* Main Produce Marketplace */}
       <div id="marketplace" className="space-y-6 pt-4">

@@ -27,15 +27,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>('en');
   const [isTranslatorOpen, setIsTranslatorOpen] = useState(false);
 
-  // Load language preference from localStorage on mount
+  // Load language preference from localStorage on mount - default is English
   useEffect(() => {
     try {
       const savedLang = (localStorage.getItem('kisan_selected_language') || localStorage.getItem('kisan_language')) as Language | null;
       if (savedLang && translations[savedLang]) {
         setLanguageState(savedLang);
+      } else {
+        setLanguageState('en');
       }
     } catch {
-      // ignore localStorage errors in private browsing
+      setLanguageState('en');
     }
   }, []);
 
@@ -51,9 +53,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Safe translation resolver with fallback to Hindi then English then selected language
+  // Safe translation resolver with base fallback to English then selected language
   const t: TranslationSchema = {
-    ...translations.hi,
     ...translations.en,
     ...(translations[language] || {}),
   };
