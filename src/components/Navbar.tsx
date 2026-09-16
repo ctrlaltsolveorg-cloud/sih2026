@@ -20,7 +20,11 @@ import {
   Check,
   Sun,
   Moon,
-  ShieldCheck
+  ShieldCheck,
+  Package,
+  Sprout,
+  Truck,
+  Settings
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -43,6 +47,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (pathname === '/farmer') setRole('FARMER');
@@ -53,11 +58,14 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
     else if (pathname === '/admin') setRole('ADMIN');
   }, [pathname, setRole]);
 
-  // Close dropdown on outside click
+  // Close dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsLangDropdownOpen(false);
+      }
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setShowProfileMenu(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -308,32 +316,204 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             )}
           </div>
 
-          {/* 4. User Profile Avatar / Login Button - Icon Only */}
-          {isAuthenticated && user ? (
-            <div className="relative">
+          {/* 4. User Profile & Action Menu - Icon Button & Rich Popup */}
+          <div className="relative" ref={profileRef}>
+            {isAuthenticated && user ? (
               <button
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                className="w-9 h-9 sm:w-10 sm:h-10 p-0 flex items-center justify-center bg-white/80 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl shadow-sm transition shrink-0"
+                className="w-9 h-9 sm:w-10 sm:h-10 p-0 flex items-center justify-center bg-white/80 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl shadow-sm transition shrink-0 active:scale-95"
                 title={`${user.name} (${user.role})`}
                 aria-label="User Profile"
               >
                 <UserAvatar name={user.name} size="sm" />
               </button>
+            ) : (
+              <button
+                onClick={() => openAuthModal('login')}
+                className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl flex items-center justify-center shadow-md transition shrink-0 active:scale-95"
+                title={language === 'hi' ? 'लॉगिन करें (Log In)' : 'Log In'}
+                aria-label="Log In"
+              >
+                <LogIn className="w-4 h-4" />
+              </button>
+            )}
 
-              {showProfileMenu && (
-                <div className="absolute right-0 mt-2 w-56 bg-[#FAF5EB] dark:bg-[#0c2217] rounded-2xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 p-3 z-50 animate-fadeIn space-y-2">
-                  <div className="flex items-center gap-3 p-2 bg-emerald-900/5 dark:bg-emerald-950/60 rounded-xl border border-emerald-900/10 dark:border-emerald-500/20">
-                    <UserAvatar name={user.name} size="md" />
-                    <div className="overflow-hidden">
-                      <p className="text-xs font-extrabold text-emerald-950 dark:text-amber-100 truncate">{user.name}</p>
-                      <p className="text-[10px] text-emerald-800/70 dark:text-emerald-300/70 truncate">{user.email}</p>
-                      <span className="inline-block mt-0.5 text-[9px] font-bold px-2 py-0.5 bg-amber-500/20 text-amber-900 dark:text-amber-300 rounded-md border border-amber-500/30">
+            {/* Comprehensive Profile & User Actions Popup */}
+            {showProfileMenu && isAuthenticated && user && (
+              <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 p-3.5 z-50 animate-fadeIn space-y-3">
+                {/* Profile Header */}
+                <div className="flex items-center gap-3 p-3 bg-emerald-900/10 dark:bg-emerald-950/80 rounded-2xl border border-emerald-900/15 dark:border-emerald-500/20">
+                  <UserAvatar name={user.name} size="md" />
+                  <div className="overflow-hidden flex-1">
+                    <p className="text-xs font-black text-emerald-950 dark:text-amber-100 truncate">{user.name}</p>
+                    <p className="text-[10px] text-emerald-800/70 dark:text-emerald-300/70 truncate">{user.email}</p>
+                    <div className="flex items-center gap-1.5 mt-1">
+                      <span className="text-[9px] font-black px-2 py-0.5 bg-amber-500/20 text-amber-950 dark:text-amber-300 rounded-md border border-amber-500/30">
                         {user.role}
+                      </span>
+                      <span className="text-[9px] text-emerald-700 dark:text-emerald-400 font-mono font-bold">
+                        {user.id.slice(0, 10)}
                       </span>
                     </div>
                   </div>
+                </div>
 
+                {/* Primary Action Buttons */}
+                <div className="space-y-1 text-xs font-bold">
+                  {/* My Orders & Live Escrow Tracking */}
+                  <Link
+                    href="/buyer#active-orders"
+                    onClick={() => setShowProfileMenu(false)}
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-100/70 dark:hover:bg-emerald-900/50 text-emerald-950 dark:text-amber-100 transition group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-1.5 rounded-lg bg-amber-500/15 text-amber-800 dark:text-amber-300 group-hover:scale-105 transition">
+                        <Package className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="leading-tight">{language === 'hi' ? 'मेरे सक्रिय ऑर्डर (My Orders)' : 'My Active Orders'}</div>
+                        <div className="text-[10px] font-normal text-emerald-800/70 dark:text-emerald-300/60">
+                          {language === 'hi' ? 'लाइव ट्रैकिंग एवं डिलीवरी OTP' : 'Live Escrow & Delivery Tracking'}
+                        </div>
+                      </div>
+                    </div>
+                    <span className="text-[10px] bg-emerald-800 text-amber-200 px-2 py-0.5 rounded-full font-extrabold shadow-xs">
+                      Live
+                    </span>
+                  </Link>
+
+                  {/* My Crops & Produce Registry */}
+                  <Link
+                    href="/farmer"
+                    onClick={() => {
+                      setRole('FARMER');
+                      setShowProfileMenu(false);
+                    }}
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-100/70 dark:hover:bg-emerald-900/50 text-emerald-950 dark:text-amber-100 transition group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-1.5 rounded-lg bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 group-hover:scale-105 transition">
+                        <Sprout className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="leading-tight">{language === 'hi' ? 'मेरी फसलें (My Crops)' : 'My Crops & Produce'}</div>
+                        <div className="text-[10px] font-normal text-emerald-800/70 dark:text-emerald-300/60">
+                          {language === 'hi' ? 'फसल सूची, नई फसल दर्ज करें' : 'List & Manage Harvest Produce'}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+
+                  {/* Shopping Cart Drawer Trigger */}
                   <button
+                    type="button"
+                    onClick={() => {
+                      setIsCartOpen(true);
+                      setShowProfileMenu(false);
+                    }}
+                    className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-100/70 dark:hover:bg-emerald-900/50 text-emerald-950 dark:text-amber-100 transition text-left group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-1.5 rounded-lg bg-amber-500/15 text-amber-800 dark:text-amber-300 group-hover:scale-105 transition">
+                        <ShoppingBag className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="leading-tight">{language === 'hi' ? 'खरीदारी टोकरी (My Cart)' : 'Shopping Cart'}</div>
+                        <div className="text-[10px] font-normal text-emerald-800/70 dark:text-emerald-300/60">
+                          {language === 'hi' ? 'सीधे खेत से खरीद चेकआउट' : 'Direct Produce Checkout'}
+                        </div>
+                      </div>
+                    </div>
+                    {itemCount > 0 ? (
+                      <span className="text-[10px] bg-amber-500 text-emerald-950 px-2 py-0.5 rounded-full font-black shadow-xs">
+                        {itemCount}
+                      </span>
+                    ) : (
+                      <span className="text-[10px] text-emerald-800/50 dark:text-emerald-400/50 font-normal">
+                        {language === 'hi' ? 'खाली' : '0'}
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Transporter Fleet & Trips */}
+                  <Link
+                    href="/transporter"
+                    onClick={() => {
+                      setRole('TRANSPORTER');
+                      setShowProfileMenu(false);
+                    }}
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-100/70 dark:hover:bg-emerald-900/50 text-emerald-950 dark:text-amber-100 transition group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-1.5 rounded-lg bg-blue-500/15 text-blue-800 dark:text-blue-300 group-hover:scale-105 transition">
+                        <Truck className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="leading-tight">{language === 'hi' ? 'परिवहन फ्लीट (Fleet Trips)' : 'Transporter Fleet'}</div>
+                        <div className="text-[10px] font-normal text-emerald-800/70 dark:text-emerald-300/60">
+                          {language === 'hi' ? 'पिकअप और डिलीवरी ट्रिप' : 'Trips & Handshake OTP'}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+
+                {/* Role Switcher Section */}
+                <div className="pt-2 border-t border-emerald-900/10 dark:border-emerald-500/20">
+                  <div className="text-[10px] font-extrabold text-emerald-900/70 dark:text-emerald-300/70 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                    <Settings className="w-3 h-3 text-amber-600" />
+                    <span>{language === 'hi' ? 'भूमिका बदलें (Switch Role)' : 'Switch Active Role'}</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1 text-[10px] font-bold text-center">
+                    <Link
+                      href="/farmer"
+                      onClick={() => {
+                        setRole('FARMER');
+                        setShowProfileMenu(false);
+                      }}
+                      className={`py-1 rounded-lg border transition ${
+                        role === 'FARMER'
+                          ? 'bg-emerald-800 text-amber-100 border-emerald-700'
+                          : 'bg-white dark:bg-emerald-950/60 text-emerald-950 dark:text-emerald-200 border-emerald-900/10 hover:bg-emerald-100'
+                      }`}
+                    >
+                      🚜 Farmer
+                    </Link>
+                    <Link
+                      href="/buyer"
+                      onClick={() => {
+                        setRole('BUYER');
+                        setShowProfileMenu(false);
+                      }}
+                      className={`py-1 rounded-lg border transition ${
+                        role === 'BUYER'
+                          ? 'bg-emerald-800 text-amber-100 border-emerald-700'
+                          : 'bg-white dark:bg-emerald-950/60 text-emerald-950 dark:text-emerald-200 border-emerald-900/10 hover:bg-emerald-100'
+                      }`}
+                    >
+                      🛍️ Buyer
+                    </Link>
+                    <Link
+                      href="/admin"
+                      onClick={() => {
+                        setRole('ADMIN');
+                        setShowProfileMenu(false);
+                      }}
+                      className={`py-1 rounded-lg border transition ${
+                        role === 'ADMIN'
+                          ? 'bg-emerald-800 text-amber-100 border-emerald-700'
+                          : 'bg-white dark:bg-emerald-950/60 text-emerald-950 dark:text-emerald-200 border-emerald-900/10 hover:bg-emerald-100'
+                      }`}
+                    >
+                      ⚖️ Admin
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Logout Button */}
+                <div className="pt-2 border-t border-emerald-900/10 dark:border-emerald-500/20">
+                  <button
+                    type="button"
                     onClick={() => {
                       logout();
                       setShowProfileMenu(false);
@@ -344,43 +524,9 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                     <span>{language === 'hi' ? 'लॉगआउट (Log Out)' : 'Log Out'}</span>
                   </button>
                 </div>
-              )}
-            </div>
-          ) : (
-            <button
-              onClick={() => openAuthModal('login')}
-              className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl flex items-center justify-center shadow-md transition shrink-0"
-              title={language === 'hi' ? 'लॉगिन (Log In)' : 'Log In'}
-              aria-label="Log In"
-            >
-              <LogIn className="w-4 h-4" />
-            </button>
-          )}
-
-          {/* 5. Orders Quick Nav - Icon Only */}
-          <Link
-            href="/buyer#active-orders"
-            className="w-9 h-9 sm:w-10 sm:h-10 bg-emerald-900/10 dark:bg-emerald-950/80 hover:bg-emerald-900/20 dark:hover:bg-emerald-900 text-emerald-950 dark:text-amber-200 font-bold rounded-xl border border-emerald-900/15 dark:border-emerald-500/30 shadow-xs transition flex items-center justify-center shrink-0"
-            title={language === 'hi' ? 'मेरे ऑर्डर (My Orders)' : 'My Orders'}
-            aria-label="My Orders"
-          >
-            <ShieldCheck className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-          </Link>
-
-          {/* 6. Cart Trigger Button - Icon Only */}
-          <button
-            onClick={handleCartClick}
-            className="relative w-9 h-9 sm:w-10 sm:h-10 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl shadow-md transition flex items-center justify-center shrink-0"
-            title={language === 'hi' ? `टोकरी (${itemCount})` : `Cart (${itemCount})`}
-            aria-label="Cart"
-          >
-            <ShoppingBag className="w-4 h-4 text-amber-400" />
-            {itemCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-amber-500 text-emerald-950 font-extrabold text-[9px] rounded-full flex items-center justify-center border border-[#0F3826] shadow-sm">
-                {itemCount}
-              </span>
+              </div>
             )}
-          </button>
+          </div>
         </div>
       </div>
 

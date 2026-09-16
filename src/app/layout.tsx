@@ -7,6 +7,7 @@ import { RoleProvider } from '@/context/RoleContext';
 import { CartProvider } from '@/context/CartContext';
 import Navbar from '@/components/Navbar';
 import CartDrawer from '@/components/CartDrawer';
+import FloatingCartButton from '@/components/FloatingCartButton';
 import AuthModal from '@/components/AuthModal';
 import IndiaTranslatorModal from '@/components/IndiaTranslatorModal';
 import Footer from '@/components/Footer';
@@ -58,6 +59,7 @@ export default function RootLayout({
                       {children}
                     </main>
                     <CartDrawer />
+                    <FloatingCartButton />
                     <AuthModal />
                     <IndiaTranslatorModal />
                     <Footer />
