@@ -268,11 +268,11 @@ export default function IndiaTranslatorModal() {
               <select
                 value={sourceLang}
                 onChange={(e) => setSourceLang(e.target.value as Language)}
-                className="w-full px-3 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl text-xs font-bold text-emerald-950 dark:text-emerald-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-700"
+                className="w-full max-w-full px-3 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl text-xs font-bold text-emerald-950 dark:text-emerald-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-700 truncate"
               >
                 {supportedLanguages.map((l) => (
                   <option key={l.code} value={l.code}>
-                    {l.flagEmoji} {l.nativeName} ({l.name}) — {l.region}
+                    {l.flagEmoji} {l.nativeName} ({l.name})
                   </option>
                 ))}
               </select>
@@ -296,11 +296,11 @@ export default function IndiaTranslatorModal() {
               <select
                 value={targetLang}
                 onChange={(e) => setTargetLang(e.target.value as Language)}
-                className="w-full px-3 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl text-xs font-bold text-emerald-950 dark:text-emerald-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-700"
+                className="w-full max-w-full px-3 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl text-xs font-bold text-emerald-950 dark:text-emerald-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-700 truncate"
               >
                 {supportedLanguages.map((l) => (
                   <option key={l.code} value={l.code}>
-                    {l.flagEmoji} {l.nativeName} ({l.name}) — {l.region}
+                    {l.flagEmoji} {l.nativeName} ({l.name})
                   </option>
                 ))}
               </select>

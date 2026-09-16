@@ -28,6 +28,14 @@
   --text-main: #F3F4F6;
 }
 
+html, body {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: var(--bg-sand);
   background-image: radial-gradient(rgba(15, 56, 38, 0.05) 1px, transparent 1px);
@@ -37,6 +45,15 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .dark body,

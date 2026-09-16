@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { LanguageProvider } from '@/context/LanguageContext';
@@ -17,6 +17,12 @@ export const metadata: Metadata = {
   description: 'Direct Agriculture Trading & Logistics Platform for SIH 2026 Problem Statement 26033. Computer Vision Grading, Fair Price calculation, and Demand Forecasting.',
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -25,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -46,15 +53,15 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased selection:bg-amber-200 selection:text-emerald-950 dark:selection:bg-amber-500/30 dark:selection:text-amber-200 bg-[#FAF5EB] dark:bg-[#07170f] text-[#1A2E26] dark:text-[#E2E8F0] transition-colors duration-200">
+      <body className="antialiased selection:bg-amber-200 selection:text-emerald-950 dark:selection:bg-amber-500/30 dark:selection:text-amber-200 bg-[#FAF5EB] dark:bg-[#07170f] text-[#1A2E26] dark:text-[#E2E8F0] transition-colors duration-200 w-full max-w-full overflow-x-hidden">
         <ThemeProvider>
           <LanguageProvider>
             <AuthProvider>
               <RoleProvider>
                 <CartProvider>
-                  <div className="flex flex-col min-h-screen">
+                  <div className="flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
                     <Navbar />
-                    <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 py-6">
+                    <main className="flex-1 w-full max-w-full px-3 sm:px-8 lg:px-12 py-4 sm:py-6 overflow-x-hidden">
                       {children}
                     </main>
                     <CartDrawer />

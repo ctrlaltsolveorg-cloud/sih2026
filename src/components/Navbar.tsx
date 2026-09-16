@@ -97,39 +97,39 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
       </div>
 
       {/* Top Banner with Frosted Glass */}
-      <div className="relative z-10 bg-[#0F3826]/85 dark:bg-[#040e09]/85 text-amber-200 text-xs py-1 px-4 sm:px-8 border-b border-emerald-500/20 backdrop-blur-md flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="px-2 py-0.5 bg-amber-500/20 text-amber-300 font-extrabold rounded-md text-[10px] border border-amber-400/30">
+      <div className="relative z-10 bg-[#0F3826]/85 dark:bg-[#040e09]/85 text-amber-200 text-[10px] sm:text-xs py-1 px-3 sm:px-8 border-b border-emerald-500/20 backdrop-blur-md flex items-center justify-between gap-2 overflow-hidden">
+        <div className="flex items-center gap-1.5 shrink-0">
+          <span className="px-1.5 py-0.5 bg-amber-500/20 text-amber-300 font-extrabold rounded-md text-[9px] sm:text-[10px] border border-amber-400/30">
             SIH 2026 PS 26033
           </span>
           <span className="truncate hidden sm:inline text-amber-100">{t.subTitle}</span>
         </div>
 
-        <div className="flex items-center gap-3 text-xs">
+        <div className="flex items-center gap-2 text-[10px] sm:text-xs shrink-0">
           {isDeveloperMode && (
-            <span className="px-2 py-0.5 bg-amber-500/25 text-amber-300 font-extrabold rounded-md text-[10px] border border-amber-400/40 flex items-center gap-1 shadow-xs">
+            <span className="px-1.5 py-0.5 bg-amber-500/25 text-amber-300 font-extrabold rounded-md text-[9px] sm:text-[10px] border border-amber-400/40 flex items-center gap-1 shadow-xs">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
-              ⚡ DEV GOD MODE (ALL ACCESS)
+              ⚡ DEV GOD MODE
             </span>
           )}
-          <span>
+          <span className="truncate max-w-[150px] sm:max-w-none">
             Active Role: <strong className="text-amber-300">{userName ? `${userName} (${role})` : role}</strong>
           </span>
         </div>
       </div>
 
       {/* Main Navbar Row with Frosted Glass */}
-      <div className="relative z-10 w-full px-4 sm:px-8 lg:px-12 py-3 flex items-center justify-between gap-3 bg-white/35 dark:bg-black/20 backdrop-blur-md">
+      <div className="relative z-10 w-full px-2.5 sm:px-8 lg:px-12 py-2 sm:py-3 flex items-center justify-between gap-1.5 sm:gap-3 bg-white/35 dark:bg-black/20 backdrop-blur-md max-w-full overflow-hidden">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-amber-200 shadow-md group-hover:scale-105 transition">
-            <Leaf className="w-5 h-5 fill-amber-300" />
+        <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 group">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-amber-200 shadow-md group-hover:scale-105 transition shrink-0">
+            <Leaf className="w-4 h-4 sm:w-5 sm:h-5 fill-amber-300" />
           </div>
           <div>
-            <h1 className="font-extrabold text-xl text-emerald-950 dark:text-amber-100 leading-none tracking-tight">
+            <h1 className="font-extrabold text-base sm:text-xl text-emerald-950 dark:text-amber-100 leading-none tracking-tight">
               {t.appName}
             </h1>
-            <span className="text-[10px] text-amber-800 dark:text-amber-400 font-semibold leading-none">
+            <span className="text-[9px] sm:text-[10px] text-amber-800 dark:text-amber-400 font-semibold leading-none hidden xs:block">
               {t.subTitle || 'Kisan Diwas Agri-Tech Platform'}
             </span>
           </div>
@@ -222,7 +222,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
         </nav>
 
         {/* Right Buttons: Theme Toggle + India Translator + 11-Language Dropdown + Cart + User Profile / Login */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           {/* 1. Theme Toggle Button (Sun / Moon) */}
           <button
             type="button"
@@ -230,12 +230,12 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             id="theme-toggle-btn"
             aria-label={resolvedTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             title={resolvedTheme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-            className="w-9 h-9 sm:w-10 sm:h-10 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 text-emerald-950 dark:text-amber-300 border border-emerald-900/15 dark:border-white/15 backdrop-blur-lg font-extrabold rounded-xl flex items-center justify-center shadow-xs transition transform active:scale-95 shrink-0"
+            className="w-8 h-8 sm:w-10 sm:h-10 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 text-emerald-950 dark:text-amber-300 border border-emerald-900/15 dark:border-white/15 backdrop-blur-lg font-extrabold rounded-xl flex items-center justify-center shadow-xs transition transform active:scale-95 shrink-0"
           >
             {resolvedTheme === 'dark' ? (
-              <Sun className="w-4 h-4 text-amber-400 animate-pulse" />
+              <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 animate-pulse" />
             ) : (
-              <Moon className="w-4 h-4 text-emerald-800 dark:text-amber-400" />
+              <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-800 dark:text-amber-400" />
             )}
           </button>
 
@@ -244,11 +244,11 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             type="button"
             onClick={() => setIsTranslatorOpen(true)}
             id="navbar-translator-btn"
-            className="w-9 h-9 sm:w-10 sm:h-10 bg-amber-500/20 hover:bg-amber-500/30 text-emerald-950 dark:text-amber-200 border border-amber-500/30 dark:border-amber-400/30 backdrop-blur-lg font-extrabold rounded-xl flex items-center justify-center shadow-xs transition active:scale-95 shrink-0"
+            className="w-8 h-8 sm:w-10 sm:h-10 bg-amber-500/20 hover:bg-amber-500/30 text-emerald-950 dark:text-amber-200 border border-amber-500/30 dark:border-amber-400/30 backdrop-blur-lg font-extrabold rounded-xl flex items-center justify-center shadow-xs transition active:scale-95 shrink-0"
             title={t.translatorTitle || 'India Multi-Language Translator'}
             aria-label="Translator"
           >
-            <Languages className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+            <Languages className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-700 dark:text-amber-400" />
           </button>
 
           {/* 3. 11-Indian Language Dropdown Selector */}
@@ -257,18 +257,18 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               type="button"
               id="navbar-lang-selector-btn"
               onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-              className="h-9 sm:h-10 px-2 sm:px-2.5 bg-white/70 dark:bg-white/10 hover:bg-white/90 dark:hover:bg-white/20 text-emerald-950 dark:text-emerald-100 border border-emerald-900/15 dark:border-white/15 backdrop-blur-lg font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition shrink-0 active:scale-95"
+              className="h-8 sm:h-10 px-1.5 sm:px-2.5 bg-white/70 dark:bg-white/10 hover:bg-white/90 dark:hover:bg-white/20 text-emerald-950 dark:text-emerald-100 border border-emerald-900/15 dark:border-white/15 backdrop-blur-lg font-bold rounded-xl flex items-center gap-1 shadow-xs transition shrink-0 active:scale-95"
               aria-label="Select Indian Language"
               title={`${currentLangMeta.flagEmoji} ${currentLangMeta.nativeName} (${currentLangMeta.name})`}
             >
-              <span className="text-base leading-none">{currentLangMeta.flagEmoji}</span>
-              <span className="text-xs font-bold hidden sm:inline">{currentLangMeta.nativeName}</span>
-              <ChevronDown className={`w-3.5 h-3.5 text-emerald-800/70 dark:text-emerald-300/70 transition-transform duration-200 ${isLangDropdownOpen ? 'rotate-180' : ''}`} />
+              <span className="text-sm sm:text-base leading-none">{currentLangMeta.flagEmoji}</span>
+              <span className="text-[11px] sm:text-xs font-bold hidden md:inline">{currentLangMeta.nativeName}</span>
+              <ChevronDown className={`w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-800/70 dark:text-emerald-300/70 transition-transform duration-200 ${isLangDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {/* Dropdown Menu */}
             {isLangDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-64 sm:w-72 bg-white dark:bg-[#0c2217] rounded-2xl shadow-2xl border border-emerald-900/15 dark:border-emerald-500/30 py-2 z-[100] animate-fadeIn">
+              <div className="absolute right-0 mt-2 w-60 sm:w-72 max-w-[calc(100vw-1.5rem)] bg-white dark:bg-[#0c2217] rounded-2xl shadow-2xl border border-emerald-900/15 dark:border-emerald-500/30 py-2 z-[100] animate-fadeIn">
                 <div className="px-3 py-1.5 border-b border-emerald-900/10 dark:border-emerald-500/20 flex items-center justify-between">
                   <span className="text-[11px] font-extrabold text-emerald-950 dark:text-emerald-100 uppercase tracking-wider">
                     {t.selectLanguage || 'Select Language'} (11 Languages)
@@ -336,7 +336,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               <button
                 type="button"
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                className="w-9 h-9 sm:w-10 sm:h-10 p-0 flex items-center justify-center bg-white/80 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl shadow-sm transition shrink-0 active:scale-95"
+                className="w-8 h-8 sm:w-10 sm:h-10 p-0 flex items-center justify-center bg-white/80 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl shadow-sm transition shrink-0 active:scale-95"
                 title={`${user.name} (${user.role})`}
                 aria-label="User Profile"
               >
@@ -346,18 +346,18 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               <button
                 type="button"
                 onClick={() => openAuthModal('login')}
-                className="h-9 sm:h-10 px-2.5 sm:px-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl flex items-center gap-1.5 shadow-md transition shrink-0 active:scale-95 text-xs"
+                className="h-8 sm:h-10 px-2 sm:px-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl flex items-center gap-1.5 shadow-md transition shrink-0 active:scale-95 text-[11px] sm:text-xs"
                 title="Log In / Sign Up"
                 aria-label="Log In"
               >
-                <LogIn className="w-4 h-4" />
+                <LogIn className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span className="hidden sm:inline">Log In</span>
               </button>
             )}
 
             {/* Comprehensive Profile & User Actions Popup */}
             {showProfileMenu && isAuthenticated && user && (
-              <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 p-3.5 z-[100] animate-fadeIn space-y-3">
+              <div className="absolute right-0 mt-2 w-72 sm:w-80 max-w-[calc(100vw-1.5rem)] bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 p-3.5 z-[100] animate-fadeIn space-y-3">
                 {/* Profile Header */}
                 <div className="flex items-center gap-3 p-3 bg-emerald-900/10 dark:bg-emerald-950/80 rounded-2xl border border-emerald-900/15 dark:border-emerald-500/20">
                   <UserAvatar name={user.name} size="md" />
@@ -548,8 +548,8 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
       </div>
 
       {/* Mobile / Tablet Horizontal Role Navigation Strip */}
-      <div className="lg:hidden border-t border-emerald-900/10 dark:border-emerald-500/20 bg-emerald-900/5 dark:bg-[#07170f] px-4 py-2 overflow-x-auto no-scrollbar">
-        <nav className="flex items-center gap-1.5 min-w-max text-xs font-bold">
+      <div className="lg:hidden border-t border-emerald-900/10 dark:border-emerald-500/20 bg-emerald-900/5 dark:bg-[#07170f] px-3 sm:px-4 py-2 overflow-x-auto no-scrollbar w-full max-w-full">
+        <nav className="flex items-center gap-1.5 w-max max-w-none text-xs font-bold">
           <Link
             href="/"
             className={`px-3 py-1.5 rounded-xl transition ${

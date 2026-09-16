@@ -225,12 +225,12 @@ export default function HomePage() {
       {/* Hero Banner Carousel Section with Agriculture Imagery, Navigation Controls & Floating Live Mandi Ticker */}
       <HeroCarousel
         tickerSlot={
-          <div className="w-full bg-[#072014]/65 dark:bg-[#03100a]/75 backdrop-blur-md text-amber-100 rounded-2xl py-2 px-3 sm:px-4 shadow-[0_8px_30px_rgba(0,0,0,0.35)] overflow-hidden border border-white/15 dark:border-emerald-500/25 flex items-center gap-3 transition-all hover:bg-[#072014]/75">
+          <div className="w-full max-w-full bg-[#072014]/65 dark:bg-[#03100a]/75 backdrop-blur-md text-amber-100 rounded-2xl py-2 px-3 sm:px-4 shadow-[0_8px_30px_rgba(0,0,0,0.35)] overflow-hidden border border-white/15 dark:border-emerald-500/25 flex items-center gap-3 transition-all hover:bg-[#072014]/75 min-w-0">
             <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400 shrink-0 bg-emerald-950/85 px-2.5 py-1 rounded-xl border border-amber-400/25 shadow-xs">
               <TrendingUp className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
               <span>{t.liveMandiTicker}</span>
             </div>
-            <div className="overflow-hidden relative w-full">
+            <div className="overflow-hidden relative w-full flex-1 min-w-0">
               <div className="animate-marquee whitespace-nowrap flex gap-8 text-xs">
                 {tickerItems.concat(tickerItems).map((item, idx) => (
                   <span key={idx} className="inline-flex items-center gap-2 font-medium">
@@ -279,11 +279,11 @@ export default function HomePage() {
         <div className="space-y-3">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Category Navigation Pills */}
-            <div className="flex items-center gap-1.5 bg-white dark:bg-[#07170f] p-1 rounded-2xl border border-emerald-900/15 dark:border-emerald-500/20 shadow-sm overflow-x-auto">
+            <div className="flex items-center gap-1.5 bg-white dark:bg-[#07170f] p-1 rounded-2xl border border-emerald-900/15 dark:border-emerald-500/20 shadow-sm overflow-x-auto no-scrollbar max-w-full">
               <button
                 type="button"
                 onClick={() => setSelectedCropCategory('All')}
-                className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'All'
+                className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'All'
                     ? 'bg-[#0F3826] text-amber-100 shadow'
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
@@ -294,7 +294,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setSelectedCropCategory('Vegetables')}
-                className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Vegetables'
+                className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Vegetables'
                     ? 'bg-[#0F3826] text-amber-100 shadow'
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
@@ -305,7 +305,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setSelectedCropCategory('Fruits')}
-                className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Fruits'
+                className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Fruits'
                     ? 'bg-[#0F3826] text-amber-100 shadow'
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
@@ -316,7 +316,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setSelectedCropCategory('Pulses')}
-                className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Pulses'
+                className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Pulses'
                     ? 'bg-[#0F3826] text-amber-100 shadow'
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
@@ -327,7 +327,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setSelectedCropCategory('Grains')}
-                className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Grains'
+                className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-extrabold transition whitespace-nowrap ${selectedCropCategory === 'Grains'
                     ? 'bg-[#0F3826] text-amber-100 shadow'
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
@@ -337,7 +337,7 @@ export default function HomePage() {
             </div>
 
             {/* Real-time Search Box */}
-            <div className="relative min-w-[240px] sm:w-80">
+            <div className="relative w-full sm:w-80">
               <Search className="w-4 h-4 absolute left-3.5 top-3 text-emerald-800/50 dark:text-emerald-400/60" />
               <input
                 type="text"
@@ -358,11 +358,11 @@ export default function HomePage() {
           </div>
 
           {/* Secondary Quality Filters */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="text-[11px] font-bold text-emerald-900/70 dark:text-emerald-300/70">
               {language === 'hi' ? 'गुणवत्ता फिल्टर:' : 'Quality Filter:'}
             </span>
-            <div className="flex items-center gap-1.5 bg-emerald-900/5 dark:bg-emerald-950/40 p-1 rounded-xl border border-emerald-900/10 dark:border-emerald-500/20 text-xs">
+            <div className="flex flex-wrap items-center gap-1.5 bg-emerald-900/5 dark:bg-emerald-950/40 p-1 rounded-xl border border-emerald-900/10 dark:border-emerald-500/20 text-xs">
               <button
                 onClick={() => setFilter('all')}
                 className={`px-3 py-1 rounded-lg font-bold transition ${filter === 'all'
