@@ -205,8 +205,9 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
         </nav>
 
         {/* Right Buttons: Theme Toggle + India Translator + 11-Language Dropdown + User Profile + Orders + Cart */}
-        <div className="flex items-center gap-2 shrink-0">
-          {/* Theme Toggle Button (Sun / Moon) */}
+        {/* Right Buttons: Theme Toggle + India Translator + 11-Language Dropdown + User Profile + Orders + Cart (Icon-Only) */}
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          {/* 1. Theme Toggle Button (Sun / Moon) - Icon Only */}
           <button
             type="button"
             onClick={toggleTheme}
@@ -214,45 +215,37 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             aria-label={resolvedTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             title={
               resolvedTheme === 'dark'
-                ? (language === 'hi' ? 'लाइट मोड चालू करें' : 'Switch to Light Mode')
-                : (language === 'hi' ? 'डार्क मोड चालू करें' : 'Switch to Dark Mode')
+                ? (language === 'hi' ? 'लाइट मोड' : 'Light Mode')
+                : (language === 'hi' ? 'डार्क मोड' : 'Dark Mode')
             }
-            className="px-2.5 sm:px-3 py-1.5 bg-white/90 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 text-emerald-950 dark:text-amber-300 border border-emerald-900/15 dark:border-emerald-500/30 font-extrabold rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition transform active:scale-95"
+            className="w-9 h-9 sm:w-10 sm:h-10 bg-white/90 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 text-emerald-950 dark:text-amber-300 border border-emerald-900/15 dark:border-emerald-500/30 font-extrabold rounded-xl flex items-center justify-center shadow-sm transition transform active:scale-95 shrink-0"
           >
             {resolvedTheme === 'dark' ? (
-              <>
-                <Sun className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-                <span className="hidden md:inline">{language === 'hi' ? 'लाइट' : 'Light'}</span>
-              </>
+              <Sun className="w-4 h-4 text-amber-400 animate-pulse" />
             ) : (
-              <>
-                <Moon className="w-3.5 h-3.5 text-emerald-800 dark:text-amber-400" />
-                <span className="hidden md:inline">{language === 'hi' ? 'डार्क' : 'Dark'}</span>
-              </>
+              <Moon className="w-4 h-4 text-emerald-800 dark:text-amber-400" />
             )}
           </button>
 
-          {/* India Translator Launch Button */}
+          {/* 2. India Translator Launch Button - Icon Only */}
           <button
             onClick={() => setIsTranslatorOpen(true)}
-            className="px-2.5 sm:px-3 py-1.5 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-emerald-800/10 hover:bg-amber-500/30 text-emerald-950 dark:text-amber-200 border border-amber-600/30 dark:border-amber-500/30 font-extrabold rounded-xl text-xs flex items-center gap-1.5 shadow-xs transition"
+            className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-emerald-800/10 hover:bg-amber-500/30 text-emerald-950 dark:text-amber-200 border border-amber-600/30 dark:border-amber-500/30 font-extrabold rounded-xl flex items-center justify-center shadow-xs transition shrink-0"
             title={t.translatorTitle || 'India Multi-Language Translator'}
+            aria-label="Translator"
           >
-            <Languages className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
-            <span className="hidden md:inline">{t.translatorBtn || '🇮🇳 India Translator'}</span>
-            <span className="md:hidden">🇮🇳</span>
+            <Languages className="w-4 h-4 text-amber-700 dark:text-amber-400" />
           </button>
 
-          {/* 11-Indian Language Dropdown Selector */}
+          {/* 3. 11-Indian Language Dropdown Selector - Icon Only */}
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-              className="px-2.5 sm:px-3 py-1.5 bg-white/90 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 text-emerald-950 dark:text-emerald-100 border border-emerald-900/15 dark:border-emerald-500/30 font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition"
+              className="w-9 h-9 sm:w-10 sm:h-10 bg-white/90 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 text-emerald-950 dark:text-emerald-100 border border-emerald-900/15 dark:border-emerald-500/30 font-bold rounded-xl flex items-center justify-center shadow-sm transition shrink-0"
               aria-label="Select Indian Language"
+              title={`${currentLangMeta.flagEmoji} ${currentLangMeta.nativeName} (${currentLangMeta.name})`}
             >
-              <Globe className="w-3.5 h-3.5 text-emerald-800 dark:text-emerald-300" />
-              <span className="font-extrabold">{currentLangMeta.flagEmoji} {currentLangMeta.nativeName}</span>
-              <ChevronDown className="w-3.5 h-3.5 text-emerald-800/60 dark:text-emerald-300/60" />
+              <Globe className="w-4 h-4 text-emerald-800 dark:text-emerald-300" />
             </button>
 
             {/* Dropdown Menu */}
@@ -315,17 +308,16 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             )}
           </div>
 
-          {/* User Profile Avatar / Login Button */}
+          {/* 4. User Profile Avatar / Login Button - Icon Only */}
           {isAuthenticated && user ? (
             <div className="relative">
               <button
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                className="flex items-center gap-2 p-1.5 bg-white/80 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 border border-emerald-900/15 dark:border-emerald-500/30 rounded-2xl shadow-sm transition"
+                className="w-9 h-9 sm:w-10 sm:h-10 p-0 flex items-center justify-center bg-white/80 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl shadow-sm transition shrink-0"
+                title={`${user.name} (${user.role})`}
+                aria-label="User Profile"
               >
                 <UserAvatar name={user.name} size="sm" />
-                <span className="text-xs font-extrabold text-emerald-950 dark:text-emerald-100 max-w-[90px] truncate hidden md:inline">
-                  {user.name}
-                </span>
               </button>
 
               {showProfileMenu && (
@@ -357,32 +349,34 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
           ) : (
             <button
               onClick={() => openAuthModal('login')}
-              className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl text-xs flex items-center gap-1.5 shadow-md transition shrink-0"
+              className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl flex items-center justify-center shadow-md transition shrink-0"
+              title={language === 'hi' ? 'लॉगिन (Log In)' : 'Log In'}
+              aria-label="Log In"
             >
               <LogIn className="w-4 h-4" />
-              <span className="hidden sm:inline">{language === 'hi' ? 'लॉगिन' : 'Log In'}</span>
             </button>
           )}
 
-          {/* Orders Quick Nav */}
+          {/* 5. Orders Quick Nav - Icon Only */}
           <Link
             href="/buyer#active-orders"
-            className="hidden sm:flex px-3 py-2 bg-emerald-900/10 dark:bg-emerald-950/80 hover:bg-emerald-900/20 dark:hover:bg-emerald-900 text-emerald-950 dark:text-amber-200 font-bold rounded-xl border border-emerald-900/15 dark:border-emerald-500/30 shadow-xs transition items-center gap-1.5 text-xs shrink-0"
-            title="सक्रिय ऑर्डर ट्रैक करें"
+            className="w-9 h-9 sm:w-10 sm:h-10 bg-emerald-900/10 dark:bg-emerald-950/80 hover:bg-emerald-900/20 dark:hover:bg-emerald-900 text-emerald-950 dark:text-amber-200 font-bold rounded-xl border border-emerald-900/15 dark:border-emerald-500/30 shadow-xs transition flex items-center justify-center shrink-0"
+            title={language === 'hi' ? 'मेरे ऑर्डर (My Orders)' : 'My Orders'}
+            aria-label="My Orders"
           >
             <ShieldCheck className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-            <span>{language === 'hi' ? 'मेरे ऑर्डर' : 'My Orders'}</span>
           </Link>
 
-          {/* Cart Trigger Button */}
+          {/* 6. Cart Trigger Button - Icon Only */}
           <button
             onClick={handleCartClick}
-            className="relative px-3 sm:px-4 py-2 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl shadow-md transition flex items-center gap-2 text-xs shrink-0"
+            className="relative w-9 h-9 sm:w-10 sm:h-10 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl shadow-md transition flex items-center justify-center shrink-0"
+            title={language === 'hi' ? `टोकरी (${itemCount})` : `Cart (${itemCount})`}
+            aria-label="Cart"
           >
             <ShoppingBag className="w-4 h-4 text-amber-400" />
-            <span className="hidden sm:inline">{language === 'hi' ? 'टोकरी' : 'Cart'}</span>
             {itemCount > 0 && (
-              <span className="w-5 h-5 bg-amber-500 text-emerald-950 font-extrabold text-[10px] rounded-full flex items-center justify-center border-2 border-[#0F3826]">
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-amber-500 text-emerald-950 font-extrabold text-[9px] rounded-full flex items-center justify-center border border-[#0F3826] shadow-sm">
                 {itemCount}
               </span>
             )}
