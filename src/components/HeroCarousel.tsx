@@ -43,7 +43,7 @@ export default function HeroCarousel({ onExploreClick }: HeroCarouselProps) {
     },
     {
       id: 2,
-      image: '/images/farmer3.jpg',
+      image: '/images/fresh_farm_produce.jpg',
       badgeHi: '100% Farm-Fresh • खेत से सीधी ताज़ी उपज',
       badgeEn: '100% Farm-Fresh • Direct Harvest from Fields',
       titleHi: 'ताज़ी फल-सब्जियां और जैविक उपज सीधे खेत से',
