@@ -74,40 +74,42 @@ export default function CartDrawer() {
   const [checkoutStep, setCheckoutStep] = useState<'ADDRESS' | 'CONFIRM' | 'SUCCESS'>('ADDRESS');
   const [userConfirmedIdentity, setUserConfirmedIdentity] = useState(true);
 
-  // Flipkart/Amazon-style comprehensive mandatory shipping details
+  // Flipkart/Amazon-style comprehensive mandatory shipping details - all empty by default
   const [shippingForm, setShippingForm] = useState(() => {
     if (typeof window !== 'undefined') {
       try {
         const saved = localStorage.getItem('kb_buyer_shipping_address');
-        if (saved) return JSON.parse(saved);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          // If the saved address is the old dummy test Pune address, purge it
+          if (
+            parsed &&
+            parsed.flatBuilding !== 'Flat 402, Green Acres Apartment' &&
+            parsed.mobileNumber !== '9999999999' &&
+            parsed.fullName !== 'Piyush Kumar'
+          ) {
+            return parsed;
+          } else {
+            localStorage.removeItem('kb_buyer_shipping_address');
+          }
+        }
       } catch (e) {}
     }
     return {
-      fullName: 'Piyush Kumar',
-      mobileNumber: '9999999999',
-      altPhone: '9811122233',
-      pincode: '411014',
-      flatBuilding: 'Flat 402, Green Acres Apartment',
-      areaStreet: 'Viman Nagar Main Road, Clover Park',
-      landmark: 'Near Agri Collection Hub & Symbiosis',
-      postOffice: 'Viman Nagar Post Office',
-      district: 'Pune',
-      state: 'Maharashtra',
+      fullName: '',
+      mobileNumber: '',
+      altPhone: '',
+      pincode: '',
+      flatBuilding: '',
+      areaStreet: '',
+      landmark: '',
+      postOffice: '',
+      district: '',
+      state: '',
       addressType: 'HOME' as 'HOME' | 'WORK' | 'MANDI_SHOP',
-      deliveryInstructions: 'Call upon arrival; deliver at gate',
+      deliveryInstructions: '',
     };
   });
-
-  // Sync user name/phone into shippingForm when logged in
-  useEffect(() => {
-    if (user) {
-      setShippingForm((prev: any) => ({
-        ...prev,
-        fullName: prev.fullName || user.name || '',
-        mobileNumber: prev.mobileNumber || user.phone || '',
-      }));
-    }
-  }, [user]);
 
   if (!isCartOpen && !isCheckoutModalOpen) return null;
 
@@ -550,7 +552,7 @@ export default function CartDrawer() {
                         type="text"
                         value={shippingForm.fullName}
                         onChange={(e) => setShippingForm({ ...shippingForm, fullName: e.target.value })}
-                        placeholder={language === 'hi' ? 'उदा. पीयूष कुमार' : 'e.g. Piyush Kumar'}
+                        placeholder={language === 'hi' ? 'उदा. राहुल शर्मा' : 'e.g. Rahul Sharma'}
                         className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
@@ -566,7 +568,7 @@ export default function CartDrawer() {
                         onChange={(e) =>
                           setShippingForm({ ...shippingForm, mobileNumber: e.target.value.replace(/\D/g, '') })
                         }
-                        placeholder="9876543210"
+                        placeholder={language === 'hi' ? 'उदा. 9876543210' : 'e.g. 9876543210'}
                         className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
@@ -585,7 +587,7 @@ export default function CartDrawer() {
                         onChange={(e) =>
                           setShippingForm({ ...shippingForm, altPhone: e.target.value.replace(/\D/g, '') })
                         }
-                        placeholder={language === 'hi' ? 'उदा. 9811122233' : 'e.g. 9811122233'}
+                        placeholder={language === 'hi' ? 'उदा. 9811122233 (वैकल्पिक)' : 'e.g. 9811122233 (Optional)'}
                         className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
@@ -601,7 +603,7 @@ export default function CartDrawer() {
                         onChange={(e) =>
                           setShippingForm({ ...shippingForm, pincode: e.target.value.replace(/\D/g, '') })
                         }
-                        placeholder="411014"
+                        placeholder={language === 'hi' ? 'उदा. 411014' : 'e.g. 411014'}
                         className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-mono font-bold placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
@@ -646,7 +648,7 @@ export default function CartDrawer() {
                         type="text"
                         value={shippingForm.landmark}
                         onChange={(e) => setShippingForm({ ...shippingForm, landmark: e.target.value })}
-                        placeholder={language === 'hi' ? 'उदा. सिम्बायोसिस के पास' : 'e.g. Near Symbiosis Campus'}
+                        placeholder={language === 'hi' ? 'उदा. कृषि मंडी गेट के पास' : 'e.g. Near Agri Mandi Gate'}
                         className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
@@ -659,7 +661,7 @@ export default function CartDrawer() {
                         type="text"
                         value={shippingForm.postOffice}
                         onChange={(e) => setShippingForm({ ...shippingForm, postOffice: e.target.value })}
-                        placeholder={language === 'hi' ? 'उदा. विमान नगर पोस्ट ऑफिस' : 'e.g. Viman Nagar Post Office'}
+                        placeholder={language === 'hi' ? 'उदा. मुख्य डाकघर / नगर' : 'e.g. Main Post Office / Town'}
                         className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
@@ -675,7 +677,7 @@ export default function CartDrawer() {
                         type="text"
                         value={shippingForm.district}
                         onChange={(e) => setShippingForm({ ...shippingForm, district: e.target.value })}
-                        placeholder={language === 'hi' ? 'उदा. पुणे' : 'e.g. Pune'}
+                        placeholder={language === 'hi' ? 'उदा. पुणे / इंदौर / नासिक' : 'e.g. Pune / Indore / Nashik'}
                         className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
                       />
                     </div>
@@ -689,6 +691,9 @@ export default function CartDrawer() {
                         onChange={(e) => setShippingForm({ ...shippingForm, state: e.target.value })}
                         className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium cursor-pointer"
                       >
+                        <option value="" disabled>
+                          {language === 'hi' ? '-- राज्य चुनें (Select State) --' : '-- Select State --'}
+                        </option>
                         {INDIAN_STATES.map((st) => (
                           <option key={st} value={st} className="dark:bg-[#132c1e] dark:text-emerald-100">
                             {st}
