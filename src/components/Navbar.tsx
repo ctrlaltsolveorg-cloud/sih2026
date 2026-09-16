@@ -86,11 +86,13 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
     supportedLanguages[0];
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-2xl backdrop-saturate-200 bg-[#FAF5EB]/75 dark:bg-[#07170f]/80 border-b border-emerald-900/15 dark:border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-200 relative overflow-hidden">
-      {/* Blurred colored background ambient glow lights shining through the frosted glass */}
-      <div className="absolute -top-12 left-[15%] w-72 h-28 bg-emerald-500/25 dark:bg-emerald-400/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -top-12 right-[15%] w-72 h-28 bg-amber-500/25 dark:bg-amber-400/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-96 h-16 bg-teal-500/20 dark:bg-teal-400/15 rounded-full blur-2xl pointer-events-none" />
+    <header className="sticky top-0 z-50 w-full backdrop-blur-2xl backdrop-saturate-200 bg-[#FAF5EB]/75 dark:bg-[#07170f]/80 border-b border-emerald-900/15 dark:border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-200 relative">
+      {/* Background ambient glow container with overflow-hidden so orbs don't bleed outside the navbar boundary, while allowing all dropdowns to render freely above page content */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute -top-12 left-[15%] w-72 h-28 bg-emerald-500/25 dark:bg-emerald-400/20 rounded-full blur-3xl" />
+        <div className="absolute -top-12 right-[15%] w-72 h-28 bg-amber-500/25 dark:bg-amber-400/20 rounded-full blur-3xl" />
+        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-96 h-16 bg-teal-500/20 dark:bg-teal-400/15 rounded-full blur-2xl" />
+      </div>
 
       {/* Top Banner with Frosted Glass */}
       <div className="relative z-10 bg-[#0F3826]/85 dark:bg-[#040e09]/85 text-amber-200 text-xs py-1 px-4 sm:px-8 border-b border-emerald-500/20 backdrop-blur-md flex items-center justify-between">
@@ -251,7 +253,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
           </button>
 
           {/* 3. 11-Indian Language Dropdown Selector - Icon Only */}
-          <div className="relative" ref={dropdownRef}>
+          <div className="relative z-50" ref={dropdownRef}>
             <button
               onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
               className="w-9 h-9 sm:w-10 sm:h-10 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 text-emerald-950 dark:text-emerald-100 border border-emerald-900/15 dark:border-white/15 backdrop-blur-lg font-bold rounded-xl flex items-center justify-center shadow-xs transition shrink-0"
@@ -263,7 +265,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
             {/* Dropdown Menu */}
             {isLangDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-64 sm:w-72 bg-white dark:bg-[#0c2217] rounded-2xl shadow-2xl border border-emerald-900/15 dark:border-emerald-500/30 py-2 z-50 animate-fadeIn">
+              <div className="absolute right-0 mt-2 w-64 sm:w-72 bg-white dark:bg-[#0c2217] rounded-2xl shadow-2xl border border-emerald-900/15 dark:border-emerald-500/30 py-2 z-[100] animate-fadeIn">
                 <div className="px-3 py-1.5 border-b border-emerald-900/10 dark:border-emerald-500/20 flex items-center justify-between">
                   <span className="text-[11px] font-extrabold text-emerald-950 dark:text-emerald-100 uppercase tracking-wider">
                     {t.selectLanguage || 'भाषा चुनें'} (11 Languages)
@@ -322,7 +324,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
           </div>
 
           {/* 4. User Profile & Action Menu - Icon Button & Rich Popup */}
-          <div className="relative" ref={profileRef}>
+          <div className="relative z-50" ref={profileRef}>
             {isAuthenticated && user ? (
               <button
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
@@ -345,7 +347,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
             {/* Comprehensive Profile & User Actions Popup */}
             {showProfileMenu && isAuthenticated && user && (
-              <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 p-3.5 z-50 animate-fadeIn space-y-3">
+              <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 p-3.5 z-[100] animate-fadeIn space-y-3">
                 {/* Profile Header */}
                 <div className="flex items-center gap-3 p-3 bg-emerald-900/10 dark:bg-emerald-950/80 rounded-2xl border border-emerald-900/15 dark:border-emerald-500/20">
                   <UserAvatar name={user.name} size="md" />
