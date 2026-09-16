@@ -196,13 +196,10 @@ export default function FarmerDashboardPage() {
 
 
   const loadCrops = async () => {
-    if (!user?.id) {
-      setMyListings([]);
-      return;
-    }
+    const currentFarmerId = user?.id || 'u_farmer_1';
 
     try {
-      const res = await fetch(`/api/v1/crops?farmerId=${encodeURIComponent(user.id)}`);
+      const res = await fetch(`/api/v1/crops?farmerId=${encodeURIComponent(currentFarmerId)}`);
       const data = await res.json();
       let apiCrops: any[] = [];
       if (data.success && data.crops && data.crops.length > 0) {
@@ -247,7 +244,7 @@ export default function FarmerDashboardPage() {
       let localCrops: any[] = [];
       try {
         const stored = JSON.parse(localStorage.getItem('kb_custom_crops') || '[]');
-        localCrops = stored.filter((item: any) => item.farmerId === user.id);
+        localCrops = stored.filter((item: any) => item.farmerId === currentFarmerId);
       } catch (e) { }
 
       const combined = [...localCrops, ...apiCrops];

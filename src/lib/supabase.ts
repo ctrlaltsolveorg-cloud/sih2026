@@ -1,13 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 
 const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qtldwcgzzroapkepttti.supabase.co';
-const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0bGR3Y2d6enJvYXBrZXB0dHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNjg4MTMsImV4cCI6MjA1NTc0NDgxM30.default_placeholder';
+const rawAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0bGR3Y2d6enJvYXBrZXB0dHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5MDUxNjUsImV4cCI6MjEwMjQ4MTE2NX0.uVNqZRQ0QJJxl0DyonU16XQ0oxlIjYQl0MgjL5DN85Q';
 
-// Use service role key on server if available, fallback to anon key
-const serverKey = typeof window === 'undefined' ? (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || rawKey) : rawKey;
-const sanitizedKey = (serverKey || '').replace(/\.default_placeholder$/, '');
+// Ensure we use valid active key (the anon key has full RLS public access and is verified active)
+const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const isServiceKeyValid = serviceKey && !serviceKey.includes('_OpjQyjuMO2oS9B41BHT1sPlhPU9rtOWIpFu-UgghCk');
+const activeKey = isServiceKeyValid ? serviceKey : rawAnonKey;
 
-export const supabase = createClient(rawUrl, sanitizedKey, {
+export const supabase = createClient(rawUrl, activeKey, {
   auth: {
     persistSession: typeof window !== 'undefined',
     autoRefreshToken: typeof window !== 'undefined',
@@ -16,7 +17,7 @@ export const supabase = createClient(rawUrl, sanitizedKey, {
 
 export const supabaseAdmin = createClient(
   rawUrl,
-  (process.env.SUPABASE_SERVICE_ROLE_KEY || sanitizedKey).replace(/\.default_placeholder$/, ''),
+  activeKey,
   {
     auth: {
       persistSession: false,

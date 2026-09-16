@@ -8,7 +8,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const farmerId = searchParams.get('farmerId');
 
-    const listings = farmerId ? getCropsByFarmer(farmerId) : getAllCrops();
+    const listings = farmerId ? await getCropsByFarmer(farmerId) : await getAllCrops();
     return NextResponse.json({
       success: true,
       source: 'database',

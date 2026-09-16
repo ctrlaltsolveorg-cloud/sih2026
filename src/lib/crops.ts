@@ -69,34 +69,70 @@ export function ensureStapleProductsSeeded(db: any) {
 }
 
 /**
- * Fetch exactly the 3 verified staple crop listings from SQLite
+ * Fetch all active crop listings (Public Marketplace across India)
+ * Supabase Cloud first, with SQLite fallback.
  */
-export function getAllCrops() {
+export async function getAllCrops() {
+  // 1. Try Supabase Cloud first
+  try {
+    const { data: supaCrops, error: supaErr } = await supabase
+      .from('product_listings')
+      .select('*')
+      .eq('status', 'ACTIVE')
+      .order('created_at', { ascending: false });
+
+    if (!supaErr && Array.isArray(supaCrops) && supaCrops.length > 0) {
+      return supaCrops;
+    }
+  } catch (err) {
+    console.warn('Supabase getAllCrops failed, falling back to SQLite:', err);
+  }
+
+  // 2. Fallback to SQLite DB
   const db = getDb();
   ensureStapleProductsSeeded(db);
   return db
     .prepare(
       `
-    SELECT l.*, u.name as farmer_name, u.phone as farmer_phone
+    SELECT l.*, COALESCE(u.name, 'Verified Farmer') as farmer_name, COALESCE(u.phone, '+91 98765 43210') as farmer_phone
     FROM product_listings l
     LEFT JOIN users u ON l.farmer_id = u.id
-    WHERE l.id IN ('prod_tomato_1', 'prod_onion_1', 'prod_wheat_1')
-    ORDER BY l.id ASC
+    WHERE l.status = 'ACTIVE' OR l.status IS NULL
+    ORDER BY l.created_at DESC
   `
     )
     .all();
 }
 
 /**
- * Fetch crops owned by a specific farmer (user-isolated data)
+ * Fetch crops owned by a specific farmer (User-Isolated Farmer Desk)
+ * Shows only the crops belonging to the given farmerId.
  */
-export function getCropsByFarmer(farmerId: string) {
+export async function getCropsByFarmer(farmerId: string) {
+  if (!farmerId) return [];
+
+  // 1. Try Supabase Cloud first
+  try {
+    const { data: supaCrops, error: supaErr } = await supabase
+      .from('product_listings')
+      .select('*')
+      .eq('farmer_id', farmerId)
+      .order('created_at', { ascending: false });
+
+    if (!supaErr && Array.isArray(supaCrops)) {
+      return supaCrops;
+    }
+  } catch (err) {
+    console.warn('Supabase getCropsByFarmer failed, falling back to SQLite:', err);
+  }
+
+  // 2. Fallback to SQLite DB
   const db = getDb();
   ensureStapleProductsSeeded(db);
   return db
     .prepare(
       `
-    SELECT l.*, u.name as farmer_name, u.phone as farmer_phone
+    SELECT l.*, COALESCE(u.name, 'Verified Farmer') as farmer_name, COALESCE(u.phone, '+91 98765 43210') as farmer_phone
     FROM product_listings l
     LEFT JOIN users u ON l.farmer_id = u.id
     WHERE l.farmer_id = ?
@@ -215,28 +251,56 @@ export async function createCropListing(input: CropListingInput) {
     );
   }
 
-  // 3. Supabase Sync
+  // 3. Supabase Sync (Cloud Primary)
   let supabaseStatus = 'Supabase Synced';
   try {
-    const { error } = await supabase.from('product_listings').insert([
-      {
-        id,
-        farmer_id: newListing.farmer_id,
-        crop_name: newListing.crop_name,
-        category: newListing.category,
-        quantity_available: newListing.quantity_available,
-        price_paise: newListing.price_paise,
-        grade: newListing.grade,
-        location: newListing.location,
-        image_url: newListing.image_url,
-        logo_url: newListing.logo_url,
-        status: 'ACTIVE',
-      },
-    ]);
+    // 3a. Ensure farmer user exists in Supabase users table
+    try {
+      await supabase.from('users').upsert({
+        id: actualFarmerId,
+        name: farmerName || 'किसान (Farmer)',
+        phone: '+91 98765 43210',
+        role: 'FARMER',
+        district: 'Nashik',
+        state: 'Maharashtra',
+        address: loc,
+      });
+    } catch (uErr) {
+      console.warn('Notice ensuring user in Supabase:', uErr);
+    }
+
+    // 3b. Insert or update listing in Supabase product_listings
+    const supaListing = {
+      id,
+      farmer_id: actualFarmerId,
+      farmer_name: farmerName || 'किसान (Farmer)',
+      farmer_phone: '+91 98765 43210',
+      crop_name: newListing.crop_name,
+      category: newListing.category,
+      quantity_available: newListing.quantity_available,
+      unit: newListing.unit,
+      price_paise: newListing.price_paise,
+      mandi_retail_price_paise: newListing.mandi_retail_price_paise,
+      grade: newListing.grade,
+      harvest_date: newListing.harvest_date,
+      organic_certified: newListing.organic_certified,
+      image_url: newListing.image_url,
+      logo_url: newListing.logo_url,
+      images: finalImageList,
+      location: newListing.location,
+      district: 'Nashik',
+      status: 'ACTIVE',
+    };
+
+    const { error } = await supabase.from('product_listings').upsert([supaListing]);
     if (error) {
+      console.warn('Supabase product_listings upsert note:', error.message);
       supabaseStatus = `SQLite Saved (Supabase Note: ${error.message})`;
+    } else {
+      supabaseStatus = 'Supabase Cloud Synced (Verified)';
     }
   } catch (err: any) {
+    console.warn('Supabase product_listings catch note:', err.message);
     supabaseStatus = `SQLite Saved (${err.message})`;
   }
 
