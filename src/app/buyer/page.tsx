@@ -3,12 +3,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
-import { getLocalizedFarmer, getLocalizedLocation, getLocalizedCropName } from '@/lib/i18n';
+import { getLocalizedFarmer, getLocalizedLocation, getLocalizedCropName, stripIndicParens } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import PortalGuard from '@/components/PortalGuard';
 import BulmaProductCard from '@/components/BulmaProductCard';
+import { getCropLogoUrl, getCropPhotosByName } from '@/lib/cropImageMatcher';
 import {
   ShoppingBag,
   Plus,
@@ -37,15 +38,15 @@ export default function BuyerDashboardPage() {
   const [successSignal, setSuccessSignal] = useState<string | null>(null);
 
   const [showAddReqModal, setShowAddReqModal] = useState(false);
-  const [buyerName, setBuyerName] = useState(userName || 'रमेश ट्रेडिंग कं.');
+  const [buyerName, setBuyerName] = useState(userName || 'Ramesh Trading Co.');
   const [buyerContact, setBuyerContact] = useState(userPhone || '+91 98230 45678');
-  const [cropName, setCropName] = useState('टमाटर');
+  const [cropName, setCropName] = useState('Tomato');
   const [requiredQty, setRequiredQty] = useState('1500');
   const [maxPriceRs, setMaxPriceRs] = useState('29.00');
-  const [deliveryLoc, setDeliveryLoc] = useState('अन्नपूर्णा पुणे संकलन हब');
+  const [deliveryLoc, setDeliveryLoc] = useState('Annapurna Pune Collection Hub');
 
   useEffect(() => {
-    if (userName) setBuyerName((prev) => (!prev || prev === 'रमेश ट्रेडिंग कं.' ? userName : prev));
+    if (userName) setBuyerName((prev) => (!prev || prev === 'Ramesh Trading Co.' ? userName : prev));
     if (userPhone) setBuyerContact((prev) => (!prev || prev === '+91 98230 45678' ? userPhone : prev));
   }, [userName, userPhone]);
 
@@ -106,11 +107,11 @@ export default function BuyerDashboardPage() {
       });
       const data = await res.json();
       if (!res.ok || !data.success) {
-        throw new Error(data.message || 'OTP जनरेट करने में विफल');
+        throw new Error(data.message || 'Failed to generate OTP');
       }
       await fetchOrders();
     } catch (err: any) {
-      alert(err.message || 'OTP जनरेट करने में त्रुटि आई।');
+      alert(err.message || 'Error generating OTP.');
     } finally {
       setGeneratingDeliveryOtp((prev) => ({ ...prev, [orderId]: false }));
     }
@@ -155,7 +156,7 @@ export default function BuyerDashboardPage() {
 
       const data = await res.json();
       if (!res.ok || !data.success) {
-        throw new Error(data.message || 'OTP सत्यापन असफल रहा।');
+        throw new Error(data.message || 'OTP verification failed.');
       }
 
       setVerifyMessage({ type: 'success', text: data.message });
@@ -189,18 +190,18 @@ export default function BuyerDashboardPage() {
             }
             return {
               id: item.id || `local_${Date.now()}`,
-              crop_name: item.crop || item.crop_name || 'ताज़ा फसल',
+              crop_name: item.crop || item.crop_name || 'Fresh Produce',
               crop_name_hi: item.crop_name_hi,
               category: item.category || 'Vegetables',
-              variety: item.variety || 'हाइब्रिड उच्च उपज',
+              variety: item.variety || 'Hybrid High Yield',
               quantity_kg: parseInt(item.qty || item.quantity_available) || 500,
               price_paise_per_kg: item.pricePaise || Math.round((parseFloat(item.priceRupees) || 32) * 100),
-              quality_grade: item.grade || 'उच्चतम श्रेणी A+',
+              quality_grade: item.grade || 'Grade A+',
               cv_trust_score: 98,
               harvest_date: item.harvestDate || '2026-09-08',
               is_organic: item.isOrganic || 0,
-              farmer_name: item.farmer_name || 'किसान (Farmer)',
-              location: item.location || 'नासिक मंडी संकलन हब',
+              farmer_name: item.farmer_name || 'Farmer',
+              location: item.location || 'Nashik Mandi Collection Hub',
               images: photos,
               unit: item.unit || 'kg',
               isDirectFromFarmer: true,
@@ -228,20 +229,27 @@ export default function BuyerDashboardPage() {
                 photoList.push(photoList[0]);
               }
 
+              const cropNameStr = c.crop_name || 'Fresh Produce';
+              const effectivePhotoList = photoList.length > 0 ? photoList : getCropPhotosByName(cropNameStr);
+              const effectiveLogoUrl = c.logo_url || photoList[0] || getCropLogoUrl(cropNameStr);
+
               return {
                 id: c.id,
-                crop_name: c.crop_name,
+                crop_name: cropNameStr,
                 category: c.category || 'Vegetables',
-                variety: 'सत्यापित किसान लॉट',
+                variety: 'Verified Farmer Lot',
                 quantity_kg: c.quantity_available,
-                price_paise_per_kg: c.price_paise,
-                quality_grade: c.grade || 'उच्चतम श्रेणी A+',
+                price_paise: c.price_paise,
+                quality_grade: c.grade || 'Grade A+',
                 cv_trust_score: 97,
                 harvest_date: c.harvest_date || '2026-09-08',
                 is_organic: c.organic_certified || 0,
-                farmer_name: c.farmer_name || 'किसान (Farmer)',
-                location: c.location || 'नासिक मंडी संकलन हब',
-                images: photoList,
+                farmer_name: c.farmer_name || 'Farmer',
+                location: c.location || 'Nashik Mandi Collection Hub',
+                images: effectivePhotoList,
+                image_url: effectiveLogoUrl || effectivePhotoList[0],
+                logo_url: effectiveLogoUrl,
+                side_logo: effectiveLogoUrl,
                 unit: c.unit || 'kg',
                 isDirectFromFarmer: true,
               };
@@ -279,7 +287,6 @@ export default function BuyerDashboardPage() {
       result = result.filter(
         (it) =>
           it.crop_name.toLowerCase().includes(q) ||
-          (it.crop_name_hi && it.crop_name_hi.includes(q)) ||
           (it.variety && it.variety.toLowerCase().includes(q)) ||
           (it.farmer_name && it.farmer_name.toLowerCase().includes(q))
       );
@@ -291,9 +298,7 @@ export default function BuyerDashboardPage() {
     e.preventDefault();
     setShowAddReqModal(false);
     setSuccessSignal(
-      language === 'hi'
-        ? `थोक मांग प्रस्ताव दर्ज! (${buyerName} • ${buyerContact})`
-        : `Bulk Requirement Posted! (${buyerName} • ${buyerContact})`
+      `Bulk Requirement Posted! (${buyerName} • ${buyerContact})`
     );
     setTimeout(() => setSuccessSignal(null), 4000);
   };
@@ -310,9 +315,7 @@ export default function BuyerDashboardPage() {
       imageUrl: item.imageUrl || (item.photos && item.photos[0]),
     });
     setSuccessSignal(
-      language === 'hi'
-        ? `${item.cropName || item.crop_name} कार्ट में जोड़ा गया!`
-        : `${item.cropName || item.crop_name} added to procurement cart!`
+      `${item.cropName || item.crop_name} added to procurement cart!`
     );
     setTimeout(() => setSuccessSignal(null), 4000);
   };
@@ -320,12 +323,8 @@ export default function BuyerDashboardPage() {
   return (
     <PortalGuard
       requiredRole="BUYER"
-      portalName={language === 'hi' ? 'प्रत्यक्ष खरीदार पोर्टल (Buyer Desk)' : 'Buyer Desk'}
-      portalDescription={
-        language === 'hi'
-          ? 'यह पोर्टल केवल सत्यापित थोक एवं खुदरा खरीदारों के लिए है जहाँ वे किसान डेस्क बोर्ड से सीधे प्रेषित 350+ फसलें 2 से 6 तस्वीरों के साथ देख व खरीद सकते हैं।'
-          : 'This portal is restricted to verified Bulk and Retail Buyers to procure directly from Farmer Desk listings with 2-6 verified photos.'
-      }
+      portalName="Buyer Desk"
+      portalDescription="This portal is restricted to verified Bulk and Retail Buyers to procure directly from Farmer Desk listings with 2-6 verified photos."
     >
       <div className="space-y-8">
         {/* Header */}
@@ -342,9 +341,7 @@ export default function BuyerDashboardPage() {
                 {t.buyerWelcome}, {userName}
               </h1>
               <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
-                {language === 'hi'
-                  ? 'किसानों से सीधे ताज़ा फसलें, बेहतर दामों पर उच्च गुणवत्ता वाले उत्पाद'
-                  : 'Fresh Crops Direct from Farmers with Quality Produce at Better prices.'}
+                Fresh Crops Direct from Farmers with Quality Produce at Better prices.
               </p>
             </div>
           </div>
@@ -355,7 +352,7 @@ export default function BuyerDashboardPage() {
               className="px-4 py-3 bg-emerald-950/80 hover:bg-emerald-900 text-amber-300 font-bold rounded-xl border border-amber-400/30 transition flex items-center gap-2 text-xs shadow"
             >
               <Tractor className="w-4 h-4 text-amber-400" />
-              <span>{language === 'hi' ? 'किसान डेस्क देखें' : 'Farmer Desk Board'}</span>
+              <span>Farmer Desk Board</span>
             </Link>
 
             <button
@@ -363,7 +360,7 @@ export default function BuyerDashboardPage() {
               className="px-5 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 font-extrabold rounded-xl shadow-lg hover:from-amber-400 hover:to-amber-500 transition flex items-center gap-2 text-sm shrink-0"
             >
               <Plus className="w-4 h-4" />
-              <span>{language === 'hi' ? 'थोक आवश्यकता प्रस्ताव भेजें' : 'Post Bulk Demand Request'}</span>
+              <span>Post Bulk Demand Request</span>
             </button>
           </div>
         </div>
@@ -378,19 +375,19 @@ export default function BuyerDashboardPage() {
 
           <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-amber-600 dark:border-l-amber-400">
             <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{t.buyerStatActiveOrders}</span>
-            <div className="text-2xl font-extrabold text-amber-800 dark:text-amber-300">{buyerOrders.length} {language === 'hi' ? 'ऑर्डर' : 'Orders'}</div>
+            <div className="text-2xl font-extrabold text-amber-800 dark:text-amber-300">{buyerOrders.length} Orders</div>
             <span className="text-[11px] text-amber-700 dark:text-amber-400 font-medium">{t.buyerStatGPSLogistics}</span>
           </div>
 
           <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-purple-600 dark:border-l-purple-400">
-            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{language === 'hi' ? 'सीधे किसान लॉट्स' : 'Direct Farmer Lots'}</span>
-            <div className="text-2xl font-extrabold text-purple-900 dark:text-purple-300">{farmerProduce.length} {language === 'hi' ? 'ताज़ा लॉट' : 'Fresh Lots'}</div>
-            <span className="text-[11px] text-purple-700 dark:text-purple-400 font-medium">{language === 'hi' ? 'किसान डेस्क से लाइव' : 'Live from Farmer Desk'}</span>
+            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">Direct Farmer Lots</span>
+            <div className="text-2xl font-extrabold text-purple-900 dark:text-purple-300">{farmerProduce.length} Fresh Lots</div>
+            <span className="text-[11px] text-purple-700 dark:text-purple-400 font-medium">Live from Farmer Desk</span>
           </div>
 
           <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-blue-600 dark:border-l-blue-400">
             <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{t.buyerStatRecurringContracts}</span>
-            <div className="text-2xl font-extrabold text-blue-700 dark:text-blue-300">2 {language === 'hi' ? 'अनुबंध' : 'Contracts'}</div>
+            <div className="text-2xl font-extrabold text-blue-700 dark:text-blue-300">2 Contracts</div>
             <span className="text-[11px] text-blue-600 dark:text-blue-400 font-medium">{t.buyerStatFPOGuarantee}</span>
           </div>
         </div>
@@ -403,20 +400,18 @@ export default function BuyerDashboardPage() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="px-2.5 py-0.5 bg-emerald-900 dark:bg-emerald-800 text-amber-300 font-extrabold text-[11px] rounded-full border border-emerald-700/50">
-                  {language === 'hi' ? 'किसान डेस्क से सीधा संकलन' : 'Direct from Farmer Desk'}
+                  Direct from Farmer Desk
                 </span>
                 <span className="text-xs text-amber-700 dark:text-amber-400 font-bold flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
-                  <span>{language === 'hi' ? '2-6 फोटो सत्यापित' : '2-6 Photos Verified'}</span>
+                  <span>2-6 Photos Verified</span>
                 </span>
               </div>
               <h2 className="text-2xl font-extrabold text-emerald-950 dark:text-emerald-50 mt-1">
-                {language === 'hi' ? 'ताज़ा कृषि उत्पाद बोर्ड' : 'Live Produce Procurement Board'}
+                Live Produce Procurement Board
               </h2>
               <p className="text-xs text-emerald-800/70 dark:text-emerald-300/80">
-                {language === 'hi'
-                  ? 'आपकी फसल सफलतापूर्वक आपकी फसल सूची में जोड़ दी गई है और अब यह प्लेटफ़ॉर्म पर उपलब्ध है।'
-                  : 'Your crop has been added successfully to your crop list and is now available on the platform.'}
+                Your crop has been added successfully to your crop list and is now available on the platform.
               </p>
             </div>
 
@@ -429,18 +424,18 @@ export default function BuyerDashboardPage() {
                   onChange={(e) => setSelectedCategory(e.target.value)}
                   className="px-3.5 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-emerald-100 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm cursor-pointer hover:border-emerald-800 transition"
                 >
-                  <option value="All">{language === 'hi' ? '🌐 सभी श्रेणियां' : '🌐 All Categories'}</option>
-                  <option value="Vegetables">{language === 'hi' ? '🥦 सब्जियाँ (Vegetables)' : '🥦 Vegetables'}</option>
-                  <option value="Fruits">{language === 'hi' ? '🍎 फल (Fruits)' : '🍎 Fruits'}</option>
-                  <option value="Pulses">{language === 'hi' ? '🫘 दालें / दलहन (Pulses)' : '🫘 Pulses'}</option>
-                  <option value="Grains">{language === 'hi' ? '🌾 अनाज (Grains)' : '🌾 Grains'}</option>
+                  <option value="All">🌐 All Categories</option>
+                  <option value="Vegetables">🥦 Vegetables</option>
+                  <option value="Fruits">🍎 Fruits</option>
+                  <option value="Pulses">🫘 Pulses</option>
+                  <option value="Grains">🌾 Grains</option>
                 </select>
               </div>
 
               <span className="text-xs font-bold text-emerald-900 dark:text-emerald-200 bg-white dark:bg-[#07170f] px-3 py-2 rounded-xl border border-emerald-900/15 dark:border-emerald-500/30 shadow-sm flex items-center gap-1.5 whitespace-nowrap">
                 <Tractor className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                 <span>
-                  {filteredProduce.length} {language === 'hi' ? 'किसान फसलें' : 'Farmer Crop(s)'}
+                  {filteredProduce.length} Farmer Crop(s)
                 </span>
               </span>
 
@@ -449,11 +444,7 @@ export default function BuyerDashboardPage() {
                 <Search className="w-4 h-4 absolute left-3.5 top-2.5 text-emerald-800/50 dark:text-emerald-400/60" />
                 <input
                   type="text"
-                  placeholder={
-                    language === 'hi'
-                      ? 'किसान फसल खोजें...'
-                      : 'Search farmer produce...'
-                  }
+                  placeholder="Search farmer produce..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-white placeholder-emerald-800/40 dark:placeholder-emerald-300/40 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm font-medium"
@@ -487,14 +478,10 @@ export default function BuyerDashboardPage() {
               </div>
               <div>
                 <h3 className="font-extrabold text-lg text-emerald-950">
-                  {language === 'hi'
-                    ? 'वर्तमान में किसान द्वारा कोई फसल उपलब्ध नहीं है'
-                    : 'No Farmer Produce Currently Listed'}
+                  No Farmer Produce Currently Listed
                 </h3>
                 <p className="text-xs text-emerald-800/70 max-w-md mx-auto mt-1">
-                  {language === 'hi'
-                    ? 'पंजीकृत किसान अपने किसान पोर्टल (Farmer Desk) में जाकर 2 से 6 तस्वीरों के साथ अपनी ताज़ा फसलें दर्ज करेंगे, वह सीधे यहाँ खरीदार बोर्ड पर दिखाई देंगी।'
-                    : 'When registered farmers list their fresh harvest with 2 to 6 photos on the Farmer Desk, it will appear directly here on the Buyer Desk.'}
+                  When registered farmers list their fresh harvest with 2 to 6 photos on the Farmer Desk, it will appear directly here on the Buyer Desk.
                 </p>
               </div>
               <Link
@@ -502,7 +489,7 @@ export default function BuyerDashboardPage() {
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow-md transition"
               >
                 <Plus className="w-4 h-4 text-amber-400" />
-                <span>{language === 'hi' ? 'किसान डेस्क पर फसल दर्ज करें' : 'Go to Farmer Desk to Insert Crop'}</span>
+                <span>Go to Farmer Desk to Insert Crop</span>
               </Link>
             </div>
           ) : (
@@ -526,7 +513,7 @@ export default function BuyerDashboardPage() {
                   images={crop.images}
                   unit={crop.unit}
                   description={crop.description}
-                  badge={crop.isDirectFromFarmer ? (language === 'hi' ? 'किसान डेस्क से' : 'Farmer Direct') : undefined}
+                  badge={crop.isDirectFromFarmer ? 'Farmer Direct' : undefined}
                   onAddToCart={handleAddToCart}
                 />
               ))}
@@ -546,13 +533,13 @@ export default function BuyerDashboardPage() {
             <div className="space-y-4">
               {loadingOrders ? (
                 <div className="p-8 text-center text-emerald-800/60 dark:text-emerald-300/70 font-medium text-sm glass-card rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20">
-                  सक्रिय ऑर्डर लोड हो रहे हैं... (Loading live orders...)
+                  Loading live orders...
                 </div>
               ) : buyerOrders.length === 0 ? (
                 <div className="p-8 text-center glass-card rounded-2xl space-y-2 border border-emerald-900/10">
                   <ShoppingBag className="w-10 h-10 text-emerald-800/40 mx-auto" />
-                  <p className="font-bold text-sm text-emerald-950">कोई सक्रिय ऑर्डर नहीं मिला</p>
-                  <p className="text-xs text-emerald-800/70">बाज़ार से ताज़ा फसल चुनें और कार्ट से सुरक्षित एस्क्रो ऑर्डर दें।</p>
+                  <p className="font-bold text-sm text-emerald-950">No Active Orders Found</p>
+                  <p className="text-xs text-emerald-800/70">Select fresh produce from the market and place a secure escrow order.</p>
                 </div>
               ) : (
                 buyerOrders.map((ord) => {
@@ -572,22 +559,22 @@ export default function BuyerDashboardPage() {
                               : 'bg-emerald-900 text-amber-200'
                         }`}>
                           {isDelivered 
-                            ? (language === 'hi' ? '✓ सफलतापूर्वक हस्तांतरित' : '✓ Delivered & Verified') 
+                            ? '✓ Delivered & Verified' 
                             : isOutForDelivery 
-                              ? (language === 'hi' ? '🚚 परिवहन में (Out for Delivery)' : '🚚 Out for Delivery') 
-                              : (language === 'hi' ? 'ऑर्डर दर्ज (Placed)' : 'Order Placed')}
+                              ? '🚚 Out for Delivery' 
+                              : 'Order Placed'}
                         </span>
                       </div>
 
                       <h3 className="font-extrabold text-base text-emerald-950">
-                        {language === 'hi' ? 'किसान: ' : 'Farmer: '}{ord.farmer_name || 'किसान (Registered Farmer)'}
+                        {language === 'hi' ? 'किसान:' : 'Farmer:'} {getLocalizedFarmer(ord.farmer_name || 'Ramesh Patil', language)}
                       </h3>
 
                       {ord.items && ord.items.length > 0 && (
                         <div className="bg-emerald-50/60 p-2.5 rounded-xl text-xs space-y-1 text-emerald-900">
                           {ord.items.map((it: any, idx: number) => (
                             <div key={idx} className="flex justify-between font-medium">
-                              <span>{it.crop_name} ({it.quantity} {it.unit})</span>
+                              <span>{getLocalizedCropName(it.crop_name, language)} ({it.quantity} {it.unit})</span>
                               <span className="font-bold">₹{((it.quantity * it.unit_price_paise) / 100).toFixed(2)}</span>
                             </div>
                           ))}
@@ -599,24 +586,24 @@ export default function BuyerDashboardPage() {
                         <div className="flex items-center justify-between font-bold">
                           <span className="flex items-center gap-1 text-emerald-900">
                             <MapPin className="w-3.5 h-3.5 text-amber-600" />
-                            डिलीवरी पता: {ord.shipping?.fullName || ord.recipient_name || ord.buyer_name || 'क्रेता'}
+                            {language === 'hi' ? 'वितरण पता:' : 'Delivery Address:'} {stripIndicParens(ord.shipping?.fullName || ord.recipient_name || ord.buyer_name || 'Buyer')}
                           </span>
                           <span className="text-[10px] px-2 py-0.5 bg-white rounded-full border border-emerald-200 text-emerald-800">
-                            {ord.shipping?.addressType === 'WORK' ? '🏢 ऑफिस/दुकान' : ord.shipping?.addressType === 'MANDI_SHOP' ? '🏪 थोक मंडी' : '🏠 घर (Home)'}
+                            {ord.shipping?.addressType === 'WORK' ? '🏢 Office/Shop' : ord.shipping?.addressType === 'MANDI_SHOP' ? '🏪 Mandi Shop' : '🏠 Home'}
                           </span>
                         </div>
                         <p className="text-[11px] text-emerald-800 leading-snug">
                           {ord.shipping?.flatBuilding || ord.flat_building ? (
                             <>
                               {ord.shipping?.flatBuilding || ord.flat_building}, {ord.shipping?.areaStreet || ord.area_street}
-                              {(ord.shipping?.landmark || ord.landmark) && `, लैंडमार्क: ${ord.shipping?.landmark || ord.landmark}`}
+                              {(ord.shipping?.landmark || ord.landmark) && `, Landmark: ${ord.shipping?.landmark || ord.landmark}`}
                               <br />
                               <span className="font-bold text-emerald-900">
-                                डाकघर: {ord.shipping?.postOffice || ord.post_office || '-'}, {ord.shipping?.district || ord.district || 'Pune'}, {ord.shipping?.state || ord.state || 'Maharashtra'} — {ord.shipping?.pincode || ord.pin_code || '411014'}
+                                Post Office: {ord.shipping?.postOffice || ord.post_office || '-'}, {ord.shipping?.district || ord.district || 'Pune'}, {ord.shipping?.state || ord.state || 'Maharashtra'} — {ord.shipping?.pincode || ord.pin_code || '411014'}
                               </span>
                             </>
                           ) : (
-                            ord.delivery_address || 'पुणे डिलीवरी संकलन हब'
+                            ord.delivery_address || 'Pune Delivery Collection Hub'
                           )}
                         </p>
                       </div>
@@ -626,7 +613,7 @@ export default function BuyerDashboardPage() {
                         <div className="flex items-center gap-1.5">
                           <Truck className="w-3.5 h-3.5 text-emerald-700" />
                           <span className="font-bold text-emerald-950">
-                            चालक: {ord.driver_name || 'विक्रम शिंदे (Tata Ace)'}
+                            {language === 'hi' ? 'चालक:' : 'Driver:'} {stripIndicParens(ord.driver_name || 'Vikram Shinde (Tata Ace)')}
                           </span>
                         </div>
                         {ord.driver_phone && (
@@ -645,7 +632,7 @@ export default function BuyerDashboardPage() {
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1.5 text-xs font-extrabold text-amber-950">
                             <ShieldCheck className="w-4 h-4 text-amber-700" />
-                            <span>डिलीवरी सत्यापन OTP:</span>
+                            <span>Delivery Verification OTP:</span>
                           </div>
                           <div className="flex items-center gap-2">
                             <span className="font-mono text-base font-black px-2.5 py-0.5 bg-white border border-amber-300 rounded-lg text-emerald-950 tracking-wider shadow-xs">
@@ -655,7 +642,7 @@ export default function BuyerDashboardPage() {
                               <button
                                 onClick={() => handleGenerateDeliveryOtp(ord.id)}
                                 disabled={generatingDeliveryOtp[ord.id]}
-                                title="नया OTP जनरेट करें"
+                                title="Generate New OTP"
                                 className="p-1 hover:bg-amber-200 text-amber-950 rounded-lg transition"
                               >
                                 <RefreshCw className={`w-3.5 h-3.5 ${generatingDeliveryOtp[ord.id] ? 'animate-spin text-amber-700' : ''}`} />
@@ -665,8 +652,8 @@ export default function BuyerDashboardPage() {
                         </div>
                         <p className="text-[10px] text-amber-900/90 leading-tight">
                           {isDelivered 
-                            ? '✓ यह OTP सफलतापूर्वक सत्यापित हो चुका है। भुगतान किसान को हस्तांतरित कर दिया गया है।'
-                            : '⚠️ सुरक्षा नियम: डिलीवरी एजेंट को यह 4-अंकीय कोड केवल तभी बताएं जब आपको फसल सही सलामत मिल जाए व (COD होने पर) नकद भुगतान हो जाए।'}
+                            ? '✓ This OTP has been successfully verified. Payment has been released to the farmer.'
+                            : '⚠️ Security Rule: Share this 4-digit code with the delivery agent only after receiving your produce safely and completing payment (if COD).'}
                         </p>
                       </div>
 
@@ -688,11 +675,11 @@ export default function BuyerDashboardPage() {
                             className="text-xs font-bold bg-[#0F3826] text-amber-50 px-3.5 py-1.5 rounded-xl hover:bg-emerald-900 shadow-sm transition flex items-center gap-1"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
-                            <span>हैंडओवर सत्यापित करें (Verify)</span>
+                            <span>Verify Handover</span>
                           </button>
                         ) : (
                           <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-lg">
-                            {language === 'hi' ? 'एस्क्रो भुगतान सेटल्ड ✓' : 'Escrow Settled ✓'}
+                            Escrow Settled ✓
                           </span>
                         )}
                       </div>
@@ -714,38 +701,34 @@ export default function BuyerDashboardPage() {
               <div className="glass-card p-5 rounded-2xl space-y-3 border border-emerald-900/10 dark:border-emerald-500/20">
                 <div className="flex items-center justify-between">
                   <h3 className="font-extrabold text-sm text-emerald-950 dark:text-emerald-50">
-                    {language === 'hi' ? 'साप्ताहिक टमाटर आपूर्ति अनुबंध' : 'Weekly Fresh Tomato Supply Contract'}
+                    Weekly Fresh Tomato Supply Contract
                   </h3>
                   <span className="text-[10px] px-2.5 py-0.5 bg-emerald-100 dark:bg-emerald-900/80 text-emerald-800 dark:text-emerald-200 dark:border dark:border-emerald-500/30 font-bold rounded-full">
-                    {language === 'hi' ? 'सक्रिय' : 'Active'}
+                    Active
                   </span>
                 </div>
                 <p className="text-xs text-emerald-800/80 dark:text-emerald-200">
-                  {language === 'hi'
-                    ? '100 किग्रा ताज़ा टमाटर प्रत्येक सोमवार और गुरुवार नासिक FPO हब से सीधा वितरण।'
-                    : '100 kg Fresh Tomatoes dispatched every Monday & Thursday directly from Nashik FPO Hub.'}
+                  100 kg Fresh Tomatoes dispatched every Monday & Thursday directly from Nashik FPO Hub.
                 </p>
                 <button className="w-full py-2 bg-emerald-900/10 dark:bg-emerald-800/40 hover:bg-emerald-900/20 dark:hover:bg-emerald-700/50 text-emerald-950 dark:text-emerald-100 dark:border dark:border-emerald-500/30 font-bold rounded-xl text-xs transition">
-                  {language === 'hi' ? 'अनुबंध की शर्तें देखें (एस्क्रौ सुरक्षा)' : 'View Contract Terms (Escrow Protection)'}
+                  View Contract Terms (Escrow Protection)
                 </button>
               </div>
 
               <div className="glass-card p-5 rounded-2xl space-y-3 border border-emerald-900/10 dark:border-emerald-500/20">
                 <div className="flex items-center justify-between">
                   <h3 className="font-extrabold text-sm text-emerald-950 dark:text-emerald-50">
-                    {language === 'hi' ? 'मासिक शरबाती गेहूं आपूर्ति अनुबंध' : 'Monthly Sharbati Wheat Supply Contract'}
+                    Monthly Sharbati Wheat Supply Contract
                   </h3>
                   <span className="text-[10px] px-2.5 py-0.5 bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 dark:border dark:border-amber-500/30 font-bold rounded-full">
-                    {language === 'hi' ? 'नवीनीकरण हेतु तैयार' : 'Ready for Renewal'}
+                    Ready for Renewal
                   </span>
                 </div>
                 <p className="text-xs text-emerald-800/80 dark:text-emerald-200">
-                  {language === 'hi'
-                    ? '500 किग्रा शरबाती गेहूं उज्जैन साइलो हब से प्रत्यक्ष मासिक प्रेषण।'
-                    : '500 kg Sharbati Wheat monthly dispatch directly from Ujjain Silo Hub.'}
+                  500 kg Sharbati Wheat monthly dispatch directly from Ujjain Silo Hub.
                 </p>
                 <button className="w-full py-2 bg-[#0F3826] dark:bg-emerald-700 text-amber-50 hover:bg-emerald-900 dark:hover:bg-emerald-600 font-bold rounded-xl text-xs shadow transition">
-                  {language === 'hi' ? 'अनुबंध नवीनीकृत करें' : 'Renew Contract'}
+                  Renew Contract
                 </button>
               </div>
             </div>
@@ -758,7 +741,7 @@ export default function BuyerDashboardPage() {
             <div className="bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl p-6 w-full max-w-lg shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 text-[#1A2E26] dark:text-[#E2E8F0] space-y-4">
               <div className="flex items-center justify-between border-b border-emerald-900/10 dark:border-emerald-500/20 pb-3">
                 <h3 className="font-extrabold text-lg text-emerald-950 dark:text-emerald-50">
-                  {language === 'hi' ? 'थोक आवश्यकता प्रस्ताव भेजें' : 'Post Bulk Demand Requirement'}
+                  Post Bulk Demand Requirement
                 </h3>
                 <button
                   onClick={() => setShowAddReqModal(false)}
@@ -774,14 +757,14 @@ export default function BuyerDashboardPage() {
                   <div>
                     <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1 flex items-center gap-1.5">
                       <User className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
-                      <span>{language === 'hi' ? 'नाम (Name)' : 'Name'}</span>
+                      <span>Name</span>
                     </label>
                     <input
                       type="text"
                       required
                       value={buyerName}
                       onChange={(e) => setBuyerName(e.target.value)}
-                      placeholder={language === 'hi' ? 'उदा. रमेश ट्रेडिंग / नाम' : 'e.g. Ramesh Traders / Name'}
+                      placeholder="e.g. Ramesh Traders / Name"
                       className="w-full px-3.5 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-white placeholder-emerald-800/40 dark:placeholder-emerald-300/40 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
                     />
                   </div>
@@ -789,7 +772,7 @@ export default function BuyerDashboardPage() {
                   <div>
                     <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1 flex items-center gap-1.5">
                       <Phone className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
-                      <span>{language === 'hi' ? 'संपर्क (Contact)' : 'Contact'}</span>
+                      <span>Contact</span>
                     </label>
                     <input
                       type="tel"
@@ -804,7 +787,7 @@ export default function BuyerDashboardPage() {
 
                 <div>
                   <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
-                    {language === 'hi' ? 'फसल का नाम' : 'Crop Name'}
+                    Crop Name
                   </label>
                   <input
                     type="text"
@@ -818,7 +801,7 @@ export default function BuyerDashboardPage() {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
-                      {language === 'hi' ? 'आवश्यक मात्रा (किग्रा)' : 'Required Quantity (kg)'}
+                      Required Quantity (kg)
                     </label>
                     <input
                       type="number"
@@ -831,7 +814,7 @@ export default function BuyerDashboardPage() {
 
                   <div>
                     <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
-                      {language === 'hi' ? 'अधिकतम दर (₹/किग्रा)' : 'Max Price Rate (₹/kg)'}
+                      Max Price Rate (₹/kg)
                     </label>
                     <input
                       type="number"
@@ -846,7 +829,7 @@ export default function BuyerDashboardPage() {
 
                 <div>
                   <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
-                    {language === 'hi' ? 'डिलीवरी स्थान / हब' : 'Delivery Location / Hub'}
+                    Delivery Location / Hub
                   </label>
                   <input
                     type="text"
@@ -863,14 +846,14 @@ export default function BuyerDashboardPage() {
                     onClick={() => setShowAddReqModal(false)}
                     className="flex-1 py-3 bg-emerald-100 dark:bg-emerald-900/50 hover:bg-emerald-200 dark:hover:bg-emerald-900 text-emerald-950 dark:text-emerald-200 font-bold rounded-xl text-xs transition"
                   >
-                    {language === 'hi' ? 'रद्द करें' : 'Cancel'}
+                    Cancel
                   </button>
 
                   <button
                     type="submit"
                     className="flex-1 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl text-xs shadow-md transition"
                   >
-                    {language === 'hi' ? 'प्रस्ताव सबमिट करें' : 'Submit Requirement'}
+                    Submit Requirement
                   </button>
                 </div>
               </form>
@@ -885,7 +868,7 @@ export default function BuyerDashboardPage() {
               <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-5 h-5 text-emerald-700" />
-                  <h3 className="font-extrabold text-base text-emerald-950">डिलीवरी हैंडओवर सत्यापन</h3>
+                  <h3 className="font-extrabold text-base text-emerald-950">Delivery Handover Verification</h3>
                 </div>
                 <button
                   onClick={() => setActiveVerifyOrder(null)}
@@ -897,11 +880,11 @@ export default function BuyerDashboardPage() {
 
               <div className="space-y-1">
                 <p className="text-xs text-emerald-900/80">
-                  ऑर्डर <strong className="font-mono text-emerald-950">#{activeVerifyOrder.id}</strong> के लिए डिलीवरी एजेंट को देने वाला 4-अंकीय OTP:
+                  4-digit OTP to provide to the delivery agent for Order <strong className="font-mono text-emerald-950">#{activeVerifyOrder.id}</strong>:
                 </p>
                 <div className="p-3 bg-amber-500/15 rounded-xl border border-amber-300/60 flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] text-amber-900 font-bold block">डिलीवरी एजेंट को देने वाला कोड:</span>
+                    <span className="text-[10px] text-amber-900 font-bold block">Code for delivery agent:</span>
                     <span className="text-2xl font-mono font-black tracking-widest text-emerald-950">
                       {activeVerifyOrder.delivery_otp || '----'}
                     </span>
@@ -918,7 +901,7 @@ export default function BuyerDashboardPage() {
 
               <div className="space-y-1.5">
                 <label className="block text-xs font-bold text-emerald-950">
-                  डिलीवरी एजेंट द्वारा दर्ज किया जाने वाला 4-अंकीय OTP:
+                  4-digit OTP entered by delivery agent:
                 </label>
                 <input
                   type="text"
@@ -943,7 +926,7 @@ export default function BuyerDashboardPage() {
               )}
 
               <p className="text-[11px] text-emerald-800/80 leading-relaxed bg-emerald-50 p-2.5 rounded-xl border border-emerald-900/10">
-                🔒 <strong>सुरक्षा एस्क्रो तंत्र:</strong> यह OTP दर्ज करने के बाद ही ऑर्डर को पूर्ण (Delivered) माना जाएगा और एस्क्रो से किसान को भुगतान रिलीज होगा।
+                🔒 <strong>Escrow Security Mechanism:</strong> Only after verifying this OTP will the order be marked as Delivered and payment released to the farmer from escrow.
               </p>
 
               <div className="flex gap-3 pt-2">
@@ -952,7 +935,7 @@ export default function BuyerDashboardPage() {
                   onClick={() => setActiveVerifyOrder(null)}
                   className="flex-1 py-3 border border-emerald-900/20 text-emerald-900 font-bold rounded-xl text-xs hover:bg-emerald-50 transition"
                 >
-                  रद्द करें
+                  Cancel
                 </button>
                 <button
                   type="button"
@@ -960,7 +943,7 @@ export default function BuyerDashboardPage() {
                   disabled={verifyingOtp || verifyOtpInput.length !== 4}
                   className="flex-1 py-3 bg-[#0F3826] text-amber-50 font-bold rounded-xl text-xs hover:bg-emerald-900 disabled:opacity-50 transition shadow-lg flex items-center justify-center gap-1.5"
                 >
-                  {verifyingOtp ? 'सत्यापित हो रहा है...' : 'सत्यापित करें एवं भुगतान जारी करें'}
+                  {verifyingOtp ? 'Verifying...' : 'Verify & Release Payment'}
                 </button>
               </div>
             </div>
@@ -975,7 +958,7 @@ export default function BuyerDashboardPage() {
             </div>
             <div>
               <p className="text-xs font-extrabold text-emerald-300">
-                {language === 'hi' ? 'सफलतापूर्वक पुष्टित ✓' : 'Confirmed Successfully ✓'}
+                Confirmed Successfully ✓
               </p>
               <p className="text-xs font-medium text-amber-100/90">{successSignal}</p>
             </div>

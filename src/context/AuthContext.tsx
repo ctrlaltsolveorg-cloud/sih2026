@@ -176,7 +176,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (match) {
         if (match.password && match.password !== pass) {
-          return { success: false, error: 'गलत पासवर्ड! (Incorrect password. Please try again.)' };
+          return { success: false, error: 'Incorrect password. Please try again.' };
         }
         const loggedUser: AuthUser = {
           id: match.id,
@@ -226,7 +226,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       return {
         success: false,
-        error: 'खाता नहीं मिला! कृपया साइनअप (Sign Up) करके नया खाता बनाएँ।',
+        error: 'Account not found! Please sign up to create a new account.',
       };
     } catch (err: any) {
       return { success: false, error: err.message };
@@ -236,7 +236,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const verifyCredentials = async (email: string, pass: string): Promise<{ success: boolean; error?: string }> => {
     const cleanEmail = email.toLowerCase().trim();
     if (!cleanEmail || !pass) {
-      return { success: false, error: 'कृपया ईमेल/यूज़र ID और पासवर्ड दोनों दर्ज करें।' };
+      return { success: false, error: 'Please enter both email/user ID and password.' };
     }
 
     try {
@@ -269,7 +269,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (!match.password || match.password === pass) {
           return { success: true };
         }
-        return { success: false, error: 'गलत पासवर्ड! (Incorrect Password)' };
+        return { success: false, error: 'Incorrect Password' };
       }
 
       // 4. Check demo seed accounts
@@ -295,7 +295,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         ) {
           return { success: true };
         }
-        return { success: false, error: 'गलत पासवर्ड! (Incorrect Password)' };
+        return { success: false, error: 'Incorrect Password' };
       }
 
       // If user is currently logged in, check pass match or length
@@ -303,9 +303,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { success: true };
       }
 
-      return { success: false, error: 'यूज़र ID / ईमेल या पासवर्ड अमान्य है! (Invalid credentials)' };
+      return { success: false, error: 'Invalid credentials. Please check your username and password.' };
     } catch (err: any) {
-      return { success: false, error: err.message || 'सत्यापन विफल हुआ' };
+      return { success: false, error: err.message || 'Verification failed' };
     }
   };
 
@@ -342,7 +342,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (duplicate) {
         return {
           success: false,
-          error: 'यह ईमेल खाता पहले से पंजीकृत है! कृपया इस ईमेल से लॉगिन करें।',
+          error: 'This email is already registered! Please log in.',
         };
       }
     } catch (e) {}
@@ -358,7 +358,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (checkData?.exists) {
         return {
           success: false,
-          error: 'यह ईमेल खाता पहले से पंजीकृत है! कृपया इस ईमेल से लॉगिन करें।',
+          error: 'This email is already registered! Please log in.',
         };
       }
     } catch (e) {}
@@ -375,7 +375,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (error && error.message.includes('User already registered')) {
         return {
           success: false,
-          error: 'यह ईमेल खाता सुपाबेस ऑथ में पहले से दर्ज है! कृपया लॉगिन पर जाएँ।',
+          error: 'This email is already registered in Supabase Auth! Please log in.',
         };
       }
 
@@ -452,17 +452,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (error) {
         return {
           success: true,
-          message: `पासवर्ड रीसेट लिंक প্রेषित! (${email} पर सत्यापन संदेश भेजा गया है)`,
+          message: `Password reset link sent! (Verification message sent to ${email})`,
         };
       }
       return {
         success: true,
-        message: `पासवर्ड रीसेट लिंक आपके ईमेल (${email}) पर भेज दिया गया है।`,
+        message: `Password reset link has been sent to your email (${email}).`,
       };
     } catch (err: any) {
       return {
         success: true,
-        message: `पासवर्ड रीसेट लिंक आपके ईमेल (${email}) पर भेज दिया गया है।`,
+        message: `Password reset link has been sent to your email (${email}).`,
       };
     }
   };

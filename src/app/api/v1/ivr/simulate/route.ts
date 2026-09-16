@@ -38,11 +38,11 @@ export async function POST(request: Request) {
         'ACTIVE'
       );
 
-      responseAudioText = 'धन्यवाद! आपकी 500 किलो टमाटर की फसल ₹28 प्रति किलो के भाव पर किसान डायरेक्ट बाज़ार में सफलतापूर्वक लिस्ट कर दी गई है। (Listing Created via IVR Call)';
+      responseAudioText = 'Thank you! Your 500 kg tomato produce has been listed successfully at ₹28 per kg on Kisan Direct Market. (Listing Created via IVR Call)';
     } else if (dtmfInput === '2' || textCommand?.toLowerCase().includes('price')) {
-      responseAudioText = 'आज नासिक मंडी में टमाटर का AI अनुशंसित भाव ₹28 से ₹32 प्रति किलो है। मांग बहुत अधिक है।';
+      responseAudioText = 'Today in Nashik Mandi, the AI recommended price for tomatoes is ₹28 to ₹32 per kg. Demand is very high.';
     } else {
-      responseAudioText = 'नमस्ते किसान भाई! फसल की बिक्री के लिए 1 दबाएं, मंडी भाव जानने के लिए 2 दबाएं।';
+      responseAudioText = 'Welcome farmer! Press 1 to list your produce for sale, press 2 to check current mandi prices.';
     }
 
     return NextResponse.json({

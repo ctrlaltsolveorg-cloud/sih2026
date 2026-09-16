@@ -33,8 +33,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       const savedLang = (localStorage.getItem('kisan_selected_language') || localStorage.getItem('kisan_language')) as Language | null;
       if (savedLang && translations[savedLang]) {
         setLanguageState(savedLang);
+        if (typeof document !== 'undefined') {
+          document.documentElement.lang = savedLang;
+        }
       } else {
         setLanguageState('en');
+        if (typeof document !== 'undefined') {
+          document.documentElement.lang = 'en';
+        }
       }
     } catch {
       setLanguageState('en');
@@ -47,6 +53,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       try {
         localStorage.setItem('kisan_selected_language', lang);
         localStorage.setItem('kisan_language', lang);
+        if (typeof document !== 'undefined') {
+          document.documentElement.lang = lang;
+        }
       } catch {
         // ignore
       }

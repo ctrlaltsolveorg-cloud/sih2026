@@ -59,15 +59,19 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     unit: "kg",
     grade: "A+",
     isOrganic: 1,
-    photos: [],
-    thumbnail: "",
-    sideLogo: "",
+    photos: [
+      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80"
+    ],
+    thumbnail: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+    sideLogo: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
     description: "ताज़ा संकलित टमाटर - उच्च गुणवत्ता, नासिक मंडी हब द्वारा प्रमाणित। 100% जैविक और सीधा खेत से।",
     farmerId: "u_farmer_1",
-    farmerName: "Ramesh Patil (रमेश पाटिल)",
+    farmerName: "Ramesh Patil",
     farmerPhone: "+91 98765 43210",
     quantityKg: 500,
-    location: "खेत संकलन केंद्र #04, नासिक (Nashik Mandi Hub, Maharashtra)"
+    location: "Farm Collection Center #04, Nashik Hub"
   },
   {
     id: "prod_onion_1",
@@ -80,15 +84,19 @@ export const VEGETABLES_CATALOG: CatalogCropItem[] = [
     unit: "kg",
     grade: "A",
     isOrganic: 0,
-    photos: [],
-    thumbnail: "",
-    sideLogo: "",
+    photos: [
+      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80"
+    ],
+    thumbnail: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
+    sideLogo: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=800&q=80",
     description: "नाशिक का प्रसिद्ध लाल प्याज - निर्यात स्तर का सूखा और टिकाऊ लॉट, न्यूनतम नमी और लंबे समय तक सुरक्षित।",
     farmerId: "u_farmer_2",
-    farmerName: "Harpreet Singh (हरप्रीत सिंह)",
+    farmerName: "Harpreet Singh",
     farmerPhone: "+91 98765 43211",
     quantityKg: 800,
-    location: "पिंपलगांव मंडी हब, नासिक (Pimplgaon Mandi Hub, Nashik)"
+    location: "Pimplgaon Mandi Hub, Nashik"
   }
 ];
 
@@ -104,15 +112,19 @@ export const GRAINS_CATALOG: CatalogCropItem[] = [
     unit: "kg",
     grade: "A+",
     isOrganic: 1,
-    photos: [],
-    thumbnail: "",
-    sideLogo: "",
+    photos: [
+      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80"
+    ],
+    thumbnail: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
+    sideLogo: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80",
     description: "सीहोर मध्य प्रदेश का वास्तविक शरबाती गेहूं - 100% शुद्ध, उच्च प्रोटीन और चपाती के लिए सर्वोत्तम।",
     farmerId: "u_farmer_3",
-    farmerName: "Suresh Gaikwad (सुरेश गायकवाड़)",
+    farmerName: "Suresh Gaikwad",
     farmerPhone: "+91 98765 43212",
     quantityKg: 1200,
-    location: "सीहोर कृषि मंडी हब, मध्य प्रदेश (Sehore Mandi Hub, MP)"
+    location: "Sehore Mandi Hub, MP"
   }
 ];
 

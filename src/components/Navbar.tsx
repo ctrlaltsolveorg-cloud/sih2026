@@ -58,7 +58,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
     else if (pathname === '/admin') setRole('ADMIN');
   }, [pathname, setRole]);
 
-  // Close dropdowns on outside click
+  // Close dropdowns on outside click or Escape key
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -68,17 +68,19 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
         setShowProfileMenu(false);
       }
     };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsLangDropdownOpen(false);
+        setShowProfileMenu(false);
+      }
+    };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
-
-  const handleCartClick = () => {
-    if (onOpenCart) {
-      onOpenCart();
-    } else {
-      setIsCartOpen(true);
-    }
-  };
 
   const currentLangMeta =
     supportedLanguages.find((l) => l.code === language) ||
@@ -111,7 +113,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             </span>
           )}
           <span>
-            {language === 'hi' ? 'सक्रिय भूमिका:' : 'Active Role:'} <strong className="text-amber-300">{userName ? `${userName} (${role})` : role}</strong>
+            Active Role: <strong className="text-amber-300">{userName ? `${userName} (${role})` : role}</strong>
           </span>
         </div>
       </div>
@@ -134,7 +136,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
         </Link>
 
         {/* Desktop 6 Role Nav Links */}
-        <nav className="hidden xl:flex items-center gap-1 bg-white/50 dark:bg-emerald-950/50 p-1 rounded-2xl border border-emerald-900/10 dark:border-white/10 text-xs font-bold backdrop-blur-lg shadow-xs">
+        <nav className="hidden lg:flex items-center gap-1 bg-white/50 dark:bg-emerald-950/50 p-1 rounded-2xl border border-emerald-900/10 dark:border-white/10 text-xs font-bold backdrop-blur-lg shadow-xs">
           <Link
             href="/"
             className={`px-3 py-1.5 rounded-xl transition ${
@@ -219,20 +221,15 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
           </Link>
         </nav>
 
-        {/* Right Buttons: Theme Toggle + India Translator + 11-Language Dropdown + User Profile + Orders + Cart */}
-        {/* Right Buttons: Theme Toggle + India Translator + 11-Language Dropdown + User Profile + Orders + Cart (Icon-Only) */}
+        {/* Right Buttons: Theme Toggle + India Translator + 11-Language Dropdown + Cart + User Profile / Login */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {/* 1. Theme Toggle Button (Sun / Moon) - Icon Only */}
+          {/* 1. Theme Toggle Button (Sun / Moon) */}
           <button
             type="button"
             onClick={toggleTheme}
             id="theme-toggle-btn"
             aria-label={resolvedTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            title={
-              resolvedTheme === 'dark'
-                ? (language === 'hi' ? 'लाइट मोड' : 'Light Mode')
-                : (language === 'hi' ? 'डार्क मोड' : 'Dark Mode')
-            }
+            title={resolvedTheme === 'dark' ? 'Light Mode' : 'Dark Mode'}
             className="w-9 h-9 sm:w-10 sm:h-10 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 text-emerald-950 dark:text-amber-300 border border-emerald-900/15 dark:border-white/15 backdrop-blur-lg font-extrabold rounded-xl flex items-center justify-center shadow-xs transition transform active:scale-95 shrink-0"
           >
             {resolvedTheme === 'dark' ? (
@@ -242,25 +239,31 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
             )}
           </button>
 
-          {/* 2. India Translator Launch Button - Icon Only */}
+          {/* 2. India Translator Launch Button */}
           <button
+            type="button"
             onClick={() => setIsTranslatorOpen(true)}
-            className="w-9 h-9 sm:w-10 sm:h-10 bg-amber-500/20 hover:bg-amber-500/30 text-emerald-950 dark:text-amber-200 border border-amber-500/30 dark:border-amber-400/30 backdrop-blur-lg font-extrabold rounded-xl flex items-center justify-center shadow-xs transition shrink-0"
+            id="navbar-translator-btn"
+            className="w-9 h-9 sm:w-10 sm:h-10 bg-amber-500/20 hover:bg-amber-500/30 text-emerald-950 dark:text-amber-200 border border-amber-500/30 dark:border-amber-400/30 backdrop-blur-lg font-extrabold rounded-xl flex items-center justify-center shadow-xs transition active:scale-95 shrink-0"
             title={t.translatorTitle || 'India Multi-Language Translator'}
             aria-label="Translator"
           >
             <Languages className="w-4 h-4 text-amber-700 dark:text-amber-400" />
           </button>
 
-          {/* 3. 11-Indian Language Dropdown Selector - Icon Only */}
+          {/* 3. 11-Indian Language Dropdown Selector */}
           <div className="relative z-50" ref={dropdownRef}>
             <button
+              type="button"
+              id="navbar-lang-selector-btn"
               onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-              className="w-9 h-9 sm:w-10 sm:h-10 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 text-emerald-950 dark:text-emerald-100 border border-emerald-900/15 dark:border-white/15 backdrop-blur-lg font-bold rounded-xl flex items-center justify-center shadow-xs transition shrink-0"
+              className="h-9 sm:h-10 px-2 sm:px-2.5 bg-white/70 dark:bg-white/10 hover:bg-white/90 dark:hover:bg-white/20 text-emerald-950 dark:text-emerald-100 border border-emerald-900/15 dark:border-white/15 backdrop-blur-lg font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition shrink-0 active:scale-95"
               aria-label="Select Indian Language"
               title={`${currentLangMeta.flagEmoji} ${currentLangMeta.nativeName} (${currentLangMeta.name})`}
             >
-              <Globe className="w-4 h-4 text-emerald-800 dark:text-emerald-300" />
+              <span className="text-base leading-none">{currentLangMeta.flagEmoji}</span>
+              <span className="text-xs font-bold hidden sm:inline">{currentLangMeta.nativeName}</span>
+              <ChevronDown className={`w-3.5 h-3.5 text-emerald-800/70 dark:text-emerald-300/70 transition-transform duration-200 ${isLangDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {/* Dropdown Menu */}
@@ -268,7 +271,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               <div className="absolute right-0 mt-2 w-64 sm:w-72 bg-white dark:bg-[#0c2217] rounded-2xl shadow-2xl border border-emerald-900/15 dark:border-emerald-500/30 py-2 z-[100] animate-fadeIn">
                 <div className="px-3 py-1.5 border-b border-emerald-900/10 dark:border-emerald-500/20 flex items-center justify-between">
                   <span className="text-[11px] font-extrabold text-emerald-950 dark:text-emerald-100 uppercase tracking-wider">
-                    {t.selectLanguage || 'भाषा चुनें'} (11 Languages)
+                    {t.selectLanguage || 'Select Language'} (11 Languages)
                   </span>
                   <span className="text-[10px] text-amber-700 dark:text-amber-300 font-bold bg-amber-100 dark:bg-amber-950/80 px-1.5 py-0.5 rounded">
                     Pan-India
@@ -280,8 +283,10 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                     const isSelected = language === lang.code;
                     return (
                       <button
+                        type="button"
                         key={lang.code}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setLanguage(lang.code);
                           setIsLangDropdownOpen(false);
                         }}
@@ -309,24 +314,27 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
                 <div className="px-3 pt-2 mt-1 border-t border-emerald-900/10 dark:border-emerald-500/20 text-center">
                   <button
-                    onClick={() => {
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setIsLangDropdownOpen(false);
                       setIsTranslatorOpen(true);
                     }}
                     className="text-[11px] text-emerald-800 dark:text-emerald-300 hover:text-emerald-950 dark:hover:text-emerald-100 font-bold flex items-center justify-center gap-1 w-full py-1 hover:bg-emerald-50 dark:hover:bg-emerald-900/40 rounded-lg transition"
                   >
-                    <Languages className="w-3 h-3 text-amber-600 dark:text-amber-400" />
-                    <span>{t.translatorTitle || 'AI Translator'}</span>
+                    <Languages className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                    <span>{t.translatorTitle || 'AI Multi-Language Translator'}</span>
                   </button>
                 </div>
               </div>
             )}
           </div>
 
-          {/* 4. User Profile & Action Menu - Icon Button & Rich Popup */}
+          {/* 4. User Profile & Action Menu */}
           <div className="relative z-50" ref={profileRef}>
             {isAuthenticated && user ? (
               <button
+                type="button"
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
                 className="w-9 h-9 sm:w-10 sm:h-10 p-0 flex items-center justify-center bg-white/80 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 border border-emerald-900/15 dark:border-emerald-500/30 rounded-xl shadow-sm transition shrink-0 active:scale-95"
                 title={`${user.name} (${user.role})`}
@@ -336,12 +344,14 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
               </button>
             ) : (
               <button
+                type="button"
                 onClick={() => openAuthModal('login')}
-                className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl flex items-center justify-center shadow-md transition shrink-0 active:scale-95"
-                title={language === 'hi' ? 'लॉगिन करें (Log In)' : 'Log In'}
+                className="h-9 sm:h-10 px-2.5 sm:px-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-emerald-950 font-extrabold rounded-xl flex items-center gap-1.5 shadow-md transition shrink-0 active:scale-95 text-xs"
+                title="Log In / Sign Up"
                 aria-label="Log In"
               >
                 <LogIn className="w-4 h-4" />
+                <span className="hidden sm:inline">Log In</span>
               </button>
             )}
 
@@ -378,9 +388,9 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                         <Package className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="leading-tight">{language === 'hi' ? 'मेरे सक्रिय ऑर्डर (My Orders)' : 'My Active Orders'}</div>
+                        <div className="leading-tight">My Active Orders</div>
                         <div className="text-[10px] font-normal text-emerald-800/70 dark:text-emerald-300/60">
-                          {language === 'hi' ? 'लाइव ट्रैकिंग एवं डिलीवरी OTP' : 'Live Escrow & Delivery Tracking'}
+                          Live Escrow & Delivery Tracking
                         </div>
                       </div>
                     </div>
@@ -403,9 +413,9 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                         <Sprout className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="leading-tight">{language === 'hi' ? 'मेरी फसलें (My Crops)' : 'My Crops & Produce'}</div>
+                        <div className="leading-tight">My Crops & Produce</div>
                         <div className="text-[10px] font-normal text-emerald-800/70 dark:text-emerald-300/60">
-                          {language === 'hi' ? 'फसल सूची, नई फसल दर्ज करें' : 'List & Manage Harvest Produce'}
+                          List & Manage Harvest Produce
                         </div>
                       </div>
                     </div>
@@ -425,9 +435,9 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                         <ShoppingBag className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="leading-tight">{language === 'hi' ? 'खरीदारी टोकरी (My Cart)' : 'Shopping Cart'}</div>
+                        <div className="leading-tight">Shopping Cart</div>
                         <div className="text-[10px] font-normal text-emerald-800/70 dark:text-emerald-300/60">
-                          {language === 'hi' ? 'सीधे खेत से खरीद चेकआउट' : 'Direct Produce Checkout'}
+                          Direct Produce Checkout
                         </div>
                       </div>
                     </div>
@@ -437,7 +447,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                       </span>
                     ) : (
                       <span className="text-[10px] text-emerald-800/50 dark:text-emerald-400/50 font-normal">
-                        {language === 'hi' ? 'खाली' : '0'}
+                        0
                       </span>
                     )}
                   </button>
@@ -456,9 +466,9 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                         <Truck className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="leading-tight">{language === 'hi' ? 'परिवहन फ्लीट (Fleet Trips)' : 'Transporter Fleet'}</div>
+                        <div className="leading-tight">Transporter Fleet</div>
                         <div className="text-[10px] font-normal text-emerald-800/70 dark:text-emerald-300/60">
-                          {language === 'hi' ? 'पिकअप और डिलीवरी ट्रिप' : 'Trips & Handshake OTP'}
+                          Trips & Handshake OTP
                         </div>
                       </div>
                     </div>
@@ -469,7 +479,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                 <div className="pt-2 border-t border-emerald-900/10 dark:border-emerald-500/20">
                   <div className="text-[10px] font-extrabold text-emerald-900/70 dark:text-emerald-300/70 uppercase tracking-wider mb-1.5 flex items-center gap-1">
                     <Settings className="w-3 h-3 text-amber-600" />
-                    <span>{language === 'hi' ? 'भूमिका बदलें (Switch Role)' : 'Switch Active Role'}</span>
+                    <span>Switch Active Role</span>
                   </div>
                   <div className="grid grid-cols-3 gap-1 text-[10px] font-bold text-center">
                     <Link
@@ -528,7 +538,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                     className="w-full py-2 px-3 bg-red-100 dark:bg-red-950/60 hover:bg-red-200 dark:hover:bg-red-900/60 text-red-900 dark:text-red-200 font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition"
                   >
                     <LogOut className="w-3.5 h-3.5" />
-                    <span>{language === 'hi' ? 'लॉगआउट (Log Out)' : 'Log Out'}</span>
+                    <span>Log Out</span>
                   </button>
                 </div>
               </div>
@@ -538,7 +548,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
       </div>
 
       {/* Mobile / Tablet Horizontal Role Navigation Strip */}
-      <div className="xl:hidden border-t border-emerald-900/10 dark:border-emerald-500/20 bg-emerald-900/5 dark:bg-[#07170f] px-4 py-2 overflow-x-auto no-scrollbar">
+      <div className="lg:hidden border-t border-emerald-900/10 dark:border-emerald-500/20 bg-emerald-900/5 dark:bg-[#07170f] px-4 py-2 overflow-x-auto no-scrollbar">
         <nav className="flex items-center gap-1.5 min-w-max text-xs font-bold">
           <Link
             href="/"

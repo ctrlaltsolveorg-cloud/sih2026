@@ -171,7 +171,7 @@ function initTables(db: Database.Database) {
       optimized_stop_sequence INTEGER DEFAULT 1,
       estimated_distance_km REAL DEFAULT 14.5,
       estimated_eta_minutes INTEGER DEFAULT 35,
-      driver_name TEXT DEFAULT 'विक्रम शिंदे (Vikram Shinde)',
+      driver_name TEXT DEFAULT 'Vikram Shinde',
       driver_phone TEXT DEFAULT '+91 99000 11122',
       driver_vehicle TEXT DEFAULT 'MH-15-EG-8821 (Tata Ace Gold)',
       cod_collected INTEGER DEFAULT 0,

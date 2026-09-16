@@ -50,22 +50,29 @@ export default function CropImageDropdown({
     return allPool.find((item) => item.id === selectedId) || allPool[0] || FULL_CROP_CATALOG[0];
   }, [selectedId, allPool]);
 
-  // Click outside to close
+  // Click outside to close (handles mouse & touch events safely + clears timer)
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    let focusTimer: NodeJS.Timeout;
+
+    function handleClickOutside(event: MouseEvent | TouchEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     }
+
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
       // Focus search input on open
-      setTimeout(() => {
+      focusTimer = setTimeout(() => {
         searchInputRef.current?.focus();
       }, 50);
     }
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+      clearTimeout(focusTimer);
     };
   }, [isOpen]);
 
@@ -137,30 +144,34 @@ export default function CropImageDropdown({
               {(selectedCrop.isCustom || selectedCrop.id.startsWith('custom_')) && (
                 <span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-amber-400 text-emerald-950 shadow-xs flex items-center gap-1">
                   <Sparkles className="w-2.5 h-2.5 text-emerald-950" />
-                  <span>{language === 'hi' ? 'अनलिस्टेड (352 में नहीं)' : 'Unlisted (Not in 352)'}</span>
+                  <span>Unlisted (Not in 352)</span>
                 </span>
               )}
-              <span className="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-emerald-900 text-amber-200 uppercase tracking-wide">
-                {categoryEmoji[selectedCrop.category] || '🌱'} {getLocalizedCategory(selectedCrop.category, language)}
-              </span>
-              <span className="text-[11px] font-bold text-amber-700 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-md">
-                {selectedCrop.variety}
-              </span>
-              {selectedCrop.isOrganic === 1 && (
+              {selectedCrop?.category && (
+                <span className="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-emerald-900 text-amber-200 uppercase tracking-wide">
+                  {categoryEmoji[selectedCrop.category] || '🌱'} {getLocalizedCategory(selectedCrop.category, language)}
+                </span>
+              )}
+              {selectedCrop?.variety && (
+                <span className="text-[11px] font-bold text-amber-700 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-md">
+                  {selectedCrop.variety}
+                </span>
+              )}
+              {selectedCrop?.isOrganic === 1 && (
                 <span className="text-[10px] font-extrabold text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded">
-                  100% {language === 'hi' ? 'जैविक' : 'Organic'}
+                  100% Organic
                 </span>
               )}
             </div>
 
             <h4 className="font-black text-sm sm:text-base text-emerald-950 truncate mt-0.5">
-              {selectedCrop.nameHi} <span className="text-emerald-800/80 font-bold text-xs sm:text-sm">({selectedCrop.name})</span>
+              {selectedCrop?.name || ''}
             </h4>
 
             <div className="flex items-center gap-2 text-xs font-bold text-emerald-900 mt-0.5">
-              <span className="text-amber-800 font-extrabold">₹{selectedCrop.priceRupees}/{selectedCrop.unit}</span>
+              <span className="text-amber-800 font-extrabold">₹{selectedCrop?.priceRupees || 0}/{selectedCrop?.unit || 'kg'}</span>
               <span className="text-emerald-900/30">•</span>
-              <span className="text-[11px] text-emerald-700 font-semibold">{selectedCrop.grade}</span>
+              <span className="text-[11px] text-emerald-700 font-semibold">{selectedCrop?.grade || 'A+'}</span>
             </div>
           </div>
         </div>
@@ -168,7 +179,7 @@ export default function CropImageDropdown({
         {/* Action Button & Chevron */}
         <div className="flex items-center gap-2 shrink-0">
           <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-amber-900 bg-amber-100 px-2.5 py-1 rounded-lg border border-amber-300">
-            <span>{language === 'hi' ? 'फसल बदलें' : 'Change Crop'}</span>
+            <span>Change Crop</span>
           </span>
           <div className={`p-1.5 rounded-lg bg-emerald-900/5 text-emerald-900 transition-transform duration-200 ${isOpen ? 'rotate-180 bg-amber-500 text-emerald-950' : ''}`}>
             <ChevronDown className="w-4 h-4" />
@@ -191,11 +202,7 @@ export default function CropImageDropdown({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={
-                  language === 'hi'
-                    ? '352 फसलों में खोजें (उदा. टमाटर, आम, चना, गेहूं, मिर्च...)'
-                    : 'Search 352+ crops by name or variety (e.g. Tomato, Mango, Chana, Sharbati...)'
-                }
+                placeholder="Search 352+ crops by name or variety (e.g. Tomato, Mango, Chana, Sharbati...)"
                 className="w-full pl-9 pr-8 py-2 bg-emerald-950/90 text-white placeholder-emerald-300/60 rounded-xl text-xs font-bold border border-amber-400/30 focus:outline-none focus:ring-2 focus:ring-amber-400"
               />
               {searchQuery && (
@@ -220,7 +227,7 @@ export default function CropImageDropdown({
                     : 'bg-emerald-950/60 hover:bg-emerald-800 text-emerald-100'
                 }`}
               >
-                🌐 {language === 'hi' ? 'सभी' : 'All'} ({CATALOG_STATS.totalCount})
+                🌐 All ({CATALOG_STATS.totalCount})
               </button>
               <button
                 type="button"
@@ -231,7 +238,7 @@ export default function CropImageDropdown({
                     : 'bg-emerald-950/60 hover:bg-emerald-800 text-emerald-100'
                 }`}
               >
-                🥦 {language === 'hi' ? 'सब्जियाँ' : 'Vegetables'} (100)
+                🥦 Vegetables (100)
               </button>
               <button
                 type="button"
@@ -242,7 +249,7 @@ export default function CropImageDropdown({
                     : 'bg-emerald-950/60 hover:bg-emerald-800 text-emerald-100'
                 }`}
               >
-                🍎 {language === 'hi' ? 'फल' : 'Fruits'} (100)
+                🍎 Fruits (100)
               </button>
               <button
                 type="button"
@@ -253,7 +260,7 @@ export default function CropImageDropdown({
                     : 'bg-emerald-950/60 hover:bg-emerald-800 text-emerald-100'
                 }`}
               >
-                🫘 {language === 'hi' ? 'दालें' : 'Pulses'} (100)
+                🫘 Pulses (100)
               </button>
               <button
                 type="button"
@@ -264,7 +271,7 @@ export default function CropImageDropdown({
                     : 'bg-emerald-950/60 hover:bg-emerald-800 text-emerald-100'
                 }`}
               >
-                🌾 {language === 'hi' ? 'अनाज' : 'Grains'} (52)
+                🌾 Grains (52)
               </button>
               {customCrops && customCrops.length > 0 && (
                 <button
@@ -277,7 +284,7 @@ export default function CropImageDropdown({
                   }`}
                 >
                   <Sparkles className="w-3 h-3 text-amber-300" />
-                  <span>{language === 'hi' ? 'मेरी अनलिस्टेड' : 'My Unlisted'} ({customCrops.length})</span>
+                  <span>My Unlisted ({customCrops.length})</span>
                 </button>
               )}
             </div>
@@ -289,9 +296,9 @@ export default function CropImageDropdown({
             {filteredList.length === 0 ? (
               <div className="text-center py-8 text-xs text-emerald-800">
                 <ImageIcon className="w-8 h-8 mx-auto text-emerald-400 mb-1 opacity-60" />
-                <p className="font-bold">{language === 'hi' ? 'कोई फसल नहीं मिली' : 'No crops found matching your search'}</p>
+                <p className="font-bold">No crops found matching your search</p>
                 <p className="text-[11px] text-emerald-600 mt-0.5">
-                  {language === 'hi' ? 'कृपया अलग नाम खोजें' : 'Try searching for Tomato, Mango, Chana, or Wheat'}
+                  Try searching for Tomato, Mango, Chana, or Wheat
                 </p>
               </div>
             ) : (
@@ -307,19 +314,19 @@ export default function CropImageDropdown({
                     onClick={() => handleSelect(crop)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
                         handleSelect(crop);
                       }
                     }}
-                    className={`w-full p-2.5 sm:p-3 rounded-xl text-left flex items-center justify-between gap-3 transition-colors cursor-pointer ${
+                    className={`p-2.5 flex items-center justify-between gap-3 cursor-pointer transition rounded-xl ${
                       isSelected
-                        ? 'bg-emerald-900 text-amber-50 shadow-sm'
-                        : 'hover:bg-amber-50/70 text-emerald-950'
+                        ? 'bg-[#0F3826] text-amber-100 font-bold shadow-sm'
+                        : 'hover:bg-emerald-50 text-emerald-950'
                     }`}
                   >
-                    {/* Left: Crop Image & Texts */}
+                    {/* Left: Thumbnail & Badges */}
                     <div className="flex items-center gap-3 min-w-0">
-                      {/* Image Thumbnail */}
-                      <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-amber-500/40 shrink-0 bg-gradient-to-br from-[#0F3826] to-[#082015] shadow-xs flex items-center justify-center text-xl">
+                      <div className="w-12 h-12 rounded-xl bg-amber-50 border border-emerald-900/15 overflow-hidden shrink-0 flex items-center justify-center relative shadow-xs">
                         {cropImg ? (
                           <img
                             src={cropImg}
@@ -328,12 +335,10 @@ export default function CropImageDropdown({
                             loading="lazy"
                           />
                         ) : (
-                          <span>{categoryEmoji[crop.category] || '🌱'}</span>
+                          <span className="text-xl">{categoryEmoji[crop.category] || '🌱'}</span>
                         )}
-                        {crop.photos && crop.photos.length > 0 && (
-                          <span className="absolute bottom-0.5 right-0.5 bg-black/70 text-amber-300 text-[9px] font-mono px-1 rounded">
-                            {crop.photos.length}P
-                          </span>
+                        {crop.isOrganic === 1 && (
+                          <span className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-emerald-600 border border-white" title="Organic Certified" />
                         )}
                       </div>
 
@@ -343,7 +348,7 @@ export default function CropImageDropdown({
                           {(crop.id.startsWith('custom_') || crop.isCustom) && (
                             <span className="px-1.5 py-0.5 rounded text-[10px] font-black bg-amber-400 text-emerald-950 shadow-xs flex items-center gap-1">
                               <Sparkles className="w-2.5 h-2.5" />
-                              <span>{language === 'hi' ? '✨ अनलिस्टेड (352 में नहीं)' : '✨ Unlisted (Not in 352)'}</span>
+                              <span>✨ Unlisted (Not in 352)</span>
                             </span>
                           )}
                           <span
@@ -363,7 +368,7 @@ export default function CropImageDropdown({
                         </div>
 
                         <div className="font-black text-xs sm:text-sm truncate mt-0.5">
-                          {crop.nameHi} <span className={isSelected ? 'text-amber-200 font-semibold' : 'text-emerald-800/80 font-normal'}>({crop.name})</span>
+                          {crop.name}
                         </div>
 
                         <div className="flex items-center gap-2 text-[11px] font-bold mt-0.5">
@@ -393,10 +398,10 @@ export default function CropImageDropdown({
                             setIsOpen(false);
                           }}
                           className="px-2 py-1 bg-amber-400 hover:bg-amber-300 text-emerald-950 font-black text-[10px] rounded-lg shadow-xs flex items-center gap-1 transition cursor-pointer"
-                          title={language === 'hi' ? 'फसल विवरण व 2-6 फोटो अपडेट करें' : 'Update produce & photos'}
+                          title="Update produce & photos"
                         >
                           <Edit3 className="w-3 h-3" />
-                          <span>{language === 'hi' ? 'अपडेट' : 'Update'}</span>
+                          <span>Update</span>
                         </button>
                       )}
 
@@ -406,7 +411,7 @@ export default function CropImageDropdown({
                         </div>
                       ) : (
                         <span className="text-[10px] font-bold text-emerald-800/50 hover:text-emerald-950">
-                          {language === 'hi' ? 'चुनें' : 'Select'} →
+                          Select →
                         </span>
                       )}
                     </div>
@@ -419,16 +424,14 @@ export default function CropImageDropdown({
           {/* Footer Status */}
           <div className="px-3 py-2 bg-emerald-950/5 border-t border-emerald-900/10 flex items-center justify-between text-[11px] text-emerald-800">
             <span>
-              {language === 'hi'
-                ? `प्रदर्शित: ${filteredList.length} फसलें (2-6 फोटो सहित)`
-                : `Showing: ${filteredList.length} produce (2-6 photos verified)`}
+              Showing: {filteredList.length} produce (2-6 photos verified)
             </span>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
               className="text-xs font-bold text-amber-700 hover:text-amber-900"
             >
-              {language === 'hi' ? 'बंद करें ✕' : 'Close ✕'}
+              Close ✕
             </button>
           </div>
         </div>

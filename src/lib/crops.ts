@@ -28,18 +28,18 @@ export function ensureStapleProductsSeeded(db: any) {
     db.prepare(`
       INSERT OR REPLACE INTO users (id, name, phone, email, role, village, district, state, address)
       VALUES 
-      ('u_farmer_1', 'Ramesh Patil (रमेश पाटिल)', '+91 98765 43210', 'ramesh.patil@kisanbandhan.ai', 'FARMER', 'Pimplgaon', 'Nashik', 'Maharashtra', 'खेत संकलन केंद्र #04, नासिक (Nashik Hub, Maharashtra)'),
-      ('u_farmer_2', 'Harpreet Singh (हरप्रीत सिंह)', '+91 98765 43211', 'harpreet@kisanbandhan.ai', 'FARMER', 'Pimplgaon Hub', 'Nashik', 'Maharashtra', 'पिंपलगांव मंडी हब, नासिक (Pimplgaon Mandi Hub, Nashik)'),
-      ('u_farmer_3', 'Suresh Gaikwad (सुरेश गायकवाड़)', '+91 98765 43212', 'suresh.gaikwad@kisanbandhan.ai', 'FARMER', 'Sehore Mandi', 'Sehore', 'Madhya Pradesh', 'सीहोर कृषि मंडी हब, मध्य प्रदेश (Sehore Mandi Hub, MP)')
+      ('u_farmer_1', 'Ramesh Patil', '+91 98765 43210', 'ramesh.patil@kisanbandhan.ai', 'FARMER', 'Pimplgaon', 'Nashik', 'Maharashtra', 'Farm Collection Center #04, Nashik Hub, Maharashtra'),
+      ('u_farmer_2', 'Harpreet Singh', '+91 98765 43211', 'harpreet@kisanbandhan.ai', 'FARMER', 'Pimplgaon Hub', 'Nashik', 'Maharashtra', 'Pimplgaon Mandi Hub, Nashik, Maharashtra'),
+      ('u_farmer_3', 'Suresh Gaikwad', '+91 98765 43212', 'suresh.gaikwad@kisanbandhan.ai', 'FARMER', 'Sehore Mandi', 'Sehore', 'Madhya Pradesh', 'Sehore Mandi Hub, Madhya Pradesh')
     `).run();
 
     // 2. Ensure buyers exist
     db.prepare(`
       INSERT OR REPLACE INTO users (id, name, phone, email, role, village, district, state, address)
       VALUES 
-      ('u_buyer_1', 'Priya Sharma (प्रिया शर्मा)', '+91 98111 22233', 'priya.buyer@kisanbandhan.ai', 'BUYER', 'Viman Nagar', 'Pune', 'Maharashtra', 'Sector 4, Viman Nagar, Pune, Maharashtra 411014'),
-      ('u_buyer_2', 'Annapurna Hotel & Catering (होटल अन्नपूर्णा)', '+91 98222 33344', 'annapurna@kisanbandhan.ai', 'BUYER', 'Swargate', 'Pune', 'Maharashtra', 'Annapurna Hotel & Catering, Swargate, Pune 411002'),
-      ('u_partner_1', 'Vikram Shinde Fleet (विक्रम शिंदे)', '+91 99000 11122', 'vikram.logistics@kisanbandhan.ai', 'TRANSPORTER', 'Hadapsar', 'Pune', 'Maharashtra', 'Kisan Express Logistics Hub, Pune')
+      ('u_buyer_1', 'Priya Sharma', '+91 98111 22233', 'priya.buyer@kisanbandhan.ai', 'BUYER', 'Viman Nagar', 'Pune', 'Maharashtra', 'Sector 4, Viman Nagar, Pune, Maharashtra 411014'),
+      ('u_buyer_2', 'Annapurna Hotel & Catering', '+91 98222 33344', 'annapurna@kisanbandhan.ai', 'BUYER', 'Swargate', 'Pune', 'Maharashtra', 'Annapurna Hotel & Catering, Swargate, Pune 411002'),
+      ('u_partner_1', 'Vikram Shinde Fleet', '+91 99000 11122', 'vikram.logistics@kisanbandhan.ai', 'TRANSPORTER', 'Hadapsar', 'Pune', 'Maharashtra', 'Kisan Express Logistics Hub, Pune')
     `).run();
 
     // 3. Ensure the 3 verified products exist
@@ -47,9 +47,9 @@ export function ensureStapleProductsSeeded(db: any) {
       INSERT OR REPLACE INTO product_listings (
         id, farmer_id, crop_name, category, quantity_available, unit, price_paise, mandi_retail_price_paise, grade, harvest_date, image_url, location, district, status
       ) VALUES 
-      ('prod_tomato_1', 'u_farmer_1', 'Tomato (Vaishali 108)', 'Vegetables', 500, 'kg', 3450, 4200, 'उच्चतम श्रेणी A+', '2026-09-14', '', 'खेत संकलन केंद्र #04, नासिक (Nashik Hub, Maharashtra)', 'Nashik', 'ACTIVE'),
-      ('prod_onion_1', 'u_farmer_2', 'Onion (Nashik Red)', 'Vegetables', 800, 'kg', 2800, 3500, 'ग्रेड A+ (निर्यात गुणवत्ता)', '2026-09-14', '', 'पिंपलगांव मंडी हब, नासिक (Pimplgaon Mandi Hub, Nashik)', 'Nashik', 'ACTIVE'),
-      ('prod_wheat_1', 'u_farmer_3', 'Wheat (Sharbati Gold)', 'Grains', 1200, 'kg', 3800, 4600, 'प्रीमियम ग्रेड A', '2026-09-14', '', 'सीहोर कृषि मंडी हब, मध्य प्रदेश (Sehore Mandi Hub, MP)', 'Sehore', 'ACTIVE')
+      ('prod_tomato_1', 'u_farmer_1', 'Tomato (Vaishali 108)', 'Vegetables', 500, 'kg', 3450, 4200, 'A+', '2026-09-14', '', 'Farm Collection Center #04, Nashik Hub', 'Nashik', 'ACTIVE'),
+      ('prod_onion_1', 'u_farmer_2', 'Onion (Nashik Red)', 'Vegetables', 800, 'kg', 2800, 3500, 'A', '2026-09-14', '', 'Pimplgaon Mandi Hub, Nashik', 'Nashik', 'ACTIVE'),
+      ('prod_wheat_1', 'u_farmer_3', 'Wheat (Sharbati Gold)', 'Grains', 1200, 'kg', 3800, 4600, 'A+', '2026-09-14', '', 'Sehore Mandi Hub, MP', 'Sehore', 'ACTIVE')
     `).run();
 
     // 4. Ensure ord_501 order item exists so transporter shows real crop details
@@ -91,7 +91,8 @@ export async function getAllCrops() {
   // 2. Fallback to SQLite DB
   const db = getDb();
   ensureStapleProductsSeeded(db);
-  return db
+  const cleanIndic = (val?: string) => (val ? val.replace(/\s*\([\u0900-\u0D7F\s\.\,\-]+\)/g, '').trim() : val);
+  const rows = db
     .prepare(
       `
     SELECT l.*, COALESCE(u.name, 'Verified Farmer') as farmer_name, COALESCE(u.phone, '+91 98765 43210') as farmer_phone
@@ -102,6 +103,11 @@ export async function getAllCrops() {
   `
     )
     .all();
+  return rows.map((r: any) => ({
+    ...r,
+    farmer_name: cleanIndic(r.farmer_name),
+    location: cleanIndic(r.location),
+  }));
 }
 
 /**
@@ -129,7 +135,8 @@ export async function getCropsByFarmer(farmerId: string) {
   // 2. Fallback to SQLite DB
   const db = getDb();
   ensureStapleProductsSeeded(db);
-  return db
+  const cleanIndic = (val?: string) => (val ? val.replace(/\s*\([\u0900-\u0D7F\s\.\,\-]+\)/g, '').trim() : val);
+  const rows = db
     .prepare(
       `
     SELECT l.*, COALESCE(u.name, 'Verified Farmer') as farmer_name, COALESCE(u.phone, '+91 98765 43210') as farmer_phone
@@ -140,6 +147,11 @@ export async function getCropsByFarmer(farmerId: string) {
   `
     )
     .all(farmerId);
+  return rows.map((r: any) => ({
+    ...r,
+    farmer_name: cleanIndic(r.farmer_name),
+    location: cleanIndic(r.location),
+  }));
 }
 
 /**

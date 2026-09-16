@@ -24,6 +24,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCategory, getLocalizedCropName, getLocalizedGrade, getLocalizedLocation, getLocalizedFarmer } from '@/lib/i18n';
 import VerifiedBadge from '@/components/VerifiedBadge';
 import { getProduceVerification, ProduceVerificationRecord } from '@/lib/verifiedStore';
+import { getCropLogoUrl, getCropPhotosByName } from '@/lib/cropImageMatcher';
 
 export interface BulmaProductCardProps {
   id: string | number;
@@ -59,12 +60,12 @@ export default function BulmaProductCard({
   variety,
   quantity_kg = 500,
   price_paise_per_kg,
-  quality_grade = 'उच्चतम श्रेणी A+',
+  quality_grade = 'Premium Grade A+',
   cv_trust_score = 96,
   harvest_date = '2026-09-08',
   is_organic = 0,
-  farmer_name = 'किसान (Farmer)',
-  location = 'नासिक मंडी संकलन हब',
+  farmer_name = 'Farmer',
+  location = 'Nashik Mandi Collection Hub',
   hub_location,
   image_url,
   images,
@@ -76,7 +77,7 @@ export default function BulmaProductCard({
   onDirectBuy,
   badge
 }: BulmaProductCardProps) {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   // Extract and normalize 2 to 6 photos
   const photoList: string[] = React.useMemo(() => {
@@ -84,7 +85,6 @@ export default function BulmaProductCard({
     if (Array.isArray(images) && images.length > 0) {
       result = images.filter((img) => typeof img === 'string' && img.trim().length > 0);
     } else if (image_url && image_url.trim().length > 0) {
-      // Check if image_url is a JSON string of array
       if (image_url.startsWith('[') && image_url.endsWith(']')) {
         try {
           const parsed = JSON.parse(image_url);
@@ -98,13 +98,21 @@ export default function BulmaProductCard({
         result = [image_url];
       }
     }
-
-    // Cap at maximum 6 photos
     return result.slice(0, 6);
   }, [images, image_url]);
 
+  // Fallback to match verified crop photos and logo presets
+  const fallbackLogo = React.useMemo(() => getCropLogoUrl(crop_name), [crop_name]);
+  const effectiveLogo = (logo_url && logo_url.trim().length > 0)
+    ? logo_url
+    : ((side_logo && side_logo.trim().length > 0) ? side_logo : (photoList[0] || fallbackLogo));
+
+  const effectivePhotos = React.useMemo(() => {
+    if (photoList.length > 0) return photoList;
+    return getCropPhotosByName(crop_name);
+  }, [photoList, crop_name]);
+
   const [activePhotoIdx, setActivePhotoIdx] = useState(0);
-  const [showLightbox, setShowLightbox] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [orderQty, setOrderQty] = useState(Math.min(100, quantity_kg || 100));
 
@@ -129,10 +137,7 @@ export default function BulmaProductCard({
   const effectiveGrade = verification.isVerified ? verification.grade : (quality_grade || 'A+');
 
   const priceRupees = (price_paise_per_kg / 100).toFixed(2);
-  const activePhoto = photoList[activePhotoIdx] || photoList[0] || '';
-  const sideLogoUrl = (logo_url && logo_url.trim().length > 0)
-    ? logo_url
-    : ((side_logo && side_logo.trim().length > 0) ? side_logo : (photoList[0] || ''));
+  const activePhoto = effectivePhotos[activePhotoIdx] || effectivePhotos[0] || effectiveLogo || '';
 
   const renderCategoryBadgeIcon = (cat: string) => {
     const c = (cat || '').toLowerCase();
@@ -141,16 +146,6 @@ export default function BulmaProductCard({
     if (c.includes('grain')) return <Wheat className="w-6 h-6 text-yellow-300" />;
     if (c.includes('pulse') || c.includes('dal')) return <Layers className="w-6 h-6 text-amber-200" />;
     return <Sprout className="w-6 h-6 text-emerald-300" />;
-  };
-
-  const handlePrevPhoto = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setActivePhotoIdx((prev) => (prev === 0 ? photoList.length - 1 : prev - 1));
-  };
-
-  const handleNextPhoto = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setActivePhotoIdx((prev) => (prev === photoList.length - 1 ? 0 : prev + 1));
   };
 
   const handleAddToCart = () => {
@@ -164,11 +159,15 @@ export default function BulmaProductCard({
         farmerName: farmer_name,
         location: location,
         imageUrl: activePhoto,
-        photos: photoList,
+        photos: effectivePhotos,
         unit,
       });
     }
   };
+
+  const displayCropName = (language === 'hi' && crop_name_hi)
+    ? crop_name_hi
+    : getLocalizedCropName(crop_name, language);
 
   return (
     <>
@@ -178,12 +177,23 @@ export default function BulmaProductCard({
             =================================================== */}
         <div className="card-header-custom">
           <div className="bulma-media">
-            {/* Category Emblem */}
+            {/* Category / Crop Emblem */}
             <div className="bulma-media-left">
               <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-amber-500/40 shadow-md bg-gradient-to-br from-[#0F3826] to-[#072115] shrink-0 flex items-center justify-center">
-                <div className="flex items-center justify-center w-full h-full">
-                  {renderCategoryBadgeIcon(category)}
-                </div>
+                {effectiveLogo ? (
+                  <img
+                    src={effectiveLogo}
+                    alt={crop_name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLElement).style.display = 'none';
+                    }}
+                  />
+                ) : (
+                  <div className="flex items-center justify-center w-full h-full">
+                    {renderCategoryBadgeIcon(category)}
+                  </div>
+                )}
                 <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 bg-emerald-500 border border-white rounded-full" />
               </div>
             </div>
@@ -196,7 +206,7 @@ export default function BulmaProductCard({
                 </span>
                 {variety && (
                   <span className="text-[10px] text-emerald-800/80 font-mono bg-amber-50/80 border border-amber-200 px-1.5 py-0.5 rounded">
-                    {variety}
+                    {getLocalizedCropName(variety, language)}
                   </span>
                 )}
                 {isOfficiallyOrganic && (
@@ -214,23 +224,17 @@ export default function BulmaProductCard({
 
               <div className="flex items-center gap-1.5 mt-1 flex-wrap">
                 <h3 className="font-extrabold text-base sm:text-lg text-emerald-950 dark:text-amber-100 leading-snug truncate">
-                  {getLocalizedCropName(crop_name, language)}
+                  {displayCropName}
                 </h3>
                 {isOfficiallyVerified && (
                   <VerifiedBadge
                     size="sm"
                     variant="whatsapp"
                     showText={false}
-                    tooltip={language === 'hi' ? 'मंत्रालय एवं मंडी बोर्ड द्वारा आधिकारिक सत्यापित' : 'Officially Verified & Audited by Mandi Board'}
+                    tooltip="Officially Verified & Audited by Mandi Board"
                   />
                 )}
               </div>
-
-              {crop_name_hi && crop_name_hi !== crop_name && (
-                <p className="text-xs text-emerald-700/80 dark:text-emerald-300/80 font-medium truncate">
-                  {crop_name_hi}
-                </p>
-              )}
             </div>
 
             {/* Upper Right Badges */}
@@ -248,6 +252,47 @@ export default function BulmaProductCard({
         </div>
 
         {/* ===================================================
+            REAL PRODUCT IMAGE SHOWCASE (Farmer Verified Photos)
+            =================================================== */}
+        {activePhoto && (
+          <div
+            className="relative w-full h-44 sm:h-48 overflow-hidden bg-black/5 dark:bg-black/40 border-y border-emerald-900/10 dark:border-emerald-500/20 group/img cursor-pointer"
+            onClick={() => setShowDetailsModal(true)}
+            title={language === 'hi' ? 'विस्तृत विवरण देखें' : 'Click to view full specifications'}
+          >
+            <img
+              src={activePhoto}
+              alt={crop_name}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+
+            <div className="absolute top-2 left-2 flex items-center gap-1.5">
+              <span className="px-2 py-0.5 bg-black/60 backdrop-blur-md text-amber-300 font-extrabold text-[10px] rounded-full border border-amber-400/30 flex items-center gap-1">
+                <Sparkles className="w-2.5 h-2.5 text-amber-400" />
+                <span>CV {cv_trust_score}% Verified</span>
+              </span>
+            </div>
+
+            {effectivePhotos.length > 1 && (
+              <div className="absolute top-2 right-2 flex items-center gap-1 bg-black/60 backdrop-blur-md text-white px-2 py-0.5 rounded-full text-[10px] font-mono">
+                <span>📷 {effectivePhotos.length} Photos</span>
+              </div>
+            )}
+
+            <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between text-white text-xs">
+              <span className="font-extrabold text-amber-300 drop-shadow">
+                ₹{priceRupees} / {unit}
+              </span>
+              <span className="text-[11px] text-emerald-200 font-semibold bg-[#0F3826]/80 px-2 py-0.5 rounded-lg border border-emerald-400/30">
+                {language === 'hi' ? 'सीधा खेत से' : 'Direct from Farm'}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* ===================================================
             NICHE SECTION (Bottom): Detailed Product Specifications
             =================================================== */}
         <div className="card-content space-y-3">
@@ -255,7 +300,7 @@ export default function BulmaProductCard({
           <div className="flex items-center justify-between bg-amber-50/70 dark:bg-amber-950/40 p-2.5 rounded-xl border border-amber-200/60 dark:border-amber-500/20">
             <div>
               <span className="text-[10px] uppercase tracking-wider font-extrabold text-amber-900/80 dark:text-amber-300 block">
-                {language === 'hi' ? 'Fair Price AI दर' : 'Fair Price AI Rate'}
+                {language === 'hi' ? 'उचित मूल्य AI दर' : (t.fairPriceAiTag || 'Fair Price AI Rate')}
               </span>
               <div className="text-xl font-extrabold text-amber-900 dark:text-amber-300 flex items-baseline gap-1">
                 <span>₹{priceRupees}</span>
@@ -268,7 +313,7 @@ export default function BulmaProductCard({
 
             <div className="text-right">
               <span className="text-[10px] uppercase tracking-wider font-extrabold text-emerald-900/80 dark:text-emerald-200 block">
-                {language === 'hi' ? 'उपलब्ध स्टॉक' : 'Stock Ready'}
+                {language === 'hi' ? 'उपलब्ध स्टॉक' : (t.availableQty || 'Stock Ready')}
               </span>
               <div className="text-base font-extrabold text-emerald-950 dark:text-emerald-100">
                 {quantity_kg.toLocaleString()} {unit}
@@ -292,12 +337,12 @@ export default function BulmaProductCard({
                     size="xs"
                     variant="whatsapp"
                     showText={false}
-                    tooltip={language === 'hi' ? 'सत्यापित किसान उत्पादक' : 'Verified Kisan Producer'}
+                    tooltip="Verified Kisan Producer"
                   />
                 )}
               </div>
               <span className="text-[10px] font-extrabold text-emerald-800 dark:text-emerald-200 uppercase bg-emerald-200/60 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded">
-                {language === 'hi' ? 'किसान' : 'Farmer'}
+                {language === 'hi' ? 'किसान' : (t.farmerLabel || 'Farmer')}
               </span>
             </div>
 
@@ -309,14 +354,14 @@ export default function BulmaProductCard({
             <div className="flex items-center justify-between text-[10px] text-emerald-700/80 dark:text-emerald-300/80 pt-1 border-t border-emerald-900/10 dark:border-emerald-500/20">
               <span className="flex items-center gap-1">
                 <Calendar className="w-3 h-3 text-amber-600 dark:text-amber-400" />
-                <span>{language === 'hi' ? 'कटाई:' : 'Harvest:'} {harvest_date}</span>
+                <span>{language === 'hi' ? 'फसल कटाई' : 'Harvest'}: {harvest_date}</span>
               </span>
               <button
                 onClick={() => setShowDetailsModal(true)}
                 className="text-amber-800 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 font-bold underline flex items-center gap-0.5"
               >
                 <Info className="w-3 h-3" />
-                <span>{language === 'hi' ? 'सम्पूर्ण विवरण' : 'Full Specs'}</span>
+                <span>{language === 'hi' ? 'पूर्ण विवरण' : 'Full Specs'}</span>
               </button>
             </div>
           </div>
@@ -363,7 +408,7 @@ export default function BulmaProductCard({
             className="flex-1 px-4 py-2.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs"
           >
             <ShoppingBag className="w-4 h-4 text-amber-400" />
-            <span>{language === 'hi' ? 'खरीदें / कार्ट में जोड़ें' : 'Add to Cart'}</span>
+            <span>{language === 'hi' ? 'कार्ट में जोड़ें' : (t.addToCart || 'Add to Cart')}</span>
           </button>
         </div>
       </div>
@@ -376,15 +421,19 @@ export default function BulmaProductCard({
           <div className="bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl p-6 w-full max-w-lg shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-emerald-900/10 dark:border-emerald-500/20 pb-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0F3826] border border-amber-500 text-amber-300">
-                  {renderCategoryBadgeIcon(category)}
+                <div className="w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center bg-[#0F3826] border border-amber-500 text-amber-300 shrink-0">
+                  {effectiveLogo ? (
+                    <img src={effectiveLogo} alt={crop_name} className="w-full h-full object-cover" />
+                  ) : (
+                    renderCategoryBadgeIcon(category)
+                  )}
                 </div>
                 <div>
                   <h3 className="font-extrabold text-lg text-emerald-950 dark:text-amber-100">
-                    {getLocalizedCropName(crop_name, language)}
+                    {displayCropName}
                   </h3>
                   <span className="bulma-tag is-success-light text-[10px]">
-                    {getLocalizedCategory(category, language)} {variety ? `• ${variety}` : ''}
+                    {getLocalizedCategory(category, language)} {variety ? `• ${getLocalizedCropName(variety, language)}` : ''}
                   </span>
                 </div>
               </div>
@@ -396,6 +445,37 @@ export default function BulmaProductCard({
               </button>
             </div>
 
+            {/* Photos Strip in Modal */}
+            {effectivePhotos.length > 0 && (
+              <div className="space-y-2">
+                <div className="relative w-full h-44 rounded-2xl overflow-hidden border border-emerald-900/15 shadow-inner">
+                  <img
+                    src={activePhoto}
+                    alt={crop_name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {effectivePhotos.length > 1 && (
+                  <div className="flex gap-2 overflow-x-auto pb-1">
+                    {effectivePhotos.map((ph, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setActivePhotoIdx(idx)}
+                        className={`w-14 h-14 rounded-xl overflow-hidden border-2 shrink-0 transition-all ${
+                          activePhotoIdx === idx
+                            ? 'border-emerald-700 ring-2 ring-emerald-500/30 shadow-sm scale-105'
+                            : 'border-emerald-900/20 opacity-70 hover:opacity-100'
+                        }`}
+                      >
+                        <img src={ph} alt="" className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Details Table */}
             <div className="bg-white dark:bg-[#07170f] p-4 rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20 space-y-2 text-xs">
               <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
@@ -403,27 +483,27 @@ export default function BulmaProductCard({
                 <span className="font-bold text-amber-900 dark:text-amber-300">₹{priceRupees} / {unit}</span>
               </div>
               <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
-                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'उपलब्ध मात्रा:' : 'Available Stock:'}</span>
+                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'उपलब्ध स्टॉक:' : 'Available Stock:'}</span>
                 <span className="font-bold text-emerald-950 dark:text-emerald-100">{quantity_kg} {unit}</span>
               </div>
               <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
                 <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'गुणवत्ता ग्रेड:' : 'Grade:'}</span>
-                <span className="font-bold text-emerald-950 dark:text-emerald-100">{quality_grade}</span>
+                <span className="font-bold text-emerald-950 dark:text-emerald-100">{getLocalizedGrade(effectiveGrade, language)}</span>
               </div>
               <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
-                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'CV विश्वासांक:' : 'CV Confidence:'}</span>
+                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'CV विश्वास स्कोर:' : 'CV Confidence:'}</span>
                 <span className="font-bold text-emerald-700 dark:text-emerald-400">{cv_trust_score}%</span>
               </div>
               <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
-                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'उत्पादक किसान:' : 'Farmer:'}</span>
-                <span className="font-bold text-emerald-950 dark:text-emerald-100">{farmer_name}</span>
+                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'किसान:' : 'Farmer:'}</span>
+                <span className="font-bold text-emerald-950 dark:text-emerald-100">{getLocalizedFarmer(farmer_name, language)}</span>
               </div>
               <div className="flex justify-between py-1 border-b border-emerald-900/5 dark:border-emerald-500/10">
-                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'मंडी / संकलन केंद्र:' : 'Hub Location:'}</span>
-                <span className="font-bold text-emerald-950 dark:text-emerald-100">{location}</span>
+                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'हब स्थान:' : 'Hub Location:'}</span>
+                <span className="font-bold text-emerald-950 dark:text-emerald-100">{getLocalizedLocation(location, language)}</span>
               </div>
               <div className="flex justify-between py-1">
-                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'कटाई तिथि:' : 'Harvest Date:'}</span>
+                <span className="text-emerald-800/80 dark:text-emerald-300/80">{language === 'hi' ? 'फसल कटाई तिथि:' : 'Harvest Date:'}</span>
                 <span className="font-bold text-emerald-950 dark:text-emerald-100">{harvest_date}</span>
               </div>
             </div>
@@ -444,7 +524,7 @@ export default function BulmaProductCard({
                 className="flex-1 py-3 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow-md transition flex items-center justify-center gap-2"
               >
                 <ShoppingBag className="w-4 h-4 text-amber-400" />
-                <span>{language === 'hi' ? 'कार्ट में जोड़ें' : 'Add to Cart'}</span>
+                <span>{language === 'hi' ? 'कार्ट में जोड़ें' : (t.addToCart || 'Add to Cart')}</span>
               </button>
             </div>
           </div>

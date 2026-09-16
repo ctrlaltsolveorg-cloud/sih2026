@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useRole } from '@/context/RoleContext';
+import { getLocalizedFarmer, getLocalizedLocation, stripIndicParens } from '@/lib/i18n';
 import PortalGuard from '@/components/PortalGuard';
 import { 
   Truck, 
@@ -124,7 +125,7 @@ export default function TransporterDashboardPage() {
         body: JSON.stringify({
           orderId,
           partnerId: 'u_partner_1',
-          driverName: userName || 'विक्रम शिंदे (Vikram Shinde)',
+          driverName: userName || 'Vikram Shinde',
           driverPhone: '+91 99000 11122',
           driverVehicle: 'MH-15-EG-8821 (Tata Ace Gold)',
         }),
@@ -132,12 +133,12 @@ export default function TransporterDashboardPage() {
 
       const data = await res.json();
       if (!res.ok || !data.success) {
-        throw new Error(data.message || 'डिलीवरी स्वीकार करने में विफल।');
+        throw new Error(data.message || 'Failed to accept delivery task.');
       }
 
       setFeedback((prev) => ({
         ...prev,
-        [orderId]: { type: 'success', message: 'डिलीवरी कार्य स्वीकृत! ऑर्डर सक्रिय यात्राओं में जोड़ा गया है।' },
+        [orderId]: { type: 'success', message: 'Delivery task accepted! Added to active trips.' },
       }));
       await loadOrders();
       setActiveTab('active');
@@ -157,7 +158,7 @@ export default function TransporterDashboardPage() {
     if (!entered) {
       setFeedback((prev) => ({
         ...prev,
-        [orderId]: { type: 'error', message: 'कृपया किसान द्वारा दिया गया 4-अंकीय पिकअप OTP दर्ज करें।' },
+        [orderId]: { type: 'error', message: 'Please enter the 4-digit pickup OTP provided by the farmer.' },
       }));
       return;
     }
@@ -179,12 +180,12 @@ export default function TransporterDashboardPage() {
 
       const data = await res.json();
       if (!res.ok || !data.success) {
-        throw new Error(data.message || 'पिकअप OTP सत्यापन असफल रहा।');
+        throw new Error(data.message || 'Pickup OTP verification failed.');
       }
 
       setFeedback((prev) => ({
         ...prev,
-        [orderId]: { type: 'success', message: data.message || '✅ पिकअप सत्यापित! माल वाहन में लोड हो चुका है।' },
+        [orderId]: { type: 'success', message: data.message || '✅ Pickup verified! Produce loaded onto vehicle.' },
       }));
       setPickupInputs((prev) => ({ ...prev, [orderId]: '' }));
       await loadOrders();
@@ -206,7 +207,7 @@ export default function TransporterDashboardPage() {
     if (isCod && !isCodChecked) {
       setFeedback((prev) => ({
         ...prev,
-        [orderId]: { type: 'error', message: '⚠️ कृपया पहले पुष्टि करें कि आपने खरीदार से नकद राशि प्राप्त कर ली है।' },
+        [orderId]: { type: 'error', message: '⚠️ Please confirm first that you have collected the cash amount from the buyer.' },
       }));
       return;
     }
@@ -215,7 +216,7 @@ export default function TransporterDashboardPage() {
     if (!entered) {
       setFeedback((prev) => ({
         ...prev,
-        [orderId]: { type: 'error', message: 'कृपया खरीदार से प्राप्त 4-अंकीय डिलीवरी OTP दर्ज करें।' },
+        [orderId]: { type: 'error', message: 'Please enter the 4-digit delivery OTP received from the buyer.' },
       }));
       return;
     }
@@ -238,12 +239,12 @@ export default function TransporterDashboardPage() {
 
       const data = await res.json();
       if (!res.ok || !data.success) {
-        throw new Error(data.message || 'डिलीवरी OTP सत्यापन असफल रहा।');
+        throw new Error(data.message || 'Delivery OTP verification failed.');
       }
 
       setFeedback((prev) => ({
         ...prev,
-        [orderId]: { type: 'success', message: data.message || '🎉 डिलीवरी पूर्ण! एस्क्रो भुगतान किसान खाते में रिलीज़ हो गया।' },
+        [orderId]: { type: 'success', message: data.message || '🎉 Delivery completed! Escrow payment released to farmer.' },
       }));
       setDeliveryInputs((prev) => ({ ...prev, [orderId]: '' }));
       await loadOrders();
@@ -260,12 +261,8 @@ export default function TransporterDashboardPage() {
   return (
     <PortalGuard
       requiredRole="TRANSPORTER"
-      portalName={language === 'hi' ? 'परिवहन एवं रसद फ्लीट (Transporter Fleet)' : 'Transporter Fleet'}
-      portalDescription={
-        language === 'hi'
-          ? 'यह पोर्टल केवल रसद एवं वाहन चालकों के लिए सुरक्षित है जहाँ रूट अनुकूलन और OTP हैंडशेक डिलीवरी होती है।'
-          : 'This portal is restricted to Transporters and Logistics Partners for cold-chain routing and OTP verification.'
-      }
+      portalName="Transporter Fleet"
+      portalDescription="This portal is restricted to Transporters and Logistics Partners for cold-chain routing and OTP verification."
     >
       <div className="space-y-8 max-w-7xl mx-auto pb-16">
         {/* Header */}
@@ -277,20 +274,18 @@ export default function TransporterDashboardPage() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-extrabold tracking-widest text-amber-400 uppercase bg-emerald-950 px-2.5 py-0.5 rounded-full border border-amber-400/20">
-                  {language === 'hi' ? 'प्रत्यक्ष रसद एवं वाहन फ्लीट' : 'Direct Fleet & Cold-Chain Logistics'}
+                  Direct Fleet & Cold-Chain Logistics
                 </span>
                 <span className="flex items-center gap-1 text-[11px] text-emerald-300 font-bold bg-emerald-900/60 px-2 py-0.5 rounded-full">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  GPS लाइव
+                  GPS Live
                 </span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
-                {language === 'hi' ? 'ग्रीन-वे लॉजिस्टिक्स पार्टनर' : 'Green-Way Logistics Fleet Partner'}
+                Green-Way Logistics Fleet Partner
               </h1>
               <p className="text-xs sm:text-sm text-amber-200/80 mt-0.5">
-                {language === 'hi'
-                  ? `चालक: ${userName || 'विक्रम शिंदे'} • वाहन: MH-15-EG-8821 • 2-चरणीय OTP सुरक्षित हैंडशेक`
-                  : `Driver: ${userName || 'Vikram Shinde'} • Vehicle: MH-15-EG-8821 • 2-Stage OTP Handshake`}
+                Driver: {userName || 'Vikram Shinde'} • Vehicle: MH-15-EG-8821 • 2-Stage OTP Handshake
               </p>
             </div>
           </div>
@@ -301,7 +296,7 @@ export default function TransporterDashboardPage() {
             className="flex items-center gap-2 px-4 py-2.5 bg-emerald-900/80 hover:bg-emerald-800 text-amber-200 rounded-xl text-xs font-bold border border-emerald-700 transition"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-amber-400' : ''}`} />
-            <span>{language === 'hi' ? 'रिफ्रेश करें' : 'Refresh Orders'}</span>
+            <span>Refresh Orders</span>
           </button>
         </div>
 
@@ -316,7 +311,7 @@ export default function TransporterDashboardPage() {
             }`}
           >
             <Truck className="w-4 h-4" />
-            <span>{language === 'hi' ? 'सक्रिय यात्राएं व हैंडशेक' : 'Active Trips & OTPs'}</span>
+            <span>Active Trips & OTPs</span>
             <span className="px-2 py-0.5 bg-amber-400 dark:bg-amber-300 text-emerald-950 rounded-full text-[10px] font-black">
               {activeOrders.length}
             </span>
@@ -331,7 +326,7 @@ export default function TransporterDashboardPage() {
             }`}
           >
             <Package className="w-4 h-4" />
-            <span>{language === 'hi' ? 'उपलब्ध डिलीवरी कार्य' : 'Available Deliveries'}</span>
+            <span>Available Deliveries</span>
             {availableOrders.length > 0 && (
               <span className="px-2 py-0.5 bg-emerald-500 text-white rounded-full text-[10px] font-black">
                 {availableOrders.length}
@@ -348,7 +343,7 @@ export default function TransporterDashboardPage() {
             }`}
           >
             <CheckCircle2 className="w-4 h-4" />
-            <span>{language === 'hi' ? 'पूर्ण डिलीवरी इतिहास' : 'Delivered History'}</span>
+            <span>Delivered History</span>
             <span className="px-2 py-0.5 bg-emerald-800/30 dark:bg-emerald-700/50 text-emerald-950 dark:text-emerald-100 rounded-full text-[10px] font-bold">
               {deliveredOrders.length}
             </span>
@@ -363,7 +358,7 @@ export default function TransporterDashboardPage() {
             }`}
           >
             <Navigation className="w-4 h-4" />
-            <span>{language === 'hi' ? 'AI मार्ग अनुकूलन' : 'AI Route Optimizer'}</span>
+            <span>AI Route Optimizer</span>
           </button>
         </div>
 
@@ -377,19 +372,17 @@ export default function TransporterDashboardPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-emerald-950 dark:text-emerald-100">
-                    {language === 'hi' ? 'कोई सक्रिय डिलीवरी नहीं है' : 'No Active Trips Right Now'}
+                    No Active Trips Right Now
                   </h3>
                   <p className="text-xs text-emerald-900/70 dark:text-emerald-300/70 max-w-sm mx-auto mt-1">
-                    {language === 'hi'
-                      ? 'नई डिलीवरी स्वीकार करने के लिए "उपलब्ध डिलीवरी कार्य" टैब पर जाएं।'
-                      : 'Switch to the "Available Deliveries" tab to accept pending farmer orders.'}
+                    Switch to the "Available Deliveries" tab to accept pending farmer orders.
                   </p>
                 </div>
                 <button
                   onClick={() => setActiveTab('available')}
                   className="px-5 py-2.5 bg-[#0F3826] dark:bg-emerald-700 text-amber-400 dark:text-amber-200 rounded-xl text-xs font-bold hover:bg-emerald-900 dark:hover:bg-emerald-600 transition shadow"
                 >
-                  {language === 'hi' ? 'उपलब्ध ऑर्डर्स देखें' : 'View Available Orders'}
+                  View Available Orders
                 </button>
               </div>
             ) : (
@@ -412,7 +405,7 @@ export default function TransporterDashboardPage() {
                           </span>
                           <div>
                             <span className="text-xs text-amber-200/80 block">
-                              {new Date(ord.created_at).toLocaleDateString('hi-IN', {
+                              {new Date(ord.created_at).toLocaleDateString('en-IN', {
                                 day: '2-digit',
                                 month: 'short',
                                 hour: '2-digit',
@@ -420,7 +413,7 @@ export default function TransporterDashboardPage() {
                               })}
                             </span>
                             <span className="text-sm font-extrabold text-white">
-                              {ord.items?.[0] ? `${ord.items[0].crop_name} (${ord.items[0].quantity} ${ord.items[0].unit})` : 'ताज़ा टमाटर - Vaishali 108 (100 kg)'}
+                              {ord.items?.[0] ? `${ord.items[0].crop_name} (${ord.items[0].quantity} ${ord.items[0].unit})` : 'Fresh Tomatoes - Vaishali 108 (100 kg)'}
                             </span>
                           </div>
                         </div>
@@ -432,7 +425,7 @@ export default function TransporterDashboardPage() {
                               : 'bg-amber-500/20 text-amber-300 border border-amber-400/30'
                           }`}>
                             <span className="w-2 h-2 rounded-full bg-current animate-ping"></span>
-                            {isPickedUp ? (language === 'hi' ? 'रवाना (In Transit to Buyer)' : 'In Transit to Buyer') : (language === 'hi' ? 'पिकअप प्रतीक्षारत (At Farm / Pickup)' : 'At Farm / Pickup')}
+                            {isPickedUp ? 'In Transit to Buyer' : 'At Farm / Pickup'}
                           </span>
                           <span className="text-base font-black text-amber-400">
                             ₹{ord.total_rupees}
@@ -475,12 +468,12 @@ export default function TransporterDashboardPage() {
                                 {isPickedUp ? '✓' : '1'}
                               </span>
                               <h4 className="font-extrabold text-sm text-emerald-950 dark:text-emerald-100">
-                                {language === 'hi' ? 'चरण 1: किसान खेत पिकअप (Handshake)' : 'Stage 1: Farmer Farm Pickup'}
+                                Stage 1: Farmer Farm Pickup
                               </h4>
                             </div>
                             {isPickedUp && (
                               <span className="text-[11px] font-bold text-emerald-800 dark:text-emerald-200 bg-emerald-100 dark:bg-emerald-900/60 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-700/40">
-                                {language === 'hi' ? 'माल लोड संपन्न ✓' : 'Produce Loaded ✓'}
+                                Produce Loaded ✓
                               </span>
                             )}
                           </div>
@@ -490,10 +483,10 @@ export default function TransporterDashboardPage() {
                               <MapPin className="w-4 h-4 text-emerald-700 dark:text-emerald-400 shrink-0 mt-0.5" />
                               <div>
                                 <strong className="text-emerald-950 dark:text-emerald-200 block">
-                                  {language === 'hi' ? 'खेत / पिकअप स्थान:' : 'Farm Pickup Location:'}
+                                  Farm Pickup Location:
                                 </strong>
                                 <span className="text-emerald-900/90 dark:text-emerald-300/90">
-                                  {ord.pickup_location || 'खेत संकलन केंद्र #04, नासिक (Nashik Mandi Hub)'}
+                                  {ord.pickup_location || 'Farm Collection Center #04, Nashik Mandi Hub'}
                                 </span>
                               </div>
                             </div>
@@ -501,7 +494,7 @@ export default function TransporterDashboardPage() {
                             <div className="flex items-center gap-2">
                               <UserCheck className="w-4 h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
                               <span className="text-emerald-950 dark:text-emerald-200">
-                                <strong>{language === 'hi' ? 'किसान:' : 'Farmer:'}</strong> {ord.farmer_name || 'Ramesh Patil (रमेश पाटिल)'}
+                                <strong>{language === 'hi' ? 'किसान:' : 'Farmer:'}</strong> {getLocalizedFarmer(ord.farmer_name || 'Ramesh Patil', language)}
                               </span>
                               <a
                                 href={`tel:${ord.farmer_phone || '+919876543210'}`}
@@ -518,18 +511,16 @@ export default function TransporterDashboardPage() {
                             <div className="mt-5 pt-4 border-t border-emerald-900/10 dark:border-emerald-500/20 space-y-3">
                               <div className="p-3 bg-amber-500/15 dark:bg-amber-950/40 rounded-xl border border-amber-300 dark:border-amber-700/50 text-[11px] text-amber-950 dark:text-amber-200 space-y-1">
                                 <p className="font-bold">
-                                  🤝 <strong>{language === 'hi' ? 'किसान हैंडशेक निर्देश:' : 'Farmer Handshake Directive:'}</strong>
+                                  🤝 <strong>Farmer Handshake Directive:</strong>
                                 </p>
                                 <p>
-                                  {language === 'hi'
-                                    ? 'खेत पर पहुँचकर सारा माल अपनी गाड़ी में लोड करें। इसके बाद किसान अपने फोन से "पिकअप OTP" जनरेट करेगा। वह 4-अंकीय कोड यहाँ दर्ज करें।'
-                                    : 'Arrive at the farm, load the produce, and enter the 4-digit pickup OTP provided by the farmer on-site.'}
+                                  Arrive at the farm, load the produce, and enter the 4-digit pickup OTP provided by the farmer on-site.
                                 </p>
                               </div>
 
                               <div className="space-y-1.5">
                                 <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200">
-                                  {language === 'hi' ? 'किसान द्वारा दिया गया 4-अंकीय पिकअप OTP:' : 'Enter 4-Digit Pickup Handover OTP:'}
+                                  Enter 4-Digit Pickup Handover OTP:
                                 </label>
                                 <div className="flex gap-2">
                                   <input
@@ -551,8 +542,8 @@ export default function TransporterDashboardPage() {
                                     className="px-4 py-2 bg-[#0F3826] hover:bg-emerald-900 dark:bg-emerald-700 dark:hover:bg-emerald-600 disabled:opacity-50 text-amber-300 dark:text-amber-100 font-bold rounded-xl text-xs shadow transition shrink-0"
                                   >
                                     {actionLoading[ord.id]
-                                      ? (language === 'hi' ? 'सत्यापित हो रहा...' : 'Verifying...')
-                                      : (language === 'hi' ? 'पिकअप सत्यापित करें' : 'Verify Pickup')}
+                                      ? 'Verifying...'
+                                      : 'Verify Pickup'}
                                   </button>
                                 </div>
                               </div>
@@ -561,7 +552,7 @@ export default function TransporterDashboardPage() {
                             <div className="mt-4 pt-3 border-t border-emerald-200 dark:border-emerald-700/40 text-center">
                               <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 flex items-center justify-center gap-1">
                                 <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                                {language === 'hi' ? 'खेत से माल लोड हो चुका है (Handshake Verified)' : 'Farm Handshake Verified & Loaded'}
+                                Farm Handshake Verified & Loaded
                               </span>
                             </div>
                           )}
@@ -579,11 +570,11 @@ export default function TransporterDashboardPage() {
                                 2
                               </span>
                               <h4 className="font-extrabold text-sm text-emerald-950 dark:text-emerald-100">
-                                {language === 'hi' ? 'चरण 2: खरीदार डिलीवरी व भुगतान' : 'Stage 2: Buyer Delivery & Settlement'}
+                                Stage 2: Buyer Delivery & Settlement
                               </h4>
                             </div>
                             <span className="text-[11px] font-bold text-amber-800 dark:text-amber-300 bg-amber-100 dark:bg-amber-950/80 px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700/50">
-                              {isCod ? (language === 'hi' ? 'नकद भुगतान (COD)' : 'Cash on Delivery (COD)') : (language === 'hi' ? 'ऑनलाइन एस्क्रो' : 'Online Escrow')}
+                              {isCod ? 'Cash on Delivery (COD)' : 'Online Escrow'}
                             </span>
                           </div>
 
@@ -592,7 +583,7 @@ export default function TransporterDashboardPage() {
                               <MapPin className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5" />
                               <div>
                                 <strong className="text-emerald-950 dark:text-emerald-200 block">
-                                  {language === 'hi' ? 'खरीदार का पता:' : 'Buyer Delivery Address:'}
+                                  Buyer Delivery Address:
                                 </strong>
                                 <span className="text-emerald-900/90 dark:text-emerald-300/90 leading-relaxed block">
                                   {ord.delivery_address}
@@ -603,7 +594,7 @@ export default function TransporterDashboardPage() {
                             <div className="flex items-center gap-2">
                               <UserCheck className="w-4 h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
                               <span className="text-emerald-950 dark:text-emerald-200">
-                                <strong>{language === 'hi' ? 'खरीदार:' : 'Buyer:'}</strong> {ord.buyer_name || 'Annapurna Hotel & Catering (होटल अन्नपूर्णा)'}
+                                <strong>Buyer:</strong> {ord.buyer_name || 'Annapurna Hotel & Catering'}
                               </span>
                               <a
                                 href={`tel:${ord.buyer_phone || '+919822233344'}`}
@@ -620,7 +611,7 @@ export default function TransporterDashboardPage() {
                             {isCod ? (
                               <div className="p-3 bg-amber-500/15 dark:bg-amber-950/40 border-2 border-amber-400 dark:border-amber-600/50 rounded-xl space-y-2 text-amber-950 dark:text-amber-100">
                                 <div className="flex items-center justify-between text-xs font-extrabold text-amber-950 dark:text-amber-200">
-                                  <span>💵 {language === 'hi' ? 'नकद संग्रह आवश्यक (COD Amount):' : 'Cash Collection Required (COD):'}</span>
+                                  <span>💵 Cash Collection Required (COD):</span>
                                   <span className="text-sm font-black text-emerald-950 dark:text-amber-300 bg-white dark:bg-[#07170f] px-2.5 py-0.5 rounded border border-amber-400 dark:border-amber-600">
                                     ₹{ord.total_rupees}
                                   </span>
@@ -638,11 +629,7 @@ export default function TransporterDashboardPage() {
                                     className="mt-0.5 w-4 h-4 rounded text-emerald-700 focus:ring-emerald-600 cursor-pointer shrink-0"
                                   />
                                   <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 leading-tight">
-                                    {language === 'hi' ? (
-                                      <>हाँ, मैंने खरीदार से <strong className="text-amber-700 dark:text-amber-300">₹{ord.total_rupees}</strong> नकद राशि पूरी प्राप्त कर ली है।</>
-                                    ) : (
-                                      <>Yes, I have collected full cash amount of <strong className="text-amber-700 dark:text-amber-300">₹{ord.total_rupees}</strong> from the buyer.</>
-                                    )}
+                                    Yes, I have collected full cash amount of <strong className="text-amber-700 dark:text-amber-300">₹{ord.total_rupees}</strong> from the buyer.
                                   </span>
                                 </label>
                               </div>
@@ -650,10 +637,10 @@ export default function TransporterDashboardPage() {
                               <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700/60 rounded-xl flex items-center justify-between text-xs font-bold text-emerald-900 dark:text-emerald-200">
                                 <div className="flex items-center gap-2">
                                   <ShieldCheck className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
-                                  <span>{language === 'hi' ? 'डिजिटल भुगतान (UPI/Escrow):' : 'Digital Escrow Payment:'}</span>
+                                  <span>Digital Escrow Payment:</span>
                                 </div>
                                 <span className="font-extrabold text-emerald-950 dark:text-emerald-100 bg-emerald-100 dark:bg-emerald-900/60 px-2 py-0.5 rounded border border-emerald-300 dark:border-emerald-700/50">
-                                  ₹{ord.total_rupees} {language === 'hi' ? 'सुरक्षित ✓' : 'Protected ✓'}
+                                  ₹{ord.total_rupees} Protected ✓
                                 </span>
                               </div>
                             )}
@@ -661,7 +648,7 @@ export default function TransporterDashboardPage() {
                             {/* Buyer Delivery OTP Input */}
                             <div className="space-y-1.5">
                               <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200">
-                                {language === 'hi' ? 'खरीदार द्वारा दिया जाने वाला 4-अंकीय डिलीवरी OTP:' : 'Enter 4-Digit Buyer Delivery OTP:'}
+                                Enter 4-Digit Buyer Delivery OTP:
                               </label>
                               <div className="flex gap-2">
                                 <input
@@ -675,7 +662,7 @@ export default function TransporterDashboardPage() {
                                       [ord.id]: e.target.value.replace(/\D/g, ''),
                                     }))
                                   }
-                                  placeholder={isCod && !codCheckboxes[ord.id] ? (language === 'hi' ? 'पहले नकद पुष्टि करें' : 'Confirm Cash First') : '9103'}
+                                  placeholder={isCod && !codCheckboxes[ord.id] ? 'Confirm Cash First' : '9103'}
                                   className="flex-1 text-center font-mono font-black text-lg tracking-widest px-3 py-2 bg-white dark:bg-[#07170f] rounded-xl border-2 border-emerald-600 dark:border-emerald-500 disabled:bg-gray-100 dark:disabled:bg-[#07170f]/70 disabled:border-gray-300 dark:disabled:border-emerald-900/40 focus:border-emerald-800 dark:focus:border-emerald-400 outline-none text-emerald-950 dark:text-emerald-100 disabled:text-gray-400 dark:disabled:text-emerald-500/40 shadow-inner"
                                 />
                                 <button
@@ -688,14 +675,14 @@ export default function TransporterDashboardPage() {
                                   className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed text-amber-50 font-bold rounded-xl text-xs shadow-lg transition shrink-0"
                                 >
                                   {actionLoading[ord.id]
-                                    ? (language === 'hi' ? 'सत्यापित हो रहा...' : 'Verifying...')
-                                    : (language === 'hi' ? 'डिलीवरी पूर्ण करें' : 'Complete Delivery')}
+                                    ? 'Verifying...'
+                                    : 'Complete Delivery'}
                                 </button>
                               </div>
                               {isCod && !codCheckboxes[ord.id] && (
                                 <p className="text-xs text-amber-800 dark:text-amber-300 font-semibold flex items-center gap-1 mt-1">
                                   <span>⚠️</span>
-                                  <span>{language === 'hi' ? 'डिलीवरी OTP अनलॉक करने के लिए ऊपर नकद रसीद चेकबॉक्स पर टिक करें।' : 'Check the cash received box above to unlock delivery OTP input.'}</span>
+                                  <span>Check the cash received box above to unlock delivery OTP input.</span>
                                 </p>
                               )}
                             </div>
@@ -718,13 +705,11 @@ export default function TransporterDashboardPage() {
               <div className="flex items-center gap-3">
                 <Package className="w-5 h-5 text-amber-900 dark:text-amber-300" />
                 <span className="text-xs font-bold text-amber-950 dark:text-amber-200">
-                  {language === 'hi'
-                    ? 'किसान-से-खरीदार तक डिलीवरी के लिए उपलब्ध नए ऑर्डर्स। तुरंत स्वीकार करें और पिकअप शुरू करें।'
-                    : 'New orders available for farm-to-buyer delivery. Accept to start pickup immediately.'}
+                  New orders available for farm-to-buyer delivery. Accept to start pickup immediately.
                 </span>
               </div>
               <span className="text-xs font-black text-amber-950 dark:text-amber-200 bg-amber-400 dark:bg-amber-600/60 px-2.5 py-1 rounded-full">
-                {availableOrders.length} {language === 'hi' ? 'कार्य उपलब्ध' : 'Available'}
+                {availableOrders.length} Available
               </span>
             </div>
 
@@ -732,12 +717,10 @@ export default function TransporterDashboardPage() {
               <div className="bg-white dark:bg-[#0c1f15] p-12 rounded-3xl border border-emerald-900/10 dark:border-emerald-500/20 text-center space-y-3">
                 <CheckCircle2 className="w-10 h-10 text-emerald-600 dark:text-emerald-400 mx-auto" />
                 <h3 className="font-bold text-base text-emerald-950 dark:text-emerald-100">
-                  {language === 'hi' ? 'फिलहाल कोई नया ऑर्डर लंबित नहीं है' : 'All available orders are accepted'}
+                  All available orders are accepted
                 </h3>
                 <p className="text-xs text-emerald-900/60 dark:text-emerald-300/60">
-                  {language === 'hi'
-                    ? 'जैसे ही कोई खरीदार नया ऑर्डर देगा, वह तुरंत यहाँ दिखाई देगा।'
-                    : 'As soon as a buyer places an order, it will appear here.'}
+                  As soon as a buyer places an order, it will appear here.
                 </p>
               </div>
             ) : (
@@ -754,15 +737,15 @@ export default function TransporterDashboardPage() {
                             #{ord.id}
                           </span>
                           <h4 className="font-extrabold text-sm text-emerald-950 dark:text-emerald-100 mt-0.5">
-                            {ord.items?.[0] ? `${ord.items[0].crop_name} (${ord.items[0].quantity} ${ord.items[0].unit})` : (language === 'hi' ? 'कृषि उपज' : 'Farm Produce')}
+                            {ord.items?.[0] ? `${ord.items[0].crop_name} (${ord.items[0].quantity} ${ord.items[0].unit})` : 'Farm Produce'}
                           </h4>
                         </div>
                         <div className="text-right">
                           <span className="text-xs font-bold text-amber-800 dark:text-amber-300 block">
-                            {language === 'hi' ? 'कुल मूल्य:' : 'Total:'} ₹{ord.total_rupees}
+                            Total: ₹{ord.total_rupees}
                           </span>
                           <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-200 bg-emerald-50 dark:bg-emerald-900/50 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-700">
-                            {language === 'hi' ? 'भाड़ा:' : 'Freight:'} ₹{(ord.delivery_fee_paise / 100).toFixed(2)}
+                            Freight: ₹{(ord.delivery_fee_paise / 100).toFixed(2)}
                           </span>
                         </div>
                       </div>
@@ -772,10 +755,10 @@ export default function TransporterDashboardPage() {
                           <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400 mt-1.5 shrink-0"></span>
                           <div>
                             <span className="text-gray-500 dark:text-emerald-400/80 block text-[10px]">
-                              {language === 'hi' ? 'पिकअप (किसान का खेत):' : 'Pickup (Farmer Farm):'}
+                              Pickup (Farmer Farm):
                             </span>
                             <span className="font-bold text-emerald-950 dark:text-emerald-100">
-                              {ord.farmer_name || (language === 'hi' ? 'रमेश पाटिल' : 'Ramesh Patil')} • {ord.pickup_location || (language === 'hi' ? 'नासिक मंडी हब' : 'Nashik Mandi Hub')}
+                              {getLocalizedFarmer(ord.farmer_name || 'Ramesh Patil', language)} • {getLocalizedLocation(ord.pickup_location || 'Nashik Mandi Hub', language)}
                             </span>
                           </div>
                         </div>
@@ -784,10 +767,10 @@ export default function TransporterDashboardPage() {
                           <span className="w-2 h-2 rounded-full bg-amber-600 dark:bg-amber-400 mt-1.5 shrink-0"></span>
                           <div>
                             <span className="text-gray-500 dark:text-amber-400/80 block text-[10px]">
-                              {language === 'hi' ? 'ड्रॉप (खरीदार का पता):' : 'Drop (Buyer Address):'}
+                              Drop (Buyer Address):
                             </span>
                             <span className="font-bold text-emerald-950 dark:text-emerald-100">
-                              {ord.buyer_name || (language === 'hi' ? 'होटल अन्नपूर्णा' : 'Hotel Annapurna')} • {ord.delivery_address}
+                              {ord.buyer_name || 'Hotel Annapurna'} • {ord.delivery_address}
                             </span>
                           </div>
                         </div>
@@ -801,8 +784,8 @@ export default function TransporterDashboardPage() {
                         <Truck className="w-4 h-4" />
                         <span>
                           {actionLoading[ord.id]
-                            ? (language === 'hi' ? 'स्वीकार किया जा रहा...' : 'Accepting...')
-                            : (language === 'hi' ? 'डिलीवरी कार्य स्वीकार करें' : 'Accept Delivery Task')}
+                            ? 'Accepting...'
+                            : 'Accept Delivery Task'}
                         </span>
                       </button>
                     </div>
@@ -820,7 +803,7 @@ export default function TransporterDashboardPage() {
               <div className="bg-white dark:bg-[#0c1f15] p-12 rounded-3xl border border-emerald-900/10 dark:border-emerald-500/20 text-center space-y-3">
                 <CheckCircle2 className="w-10 h-10 text-emerald-600 dark:text-emerald-400 mx-auto" />
                 <h3 className="font-bold text-base text-emerald-950 dark:text-emerald-100">
-                  {language === 'hi' ? 'अभी तक कोई डिलीवरी पूर्ण नहीं हुई है' : 'No Delivered Orders Yet'}
+                  No Delivered Orders Yet
                 </h3>
               </div>
             ) : (
@@ -836,17 +819,17 @@ export default function TransporterDashboardPage() {
                         <span className="text-xs font-mono font-bold text-emerald-950 dark:text-amber-300">#{ord.id}</span>
                       </div>
                       <span className="text-xs font-black text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-900/60 px-2.5 py-0.5 rounded-full border border-emerald-300 dark:border-emerald-700">
-                        {language === 'hi' ? 'डिलीवर हुआ ✓' : 'Delivered ✓'}
+                        Delivered ✓
                       </span>
                     </div>
 
                     <p className="text-xs font-bold text-emerald-950 dark:text-emerald-100">
-                      {ord.items?.[0] ? `${ord.items[0].crop_name} (${ord.items[0].quantity} ${ord.items[0].unit})` : (language === 'hi' ? 'उपज' : 'Produce')}
+                      {ord.items?.[0] ? `${ord.items[0].crop_name} (${ord.items[0].quantity} ${ord.items[0].unit})` : 'Produce'}
                     </p>
 
                     <div className="text-[11px] text-emerald-900/80 dark:text-emerald-300/80 space-y-1">
-                      <p>{language === 'hi' ? 'किसान:' : 'Farmer:'} <strong>{ord.farmer_name || (language === 'hi' ? 'रमेश पाटिल' : 'Ramesh Patil')}</strong></p>
-                      <p>{language === 'hi' ? 'खरीदार:' : 'Buyer:'} <strong>{ord.buyer_name || (language === 'hi' ? 'अन्नपूर्णा होटल' : 'Hotel Annapurna')}</strong></p>
+                      <p>{language === 'hi' ? 'किसान:' : 'Farmer:'} <strong>{getLocalizedFarmer(ord.farmer_name || 'Ramesh Patil', language)}</strong></p>
+                      <p>{language === 'hi' ? 'खरीदार:' : 'Buyer:'} <strong>{stripIndicParens(ord.buyer_name || 'Hotel Annapurna')}</strong></p>
                       <p>{language === 'hi' ? 'कुल राशि:' : 'Total:'} <strong>₹{ord.total_rupees}</strong> ({ord.payment_method})</p>
                     </div>
                   </div>
@@ -864,18 +847,18 @@ export default function TransporterDashboardPage() {
                 <Navigation className="w-6 h-6 text-amber-400" />
                 <div>
                   <h2 className="text-lg font-bold">
-                    {language === 'hi' ? 'AI रसद एवं मल्टी-स्टॉप अनुकूलित मार्ग नियोजन' : 'AI Multi-Stop Route Optimizer Engine'}
+                    AI Multi-Stop Route Optimizer Engine
                   </h2>
                   <p className="text-xs text-amber-200/70">
-                    {language === 'hi' ? 'न्यूनतम दूरी, 0% भोजन खराबी, और ईंधन बचत दर' : 'Minimal transit distance, zero spoilage & optimal fuel rate'}
+                    Minimal transit distance, zero spoilage & optimal fuel rate
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-4 text-xs font-bold bg-emerald-950/80 px-4 py-2 rounded-2xl border border-emerald-800">
-                <div>{language === 'hi' ? 'दूरी: ' : 'Distance: '}<span className="text-amber-400">42.5 किमी</span></div>
-                <div>{language === 'hi' ? 'अनुमानित समय: ' : 'ETA: '}<span className="text-amber-400">55 मिनट</span></div>
-                <div>{language === 'hi' ? 'ईंधन बचत: ' : 'Fuel Saved: '}<span className="text-emerald-400">+24.0%</span></div>
+                <div>Distance: <span className="text-amber-400">42.5 km</span></div>
+                <div>ETA: <span className="text-amber-400">55 mins</span></div>
+                <div>Fuel Saved: <span className="text-emerald-400">+24.0%</span></div>
               </div>
             </div>
 
@@ -886,12 +869,12 @@ export default function TransporterDashboardPage() {
                     #1
                   </span>
                   <div>
-                    <h4 className="font-bold text-sm text-white">स्टॉप 1: नासिक संकलन केंद्र (Nashik Mandi Hub)</h4>
-                    <p className="text-xs text-amber-200/70">पिकअप • किसान: रमेश पाटिल (टमाटर 500 किग्रा)</p>
+                    <h4 className="font-bold text-sm text-white">Stop 1: Nashik Collection Center (Nashik Mandi Hub)</h4>
+                    <p className="text-xs text-amber-200/70">Pickup • Farmer: Ramesh Patil (Tomatoes 500 kg)</p>
                   </div>
                 </div>
                 <span className="px-2.5 py-1 bg-amber-500/20 text-amber-300 text-xs font-mono font-bold rounded-lg">
-                  पिकअप OTP हैंडशेक
+                  Pickup OTP Handshake
                 </span>
               </div>
 
@@ -901,12 +884,12 @@ export default function TransporterDashboardPage() {
                     #2
                   </span>
                   <div>
-                    <h4 className="font-bold text-sm text-white">स्टॉप 2: होटल अन्नपूर्णा (Swargate, Pune)</h4>
-                    <p className="text-xs text-amber-200/70">ड्रॉप • खरीदार: रोहन शर्मा (डिलीवरी एवं एस्क्रो रिलीज)</p>
+                    <h4 className="font-bold text-sm text-white">Stop 2: Hotel Annapurna (Swargate, Pune)</h4>
+                    <p className="text-xs text-amber-200/70">Drop • Buyer: Rohan Sharma (Delivery & Escrow Release)</p>
                   </div>
                 </div>
                 <span className="px-2.5 py-1 bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold rounded-lg">
-                  डिलीवरी OTP हैंडशेक
+                  Delivery OTP Handshake
                 </span>
               </div>
             </div>

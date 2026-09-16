@@ -16,12 +16,8 @@ export default function FloatingCartButton() {
         onClick={() => setIsCartOpen(true)}
         id="floating-cart-btn"
         className="group relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-[#0F3826] via-[#144932] to-[#072115] text-amber-300 shadow-[0_10px_25px_-5px_rgba(15,56,38,0.5)] border-2 border-amber-400/40 hover:border-amber-300 hover:shadow-[0_15px_30px_-5px_rgba(15,56,38,0.65)] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center backdrop-blur-xl ring-4 ring-emerald-900/15 dark:ring-emerald-400/15"
-        aria-label={language === 'hi' ? `खरीदारी टोकरी (${itemCount})` : `Shopping Cart (${itemCount})`}
-        title={
-          language === 'hi'
-            ? `खरीदारी टोकरी (${itemCount} वस्तुएँ)`
-            : `Shopping Cart (${itemCount} items)`
-        }
+        aria-label={`Shopping Cart (${itemCount})`}
+        title={`Shopping Cart (${itemCount} items)`}
       >
         {/* Ambient Radial Hover Glow */}
         <span className="absolute inset-0 rounded-full bg-amber-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-200 blur-md pointer-events-none" />
