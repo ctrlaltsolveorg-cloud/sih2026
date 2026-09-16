@@ -141,7 +141,7 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
 
   return (
     <div 
-      className="-mx-4 sm:-mx-8 lg:-mx-12 -mt-6 relative overflow-hidden text-amber-50 group mb-8"
+      className="-mx-4 sm:-mx-8 lg:-mx-12 -mt-6 relative overflow-hidden text-amber-50 group mb-8 border-b border-emerald-900/15 dark:border-emerald-500/20"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -183,9 +183,8 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
                 style={{ backgroundImage: `url('${slide.image}')` }}
               />
 
-              {/* Clean, clear overlay with natural contrast and zero light flair */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-black/45" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#FAF5EB] dark:from-[#07170f] via-transparent to-transparent opacity-85" />
+              {/* Clean, clear overlay with natural contrast - zero light flair, zero white flare */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-black/40" />
 
               {/* Content Overlay */}
               <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 flex items-center pt-20 sm:pt-22 pb-12 sm:pb-16">
