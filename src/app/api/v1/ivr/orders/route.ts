@@ -1,54 +1,63 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
 import { sendWhatsAppOrderSlip } from '@/lib/whatsapp';
+import { getLocalizedCropName, Language } from '@/lib/i18n';
 
 export const dynamic = 'force-dynamic';
 
 /**
- * Helper to extract order details in standard n8n IVR format
+ * Clean IVR Order Status Formatter with Simple Multilingual Speech Synthesis Text
  */
-function formatIvrOrderResponse(orderRow: any, items: any[] = []) {
+function formatIvrOrderResponse(orderRow: any, items: any[] = [], targetLang: Language = 'hi') {
   const primaryItem = items.length > 0 ? items[0] : null;
-  const productName = primaryItem?.crop_name || 'ताज़ा टमाटर (Fresh Tomatoes)';
+  const rawProductName = primaryItem?.crop_name || 'Tomato';
+  const productName = getLocalizedCropName(rawProductName, targetLang);
   const productQty = primaryItem ? `${primaryItem.quantity} ${primaryItem.unit || 'kg'}` : '500 kg';
   const totalRupees = `₹${(orderRow.total_amount_paise / 100).toFixed(2)}`;
 
-  // Hindi text for IVR Text-to-Speech (TTS)
-  const speechHi = `नमस्ते ${orderRow.buyer_name || 'ग्राहक'} जी, आपके ऑर्डर नंबर ${orderRow.id} की वर्तमान स्थिति है: ${orderRow.status}। उत्पाद: ${productName}, मात्रा: ${productQty}। आपका डिलीवरी OTP है ${orderRow.delivery_otp || '9103'}। धन्यवाद।`;
-
-  // English text for IVR TTS
-  const speechEn = `Hello ${orderRow.buyer_name || 'Customer'}, your order ${orderRow.id} for ${productQty} of ${productName} is currently ${orderRow.status}. Your delivery OTP is ${orderRow.delivery_otp || '9103'}. Thank you.`;
+  // Multi-language voice audio text for IVR phone responses
+  const speechHi = `नमस्ते ${orderRow.buyer_name || 'ग्राहक'}, आपका ऑर्डर ${orderRow.id} (${productName}, ${productQty}) वर्तमान में ${orderRow.status || 'रास्ते में'} है। आपका डिलीवरी ओटीपी ${orderRow.delivery_otp || '9103'} है। किसान बंधन में कॉल करने के लिए धन्यवाद।`;
+  const speechEn = `Hello ${orderRow.buyer_name || 'Customer'}, your order ${orderRow.id} for ${productQty} of ${rawProductName} is currently ${orderRow.status || 'Out for Delivery'}. Your delivery OTP is ${orderRow.delivery_otp || '9103'}. Thank you for calling Kisan Bandhan.`;
+  const speechMr = `नमस्कार ${orderRow.buyer_name || 'ग्राहक'}, तुमची ऑर्डर ${orderRow.id} (${productName}, ${productQty}) सध्या ${orderRow.status || 'मार्गावर'} आहे. तुमचा डिलिव्हरी ओटीपी ${orderRow.delivery_otp || '9103'} आहे. धन्यवाद.`;
 
   return {
-    // Specifically requested n8n fields:
+    success: true,
+    orderId: orderRow.id,
     order_id: orderRow.id,
+    customerName: orderRow.buyer_name || 'Annapurna Hotel & Catering',
     customer_name: orderRow.buyer_name || 'Annapurna Hotel & Catering',
     phone: orderRow.buyer_phone || orderRow.phone || '+91 98230 45678',
     product: productName,
+    rawProduct: rawProductName,
     quantity: productQty,
     status: orderRow.status || 'Out for Delivery',
-
-    // Extended useful IVR telemetry for n8n workflows:
+    farmerName: orderRow.farmer_name || 'Ramesh Patil',
     farmer_name: orderRow.farmer_name || 'Ramesh Patil',
-    farmer_phone: orderRow.farmer_phone || '+91 98765 43210',
+    farmerPhone: orderRow.farmer_phone || '+91 98765 43210',
+    deliveryOtp: orderRow.delivery_otp || '9103',
     delivery_otp: orderRow.delivery_otp || '9103',
-    pickup_otp: orderRow.pickup_otp || '4829',
+    pickupOtp: orderRow.pickup_otp || '4829',
+    totalAmount: totalRupees,
     total_amount: totalRupees,
+    deliveryAddress: orderRow.delivery_address || 'Swargate, Pune',
     delivery_address: orderRow.delivery_address || 'Swargate, Pune',
+    speechText: targetLang === 'hi' ? speechHi : (targetLang === 'mr' ? speechMr : speechEn),
     speech_text_hi: speechHi,
     speech_text_en: speechEn,
+    speech_text_mr: speechMr,
   };
 }
 
 /**
- * GET Handler for n8n Webhook / HTTP Request Node
- * Query params: ?phone=9823045678 OR ?order_id=ord_501
+ * Direct IVR Voice & Order Status Query Handler
+ * Query params: ?phone=9823045678 OR ?order_id=ord_501 &lang=hi
  */
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const phone = searchParams.get('phone')?.replace(/\D/g, ''); // digits only
-    const orderId = searchParams.get('order_id');
+    const phone = searchParams.get('phone')?.replace(/\D/g, '');
+    const orderId = searchParams.get('order_id') || searchParams.get('orderId');
+    const lang = (searchParams.get('lang') || 'hi') as Language;
 
     const db = getDb();
 
@@ -81,7 +90,6 @@ export async function GET(request: Request) {
 
     let row = db.prepare(query).get(...params) as any;
 
-    // Fallback demo order if nothing matches so n8n testing never fails
     if (!row) {
       row = {
         id: orderId || 'ord_501',
@@ -98,7 +106,7 @@ export async function GET(request: Request) {
     }
 
     const items = db.prepare('SELECT * FROM order_items WHERE order_id = ?').all(row.id) as any[];
-    const result = formatIvrOrderResponse(row, items);
+    const result = formatIvrOrderResponse(row, items, lang);
 
     const shouldSendWhatsApp = searchParams.get('whatsapp') === 'true';
     let whatsappResult = null;
@@ -108,7 +116,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       ...result,
-      whatsapp_dispatch: whatsappResult,
+      whatsappDispatch: whatsappResult,
     });
   } catch (err: any) {
     return NextResponse.json({ success: false, error: err.message }, { status: 500 });
@@ -116,14 +124,15 @@ export async function GET(request: Request) {
 }
 
 /**
- * POST Handler for n8n Webhook
- * Body: { "phone": "9823045678", "order_id": "ord_501" }
+ * Direct IVR Voice/SMS Order Status Post Handler
+ * Body: { "phone": "9823045678", "orderId": "ord_501", "lang": "hi" }
  */
 export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => ({}));
     const phone = (body.phone || body.caller_id || '').toString().replace(/\D/g, '');
     const orderId = body.order_id || body.orderId;
+    const lang = (body.lang || body.language || 'hi') as Language;
 
     const db = getDb();
 
@@ -172,7 +181,7 @@ export async function POST(request: Request) {
     }
 
     const items = db.prepare('SELECT * FROM order_items WHERE order_id = ?').all(row.id) as any[];
-    const result = formatIvrOrderResponse(row, items);
+    const result = formatIvrOrderResponse(row, items, lang);
 
     const shouldSendWhatsApp = body.send_whatsapp === true || body.whatsapp === true;
     let whatsappResult = null;
@@ -182,7 +191,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       ...result,
-      whatsapp_dispatch: whatsappResult,
+      whatsappDispatch: whatsappResult,
     });
   } catch (err: any) {
     return NextResponse.json({ success: false, error: err.message }, { status: 500 });

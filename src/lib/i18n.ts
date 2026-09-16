@@ -3112,6 +3112,8 @@ export const cropTranslations: Record<string, { hi: string; en: string }> = {
   'गेहूँ': { hi: 'शरबाती गेहूं', en: 'Sharbati Wheat' },
   'Wheat': { hi: 'गेहूं', en: 'Wheat' },
   'Sharbati Wheat': { hi: 'शरबाती गेहूं', en: 'Sharbati Wheat' },
+  'Wheat (Sharbati Gold)': { hi: 'शरबाती प्रीमियम गेहूं (C-306)', en: 'Wheat (Sharbati Gold)' },
+  'Sharbati Gold C-306': { hi: 'शरबाती गोल्ड C-306', en: 'Sharbati Gold C-306' },
   'ज्वार': { hi: 'ज्वार', en: 'Sorghum (Jowar)' },
   'बाजरा': { hi: 'बाजरा', en: 'Pearl Millet (Bajra)' },
   'जौ': { hi: 'जौ', en: 'Barley' },
@@ -3119,14 +3121,21 @@ export const cropTranslations: Record<string, { hi: string; en: string }> = {
   // Vegetables
   'टमाटर': { hi: 'ताज़ा टमाटर', en: 'Fresh Tomatoes' },
   'Tomatoes': { hi: 'टमाटर', en: 'Tomatoes' },
+  'Tomato': { hi: 'टमाटर', en: 'Tomato' },
   'Fresh Tomatoes': { hi: 'ताज़ा टमाटर', en: 'Fresh Tomatoes' },
+  'Tomato (Vaishali 108)': { hi: 'ताज़ा टमाटर (वैशाली 108)', en: 'Tomato (Vaishali 108)' },
+  'Vaishali 108': { hi: 'वैशाली 108', en: 'Vaishali 108' },
   'tamatar': { hi: 'टमाटर', en: 'Fresh Tomatoes' },
   'प्याज़': { hi: 'लाल प्याज', en: 'Red Onions' },
   'प्याज': { hi: 'लाल प्याज', en: 'Red Onions' },
   'Onions': { hi: 'प्याज', en: 'Red Onions' },
+  'Onion': { hi: 'प्याज', en: 'Onion' },
+  'Onion (Nashik Red)': { hi: 'नाशिक लाल प्याज (गरवा)', en: 'Onion (Nashik Red)' },
+  'Garwa Export Quality': { hi: 'गरवा निर्यात गुणवत्ता', en: 'Garwa Export Quality' },
   'pyaaz': { hi: 'प्याज', en: 'Red Onions' },
   'आलू': { hi: 'ज्योति आलू', en: 'Jyoti Potatoes' },
   'Potatoes': { hi: 'आलू', en: 'Potatoes' },
+  'Potato': { hi: 'आलू', en: 'Potato' },
   'aalu': { hi: 'आलू', en: 'Potatoes' },
   'alu': { hi: 'आलू', en: 'Potatoes' },
   'भिंडी': { hi: 'ताज़ा भिंडी', en: 'Fresh Okra (Ladyfinger)' },
@@ -3343,6 +3352,9 @@ export const locationTranslations: Record<string, { hi: string; en: string }> = 
   'मुंबई सेन्ट्रल कोल्ड स्टोर': { hi: 'मुंबई सेन्ट्रल कोल्ड स्टोर', en: 'Mumbai Central Cold Storage' },
   'अन्नपूर्णा पुणे संकलन हब': { hi: 'अन्नपूर्णा पुणे संकलन हब', en: 'Annapurna Pune Collection Hub' },
   'नासिक मंडी संकलन हब': { hi: 'नासिक मंडी संकलन हब', en: 'Nashik Mandi Collection Hub' },
+  'Farm Collection Center #04, Nashik Hub': { hi: 'खेत संकलन केंद्र #04, नासिक हब', en: 'Farm Collection Center #04, Nashik Hub' },
+  'Pimplgaon Mandi Hub, Nashik': { hi: 'पिंपलगांव मंडी हब, नासिक', en: 'Pimplgaon Mandi Hub, Nashik' },
+  'Sehore Mandi Hub, MP': { hi: 'सीहोर कृषि मंडी हब, मध्य प्रदेश', en: 'Sehore Mandi Hub, MP' },
 };
 
 export const farmerTranslations: Record<string, { hi: string; en: string }> = {
@@ -3353,8 +3365,12 @@ export const farmerTranslations: Record<string, { hi: string; en: string }> = {
   'कविता चौधरी': { hi: 'कविता चौधरी', en: 'Kavita Choudhary' },
   'मालवा कृषक FPO': { hi: 'मालवा कृषक FPO', en: 'Malwa Krishak FPO' },
   'हनुमान सहाय': { hi: 'हनुमान सहाय', en: 'Hanuman Sahay' },
-  'Ramesh Patil': { hi: 'रामेश पाटिल', en: 'Ramesh Patil' },
+  'Ramesh Patil': { hi: 'रमेश पाटिल', en: 'Ramesh Patil' },
   'Harpreet Singh': { hi: 'हरप्रीत सिंह', en: 'Harpreet Singh' },
+  'Suresh Gaikwad': { hi: 'सुरेश गायकवाड़', en: 'Suresh Gaikwad' },
+  'रमेश पाटिल': { hi: 'रमेश पाटिल', en: 'Ramesh Patil' },
+  'हरप्रीत सिंह': { hi: 'हरप्रीत सिंह', en: 'Harpreet Singh' },
+  'सुरेश गायकवाड़': { hi: 'सुरेश गायकवाड़', en: 'Suresh Gaikwad' },
   'अन्नपूर्णा होटल एवं कैटरिंग सेवा': { hi: 'अन्नपूर्णा होटल एवं कैटरिंग सेवा', en: 'Annapurna Hotel & Catering Services' },
   'अन्नपूर्णा पुणे (खरीदार)': { hi: 'अन्नपूर्णा पुणे (खरीदार)', en: 'Annapurna Pune (Buyer)' },
   'मदर डेयरी एग्री': { hi: 'मदर डेयरी एग्री', en: 'Mother Dairy Agri' },
@@ -3726,20 +3742,68 @@ export function getLocalizedCropName(name: string, lang: Language): string {
   return name;
 }
 
+export function stripIndicParens(text: string): string {
+  if (!text) return text;
+  return text.replace(/\s*\([\u0900-\u0D7F\s\.\,\-]+\)/g, '').trim();
+}
+
+export function parseBilingualString(text: string, lang: Language): string {
+  if (!text) return text;
+  const stripped = stripIndicParens(text);
+  if (lang === 'en') {
+    return stripped;
+  }
+  const trimmed = text.trim();
+  const match = trimmed.match(/^([^(]+)\(([^)]+)\)$/);
+  if (match) {
+    const part1 = match[1].trim();
+    const part2 = match[2].trim();
+    if (/[\u0900-\u0D7F]/.test(part2)) return part2;
+    if (/[\u0900-\u0D7F]/.test(part1)) return part1;
+  }
+  return stripped;
+}
+
 export function getLocalizedLocation(loc: string, lang: Language): string {
   if (!loc) return loc;
-  if (locationTranslations[loc]) {
-    return (locationTranslations[loc] as any)[lang] || (lang === 'en' ? locationTranslations[loc].en : locationTranslations[loc].hi) || loc;
+  const cleanKey = stripIndicParens(loc);
+  if (lang === 'en') {
+    if (locationTranslations[cleanKey]?.en) return locationTranslations[cleanKey].en;
+    if (locationTranslations[loc]?.en) return locationTranslations[loc].en;
+    return cleanKey;
   }
-  return loc;
+  if (locationTranslations[cleanKey]) {
+    return (locationTranslations[cleanKey] as any)[lang] || locationTranslations[cleanKey].hi || cleanKey;
+  }
+  if (locationTranslations[loc]) {
+    return (locationTranslations[loc] as any)[lang] || locationTranslations[loc].hi || cleanKey;
+  }
+  const parsed = parseBilingualString(loc, lang);
+  if (locationTranslations[parsed]) {
+    return (locationTranslations[parsed] as any)[lang] || locationTranslations[parsed].hi || parsed;
+  }
+  return parsed;
 }
 
 export function getLocalizedFarmer(farmer: string, lang: Language): string {
   if (!farmer) return farmer;
-  if (farmerTranslations[farmer]) {
-    return (farmerTranslations[farmer] as any)[lang] || (lang === 'en' ? farmerTranslations[farmer].en : farmerTranslations[farmer].hi) || farmer;
+  const cleanKey = stripIndicParens(farmer);
+  if (lang === 'en') {
+    if (farmerTranslations[cleanKey]?.en) return farmerTranslations[cleanKey].en;
+    if (farmerTranslations[farmer]?.en) return farmerTranslations[farmer].en;
+    return cleanKey;
   }
-  return farmer;
+  if (farmerTranslations[cleanKey]) {
+    return (farmerTranslations[cleanKey] as any)[lang] || farmerTranslations[cleanKey].hi || cleanKey;
+  }
+  if (farmerTranslations[farmer]) {
+    return (farmerTranslations[farmer] as any)[lang] || farmerTranslations[farmer].hi || cleanKey;
+  }
+  const parsed = parseBilingualString(farmer, lang);
+  if (farmerTranslations[parsed]) {
+    return (farmerTranslations[parsed] as any)[lang] || farmerTranslations[parsed].hi || parsed;
+  }
+  return parsed;
 }
 
 export function getLocalizedCategory(cat: string, lang: Language): string {

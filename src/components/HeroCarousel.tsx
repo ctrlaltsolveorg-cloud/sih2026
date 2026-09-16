@@ -31,58 +31,58 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
     {
       id: 1,
       image: '/images/farmer2.jpg',
-      badgeHi: 'SIH 2026 PS 26033 • किसान दिवस समर्पित प्रत्यक्ष कृषि मंच',
+      badgeHi: 'SIH 2026 PS 26033 • Farmer-First Direct Agri Platform',
       badgeEn: 'SIH 2026 PS 26033 • Farmer-First Direct Agri Platform',
-      titleHi: 'किसान से खरीदार तक: सीधा, पारदर्शी एवं डिजिटल व्यापार',
+      titleHi: 'Farmer-to-Buyer: Direct, Transparent & Digital Agri Trade',
       titleEn: 'Farmer-to-Buyer: Direct, Transparent & Digital Agri Trade',
-      descHi: '1.4 लाख+ सत्यापित भारतीय किसानों को सीधे थोक खरीदारों, FPOs और उपभोक्ताओं से जोड़ने वाला आधुनिक डिजिटल मंडी नेटवर्क।',
+      descHi: 'Connecting 1.4 Lakh+ verified Indian farmers directly with institutional buyers, FPOs, and consumers with 0% middlemen commission.',
       descEn: 'Connecting 1.4 Lakh+ verified Indian farmers directly with institutional buyers, FPOs, and consumers with 0% middlemen commission.',
       ctaPrimaryEn: 'Explore Products',
-      ctaPrimaryHi: 'फसल बाजार देखें',
+      ctaPrimaryHi: 'Explore Products',
       ctaSecondaryEn: 'Register as Farmer',
-      ctaSecondaryHi: 'किसान पंजीकरण',
+      ctaSecondaryHi: 'Register as Farmer',
     },
     {
       id: 2,
       image: '/images/fresh_farm_produce.jpg',
-      badgeHi: '100% Farm-Fresh • खेत से सीधी ताज़ी उपज',
+      badgeHi: '100% Farm-Fresh • Direct Harvest from Fields',
       badgeEn: '100% Farm-Fresh • Direct Harvest from Fields',
-      titleHi: 'ताज़ी फल-सब्जियां और जैविक उपज सीधे खेत से',
+      titleHi: 'Fresh Farm Fruits, Vegetables & Organic Harvest Direct to You',
       titleEn: 'Fresh Farm Fruits, Vegetables & Organic Harvest Direct to You',
-      descHi: 'कंप्यूटर विज़न AI ग्रेडिंग और बायो-सेंसिंग प्रमाणित ताज़ी फसलें। उच्च पोषण, शून्य बिचौलिए और तत्काल डिजिटल भुगतान।',
+      descHi: 'AI computer vision grade-certified fresh produce harvested today with zero middlemen, escrow protection, and rapid farm-gate dispatch.',
       descEn: 'AI computer vision grade-certified fresh produce harvested today with zero middlemen, escrow protection, and rapid farm-gate dispatch.',
       ctaPrimaryEn: 'Explore Products',
-      ctaPrimaryHi: 'ताज़ी उपज देखें',
+      ctaPrimaryHi: 'Explore Products',
       ctaSecondaryEn: 'Register as Farmer',
-      ctaSecondaryHi: 'किसान पंजीकरण',
+      ctaSecondaryHi: 'Register as Farmer',
     },
     {
       id: 3,
       image: '/images/farmer1.jpg',
-      badgeHi: 'Mandi Agro-Hub • अनाज, दलहन एवं व्यापारिक फसलें',
+      badgeHi: 'Mandi Agro-Hub • Quality Grains, Pulses & Agro Commodities',
       badgeEn: 'Mandi Agro-Hub • Quality Grains, Pulses & Agro Commodities',
-      titleHi: 'उच्च गुणवत्ता अनाज, दलहन एवं आधुनिक एग्रो-हब संकलन',
+      titleHi: 'Premium Quality Grains, Pulses & Modern Agro-Hub Aggregation',
       titleEn: 'Premium Quality Grains, Pulses & Modern Agro-Hub Aggregation',
-      descHi: '42 राज्य स्तरीय एग्रो-हब के माध्यम से पारदर्शी नीलामी, स्वचालित नमी व गुणवत्ता परीक्षण तथा त्वरित बैंक अंतरण।',
+      descHi: 'Transparent bulk procurement across 42 certified agro-hubs with automated quality inspection, fair pricing, and direct bank transfers.',
       descEn: 'Transparent bulk procurement across 42 certified agro-hubs with automated quality inspection, fair pricing, and direct bank transfers.',
       ctaPrimaryEn: 'Explore Products',
-      ctaPrimaryHi: 'अनाज स्टॉक देखें',
+      ctaPrimaryHi: 'Explore Products',
       ctaSecondaryEn: 'Register as Farmer',
-      ctaSecondaryHi: 'किसान पंजीकरण',
+      ctaSecondaryHi: 'Register as Farmer',
     },
     {
       id: 4,
       image: '/images/farmer4.jpg',
-      badgeHi: 'Fair Price Assured • पारदर्शी किसान-खरीदार अनुबंध',
+      badgeHi: 'Fair Price Assured • Direct Farmer-to-Buyer Contracts',
       badgeEn: 'Fair Price Assured • Direct Farmer-to-Buyer Contracts',
-      titleHi: 'बिचौलिया मुक्त कृषि व्यापार और सुनिश्चित उचित मूल्य',
+      titleHi: 'Middlemen-Free Agri Commerce with Fair Price Assurance',
       titleEn: 'Middlemen-Free Agri Commerce with Fair Price Assurance',
-      descHi: 'लाइव एगमार्कनेट मंडी भाव, बहुभाषी टोल-फ्री AI वॉयस हेल्पलाइन और फार्म-गेट से गोदाम तक डिजिटल लॉजिस्टिक्स सुरक्षा।',
+      descHi: 'Real-time Agmarknet mandi rates, multilingual toll-free voice registration, and end-to-end multi-modal logistics straight to your doorstep.',
       descEn: 'Real-time Agmarknet mandi rates, multilingual toll-free voice registration, and end-to-end multi-modal logistics straight to your doorstep.',
       ctaPrimaryEn: 'Explore Products',
-      ctaPrimaryHi: 'कृषि बाजार देखें',
+      ctaPrimaryHi: 'Explore Products',
       ctaSecondaryEn: 'Register as Farmer',
-      ctaSecondaryHi: 'किसान पंजीकरण',
+      ctaSecondaryHi: 'Register as Farmer',
     },
   ];
 
@@ -163,7 +163,6 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
         {/* Slides with Photo in Background */}
         {slides.map((slide, idx) => {
           const isActive = idx === currentIndex;
-          const isHindi = language === 'hi';
 
           return (
             <div
@@ -177,7 +176,7 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
               <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
                 <img
                   src={slide.image}
-                  alt={isHindi ? slide.titleHi : slide.titleEn}
+                  alt={slide.titleEn}
                   className={`w-full h-full object-cover object-center transform transition-transform duration-1000 ease-out ${
                     isActive ? 'scale-105' : 'scale-100'
                   }`}
@@ -207,17 +206,17 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
                     {/* Tag / Badge */}
                     <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs font-semibold backdrop-blur-sm shadow-sm">
                       <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                      <span>{isHindi ? slide.badgeHi : slide.badgeEn}</span>
+                      <span>{slide.badgeEn}</span>
                     </div>
 
                     {/* Main Title */}
                     <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-amber-50 leading-tight drop-shadow-md">
-                      {isHindi ? slide.titleHi : slide.titleEn}
+                      {slide.titleEn}
                     </h1>
 
                     {/* Description */}
                     <p className="text-xs sm:text-sm lg:text-base text-amber-100/90 leading-relaxed max-w-2xl drop-shadow-sm font-normal">
-                      {isHindi ? slide.descHi : slide.descEn}
+                      {slide.descEn}
                     </p>
 
                     {/* Action Buttons */}
@@ -230,7 +229,7 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
                         id="hero-carousel-explore-cta"
                       >
                         <ShoppingBag className="w-4 h-4" />
-                        <span>{isHindi ? slide.ctaPrimaryHi : slide.ctaPrimaryEn}</span>
+                        <span>{slide.ctaPrimaryEn}</span>
                       </a>
 
                       {/* CTA 2: Register as Farmer */}
@@ -240,7 +239,7 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
                         id="hero-carousel-register-cta"
                       >
                         <Sprout className="w-4 h-4 text-amber-400" />
-                        <span>{isHindi ? slide.ctaSecondaryHi : slide.ctaSecondaryEn}</span>
+                        <span>{slide.ctaSecondaryEn}</span>
                       </Link>
 
                       {/* Toll-free IVR Voice badge */}
@@ -259,32 +258,32 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
                     <div className="group/card relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-black/25 dark:bg-black/40 backdrop-blur-md border border-white/25 border-b-white/10 shadow-[0_8px_25px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.35)] hover:bg-black/35 hover:border-amber-400/50 hover:shadow-[0_12px_32px_rgba(0,0,0,0.45)] hover:scale-[1.02] transition-all duration-300 text-center space-y-1.5">
                       <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20 pointer-events-none" />
                       <div className="relative z-10 text-3xl sm:text-4xl font-extrabold text-amber-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-tight">0%</div>
-                      <div className="relative z-10 text-xs text-white font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statMiddlemen || 'बिचौलिए (Middlemen)'}</div>
-                      <p className="relative z-10 text-[10px] text-amber-200/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statMiddlemenDesc || 'सीधा बैंक अंतरण'}</p>
+                      <div className="relative z-10 text-xs text-white font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statMiddlemen || 'Middlemen Commission'}</div>
+                      <p className="relative z-10 text-[10px] text-amber-200/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statMiddlemenDesc || 'Direct Bank Transfers'}</p>
                     </div>
 
                     {/* Card 2: 99.4% CV Grading */}
                     <div className="group/card relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-black/25 dark:bg-black/40 backdrop-blur-md border border-white/25 border-b-white/10 shadow-[0_8px_25px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.35)] hover:bg-black/35 hover:border-emerald-400/50 hover:shadow-[0_12px_32px_rgba(0,0,0,0.45)] hover:scale-[1.02] transition-all duration-300 text-center space-y-1.5">
                       <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20 pointer-events-none" />
                       <div className="relative z-10 text-3xl sm:text-4xl font-extrabold text-emerald-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-tight">99.4%</div>
-                      <div className="relative z-10 text-xs text-white font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statCVGrading || 'AI ग्रेडिंग सटीकता'}</div>
-                      <p className="relative z-10 text-[10px] text-emerald-200/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statCVGradingDesc || 'कंप्यूटर विज़न लैब'}</p>
+                      <div className="relative z-10 text-xs text-white font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statCVGrading || 'AI Grading Accuracy'}</div>
+                      <p className="relative z-10 text-[10px] text-emerald-200/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statCVGradingDesc || 'Computer Vision Lab'}</p>
                     </div>
 
                     {/* Card 3: 6 AI Engines */}
                     <div className="group/card relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-black/25 dark:bg-black/40 backdrop-blur-md border border-white/25 border-b-white/10 shadow-[0_8px_25px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.35)] hover:bg-black/35 hover:border-amber-400/50 hover:shadow-[0_12px_32px_rgba(0,0,0,0.45)] hover:scale-[1.02] transition-all duration-300 text-center space-y-1.5">
                       <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20 pointer-events-none" />
                       <div className="relative z-10 text-3xl sm:text-4xl font-extrabold text-amber-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-tight">6 AI</div>
-                      <div className="relative z-10 text-xs text-white font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statAIEngines || 'इंजन एकीकृत'}</div>
-                      <p className="relative z-10 text-[10px] text-amber-200/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statAIEnginesDesc || 'मूल्य, मार्ग व गुणवत्ता'}</p>
+                      <div className="relative z-10 text-xs text-white font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statAIEngines || 'Engines Integrated'}</div>
+                      <p className="relative z-10 text-[10px] text-amber-200/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statAIEnginesDesc || 'Pricing, Routes & Quality'}</p>
                     </div>
 
                     {/* Card 4: IVR/SMS Offline */}
                     <div className="group/card relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-black/25 dark:bg-black/40 backdrop-blur-md border border-white/25 border-b-white/10 shadow-[0_8px_25px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.35)] hover:bg-black/35 hover:border-emerald-400/50 hover:shadow-[0_12px_32px_rgba(0,0,0,0.45)] hover:scale-[1.02] transition-all duration-300 text-center space-y-1.5">
                       <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20 pointer-events-none" />
                       <div className="relative z-10 text-2xl sm:text-3xl font-extrabold text-emerald-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-tight">IVR/SMS</div>
-                      <div className="relative z-10 text-xs text-white font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statNoInternet || 'बिना इंटरनेट'}</div>
-                      <p className="relative z-10 text-[10px] text-emerald-200/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statNoInternetDesc || 'कीपैड फोन सपोर्ट'}</p>
+                      <div className="relative z-10 text-xs text-white font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statNoInternet || 'Offline Support'}</div>
+                      <p className="relative z-10 text-[10px] text-emerald-200/90 font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{t.statNoInternetDesc || 'Keypad Phone Support'}</p>
                     </div>
                   </div>
                 </div>
@@ -309,7 +308,7 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
                 role="tab"
                 aria-selected={isActive}
                 aria-label={`Slide ${index + 1} of ${totalSlides}`}
-                title={language === 'hi' ? slide.titleHi : slide.titleEn}
+                title={slide.titleEn}
                 onClick={() => goToSlide(index)}
                 className="p-1 cursor-pointer focus:outline-none group"
               >

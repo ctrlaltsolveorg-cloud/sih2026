@@ -501,18 +501,19 @@ export function getOrders(filter: { userId?: string; role?: string; orderId?: st
         deliveryInstructions: r.delivery_instructions || '',
       };
     }
+    const cleanIndic = (val?: string) => val ? val.replace(/\s*\([\u0900-\u0D7F\s\.\,\-]+\)/g, '').trim() : val;
     return {
       ...r,
-      buyer_name: shippingObj?.fullName || r.buyer_name || 'Annapurna Hotel & Catering (होटल अन्नपूर्णा)',
+      buyer_name: cleanIndic(shippingObj?.fullName || r.buyer_name || 'Annapurna Hotel & Catering'),
       buyer_phone: shippingObj?.mobileNumber || r.buyer_phone || '+91 98222 33344',
-      farmer_name: r.farmer_name || 'Ramesh Patil (रमेश पाटिल)',
+      farmer_name: cleanIndic(r.farmer_name || 'Ramesh Patil'),
       farmer_phone: r.farmer_phone || '+91 98765 43210',
       items,
       shipping: shippingObj,
       total_rupees: (r.total_amount_paise / 100).toFixed(2),
       subtotal_rupees: (r.subtotal_paise / 100).toFixed(2),
       delivery_fee_rupees: (r.delivery_fee_paise / 100).toFixed(2),
-      driver_name: r.driver_name || r.partner_user_name || 'विक्रम शिंदे (Vikram Shinde)',
+      driver_name: cleanIndic(r.driver_name || r.partner_user_name || 'Vikram Shinde'),
       driver_phone: r.driver_phone || r.partner_user_phone || '+91 99000 11122',
       driver_vehicle: r.driver_vehicle || 'MH-15-EG-8821 (Tata Ace Gold)',
     };

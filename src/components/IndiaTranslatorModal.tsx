@@ -237,7 +237,7 @@ export default function IndiaTranslatorModal() {
                   {t.translatorHeader}
                 </h3>
                 <span className="px-2 py-0.5 bg-amber-400/20 text-amber-300 text-[10px] font-extrabold rounded-md border border-amber-400/30">
-                  11 भाषाएं
+                  11 Languages
                 </span>
               </div>
               <p className="text-xs text-amber-200/70 mt-0.5 hidden sm:block">
@@ -315,11 +315,11 @@ export default function IndiaTranslatorModal() {
             </span>
             <div className="flex flex-wrap gap-1.5">
               {[
-                { key: "what is today's wholesale mandi price for tomatoes?", label: "🍅 मंडी भाव (Mandi Rates)" },
-                { key: "produce inspected with computer vision ai and graded a+.", label: "🔍 CV ग्रेडिंग (Grade A+)" },
-                { key: "smart contract payment securely deposited in farmer escrow.", label: "🔒 एस्क्रौ भुगतान (Escrow)" },
-                { key: "present otp 4829 at the collection hub for vehicle pickup.", label: "🚚 पिकअप OTP (Transport)" },
-                { key: "virtual pool of 500kg wheat formed under fpo cooperative.", label: "🌾 FPO पूल (Aggregation)" },
+                { key: "what is today's wholesale mandi price for tomatoes?", label: "🍅 Mandi Rates" },
+                { key: "produce inspected with computer vision ai and graded a+.", label: "🔍 CV Grading (Grade A+)" },
+                { key: "smart contract payment securely deposited in farmer escrow.", label: "🔒 Escrow Payment" },
+                { key: "present otp 4829 at the collection hub for vehicle pickup.", label: "🚚 Pickup OTP (Transport)" },
+                { key: "virtual pool of 500kg wheat formed under fpo cooperative.", label: "🌾 FPO Pool (Aggregation)" },
               ].map((item, idx) => (
                 <button
                   key={idx}
@@ -419,7 +419,7 @@ export default function IndiaTranslatorModal() {
                   onClick={() => handleApplySiteLanguage(targetLang)}
                   className="text-[11px] text-amber-800 dark:text-amber-400 hover:text-amber-950 dark:hover:text-amber-300 font-extrabold flex items-center gap-1 transition"
                 >
-                  <span>वेबसाइट भाषा बनाएं (Set Site Lang)</span>
+                  <span>Set Site Language</span>
                 </button>
               </div>
             </div>
@@ -429,9 +429,9 @@ export default function IndiaTranslatorModal() {
         {/* Modal Footer Strip */}
         <div className="bg-emerald-950 px-5 py-3 text-amber-100 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs border-t border-emerald-800/40">
           <div className="flex items-center gap-2">
-            <span className="text-amber-400 font-bold">💡 टिप:</span>
+            <span className="text-amber-400 font-bold">💡 Tip:</span>
             <span className="text-[11px] text-amber-200/80">
-              यह अनुवादक किसान संदेश, मंडी भाव और अनुबंध शर्तों को किसी भी भारतीय भाषा में तुरंत परिवर्तित करता है।
+              This translator converts farmer messages, mandi rates, and contract terms into clear English instantly.
             </span>
           </div>
 

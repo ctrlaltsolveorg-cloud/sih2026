@@ -57,10 +57,10 @@ export default function AuthModal() {
   const strengthScore = [hasMinLength, hasUpper, hasLower, hasNumber, hasSymbol].filter(Boolean).length;
 
   const getStrengthLabel = () => {
-    if (strengthScore <= 1) return { label: language === 'hi' ? 'कमजोर (Weak)' : 'Weak', color: 'bg-red-500', width: 'w-1/5' };
-    if (strengthScore <= 3) return { label: language === 'hi' ? 'मध्यम (Medium)' : 'Medium', color: 'bg-amber-500', width: 'w-3/5' };
-    if (strengthScore === 4) return { label: language === 'hi' ? 'मजबूत (Strong)' : 'Strong', color: 'bg-emerald-500', width: 'w-4/5' };
-    return { label: language === 'hi' ? 'अत्यंत सुरक्षित (Very Strong)' : 'Very Strong', color: 'bg-emerald-600', width: 'w-full' };
+    if (strengthScore <= 1) return { label: 'Weak', color: 'bg-red-500', width: 'w-1/5' };
+    if (strengthScore <= 3) return { label: 'Medium', color: 'bg-amber-500', width: 'w-3/5' };
+    if (strengthScore === 4) return { label: 'Strong', color: 'bg-emerald-500', width: 'w-4/5' };
+    return { label: 'Very Strong', color: 'bg-emerald-600', width: 'w-full' };
   };
 
   const handleSuggestPassword = () => {
@@ -85,11 +85,11 @@ export default function AuthModal() {
     setErrorMsg(null);
 
     if (!name.trim()) {
-      setErrorMsg(language === 'hi' ? 'कृपया अपना पूरा नाम दर्ज करें' : 'Please enter your full name');
+      setErrorMsg('Please enter your full name');
       return;
     }
     if (strengthScore < 2) {
-      setErrorMsg(language === 'hi' ? 'कृपया एक मजबूत पासवर्ड दर्ज करें (कम से कम 8 अक्षर)' : 'Please enter a stronger password (min 8 chars)');
+      setErrorMsg('Please enter a stronger password (min 8 chars)');
       return;
     }
 
@@ -124,10 +124,10 @@ export default function AuthModal() {
             </div>
             <div>
               <h2 className="font-extrabold text-lg leading-tight">
-                {language === 'hi' ? 'किसानबंधु AI सुरक्षा पोर्टल' : 'KisanBandhan Auth Portal'}
+                KisanBandhan Auth Portal
               </h2>
               <p className="text-xs text-amber-200/80">
-                {language === 'hi' ? '4-स्तरीय RLS सुरक्षा एवं प्रमाणीकरण' : '4-Layer RLS Security & Authentication'}
+                4-Layer RLS Security & Authentication
               </p>
             </div>
           </div>
@@ -147,7 +147,7 @@ export default function AuthModal() {
               activeTab === 'login' ? 'border-amber-600 text-amber-900 dark:text-amber-300 bg-amber-500/10 dark:bg-amber-500/20' : 'border-transparent text-emerald-900/60 dark:text-emerald-300/60 hover:text-emerald-950 dark:hover:text-emerald-100'
             }`}
           >
-            {language === 'hi' ? 'लॉगिन (Login)' : 'Log In'}
+            Log In
           </button>
           <button
             onClick={() => {
@@ -158,7 +158,7 @@ export default function AuthModal() {
               activeTab === 'signup' ? 'border-amber-600 text-amber-900 dark:text-amber-300 bg-amber-500/10 dark:bg-amber-500/20' : 'border-transparent text-emerald-900/60 dark:text-emerald-300/60 hover:text-emerald-950 dark:hover:text-emerald-100'
             }`}
           >
-            {language === 'hi' ? 'नया खाता बनाएँ (Sign Up)' : 'Sign Up'}
+            Sign Up
           </button>
           <button
             onClick={() => {
@@ -169,7 +169,7 @@ export default function AuthModal() {
               activeTab === 'forgot' ? 'border-amber-600 text-amber-900 dark:text-amber-300 bg-amber-500/10 dark:bg-amber-500/20' : 'border-transparent text-emerald-900/60 dark:text-emerald-300/60 hover:text-emerald-950 dark:hover:text-emerald-100'
             }`}
           >
-            {language === 'hi' ? 'पासवर्ड भूल गए?' : 'Reset Pass'}
+            Reset Pass
           </button>
         </div>
 
@@ -197,7 +197,7 @@ export default function AuthModal() {
                 <div className="flex items-center justify-between">
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/25 text-amber-950 font-black text-[10px] uppercase tracking-wider border border-amber-500/40">
                     <Sparkles className="w-3 h-3 text-amber-600" />
-                    <span>{language === 'hi' ? 'डेवलपर व सहयोगी मास्टर ID' : 'Developer & Collaborator ID'}</span>
+                    <span>Developer & Collaborator ID</span>
                   </span>
                   <span className="text-[10px] font-mono text-emerald-900 bg-white/90 px-2 py-0.5 rounded-md font-extrabold border border-emerald-900/10">
                     ALL 6 PORTALS
@@ -205,9 +205,7 @@ export default function AuthModal() {
                 </div>
 
                 <p className="text-[11px] text-emerald-950/85 leading-snug">
-                  {language === 'hi'
-                    ? 'डेवलपर्स और कोलैबोरेटर्स के लिए 1-क्लिक में पूरा पोर्टल (किसान, बायर, FPO, हब, ट्रांसपोर्टर, एडमिन) अनलॉक करें।'
-                    : '1-Click God Mode: Instant universal access to test and analyze all 6 stakeholder portals without restrictions.'}
+                  1-Click God Mode: Instant universal access to test and analyze all 6 stakeholder portals without restrictions.
                 </p>
 
                 <button
@@ -216,7 +214,7 @@ export default function AuthModal() {
                   className="w-full py-2.5 bg-[#062215] hover:bg-[#0F3826] text-amber-300 font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition border border-amber-400/40 active:scale-[0.99]"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  <span>{language === 'hi' ? '⚡ 1-क्लिक डेवलपर मास्टर लॉगिन (फुल एक्सेस)' : '⚡ 1-Click Developer Master Login (Full Access)'}</span>
+                  <span>⚡ 1-Click Developer Master Login (Full Access)</span>
                 </button>
 
                 <div className="flex items-center justify-between text-[10px] text-emerald-950/75 font-mono px-1">
@@ -228,7 +226,7 @@ export default function AuthModal() {
               <form onSubmit={handleLoginSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
-                  {language === 'hi' ? 'ईमेल पता (Email Address)' : 'Email Address'}
+                  Email Address
                 </label>
                 <div className="relative">
                   <Mail className="w-4 h-4 absolute left-3.5 top-3 text-emerald-800/60 dark:text-emerald-400/60" />
@@ -246,14 +244,14 @@ export default function AuthModal() {
               <div>
                 <div className="flex items-center justify-between mb-1">
                   <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200">
-                    {language === 'hi' ? 'पासवर्ड (Password)' : 'Password'}
+                    Password
                   </label>
                   <button
                     type="button"
                     onClick={() => setActiveTab('forgot')}
                     className="text-[11px] font-bold text-amber-700 dark:text-amber-400 hover:underline"
                   >
-                    {language === 'hi' ? 'पासवर्ड भूल गए?' : 'Forgot password?'}
+                    Forgot password?
                   </button>
                 </div>
                 <div className="relative">
@@ -282,11 +280,11 @@ export default function AuthModal() {
                 className="w-full py-3 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow-lg transition flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {loading && <Loader2 className="w-4 h-4 animate-spin text-amber-400" />}
-                <span>{language === 'hi' ? 'सुरक्षित लॉगिन करें' : 'Log In Securely'}</span>
+                <span>Log In Securely</span>
               </button>
 
               <div className="relative my-4 text-center text-xs text-emerald-900/40 dark:text-emerald-300/40 font-bold">
-                <span className="bg-[#FAF5EB] dark:bg-[#0c2217] px-3 relative z-10">{language === 'hi' ? 'अथवा 1-क्लिक क्विक लॉगिन' : 'OR 1-CLICK QUICK LOGIN'}</span>
+                <span className="bg-[#FAF5EB] dark:bg-[#0c2217] px-3 relative z-10">OR 1-CLICK QUICK LOGIN</span>
                 <div className="absolute inset-0 top-1/2 border-t border-emerald-900/10 dark:border-emerald-500/20" />
               </div>
 
@@ -294,7 +292,7 @@ export default function AuthModal() {
               <div className="p-3 bg-emerald-900/5 dark:bg-emerald-950/50 rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20 space-y-2">
                 <p className="text-[10px] font-bold text-amber-900 dark:text-amber-300 flex items-center gap-1">
                   <Sparkles className="w-3 h-3 text-amber-600 dark:text-amber-400" />
-                  <span>{language === 'hi' ? 'त्वरित डेमो खातों से लॉगिन करें:' : 'Instant Quick Demo Login Accounts:'}</span>
+                  <span>Instant Quick Demo Login Accounts:</span>
                 </p>
                 <div className="grid grid-cols-2 gap-1.5 text-[11px] font-extrabold">
                   <button
@@ -374,7 +372,7 @@ export default function AuthModal() {
                     d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.58l3.99 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
                   />
                 </svg>
-                <span>{language === 'hi' ? 'गूगल (Google) से जारी रखें' : 'Continue with Google'}</span>
+                <span>Continue with Google</span>
               </button>
             </form>
             </div>
@@ -385,7 +383,7 @@ export default function AuthModal() {
             <form onSubmit={handleSignupSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
-                  {language === 'hi' ? 'पूरा नाम (Full Name)' : 'Full Name'}
+                  Full Name
                 </label>
                 <div className="relative">
                   <User className="w-4 h-4 absolute left-3.5 top-3 text-emerald-800/60 dark:text-emerald-400/60" />
@@ -402,7 +400,7 @@ export default function AuthModal() {
 
               <div>
                 <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
-                  {language === 'hi' ? 'ईमेल (Email Address)' : 'Email Address'}
+                  Email Address
                 </label>
                 <div className="relative">
                   <Mail className="w-4 h-4 absolute left-3.5 top-3 text-emerald-800/60 dark:text-emerald-400/60" />
@@ -419,26 +417,26 @@ export default function AuthModal() {
 
               <div>
                 <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
-                  {language === 'hi' ? 'उपयोगकर्ता भूमिका (User Role)' : 'Select Platform Role'}
+                  Select Platform Role
                 </label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value as UserRole)}
                   className="w-full px-3.5 py-2.5 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-xl text-xs text-emerald-950 dark:text-emerald-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-semibold"
                 >
-                  <option value="FARMER">किसान पोर्टल (Farmer)</option>
-                  <option value="BUYER">थोक एवं खुदरा खरीदार (Direct Buyer)</option>
-                  <option value="FPO">एफपीओ समूह प्रबंधक (FPO Manager)</option>
-                  <option value="HUB_OPERATOR">गुणवत्ता जाँच केंद्र ऑपरेटर (Hub Operator)</option>
-                  <option value="TRANSPORTER">परिवहन एवं रसद भागीदार (Transporter)</option>
-                  <option value="ADMIN">राष्ट्रीय शासन प्रशासक (Admin)</option>
+                  <option value="FARMER">Farmer Portal</option>
+                  <option value="BUYER">Direct Buyer Portal</option>
+                  <option value="FPO">FPO Manager Portal</option>
+                  <option value="HUB_OPERATOR">Hub Operator Portal</option>
+                  <option value="TRANSPORTER">Transporter Partner Portal</option>
+                  <option value="ADMIN">National Governance Admin</option>
                 </select>
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-1">
                   <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200">
-                    {language === 'hi' ? 'मजबूत पासवर्ड बनाएँ' : 'Create Strong Password'}
+                    Create Strong Password
                   </label>
                   <button
                     type="button"
@@ -446,7 +444,7 @@ export default function AuthModal() {
                     className="text-[10px] font-bold text-amber-800 dark:text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded-full hover:bg-amber-500/30 flex items-center gap-1"
                   >
                     <Sparkles className="w-3 h-3 text-amber-600 dark:text-amber-400" />
-                    <span>{language === 'hi' ? 'मजबूत पासवर्ड सुझाव' : 'Suggest Strong Password'}</span>
+                    <span>Suggest Strong Password</span>
                   </button>
                 </div>
 
@@ -473,17 +471,17 @@ export default function AuthModal() {
                 {password.length > 0 && (
                   <div className="mt-2 space-y-1">
                     <div className="flex justify-between items-center text-[10px] font-bold">
-                      <span className="text-emerald-900/70 dark:text-emerald-300/70">{language === 'hi' ? 'सुरक्षा स्तर:' : 'Security Strength:'}</span>
+                      <span className="text-emerald-900/70 dark:text-emerald-300/70">Security Strength:</span>
                       <span className="text-emerald-950 dark:text-emerald-200">{getStrengthLabel().label}</span>
                     </div>
                     <div className="w-full h-1.5 bg-emerald-900/10 dark:bg-emerald-950/60 rounded-full overflow-hidden">
                       <div className={`h-full ${getStrengthLabel().color} ${getStrengthLabel().width} transition-all duration-300`} />
                     </div>
                     <div className="grid grid-cols-2 gap-1 text-[10px] text-emerald-800/70 dark:text-emerald-300/70 pt-1">
-                      <span className={hasMinLength ? 'text-emerald-700 dark:text-emerald-400 font-bold' : ''}>✓ {language === 'hi' ? '8+ अक्षर' : '8+ chars'}</span>
-                      <span className={hasUpper ? 'text-emerald-700 dark:text-emerald-400 font-bold' : ''}>✓ {language === 'hi' ? 'बड़ा अक्षर (A-Z)' : 'Uppercase'}</span>
-                      <span className={hasNumber ? 'text-emerald-700 dark:text-emerald-400 font-bold' : ''}>✓ {language === 'hi' ? 'संख्या (0-9)' : 'Number'}</span>
-                      <span className={hasSymbol ? 'text-emerald-700 dark:text-emerald-400 font-bold' : ''}>✓ {language === 'hi' ? 'प्रतीक (!@#$)' : 'Special char'}</span>
+                      <span className={hasMinLength ? 'text-emerald-700 dark:text-emerald-400 font-bold' : ''}>✓ 8+ chars</span>
+                      <span className={hasUpper ? 'text-emerald-700 dark:text-emerald-400 font-bold' : ''}>✓ Uppercase</span>
+                      <span className={hasNumber ? 'text-emerald-700 dark:text-emerald-400 font-bold' : ''}>✓ Number</span>
+                      <span className={hasSymbol ? 'text-emerald-700 dark:text-emerald-400 font-bold' : ''}>✓ Special char</span>
                     </div>
                   </div>
                 )}
@@ -495,11 +493,11 @@ export default function AuthModal() {
                 className="w-full py-3 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow-lg transition flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {loading && <Loader2 className="w-4 h-4 animate-spin text-amber-400" />}
-                <span>{language === 'hi' ? 'सुरक्षित खाता बनाएँ' : 'Register Account'}</span>
+                <span>Register Account</span>
               </button>
 
               <div className="relative my-3 text-center text-xs text-emerald-900/40 dark:text-emerald-300/40 font-bold">
-                <span className="bg-[#FAF5EB] dark:bg-[#0c2217] px-3 relative z-10">{language === 'hi' ? 'अथवा' : 'OR'}</span>
+                <span className="bg-[#FAF5EB] dark:bg-[#0c2217] px-3 relative z-10">OR</span>
                 <div className="absolute inset-0 top-1/2 border-t border-emerald-900/10 dark:border-emerald-500/20" />
               </div>
 
@@ -514,7 +512,7 @@ export default function AuthModal() {
                   <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.29C.47 8.2.0 10.04.0 12s.47 3.8 1.29 5.42l3.99-3.15z" />
                   <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.58l3.99 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
                 </svg>
-                <span>{language === 'hi' ? 'गूगल से नया खाता बनाएँ' : 'Sign Up with Google'}</span>
+                <span>Sign Up with Google</span>
               </button>
             </form>
           )}
@@ -523,14 +521,12 @@ export default function AuthModal() {
           {activeTab === 'forgot' && (
             <form onSubmit={handleForgotSubmit} className="space-y-4">
               <p className="text-xs text-emerald-800/80 dark:text-emerald-300/80">
-                {language === 'hi'
-                  ? 'अपना पंजीकृत ईमेल दर्ज करें। हम आपको पासवर्ड रीसेट करने का लिंक भेजेंगे।'
-                  : 'Enter your registered email address. We will send you a password reset verification link.'}
+                Enter your registered email address. We will send you a password reset verification link.
               </p>
 
               <div>
                 <label className="block text-xs font-bold text-emerald-950 dark:text-emerald-200 mb-1">
-                  {language === 'hi' ? 'पंजीकृत ईमेल (Registered Email)' : 'Registered Email'}
+                  Registered Email
                 </label>
                 <div className="relative">
                   <Mail className="w-4 h-4 absolute left-3.5 top-3 text-emerald-800/60 dark:text-emerald-400/60" />
@@ -551,7 +547,7 @@ export default function AuthModal() {
                 className="w-full py-3 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow-lg transition flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {loading && <Loader2 className="w-4 h-4 animate-spin text-amber-400" />}
-                <span>{language === 'hi' ? 'पासवर्ड रीसेट लिंक भेजें' : 'Send Reset Link'}</span>
+                <span>Send Reset Link</span>
               </button>
 
               <button
@@ -559,7 +555,7 @@ export default function AuthModal() {
                 onClick={() => setActiveTab('login')}
                 className="w-full text-center text-xs font-bold text-amber-800 dark:text-amber-400 hover:underline pt-2 block"
               >
-                {language === 'hi' ? '← वापस लॉगिन पर जाएँ' : '← Back to Login'}
+                ← Back to Login
               </button>
             </form>
           )}

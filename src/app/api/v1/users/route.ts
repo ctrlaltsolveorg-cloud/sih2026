@@ -38,7 +38,7 @@ export async function POST(request: Request) {
         {
           success: false,
           isExisting: true,
-          message: 'यह ईमेल खाता पहले से पंजीकृत है! (Account already registered with this email. Please log in.)',
+          message: 'Account already registered with this email. Please log in.',
         },
         { status: 409 }
       );

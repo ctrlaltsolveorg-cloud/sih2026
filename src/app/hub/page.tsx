@@ -12,7 +12,7 @@ export default function HubOperatorPage() {
   const { userName } = useRole();
   const [successSignal, setSuccessSignal] = useState<string | null>(null);
 
-  const [selectedCrop, setSelectedCrop] = useState('नासिक हाइब्रिड टमाटर (ताज़ा टमाटर)');
+  const [selectedCrop, setSelectedCrop] = useState('Nashik Hybrid Tomatoes (Fresh Tomatoes)');
   const [lotQuantity, setLotQuantity] = useState('500');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [cvResult, setCvResult] = useState<any>(null);
@@ -30,22 +30,22 @@ export default function HubOperatorPage() {
       const data = await res.json();
       if (data.success) {
         setCvResult(data.inspectionResult);
-        setSuccessSignal(language === 'hi' ? 'AI गुणवत्ता परीक्षण सफलतापूर्वक पूर्ण!' : 'AI Quality Inspection Passed Successfully!');
+        setSuccessSignal('AI Quality Inspection Passed Successfully!');
         setTimeout(() => setSuccessSignal(null), 4000);
       }
     } catch (e) {
       setCvResult({
         cropName: selectedCrop,
-        grade: 'उच्चतम ग्रेड A+ (निर्यात गुणवत्ता)',
+        grade: 'Export Grade A+ (Premium)',
         confidenceScore: 98.4,
         colorRipenessPercent: 94,
         defectScorePercent: 1.2,
-        fssaiCompliance: 'उत्कृष्ट प्रमाणीकरण (उत्तीर्ण)',
-        suggestedHubStorageTemp: '12°C - 14°C कोल्ड स्टोरेज',
+        fssaiCompliance: 'High Quality Certification (PASS)',
+        suggestedHubStorageTemp: '12°C - 14°C Cold Storage',
         shelfLifeEstDays: 12,
         qrHash: 'QR-HUB-NAS-9842109',
       });
-      setSuccessSignal(language === 'hi' ? 'AI गुणवत्ता परीक्षण सफलतापूर्वक पूर्ण!' : 'AI Quality Inspection Passed Successfully!');
+      setSuccessSignal('AI Quality Inspection Passed Successfully!');
       setTimeout(() => setSuccessSignal(null), 4000);
     } finally {
       setIsAnalyzing(false);
@@ -55,12 +55,8 @@ export default function HubOperatorPage() {
   return (
     <PortalGuard
       requiredRole="HUB_OPERATOR"
-      portalName={language === 'hi' ? 'गुणवत्ता जाँच केंद्र ऑपरेटर (Hub Inspector)' : 'Hub Inspector'}
-      portalDescription={
-        language === 'hi'
-          ? 'यह पोर्टल केवल माइक्रोहब गुणवत्ता अधिकारियों के लिए सुरक्षित है जहाँ कंप्यूटर विज़न AI से ग्रेडिंग व QR टैगिंग की जाती है।'
-          : 'This portal is restricted to authorized Hub Quality Inspectors to run Computer Vision quality grading and QR tracking.'
-      }
+      portalName="Hub Inspector"
+      portalDescription="This portal is restricted to authorized Hub Quality Inspectors to run Computer Vision quality grading and QR tracking."
     >
       <div className="space-y-8">
       {/* Header */}
@@ -70,15 +66,13 @@ export default function HubOperatorPage() {
         </div>
         <div>
           <span className="text-[10px] font-extrabold tracking-widest text-amber-400 uppercase bg-emerald-950 px-2.5 py-0.5 rounded-full border border-amber-400/20">
-            {language === 'hi' ? 'माइक्रो-हब कंप्यूटर विज़न ग्रेडिंग केंद्र' : 'Micro-Hub Computer Vision Grading Center'}
+            Micro-Hub Computer Vision Grading Center
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold mt-1">
-            {language === 'hi' ? 'नासिक संकलन हब #04' : 'Nashik Collection Hub #04'}
+            Nashik Collection Hub #04
           </h1>
           <p className="text-xs sm:text-sm text-amber-200/70 mt-0.5">
-            {language === 'hi'
-              ? `हब अधिकारी: ${userName} • गुणवत्ता जांच, QR टैगिंग एवं कोल्ड-स्टोरेज प्रबंधन`
-              : `Hub Inspector: ${userName} • Quality Grading, QR Tagging & Cold Storage`}
+            Hub Inspector: {userName} • Quality Grading, QR Tagging & Cold Storage
           </p>
         </div>
       </div>
@@ -94,9 +88,7 @@ export default function HubOperatorPage() {
               {t.cvGradingTitle}
             </h2>
             <p className="text-xs text-emerald-800/70">
-              {language === 'hi'
-                ? 'कैमरा दृश्य विश्लेषण, रंग परिपक्वता, FSSAI मानक और शेल्फ-लाइफ ऑटो-कैलकुलेटर'
-                : 'Camera visual analysis, ripeness detection, FSSAI standards & shelf-life calculator'}
+              Camera visual analysis, ripeness detection, FSSAI standards & shelf-life calculator
             </p>
           </div>
         </div>
@@ -106,31 +98,31 @@ export default function HubOperatorPage() {
           <div className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-emerald-950 mb-1">
-                {language === 'hi' ? 'आवक फसल लॉट चुनें' : 'Select Incoming Crop Lot'}
+                Select Incoming Crop Lot
               </label>
               <select
                 value={selectedCrop}
                 onChange={(e) => setSelectedCrop(e.target.value)}
                 className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold"
               >
-                <option value="नासिक हाइब्रिड टमाटर (ताज़ा टमाटर)">
-                  {language === 'hi' ? 'नासिक हाइब्रिड टमाटर (लॉट #101)' : 'Nashik Hybrid Tomatoes (Lot #101)'}
+                <option value="Nashik Hybrid Tomatoes (Fresh Tomatoes)">
+                  Nashik Hybrid Tomatoes (Lot #101)
                 </option>
-                <option value="लाल प्याज (नासिक)">
-                  {language === 'hi' ? 'लाल प्याज (लॉट #102)' : 'Red Onions (Lot #102)'}
+                <option value="Red Onions (Nashik)">
+                  Red Onions (Lot #102)
                 </option>
-                <option value="शरबाती ऑर्गेनिक गेहूं">
-                  {language === 'hi' ? 'शरबाती ऑर्गेनिक गेहूं (लॉट #103)' : 'Sharbati Organic Wheat (Lot #103)'}
+                <option value="Sharbati Organic Wheat">
+                  Sharbati Organic Wheat (Lot #103)
                 </option>
-                <option value="ज्योति आलू">
-                  {language === 'hi' ? 'ज्योति आलू (लॉट #104)' : 'Jyoti Potatoes (Lot #104)'}
+                <option value="Jyoti Potatoes">
+                  Jyoti Potatoes (Lot #104)
                 </option>
               </select>
             </div>
 
             <div>
               <label className="block text-xs font-bold text-emerald-950 mb-1">
-                {language === 'hi' ? 'आवक मात्रा (किग्रा)' : 'Intake Quantity (kg)'}
+                Intake Quantity (kg)
               </label>
               <input
                 type="number"
@@ -148,8 +140,8 @@ export default function HubOperatorPage() {
               <Sparkles className="w-4 h-4 text-amber-400" />
               <span>
                 {isAnalyzing
-                  ? (language === 'hi' ? 'AI कैमरा फसल विश्लेषण जारी है...' : 'AI Model Analyzing Crop...')
-                  : (language === 'hi' ? 'कंप्यूटर विज़न ऑटो-ग्रेडिंग चलाएं' : 'Run Computer Vision Auto-Grading')}
+                  ? 'AI Model Analyzing Crop...'
+                  : 'Run Computer Vision Auto-Grading'}
               </span>
             </button>
           </div>
@@ -160,36 +152,34 @@ export default function HubOperatorPage() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="px-3 py-1 bg-emerald-900 text-amber-200 font-extrabold text-xs rounded-xl shadow-sm">
-                    {cvResult.grade === 'उच्चतम ग्रेड A+ (निर्यात गुणवत्ता)'
-                      ? (language === 'hi' ? 'उच्चतम ग्रेड A+ (निर्यात गुणवत्ता)' : 'Export Grade A+ (Premium)')
-                      : cvResult.grade}
+                    {cvResult.grade}
                   </span>
                   <span className="text-xs font-extrabold text-emerald-950">
-                    {language === 'hi' ? 'CV विश्वासांक: ' : 'CV Confidence: '}{cvResult.confidenceScore}%
+                    CV Confidence: {cvResult.confidenceScore}%
                   </span>
                 </div>
 
                 <h3 className="font-extrabold text-lg text-emerald-950">
-                  {getLocalizedCropName(cvResult.cropName, language)} — {language === 'hi' ? 'गुणवत्ता स्वीकृत' : 'Quality Passed'}
+                  {cvResult.cropName} — Quality Passed
                 </h3>
 
                 <div className="space-y-1.5 text-xs text-emerald-900 bg-white/80 p-3 rounded-xl border border-emerald-900/10">
                   <div className="flex justify-between">
-                    <span>{language === 'hi' ? '• रंग परिपक्वता (Ripeness):' : '• Color Ripeness:'}</span>
-                    <strong className="text-emerald-950">{cvResult.colorRipenessPercent}% {language === 'hi' ? 'उत्कृष्ट' : 'Excellent'}</strong>
+                    <span>• Color Ripeness:</span>
+                    <strong className="text-emerald-950">{cvResult.colorRipenessPercent}% Excellent</strong>
                   </div>
                   <div className="flex justify-between">
-                    <span>{language === 'hi' ? '• क्षति दर (Defect Score):' : '• Defect Ratio:'}</span>
-                    <strong className="text-emerald-950">{cvResult.defectScorePercent}% {language === 'hi' ? '(न्यूनतम)' : '(Minimal)'}</strong>
+                    <span>• Defect Ratio:</span>
+                    <strong className="text-emerald-950">{cvResult.defectScorePercent}% (Minimal)</strong>
                   </div>
                   <div className="flex justify-between">
-                    <span>{language === 'hi' ? '• FSSAI प्रमाणीकरण:' : '• FSSAI Certification:'}</span>
-                    <strong className="text-emerald-700 font-bold">{language === 'hi' ? 'उत्तीर्ण (PASS)' : 'PASS (Certified)'}</strong>
+                    <span>• FSSAI Certification:</span>
+                    <strong className="text-emerald-700 font-bold">PASS (Certified)</strong>
                   </div>
                   <div className="flex justify-between">
-                    <span>{language === 'hi' ? '• अनुमानित शेल्फ लाइफ:' : '• Estimated Shelf Life:'}</span>
+                    <span>• Estimated Shelf Life:</span>
                     <strong className="text-amber-800">
-                      {cvResult.shelfLifeEstDays} {language === 'hi' ? 'दिन' : 'days'} ({cvResult.suggestedHubStorageTemp === '12°C - 14°C कोल्ड स्टोरेज' ? (language === 'hi' ? '12°C - 14°C कोल्ड स्टोरेज' : '12°C - 14°C Cold Storage') : cvResult.suggestedHubStorageTemp})
+                      {cvResult.shelfLifeEstDays} days ({cvResult.suggestedHubStorageTemp})
                     </strong>
                   </div>
                 </div>
@@ -203,7 +193,7 @@ export default function HubOperatorPage() {
                     </div>
                   </div>
                   <button className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold rounded-lg text-xs shadow transition">
-                    {language === 'hi' ? 'QR लेबल प्रिंट करें' : 'Print QR Label'}
+                    Print QR Label
                   </button>
                 </div>
               </div>
@@ -211,9 +201,7 @@ export default function HubOperatorPage() {
               <div className="h-full flex flex-col items-center justify-center text-center text-emerald-800/60 py-8">
                 <Camera className="w-12 h-12 mb-2 stroke-[1.5]" />
                 <p className="text-xs font-semibold">
-                  {language === 'hi'
-                    ? 'गुणवत्ता परीक्षण चलाने के लिए बाईं ओर बटन दबाएं। AI स्वतः फसल ग्रेड और QR लेबल तैयार करेगा।'
-                    : 'Press the button on the left to run AI quality inspection. The AI model will grade the crop & generate QR tag.'}
+                  Press the button on the left to run AI quality inspection. The AI model will grade the crop & generate QR tag.
                 </p>
               </div>
             )}
@@ -229,7 +217,7 @@ export default function HubOperatorPage() {
           </div>
           <div>
             <p className="text-xs font-extrabold text-emerald-300">
-              {language === 'hi' ? 'सफलतापूर्वक पुष्टित ✓' : 'Confirmed Successfully ✓'}
+              Confirmed Successfully ✓
             </p>
             <p className="text-xs font-medium text-amber-100/90">{successSignal}</p>
           </div>

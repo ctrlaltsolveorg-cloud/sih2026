@@ -31,13 +31,12 @@ export async function GET(request: Request) {
 
 /**
  * 2. Incoming Messages Handler (POST)
- * Receives incoming WhatsApp messages from Farmers, Buyers, or n8n Webhook node
+ * Receives incoming WhatsApp messages from Farmers, Buyers, or direct API webhooks
  */
 export async function POST(request: Request) {
   try {
     const payload = await request.json().catch(() => ({}));
 
-    // Support both Meta WhatsApp Webhook format and direct n8n JSON format
     let senderPhone = '';
     let messageText = '';
 
@@ -50,7 +49,7 @@ export async function POST(request: Request) {
       senderPhone = incomingMsg.from || '';
       messageText = incomingMsg.text?.body || '';
     } else {
-      // B. Simplified n8n payload format: { phone: "...", message: "..." }
+      // B. Simplified direct API payload format: { phone: "...", message: "..." }
       senderPhone = payload.phone || payload.from || payload.caller_id || '';
       messageText = payload.message || payload.text || payload.query || '';
     }
@@ -66,13 +65,11 @@ export async function POST(request: Request) {
     const queryLower = messageText.toLowerCase().trim();
     const db = getDb();
 
-    // 1. ORDER STATUS QUERY (e.g. "ord_501", "order", "status", "mera order", "delivery")
+    // 1. ORDER STATUS QUERY (e.g. "ord_501", "order", "status", "delivery")
     if (
       queryLower.includes('ord_') ||
       queryLower.includes('order') ||
       queryLower.includes('status') ||
-      queryLower.includes('ऑर्डर') ||
-      queryLower.includes('स्थिति') ||
       /^\d{3,5}$/.test(queryLower)
     ) {
       // Look up order by ID or phone number
@@ -104,17 +101,17 @@ export async function POST(request: Request) {
           status: 'Out for Delivery',
           total_amount_paise: 4140000,
           delivery_address: 'Swargate, Pune 411002',
-          farmer_name: 'रामेश्वर यादव (Rameshwar Yadav)',
+          farmer_name: 'Rameshwar Yadav',
           delivery_otp: '9103',
         };
       }
 
       const items = db.prepare('SELECT * FROM order_items WHERE order_id = ?').all(orderRow.id) as any[];
-      const primaryItem = items[0] || { crop_name: 'ताज़ा टमाटर (Fresh Tomatoes)', quantity: 500, unit: 'kg' };
+      const primaryItem = items[0] || { crop_name: 'Fresh Tomatoes', quantity: 500, unit: 'kg' };
 
       const result = await sendWhatsAppOrderSlip(senderPhone, {
         order_id: orderRow.id,
-        customer_name: orderRow.buyer_name || 'उपभोक्ता',
+        customer_name: orderRow.buyer_name || 'Customer',
         product: primaryItem.crop_name,
         quantity: `${primaryItem.quantity} ${primaryItem.unit || 'kg'}`,
         status: orderRow.status,
@@ -132,26 +129,24 @@ export async function POST(request: Request) {
       });
     }
 
-    // 2. LIVE MANDI PRICE QUERY (e.g. "bhav", "price", "mandi", "rate", "भाव")
+    // 2. LIVE MANDI PRICE QUERY (e.g. "bhav", "price", "mandi", "rate")
     if (
       queryLower.includes('bhav') ||
       queryLower.includes('rate') ||
       queryLower.includes('price') ||
-      queryLower.includes('mandi') ||
-      queryLower.includes('भाव') ||
-      queryLower.includes('मंडी')
+      queryLower.includes('mandi')
     ) {
       const priceSlip = [
-        `📈 *किसानबंधन AI • लाइव मंडी भाव (Agmarknet Live Feed)* 📈`,
+        `📈 *KisanBandhan AI • Live Mandi Prices (Agmarknet Live Feed)* 📈`,
         ``,
-        `📍 *नासिक / पुणे एग्रो-हब:*`,
-        `🍅 *टमाटर (Tomato):* ₹28 - ₹34 /kg (मांग: उच्च +4.2%)`,
-        `🧅 *प्याज (Nashik Onion):* ₹24 - ₹28 /kg (स्थिर +1.8%)`,
-        `🥔 *आलू (Jyoti Potato):* ₹21 - ₹23 /kg`,
-        `🧄 *लहसुन (Garlic):* ₹140 - ₹160 /kg`,
+        `📍 *Nashik / Pune Agro-Hub:*`,
+        `🍅 *Tomato:* ₹28 - ₹34 /kg (Demand: High +4.2%)`,
+        `🧅 *Nashik Onion:* ₹24 - ₹28 /kg (Stable +1.8%)`,
+        `🥔 *Jyoti Potato:* ₹21 - ₹23 /kg`,
+        `🧄 *Garlic:* ₹140 - ₹160 /kg`,
         ``,
-        `💡 *AI सुझाव:* त्योहारों के कारण टमाटर और लहसुन में अगले 7 दिनों तक 15% अधिक लाभ संभव है।`,
-        `फसल लिस्ट करने के लिए "LIST" लिखकर भेजें।`,
+        `💡 *AI Insight:* Higher returns expected for tomatoes and garlic over the next 7 days due to festive demand.`,
+        `Reply "LIST" to sell and list your produce directly.`,
       ].join('\n');
 
       const result = await sendWhatsAppTextMessage(senderPhone, priceSlip);
@@ -160,16 +155,16 @@ export async function POST(request: Request) {
 
     // 3. DEFAULT INTERACTIVE GREETING & MENU
     const welcomeMsg = [
-      `🌾 *नमस्ते किसान व खरीदार भाई!* 🌾`,
-      `*किसानबंधन AI (Kisan Diwas PS 26033)* में आपका स्वागत है।`,
+      `🌾 *Welcome to KisanBandhan AI!* 🌾`,
+      `*(SIH 2026 PS 26033)* Direct Farm-to-Buyer Portal`,
       ``,
-      `आप नीचे दिए गए विकल्पों में से कुछ भी लिखकर भेज सकते हैं:`,
-      `1️⃣ *STATUS* या *ऑर्डर ID* (उदा. \`ord_501\`) — लाइव डिलीवरी ट्रैकिंग व OTP`,
-      `2️⃣ *BHAV* — आज के लाइव सरकारी मंडी भाव`,
-      `3️⃣ *LIST* — खेत से बिना बिचौलिये के सीधी फसल लिस्टिंग`,
-      `4️⃣ *HELP* — किसान सहायता प्रतिनिधि से बात करने के लिए`,
+      `Reply with any of the following options:`,
+      `1️⃣ *STATUS* or *Order ID* (e.g. \`ord_501\`) — Live delivery tracking & OTP`,
+      `2️⃣ *PRICE* — Today's live government mandi prices`,
+      `3️⃣ *LIST* — Direct produce listing from farm with zero middlemen`,
+      `4️⃣ *HELP* — Connect with Kisan Support Representative`,
       ``,
-      `📞 24/7 टोल-फ्री IVR हेल्पलाइन: 1800-KISAN-AI`,
+      `📞 24/7 Toll-free IVR Helpline: 1800-KISAN-AI`,
     ].join('\n');
 
     const result = await sendWhatsAppTextMessage(senderPhone, welcomeMsg);

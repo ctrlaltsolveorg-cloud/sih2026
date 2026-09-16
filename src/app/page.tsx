@@ -18,6 +18,7 @@ import Link from 'next/link';
 import BulmaProductCard from '@/components/BulmaProductCard';
 import HeroCarousel from '@/components/HeroCarousel';
 import { FULL_CROP_CATALOG } from '@/lib/cropCatalogData';
+import { getCropLogoUrl, getCropPhotosByName } from '@/lib/cropImageMatcher';
 
 interface Listing {
   id: number | string;
@@ -52,14 +53,14 @@ export default function HomePage() {
   const [selectedCropCategory, setSelectedCropCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Mandi live ticker items in authentic Hindi
+  // Mandi live ticker items in English
   const tickerItems = [
-    { crop: 'टमाटर (उच्चतम श्रेणी A+)', price: '₹34.50/किग्रा', trend: '+4.2%' },
-    { crop: 'नाशिक लाल प्याज', price: '₹28.00/किग्रा', trend: '+1.8%' },
-    { crop: 'इन्दौर ज्योति आलू', price: '₹22.00/किग्रा', trend: '-0.5%' },
-    { crop: 'शरबाती प्रीमियम गेहूं', price: '₹38.00/किग्रा', trend: '+2.1%' },
-    { crop: 'पीला सोयाबीन', price: '₹46.50/किग्रा', trend: '+0.9%' },
-    { crop: 'देसी लहसुन', price: '₹140.00/किग्रा', trend: '+5.0%' },
+    { crop: 'Tomato (Grade A+)', price: '₹34.50/kg', trend: '+4.2%' },
+    { crop: 'Nashik Red Onion', price: '₹28.00/kg', trend: '+1.8%' },
+    { crop: 'Indore Jyoti Potato', price: '₹22.00/kg', trend: '-0.5%' },
+    { crop: 'Sharbati Premium Wheat', price: '₹38.00/kg', trend: '+2.1%' },
+    { crop: 'Yellow Soybean', price: '₹46.50/kg', trend: '+0.9%' },
+    { crop: 'Desi Garlic', price: '₹140.00/kg', trend: '+5.0%' },
   ];
 
   useEffect(() => {
@@ -78,19 +79,19 @@ export default function HomePage() {
             }
             return {
               id: item.id || `local_${idx}`,
-              crop_name: item.crop || item.crop_name || 'नयी फसल',
+              crop_name: item.crop || item.crop_name || 'Fresh Produce',
               crop_name_hi: item.crop_name_hi,
               category: item.category || 'Vegetables',
-              variety: item.variety || 'सत्यापित किसान लॉट',
+              variety: item.variety || 'Verified Farmer Lot',
               quantity_kg: parseInt(item.qty || item.quantity_available) || 500,
               price_paise_per_kg: item.pricePaise || Math.round((parseFloat(item.priceRupees) || 30) * 100),
-              quality_grade: item.grade || 'ग्रेड A+',
+              quality_grade: item.grade || 'Grade A+',
               cv_trust_score: 98,
               harvest_date: item.harvestDate || '2026-09-08',
               is_organic: item.isOrganic || 1,
-              farmer_name: item.farmer_name || 'किसान (Farmer)',
-              location: item.location || 'नासिक मंडी हब (महाराष्ट्र)',
-              hub_location: 'नासिक एग्रो-हब #04',
+              farmer_name: item.farmer_name || 'Verified Farmer',
+              location: item.location || 'Nashik Mandi Hub (Maharashtra)',
+              hub_location: 'Nashik Agro-Hub #04',
               image_url: photos[0],
               images: photos,
               logo_url: item.logo_url || item.sideLogo || photos[0],
@@ -124,16 +125,16 @@ export default function HomePage() {
                 id: c.id,
                 crop_name: c.crop_name,
                 category: c.category || 'Vegetables',
-                variety: 'सत्यापित किसान लॉट',
+                variety: 'Verified Farmer Lot',
                 quantity_kg: c.quantity_available || 500,
                 price_paise_per_kg: c.price_paise || 3000,
-                quality_grade: c.grade || 'ग्रेड A+',
+                quality_grade: c.grade || 'Grade A+',
                 cv_trust_score: 97,
                 harvest_date: c.harvest_date || '2026-09-08',
                 is_organic: c.organic_certified || 0,
-                farmer_name: c.farmer_name || 'किसान (Farmer)',
-                location: c.location || 'नासिक मंडी हब (महाराष्ट्र)',
-                hub_location: c.district ? `${c.district} एग्रो-हब` : 'नासिक एग्रो-हब #04',
+                farmer_name: c.farmer_name || 'Verified Farmer',
+                location: c.location || 'Nashik Mandi Hub (Maharashtra)',
+                hub_location: c.district ? `${c.district} Agro-Hub` : 'Nashik Agro-Hub #04',
                 image_url: photoList[0],
                 images: photoList,
                 logo_url: c.logo_url || photoList[0],
@@ -145,27 +146,32 @@ export default function HomePage() {
         } catch (e) { }
 
         // Exactly 3 Verified Staple Products
-        const catalogProduce: Listing[] = FULL_CROP_CATALOG.map((item) => ({
-          id: item.id,
-          crop_name: item.name,
-          crop_name_hi: item.nameHi,
-          category: item.category,
-          variety: item.variety,
-          quantity_kg: item.quantityKg || 500,
-          price_paise_per_kg: item.pricePaise,
-          quality_grade: item.grade,
-          cv_trust_score: 98,
-          harvest_date: '2026-09-14',
-          is_organic: item.isOrganic,
-          farmer_name: item.farmerName || 'Ramesh Patil (रमेश पाटिल)',
-          location: item.location || 'खेत संकलन केंद्र #04, नासिक (Nashik Hub)',
-          hub_location: 'नासिक एग्रो-हब #04',
-          image_url: undefined,
-          images: [],
-          logo_url: undefined,
-          side_logo: undefined,
-          unit: item.unit || 'kg',
-        }));
+        const catalogProduce: Listing[] = FULL_CROP_CATALOG.map((item) => {
+          const verifiedPhotos = item.photos && item.photos.length > 0 ? item.photos : getCropPhotosByName(item.name);
+          const verifiedLogo = item.sideLogo || item.thumbnail || getCropLogoUrl(item.name);
+
+          return {
+            id: item.id,
+            crop_name: item.name,
+            crop_name_hi: item.nameHi,
+            category: item.category,
+            variety: item.variety,
+            quantity_kg: item.quantityKg || 500,
+            price_paise_per_kg: item.pricePaise,
+            quality_grade: item.grade,
+            cv_trust_score: 98,
+            harvest_date: '2026-09-14',
+            is_organic: item.isOrganic,
+            farmer_name: item.farmerName || 'Ramesh Patil',
+            location: item.location || 'Farm Collection Center #04, Nashik Hub',
+            hub_location: 'Nashik Agro-Hub #04',
+            image_url: verifiedLogo || verifiedPhotos[0],
+            images: verifiedPhotos,
+            logo_url: verifiedLogo,
+            side_logo: verifiedLogo,
+            unit: item.unit || 'kg',
+          };
+        });
 
         setListings(catalogProduce);
       } catch (err) {
@@ -178,7 +184,7 @@ export default function HomePage() {
   }, []);
 
   const filteredListings = listings.filter((item) => {
-    if (filter === 'gradeA' && !item.quality_grade.includes('A') && !item.quality_grade.includes('निर्यात')) return false;
+    if (filter === 'gradeA' && !item.quality_grade.includes('A') && !item.quality_grade.toLowerCase().includes('export')) return false;
     if (filter === 'organic' && item.is_organic !== 1) return false;
     if (selectedCropCategory !== 'All' && item.category !== selectedCropCategory) return false;
     if (searchQuery.trim()) {
@@ -206,7 +212,7 @@ export default function HomePage() {
                 {tickerItems.concat(tickerItems).map((item, idx) => (
                   <span key={idx} className="inline-flex items-center gap-2 font-medium">
                     <span className="text-amber-50">{getLocalizedCropName(item.crop, language)}</span>
-                    <span className="font-mono text-amber-300 font-bold">{language === 'hi' ? item.price : item.price.replace('/किग्रा', '/kg')}</span>
+                    <span className="font-mono text-amber-300 font-bold">{item.price}</span>
                     <span className="text-emerald-400 text-[11px] font-bold">{item.trend}</span>
                   </span>
                 ))}
@@ -223,11 +229,11 @@ export default function HomePage() {
           <div>
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 bg-amber-500/20 text-amber-900 dark:text-amber-300 font-extrabold text-[11px] rounded-full border border-amber-500/30">
-                {language === 'hi' ? 'किसान डेस्क से सीधा संकलन' : 'Direct from Farmer Desk'}
+                Direct from Farmer Desk
               </span>
               <span className="text-xs text-emerald-700 dark:text-emerald-300 font-bold flex items-center gap-1">
                 <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                <span>{language === 'hi' ? '2 से 6 फोटो सत्यापित' : '2-6 Photos Verified'}</span>
+                <span>2-6 Photos Verified</span>
               </span>
             </div>
             <h2 className="text-2xl font-extrabold text-emerald-950 dark:text-emerald-50 flex items-center gap-2 mt-1">
@@ -241,7 +247,7 @@ export default function HomePage() {
 
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-emerald-900 dark:text-emerald-200 bg-white dark:bg-[#07170f] px-3 py-1.5 rounded-xl border border-emerald-900/15 dark:border-emerald-500/20 shadow-sm">
-              {filteredListings.length} {language === 'hi' ? 'फसलें उपलब्ध' : 'Produce Listed'}
+              {filteredListings.length} Produce Listed
             </span>
           </div>
         </div>
@@ -259,7 +265,7 @@ export default function HomePage() {
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
-                {language === 'hi' ? 'सभी ' : 'All '}
+                All
               </button>
 
               <button
@@ -270,7 +276,7 @@ export default function HomePage() {
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
-                {language === 'hi' ? '+100 सब्जियाँ' : '+100 Vegetables'}
+                +100 {language === 'hi' ? 'सब्जियाँ' : 'Vegetables'}
               </button>
 
               <button
@@ -281,7 +287,7 @@ export default function HomePage() {
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
-                {language === 'hi' ? '+100 फल' : '+100 Fruits'}
+                +100 {language === 'hi' ? 'फल' : 'Fruits'}
               </button>
 
               <button
@@ -292,7 +298,7 @@ export default function HomePage() {
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
-                {language === 'hi' ? '+100 दालें' : '+100 Pulses'}
+                +100 {language === 'hi' ? 'दालें' : 'Pulses'}
               </button>
 
               <button
@@ -303,7 +309,7 @@ export default function HomePage() {
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
-                {language === 'hi' ? '+50 अनाज' : '+50 Grains'}
+                +50 {language === 'hi' ? 'अनाज' : 'Grains'}
               </button>
             </div>
 
@@ -312,11 +318,7 @@ export default function HomePage() {
               <Search className="w-4 h-4 absolute left-3.5 top-3 text-emerald-800/50 dark:text-emerald-400/60" />
               <input
                 type="text"
-                placeholder={
-                  language === 'hi'
-                    ? 'फसल, किस्म या किसान खोजें...'
-                    : 'Search crop, variety, farmer...'
-                }
+                placeholder={language === 'hi' ? 'फसल, किस्म या किसान खोजें...' : 'Search crop, variety, farmer...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 rounded-2xl text-xs text-emerald-950 dark:text-white placeholder-emerald-800/40 dark:placeholder-emerald-300/40 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm font-medium"
@@ -383,19 +385,17 @@ export default function HomePage() {
             </div>
             <div>
               <h3 className="text-xl font-extrabold text-emerald-950">
-                {language === 'hi' ? 'वर्तमान में कोई फसल उपलब्ध नहीं है' : 'No produce currently listed'}
+                No produce currently listed
               </h3>
               <p className="text-xs text-emerald-800/70 max-w-md mx-auto mt-1">
-                {language === 'hi'
-                  ? 'पंजीकृत किसान अपने किसान पोर्टल (Farmer Desk) में जाकर 2 से 6 तस्वीरों के साथ अपनी ताज़ा फसलें पंजीकृत कर सकते हैं।'
-                  : 'Registered farmers can log in to the Farmer Desk and list their fresh harvest with 2-6 photos.'}
+                Registered farmers can log in to the Farmer Desk and list their fresh harvest with 2-6 photos.
               </p>
             </div>
             <Link
               href="/farmer"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-50 font-bold rounded-xl text-xs shadow-md transition"
             >
-              <span>{language === 'hi' ? 'किसान पोर्टल पर जाएँ' : 'Go to Farmer Desk'}</span>
+              <span>Go to Farmer Desk</span>
             </Link>
           </div>
         ) : (

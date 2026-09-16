@@ -44,7 +44,7 @@ export async function registerUserRow(input: UserInput) {
       success: false,
       isExisting: true,
       user: db.prepare('SELECT * FROM users WHERE LOWER(email) = ?').get(userEmail),
-      message: 'यह ईमेल पहले से पंजीकृत है! (User already registered with this email.)',
+      message: 'User already registered with this email.',
     };
   }
 
