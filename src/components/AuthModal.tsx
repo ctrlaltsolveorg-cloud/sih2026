@@ -124,7 +124,7 @@ export default function AuthModal() {
             </div>
             <div>
               <h2 className="font-extrabold text-lg leading-tight">
-                {language === 'hi' ? 'किसानबंधु AI सुरक्षा पोर्टल' : 'KisanBandhan AI Auth Portal'}
+                {language === 'hi' ? 'किसानबंधु AI सुरक्षा पोर्टल' : 'KisanBandhan Auth Portal'}
               </h2>
               <p className="text-xs text-amber-200/80">
                 {language === 'hi' ? '4-स्तरीय RLS सुरक्षा एवं प्रमाणीकरण' : '4-Layer RLS Security & Authentication'}
