@@ -200,6 +200,28 @@ export async function createCropListing(input: CropListingInput) {
   // 2. Save in SQLite DB
   const db = getDb();
   try {
+    // Ensure farmer user exists in users table to satisfy foreign key
+    db.prepare(`
+      INSERT OR IGNORE INTO users (id, name, phone, email, role, village, district, state, address)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      actualFarmerId,
+      farmerName || 'किसान (Farmer)',
+      '+91 98765 43210',
+      `${actualFarmerId}@kisanbandhan.ai`,
+      'FARMER',
+      'Village Hub',
+      'Nashik',
+      'Maharashtra',
+      loc
+    );
+
+    // Ensure default FPO exists
+    db.prepare(`
+      INSERT OR IGNORE INTO fpos (id, name, registration_number, district, state, hub_id)
+      VALUES ('fpo_nashik_1', 'Sahyadri Farmers Producer Co.', 'FPO-MH-2024-001', 'Nashik', 'Maharashtra', 'hub_nashik_1')
+    `).run();
+
     db.prepare(
       `
       INSERT INTO product_listings (id, farmer_id, fpo_id, crop_name, category, quantity_available, unit, price_paise, mandi_retail_price_paise, grade, harvest_date, organic_certified, image_url, logo_url, location, district, status)
@@ -745,7 +767,7 @@ export async function seedDefaultKisanAllProducts() {
       supaRecords.push({
         id: listingId,
         farmer_id: assignedFarmer.id,
-        fpo_id: assignedFarmer.fpoId,
+        farmer_name: assignedFarmer.name,
         crop_name: item.name,
         category: item.category,
         quantity_available: 500,

@@ -6,6 +6,7 @@ export interface UserInput {
   id?: string;
   name: string;
   email: string;
+  password?: string;
   phone?: string;
   role: UserRole;
   district?: string;
@@ -14,20 +15,29 @@ export interface UserInput {
 }
 
 /**
- * Check if a user with given email already exists in SQLite DB
+ * Check if a user with given email already exists in SQLite DB or Supabase
  */
-export function checkUserExistsByEmail(email: string): boolean {
+export async function checkUserExistsByEmail(email: string): Promise<boolean> {
   if (!email) return false;
+  const cleanEmail = email.toLowerCase().trim();
+
+  // 1. Check Supabase Cloud
+  try {
+    const { data } = await supabase.from('users').select('id').eq('email', cleanEmail).maybeSingle();
+    if (data?.id) return true;
+  } catch (e) {}
+
+  // 2. Check SQLite
   const db = getDb();
-  const row = db.prepare('SELECT id FROM users WHERE LOWER(email) = ?').get(email.toLowerCase().trim());
+  const row = db.prepare('SELECT id FROM users WHERE LOWER(email) = ?').get(cleanEmail);
   return !!row;
 }
 
 /**
- * Insert new user row into SQLite DB & sync with Supabase
+ * Insert new user row into SQLite DB & sync with Supabase (includes password for multi-laptop login)
  */
 export async function registerUserRow(input: UserInput) {
-  const { name, email, phone, role, district, state, address } = input;
+  const { name, email, password, phone, role, district, state, address } = input;
   const db = getDb();
 
   const userId = input.id || `u_${role.toLowerCase()}_${Date.now()}`;
@@ -72,14 +82,15 @@ export async function registerUserRow(input: UserInput) {
     `).run(userId, `${name}'s Agro Farm`, 'fpo_nashik_1', 5.5, 'VERIFIED');
   }
 
-  // 4. Sync to Supabase `users` table
+  // 4. Sync to Supabase `users` table with password for multi-device login
   let supabaseStatus = 'Supabase Synced';
   try {
-    const { error } = await supabase.from('users').insert([
+    const { error } = await supabase.from('users').upsert([
       {
         id: userId,
         name,
         email: userEmail,
+        password: password || null,
         phone: userPhone,
         role,
         district: userDistrict,

@@ -96,7 +96,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsAuthModalOpen(false);
   };
 
-  const syncUserToBackendDB = async (userObj: AuthUser) => {
+  const syncUserToBackendDB = async (userObj: AuthUser & { password?: string }) => {
     try {
       await fetch('/api/v1/users', {
         method: 'POST',
@@ -107,6 +107,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           email: userObj.email,
           role: userObj.role,
           phone: userObj.phone,
+          password: userObj.password,
         }),
       });
     } catch (e) {
@@ -118,7 +119,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const cleanEmail = email.toLowerCase().trim();
 
     try {
-      // 1. Supabase Authentication
+      // 1. Supabase Authentication via Auth API
       const { data, error } = await supabase.auth.signInWithPassword({ email: cleanEmail, password: pass });
 
       if (data?.user) {
@@ -134,11 +135,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('kisanbandhan_manual_login', 'true');
         localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(loggedUser));
         closeAuthModal();
-        syncUserToBackendDB(loggedUser);
+        syncUserToBackendDB({ ...loggedUser, password: pass });
         return { success: true };
       }
 
-      // 2. Local Storage & Seed Users Authentication Fallback
+      // 2. Direct Supabase Cloud `users` Table Lookup (Seamless Cross-Device / Multi-Laptop Login)
+      try {
+        const { data: cloudUser } = await supabase
+          .from('users')
+          .select('*')
+          .eq('email', cleanEmail)
+          .maybeSingle();
+
+        if (cloudUser) {
+          if (cloudUser.password && cloudUser.password !== pass) {
+            return { success: false, error: 'गलत पासवर्ड! (Incorrect password. Please try again.)' };
+          }
+          const loggedUser: AuthUser = {
+            id: cloudUser.id,
+            email: cloudUser.email,
+            name: capitalizeName(cloudUser.name || cleanEmail.split('@')[0]),
+            role: (cloudUser.role as UserRole) || 'FARMER',
+            phone: cloudUser.phone,
+          };
+          setUser(loggedUser);
+          localStorage.setItem('kisanbandhan_manual_login', 'true');
+          localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(loggedUser));
+          closeAuthModal();
+          syncUserToBackendDB({ ...loggedUser, password: pass });
+          return { success: true };
+        }
+      } catch (cloudErr) {
+        console.warn('Supabase cloud user login lookup note:', cloudErr);
+      }
+
+      // 3. Local Storage & Seed Users Authentication Fallback
       const stored = localStorage.getItem('kisanbandhan_registered_users');
       const usersList: Array<AuthUser & { password?: string }> = stored ? JSON.parse(stored) : [];
       const match = usersList.find((u) => u.email.toLowerCase() === cleanEmail);
@@ -158,7 +189,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('kisanbandhan_manual_login', 'true');
         localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(loggedUser));
         closeAuthModal();
-        syncUserToBackendDB(loggedUser);
+        syncUserToBackendDB({ ...loggedUser, password: pass });
         return { success: true };
       }
 
@@ -189,7 +220,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('kisanbandhan_manual_login', 'true');
         localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(seedUser));
         closeAuthModal();
-        syncUserToBackendDB(seedUser);
+        syncUserToBackendDB({ ...seedUser, password: pass });
         return { success: true };
       }
 
@@ -213,7 +244,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { data } = await supabase.auth.signInWithPassword({ email: cleanEmail, password: pass });
       if (data?.user) return { success: true };
 
-      // 2. Check local registered users list
+      // 2. Check Supabase Cloud 'users' Table (Multi-device validation)
+      try {
+        const { data: cloudUser } = await supabase
+          .from('users')
+          .select('id, password')
+          .eq('email', cleanEmail)
+          .maybeSingle();
+
+        if (cloudUser) {
+          if (cloudUser.password && cloudUser.password !== pass) {
+            return { success: false, error: 'गलत पासवर्ड! (Incorrect Password)' };
+          }
+          return { success: true };
+        }
+      } catch (e) {}
+
+      // 3. Check local registered users list
       const stored = localStorage.getItem('kisanbandhan_registered_users');
       const usersList: Array<AuthUser & { password?: string }> = stored ? JSON.parse(stored) : [];
       const match = usersList.find((u) => u.email.toLowerCase() === cleanEmail);
@@ -225,7 +272,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { success: false, error: 'गलत पासवर्ड! (Incorrect Password)' };
       }
 
-      // 3. Check demo seed accounts
+      // 4. Check demo seed accounts
       const seedAccounts: Record<string, string> = {
         'dev@kisanbandhan.ai': 'dev',
         'developer@kisanbandhan.ai': 'dev',
@@ -271,7 +318,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const formattedName = capitalizeName(name);
     const cleanEmail = email.toLowerCase().trim();
 
-    // 1. Check existing users in local storage registry
+    // 1. Check existing users in Supabase Cloud directly
+    try {
+      const { data: cloudUser } = await supabase
+        .from('users')
+        .select('id')
+        .eq('email', cleanEmail)
+        .maybeSingle();
+
+      if (cloudUser?.id) {
+        return {
+          success: false,
+          error: 'यह ईमेल खाता पहले से पंजीकृत है! कृपया इस ईमेल से लॉगिन करें।',
+        };
+      }
+    } catch (e) {}
+
+    // 2. Check existing users in local storage registry
     try {
       const stored = localStorage.getItem('kisanbandhan_registered_users');
       const usersList: Array<AuthUser & { password?: string }> = stored ? JSON.parse(stored) : [];
@@ -284,7 +347,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (e) {}
 
-    // 2. Check existing in backend SQLite DB
+    // 3. Check existing in backend SQLite DB
     try {
       const checkRes = await fetch('/api/v1/users', {
         method: 'POST',
@@ -332,8 +395,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         role,
       };
 
-      // 3. Register user row in backend SQLite DB & Supabase `users` table
-      await syncUserToBackendDB(newUser);
+      // 4. Upsert directly to Supabase `users` table with password so ANY device/laptop can log in
+      try {
+        await supabase.from('users').upsert([
+          {
+            id: userId,
+            name: formattedName,
+            email: cleanEmail,
+            password: pass,
+            role,
+            phone: `98${Math.floor(10000000 + Math.random() * 90000000)}`,
+            district: 'Nashik',
+            state: 'Maharashtra',
+            address: 'Maharashtra, India',
+          },
+        ]);
+      } catch (supaErr) {
+        console.warn('Direct Supabase users table upsert note:', supaErr);
+      }
+
+      // 5. Register user row in backend SQLite DB
+      await syncUserToBackendDB(newUserRecord);
 
       // Save to local registry backup WITH password
       try {

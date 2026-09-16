@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, role, phone, action } = body;
+    const { name, email, role, phone, password, action } = body;
 
     if (!email) {
       return NextResponse.json({ success: false, message: 'Email address is required' }, { status: 400 });
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
 
     // 1. Action: Check if user exists
     if (action === 'check_exists') {
-      const exists = checkUserExistsByEmail(email);
+      const exists = await checkUserExistsByEmail(email);
       return NextResponse.json({
         success: true,
         exists,
@@ -29,6 +29,7 @@ export async function POST(request: Request) {
     const result = await registerUserRow({
       name,
       email,
+      password,
       role,
       phone,
     });
