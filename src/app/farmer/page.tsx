@@ -1919,41 +1919,6 @@ export default function FarmerDashboardPage() {
         </div>
         )}
 
-        {/* Feature Phone IVR Info Card */}
-        <div className="glass-card p-6 rounded-3xl space-y-4 border border-amber-500/20">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-amber-500/20 text-amber-800 rounded-xl">
-              <PhoneCall className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-extrabold text-emerald-950 text-base">
-                {t.ivrGuideHeader}
-              </h3>
-              <p className="text-xs text-emerald-800/70">
-                {t.ivrGuideSub}
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs pt-1">
-            <div className="p-3 bg-white/70 rounded-xl border border-emerald-900/10 space-y-1">
-              <span className="font-bold text-amber-800 bg-amber-500/20 px-2 py-0.5 rounded text-[10px]">{t.keypad1Title}</span>
-              <p className="font-bold text-emerald-950">{t.keypad1Sub}</p>
-              <p className="text-[11px] text-emerald-800/70">{t.keypad1Desc}</p>
-            </div>
-            <div className="p-3 bg-white/70 rounded-xl border border-emerald-900/10 space-y-1">
-              <span className="font-bold text-amber-800 bg-amber-500/20 px-2 py-0.5 rounded text-[10px]">{t.keypad2Title}</span>
-              <p className="font-bold text-emerald-950">{t.keypad2Sub}</p>
-              <p className="text-[11px] text-emerald-800/70">{t.keypad2Desc}</p>
-            </div>
-            <div className="p-3 bg-white/70 rounded-xl border border-emerald-900/10 space-y-1">
-              <span className="font-bold text-amber-800 bg-amber-500/20 px-2 py-0.5 rounded text-[10px]">{t.keypad3Title}</span>
-              <p className="font-bold text-emerald-950">{t.keypad3Sub}</p>
-              <p className="text-[11px] text-emerald-800/70">{t.keypad3Desc}</p>
-            </div>
-          </div>
-        </div>
-
         {/* ===================================================
             REGISTERED PRODUCE LISTINGS: BULMA RESPONSIVE CARDS
             =================================================== */}
@@ -2126,6 +2091,37 @@ export default function FarmerDashboardPage() {
         </div>
         </div>
         )}
+
+        {/* ===================================================
+            MINIMAL TOLL-FREE IVR VOICE HELPLINE (SABSE NEECHE)
+            =================================================== */}
+        <div className="mt-8 p-3 sm:p-4 rounded-2xl bg-[#072417]/80 dark:bg-[#03140c]/90 backdrop-blur-md border border-amber-500/25 shadow-md flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-amber-100">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 bg-amber-500/20 text-amber-400 rounded-lg shrink-0">
+              <PhoneCall className="w-4 h-4" />
+            </div>
+            <div className="flex items-baseline gap-2 flex-wrap">
+              <span className="font-extrabold text-amber-300 text-xs sm:text-sm">
+                📞 1800-KISAN-AI
+              </span>
+              <span className="text-[11px] text-amber-200/70">
+                ({language === 'hi' ? 'कीपैड फोन हेतु बिना इंटरनेट वॉयस सेवा' : 'Keypad phone voice service without internet'})
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap text-[11px]">
+            <span className="px-2.5 py-1 bg-white/10 rounded-lg border border-white/10 text-amber-100 flex items-center gap-1.5">
+              <strong className="text-amber-400 font-mono font-bold">1:</strong> {language === 'hi' ? 'फसल बिक्री दर्ज' : 'Crop Reg'}
+            </span>
+            <span className="px-2.5 py-1 bg-white/10 rounded-lg border border-white/10 text-amber-100 flex items-center gap-1.5">
+              <strong className="text-amber-400 font-mono font-bold">2:</strong> {language === 'hi' ? 'मंडी भाव' : 'Mandi Rates'}
+            </span>
+            <span className="px-2.5 py-1 bg-white/10 rounded-lg border border-white/10 text-amber-100 flex items-center gap-1.5">
+              <strong className="text-amber-400 font-mono font-bold">3:</strong> {language === 'hi' ? 'खाता व एस्क्रो स्थिति' : 'Escrow Status'}
+            </span>
+          </div>
+        </div>
 
         {/* Green Pulse Success Signal Toast */}
         {successSignal && (
