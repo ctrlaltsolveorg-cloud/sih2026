@@ -281,47 +281,7 @@ export default function FarmerDashboardPage() {
     setCropName(val);
   };
 
-  const handleApplyPresetCrop = (presetName: string) => {
-    const match = matchCropImagesByName(presetName);
-    setCropName(match.canonicalName);
-    setCropNameHi(match.canonicalNameHi);
-    if (match.category && match.category !== 'Seeds') {
-      setCategory(match.category as any);
-    }
-    setVariety(match.variety);
-    setBasePriceRupees(String(match.suggestedPriceRupees || 30));
-    setPhotos([...match.photos]);
-    setPhotoError(null);
-    triggerSuccessSignal(
-      language === 'hi'
-        ? `🧅 "${match.canonicalNameHi}" का मुख्य लोगो व ${match.photos.length} सत्यापित तस्वीरें स्वतः अपलोड की गईं!`
-        : `🧅 Auto-uploaded logo & ${match.photos.length} verified photos for "${match.canonicalName}"!`
-    );
-  };
-
-  const handleAutoMatchLogoFromCropName = () => {
-    const target = cropName.trim();
-    if (!target) {
-      alert(language === 'hi' ? 'कृपया पहले फसल का नाम दर्ज करें' : 'Please enter crop name first');
-      return;
-    }
-    const match = matchCropImagesByName(target);
-    setPhotos([...match.photos]);
-    setPhotoError(null);
-    if (match.category && match.category !== 'Seeds') {
-      setCategory(match.category as any);
-    }
-    if (!cropNameHi || cropNameHi.trim() === '') {
-      setCropNameHi(match.canonicalNameHi);
-    }
-    triggerSuccessSignal(
-      language === 'hi'
-        ? `🎯 नाम "${target}" के अनुसार ${match.canonicalNameHi} का मुख्य लोगो व ${match.photos.length} तस्वीरें स्वतः अपलोड की गईं!`
-        : `🎯 Auto-matched and uploaded logo & ${match.photos.length} photos for "${match.canonicalName}"!`
-    );
-  };
-
-  // Photo handlers (2 to 6 photos validation - supports multiple file upload from camera/device)
+  // Photo handlers (supports multiple file upload from camera/device)
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -348,42 +308,9 @@ export default function FarmerDashboardPage() {
     });
 
     Promise.all(readPromises).then((newPhotos) => {
-      setPhotos((prev) => {
-        const combined = [...prev, ...newPhotos];
-        if (combined.length >= 2) setPhotoError(null);
-        return combined;
-      });
+      setPhotos((prev) => [...prev, ...newPhotos]);
     });
     e.target.value = '';
-  };
-
-  // Auto-suggest 3 high-res realistic photos for category
-  const handleLoadSamplePhotosForCategory = (cat: 'Vegetables' | 'Fruits' | 'Pulses' | 'Grains' | 'Seeds' | string) => {
-    const samplePool: Record<string, string[]> = {
-      Vegetables: [
-        'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=800&q=80',
-      ],
-      Fruits: [
-        'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80',
-      ],
-      Pulses: [
-        'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80',
-      ],
-      Grains: [
-        'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80',
-      ],
-    };
-    const targetPhotos = samplePool[cat] || samplePool.Vegetables;
-    setPhotos([...targetPhotos]);
-    setPhotoError(null);
   };
 
   const handleStartAddProduce = (cat?: CropCategory) => {
@@ -445,11 +372,12 @@ export default function FarmerDashboardPage() {
     setQuantityKg('500');
     setBasePriceRupees('40');
     setGrade('A+');
-    handleLoadSamplePhotosForCategory(category);
+    setPhotos([]);
+    setPhotoError(null);
     triggerSuccessSignal(
       language === 'hi'
-        ? 'संपादन रद्द किया गया — नया उत्पाद प्रविष्टि मोड तैयार'
-        : 'Edit cancelled — ready for new custom produce entry'
+        ? 'संपादन रद्द किया गया'
+        : 'Edit cancelled'
     );
   };
 
@@ -1186,7 +1114,7 @@ export default function FarmerDashboardPage() {
             </div>
 
             {/* ===================================================
-                MIDDLE: CROP PHOTOS (2 TO 6 PHOTOS MANDATORY)
+                MIDDLE: CROP PHOTOS
                 =================================================== */}
             <div className="p-4 sm:p-5 bg-emerald-950/5 rounded-2xl border-2 border-emerald-900/15 space-y-3.5">
               <div className="flex items-center justify-between flex-wrap gap-2">
@@ -1194,36 +1122,21 @@ export default function FarmerDashboardPage() {
                   <Camera className="w-5 h-5 text-amber-600" />
                   <div>
                     <h3 className="text-xs font-black text-emerald-950 uppercase tracking-wider">
-                      CROP PHOTOS (2 TO 6 PHOTOS MANDATORY)
+                      {language === 'hi' ? 'फसल की तस्वीरें (Crop Photos)' : 'Crop Photos'}
                     </h3>
                     <p className="text-[11px] text-emerald-800/80">
-                      Upload from camera/device, paste link, or use 1-click auto-suggest.
+                      {language === 'hi'
+                        ? 'कैमरा / डिवाइस से फोटो चुनें या इमेज URL लिंक डालें।'
+                        : 'Upload photo from device/camera or enter image URL link.'}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  {/* Auto-Suggest Photos button */}
-                  <button
-                    type="button"
-                    onClick={() => handleLoadSamplePhotosForCategory(category)}
-                    className="px-3.5 py-1.5 bg-[#0F3826] hover:bg-emerald-900 text-amber-300 font-bold rounded-xl text-xs flex items-center gap-1.5 shadow transition"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                    <span>✨ Auto-Suggest Photos</span>
-                  </button>
-
-                  {/* Photo Counter Pill */}
-                  <div
-                    className={`px-3 py-1.5 rounded-full text-xs font-extrabold flex items-center gap-1.5 shadow-sm ${
-                      photos.length >= 2 && photos.length <= 6
-                        ? 'bg-emerald-700 text-white'
-                        : 'bg-red-400 text-white'
-                    }`}
-                  >
+                  <div className="px-3 py-1.5 rounded-full text-xs font-extrabold flex items-center gap-1.5 shadow-sm bg-emerald-800 text-amber-200">
                     <Camera className="w-3.5 h-3.5" />
                     <span>
-                      Photos: {photos.length}/6 {photos.length >= 2 ? '' : '(न्यूनतम 2 अनिवार्य)'}
+                      {photos.length > 0 ? `${photos.length}/6 Photos` : (language === 'hi' ? 'फोटो जोड़ें' : 'Add Photos')}
                     </span>
                   </div>
                 </div>
@@ -1247,7 +1160,7 @@ export default function FarmerDashboardPage() {
                       + Camera / File
                     </span>
                     <span className="text-[9px] text-emerald-800/70 font-semibold">
-                      ({photos.length}/6 फोटो)
+                      ({photos.length}/6)
                     </span>
                     <input
                       type="file"
