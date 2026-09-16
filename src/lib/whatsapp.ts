@@ -100,7 +100,7 @@ export async function sendWhatsAppOrderSlip(toPhone: string, order: {
   delivery_address?: string;
 }): Promise<WhatsAppSendResult> {
   const message = [
-    `🌾 *किसानबंधन AI (KisanBandhan)* • ऑर्डर स्थिति 🌾`,
+    `🌾 *किसानबंधन (KissanBandhan)* • ऑर्डर स्थिति 🌾`,
     ``,
     `नमस्ते *${order.customer_name}* जी!`,
     `आपके ऑर्डर का ताज़ा विवरण नीचे दिया गया है:`,
@@ -132,7 +132,7 @@ export async function sendWhatsAppFarmerListingSlip(farmerPhone: string, crop: {
   grade: string;
 }): Promise<WhatsAppSendResult> {
   const message = [
-    `🚜 *किसानबंधन AI • फसल लिस्टिंग पुष्टि* 🚜`,
+    `🚜 *किसानबंधन • फसल लिस्टिंग पुष्टि* 🚜`,
     ``,
     `बधाई हो किसान भाई! आपकी फसल डिजिटल बाज़ार में सफलतापूर्वक लिस्ट हो गई है:`,
     ``,

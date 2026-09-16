@@ -63,7 +63,7 @@ export default function Footer() {
       </div>
 
       <div className="w-full px-4 sm:px-8 lg:px-12 pt-6 border-t border-emerald-900/40 flex flex-col sm:flex-row items-center justify-between text-xs text-amber-200/50 gap-4">
-        <p>© 2026 KisanBandhan AI — SIH 2026 PS 26033. All rights reserved.</p>
+        <p>© 2026 KissanBandhan — SIH 2026 PS 26033. All rights reserved.</p>
         <div className="flex gap-4">
           <a
             href="https://github.com/ctrlaltsolveorg-cloud/sih2026"

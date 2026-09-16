@@ -13,8 +13,8 @@ import IndiaTranslatorModal from '@/components/IndiaTranslatorModal';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'KisanBandhan AI — Kisan Diwas Direct Farm-to-Buyer Platform (SIH 2026)',
-  description: 'AI-Powered Direct Agriculture Trading & Logistics Platform for SIH 2026 Problem Statement 26033. Computer Vision Grading, Fair Price AI, and Demand Forecasting.',
+  title: 'KissanBandhan — Kisan Diwas Direct Farm-to-Buyer Platform (SIH 2026)',
+  description: 'Direct Agriculture Trading & Logistics Platform for SIH 2026 Problem Statement 26033. Computer Vision Grading, Fair Price calculation, and Demand Forecasting.',
 };
 
 export default function RootLayout({

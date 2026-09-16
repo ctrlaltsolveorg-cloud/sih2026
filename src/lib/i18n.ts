@@ -346,7 +346,7 @@ export interface TranslationSchema {
 export const translations: Record<Language, TranslationSchema> = {
   hi: {
     // Navigation & General
-    appName: "KisanBandhan AI",
+    appName: "KissanBandhan",
     subTitle: "कृषि से सीधे खरीदार तक — बिना बिचौलियों के",
     tagline: "भारत का पहला AI संचालित प्रत्यक्ष कृषि बाज़ार और रसद मंच",
     activeRoleLabel: "सक्रिय भूमिका",
@@ -652,7 +652,7 @@ export const translations: Record<Language, TranslationSchema> = {
 
   en: {
     // Navigation & General
-    appName: "KisanBandhan AI",
+    appName: "KissanBandhan",
     subTitle: "Direct Farm-to-Buyer Platform — Zero Middlemen",
     tagline: "India's First AI-Powered Agri Supply Chain & Logistics Engine",
     activeRoleLabel: "Active Role",
@@ -958,7 +958,7 @@ export const translations: Record<Language, TranslationSchema> = {
 
   pa: {
     // Punjabi
-    appName: "KisanBandhan AI",
+    appName: "KissanBandhan",
     subTitle: "ਖੇਤਾਂ ਤੋਂ ਸਿੱਧਾ ਖਰੀਦਦਾਰ ਤੱਕ — ਬਿਨਾਂ ਵਿਚੋਲਿਆਂ ਦੇ",
     tagline: "ਭਾਰਤ ਦਾ ਪਹਿਲਾ AI ਸੰਚਾਲਿਤ ਸਿੱਧਾ ਖੇਤੀਬਾੜੀ ਮੰਡੀ ਅਤੇ ਲੌਜਿਸਟਿਕਸ ਮੰਚ",
     activeRoleLabel: "ਸਰਗਰਮ ਭੂਮਿਕਾ",
@@ -1188,7 +1188,7 @@ export const translations: Record<Language, TranslationSchema> = {
 
   mr: {
     // Marathi
-    appName: "KisanBandhan AI",
+    appName: "KissanBandhan",
     subTitle: "शेतातून थेट ग्राहकांपर्यंत — मध्यस्थांशिवाय",
     tagline: "भारताचे पहिले AI संचलित थेट कृषी बाजारपेठ व लॉजिस्टिक्स व्यासपीठ",
     activeRoleLabel: "सक्रिय भूमिका",
@@ -1418,7 +1418,7 @@ export const translations: Record<Language, TranslationSchema> = {
 
   gu: {
     // Gujarati
-    appName: "KisanBandhan AI",
+    appName: "KissanBandhan",
     subTitle: "ખેતરમાંથી સીધા ગ્રાહક સુધી — વચેટિયાઓ વિના",
     tagline: "ભારતનું પ્રથમ AI સંચાલિત ડાયરેક્ટ એગ્રી માર્કેટપ્લેસ અને લોજિસ્ટિક્સ પ્લેટફોર્મ",
     activeRoleLabel: "સક્રિય ભૂમિકા",
@@ -1648,7 +1648,7 @@ export const translations: Record<Language, TranslationSchema> = {
 
   bn: {
     // Bengali
-    appName: "KisanBandhan AI",
+    appName: "KissanBandhan",
     subTitle: "ক্ষেত থেকে সরাসরি ক্রেতার কাছে — কোনো দালাল ছাড়াই",
     tagline: "ভারতের প্রথম AI চালিত সরাসরি কৃষি বাজার ও লজিস্টিকস প্ল্যাটফর্ম",
     activeRoleLabel: "সক্রিয় ভূমিকা",
@@ -1878,7 +1878,7 @@ export const translations: Record<Language, TranslationSchema> = {
 
   te: {
     // Telugu
-    appName: "KisanBandhan AI",
+    appName: "KissanBandhan",
     subTitle: "పొలం నుండి నేరుగా కొనుగోలుదారుడికి — దళారులు లేకుండా",
     tagline: "భారతదేశపు మొట్టమొదటి AI ఆధారిత ప్రత్యక్ష వ్యవసాయ మార్కెట్ & లాజిస్టిక్స్ ప్లాట్‌ఫామ్",
     activeRoleLabel: "క్రియాశీల పాత్ర",
@@ -2108,7 +2108,7 @@ export const translations: Record<Language, TranslationSchema> = {
 
   ta: {
     // Tamil
-    appName: "KisanBandhan AI",
+    appName: "KissanBandhan",
     subTitle: "பண்ணையிலிருந்து நேரடியாக வாங்குபவருக்கு — இடைத்தரகர்கள் இன்றி",
     tagline: "இந்தியாவின் முதல் AI நேரடி வேளாண் சந்தை மற்றும் தளவாட தளம்",
     activeRoleLabel: "செயலில் உள்ள பங்கு",
@@ -2338,7 +2338,7 @@ export const translations: Record<Language, TranslationSchema> = {
 
   kn: {
     // Kannada
-    appName: "KisanBandhan AI",
+    appName: "KissanBandhan",
     subTitle: "ಹೊಲದಿಂದ ನೇರವಾಗಿ ಗ್ರಾಹಕರಿಗೆ — ಮಧ್ಯವರ್ತಿಗಳಿಲ್ಲದೆ",
     tagline: "ಭಾರತದ ಪ್ರಪ್ರಥಮ AI ಚಾಲಿತ ನೇರ ಕೃಷಿ ಮಾರುಕಟ್ಟೆ ಮತ್ತು ಲಾಜಿಸ್ಟಿಕ್ಸ್ ವೇದಿಕೆ",
     activeRoleLabel: "ಸಕ್ರಿಯ ಪಾತ್ರ",
@@ -2568,7 +2568,7 @@ export const translations: Record<Language, TranslationSchema> = {
 
   ml: {
     // Malayalam
-    appName: "KisanBandhan AI",
+    appName: "KissanBandhan",
     subTitle: "പാടത്തുനിന്ന് നേരിട്ട് ഉപഭോക്താവിലേക്ക് — ഇടനിലക്കാരില്ലാതെ",
     tagline: "ഇന്ത്യയിലെ ആദ്യത്തെ AI അധിഷ്ഠിത നേരിട്ടുള്ള കാർഷിക വിപണിയും ലോജിസ്റ്റിക്സും",
     activeRoleLabel: "സജീവ പങ്ക്",
@@ -2798,7 +2798,7 @@ export const translations: Record<Language, TranslationSchema> = {
 
   or: {
     // Odia
-    appName: "KisanBandhan AI",
+    appName: "KissanBandhan",
     subTitle: "କ୍ଷେତରୁ ସିଧା ଗ୍ରାହକଙ୍କ ପାଖକୁ — ମଧ୍ୟସ୍ଥିଙ୍କ ବିନା",
     tagline: "ଭାରତର ପ୍ରଥମ AI ଚାଳିତ ପ୍ରତ୍ୟକ୍ଷ କୃଷି ବଜାର ଓ ଲଜିଷ୍ଟିକ୍ସ ମଞ୍ଚ",
     activeRoleLabel: "ସକ୍ରିୟ ଭୂମିକା",
