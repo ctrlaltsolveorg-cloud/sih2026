@@ -88,8 +88,8 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
     supportedLanguages[0];
 
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-2xl backdrop-saturate-200 bg-[#FAF5EB]/75 dark:bg-[#07170f]/80 border-b border-emerald-900/15 dark:border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-200 relative">
-      {/* Background ambient glow container with overflow-hidden so orbs don't bleed outside the navbar boundary, while allowing all dropdowns to render freely above page content */}
+    <header className="sticky top-0 z-[100] w-full backdrop-blur-2xl backdrop-saturate-200 bg-[#FAF5EB]/90 dark:bg-[#07170f]/90 border-b border-emerald-900/15 dark:border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-200">
+      {/* Background ambient glow container with overflow-hidden so orbs don't bleed outside the navbar boundary */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
         <div className="absolute -top-12 left-[15%] w-72 h-28 bg-emerald-500/25 dark:bg-emerald-400/20 rounded-full blur-3xl" />
         <div className="absolute -top-12 right-[15%] w-72 h-28 bg-amber-500/25 dark:bg-amber-400/20 rounded-full blur-3xl" />
@@ -118,8 +118,8 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
         </div>
       </div>
 
-      {/* Main Navbar Row with Frosted Glass */}
-      <div className="relative z-10 w-full px-2.5 sm:px-8 lg:px-12 py-2 sm:py-3 flex items-center justify-between gap-1.5 sm:gap-3 bg-white/35 dark:bg-black/20 backdrop-blur-md max-w-full overflow-hidden">
+      {/* Main Navbar Row with Frosted Glass - overflow is visible so dropdowns & profile popups render freely above page content */}
+      <div className="relative z-20 w-full px-2.5 sm:px-8 lg:px-12 py-2 sm:py-3 flex items-center justify-between gap-1.5 sm:gap-3 bg-white/35 dark:bg-black/20 backdrop-blur-md max-w-full">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 group">
           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-amber-200 shadow-md group-hover:scale-105 transition shrink-0">
@@ -357,7 +357,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
             {/* Comprehensive Profile & User Actions Popup */}
             {showProfileMenu && isAuthenticated && user && (
-              <div className="absolute right-0 mt-2 w-72 sm:w-80 max-w-[calc(100vw-1.5rem)] bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 p-3.5 z-[100] animate-fadeIn space-y-3">
+              <div className="absolute right-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-1.5rem)] bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 p-3.5 z-[120] animate-fadeIn space-y-3">
                 {/* Profile Header */}
                 <div className="flex items-center gap-3 p-3 bg-emerald-900/10 dark:bg-emerald-950/80 rounded-2xl border border-emerald-900/15 dark:border-emerald-500/20">
                   <UserAvatar name={user.name} size="md" />

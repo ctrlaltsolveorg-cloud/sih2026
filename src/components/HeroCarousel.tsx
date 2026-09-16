@@ -139,7 +139,7 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
 
   return (
     <div 
-      className="-mx-3 sm:-mx-8 lg:-mx-12 -mt-4 sm:-mt-6 relative overflow-hidden text-amber-50 group mb-6 sm:mb-8 border-b border-emerald-900/15 dark:border-emerald-500/20 w-[calc(100%+1.5rem)] sm:w-[calc(100%+4rem)] lg:w-[calc(100%+6rem)] max-w-none"
+      className="-mx-3 sm:-mx-8 lg:-mx-12 -mt-4 sm:-mt-6 relative z-0 overflow-hidden text-amber-50 group mb-6 sm:mb-8 border-b border-emerald-900/15 dark:border-emerald-500/20 w-[calc(100%+1.5rem)] sm:w-[calc(100%+4rem)] lg:w-[calc(100%+6rem)] max-w-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >

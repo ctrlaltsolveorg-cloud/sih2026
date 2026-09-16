@@ -68,7 +68,7 @@ export default function RootLayout({
             <AuthProvider>
               <RoleProvider>
                 <CartProvider>
-                  <div className="flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
+                  <div className="flex flex-col min-h-screen w-full max-w-full">
                     <Navbar />
                     <main className="flex-1 w-full max-w-full px-3 sm:px-8 lg:px-12 py-4 sm:py-6 overflow-x-hidden">
                       {children}
