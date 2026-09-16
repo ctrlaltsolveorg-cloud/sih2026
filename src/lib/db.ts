@@ -239,8 +239,13 @@ function initTables(db: Database.Database) {
       gallery_urls TEXT,
       logo_structure TEXT,
       images_structure TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    -- Purge legacy dummy listings and old mock orders
+    DELETE FROM order_items WHERE order_id LIKE 'ord_178941%' OR order_id = 'ord_501' OR listing_id LIKE 'lst_kisan_%' OR listing_id LIKE 'prod_%';
+    DELETE FROM deliveries WHERE id LIKE 'del_178941%' OR id = 'del_701' OR id = 'del_501';
+    DELETE FROM orders WHERE id LIKE 'ord_178941%' OR id = 'ord_501';
+    DELETE FROM product_listings WHERE id LIKE 'lst_kisan_%' OR id LIKE 'prod_%';
   `);
 
   try {
