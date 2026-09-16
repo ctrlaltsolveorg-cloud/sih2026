@@ -108,7 +108,7 @@ export default function FarmerDashboardPage() {
   const [quantityKg, setQuantityKg] = useState('500');
   const [unit, setUnit] = useState('kg');
   const [basePriceRupees, setBasePriceRupees] = useState('30');
-  const [grade, setGrade] = useState('उच्चतम श्रेणी A+');
+  const [grade, setGrade] = useState('A+');
   const [location, setLocation] = useState('नासिक मंडी संकलन हब');
   const [isOrganic, setIsOrganic] = useState(false);
 
@@ -510,7 +510,7 @@ export default function FarmerDashboardPage() {
     setVariety('देसी / स्थानीय फसल (Local Harvest)');
     setQuantityKg('500');
     setBasePriceRupees('40');
-    setGrade('उच्चतम श्रेणी A+');
+    setGrade('A+');
     handleLoadSamplePhotosForCategory(cat || category);
     triggerSuccessSignal(
       language === 'hi'
@@ -529,7 +529,7 @@ export default function FarmerDashboardPage() {
     setVariety(crop.variety || 'देसी / स्थानीय फसल (Local Harvest)');
     setQuantityKg(String(crop.qty || crop.quantity_available || '500'));
     setBasePriceRupees(String(crop.priceRupees || (crop.pricePaise ? (crop.pricePaise / 100).toFixed(2) : '34')));
-    setGrade(crop.grade || 'उच्चतम श्रेणी A+');
+    setGrade(crop.grade || 'A+');
     setLocation(crop.location || 'नासिक मंडी संकलन हब');
     setUnit(crop.unit || 'kg');
     setIsOrganic(
@@ -566,7 +566,7 @@ export default function FarmerDashboardPage() {
     setVariety('देसी / स्थानीय फसल (Local Harvest)');
     setQuantityKg('500');
     setBasePriceRupees('40');
-    setGrade('उच्चतम श्रेणी A+');
+    setGrade('A+');
     handleLoadSamplePhotosForCategory(category);
     triggerSuccessSignal(
       language === 'hi'
@@ -634,7 +634,7 @@ export default function FarmerDashboardPage() {
         quantity_available: parseInt(quantityKg) || 500,
         priceRupees: basePriceRupees || '34.00',
         pricePaise: Math.round((parseFloat(basePriceRupees) || 34) * 100),
-        grade: isOrganic ? '100% जैविक (Organic)' : grade,
+        grade: grade,
         location: location,
         status: 'सत्यापित फसल',
         imageUrl: photos[0],
@@ -642,7 +642,7 @@ export default function FarmerDashboardPage() {
         unit: unit,
         farmerId: user?.id || 'u_farmer_1',
         farmer_name: user?.name || userName || 'किसान (Farmer)',
-        isOrganic: isOrganic ? 1 : 0,
+        isOrganic: 0,
         harvestDate: new Date().toISOString().split('T')[0],
         cvTrustScore: 98,
         isCustom: true,
@@ -657,13 +657,13 @@ export default function FarmerDashboardPage() {
             cropName: cropName || 'अद्यतन फसल',
             quantityKg: quantityKg || '500',
             priceRupees: basePriceRupees || '34.00',
-            grade: isOrganic ? '100% जैविक (Organic)' : grade,
+            grade: grade,
             location: location,
             farmerId: user?.id || 'u_farmer_1',
             category: category,
             unit: unit,
             images: photos,
-            isOrganic: isOrganic ? 1 : 0,
+            isOrganic: 0,
           }),
         });
       } catch (err) {
@@ -689,8 +689,8 @@ export default function FarmerDashboardPage() {
               variety: variety,
               priceRupees: parseFloat(basePriceRupees) || 34,
               unit: unit,
-              grade: isOrganic ? '100% जैविक (Organic)' : grade,
-              isOrganic: isOrganic ? 1 : 0,
+              grade: grade,
+              isOrganic: 0,
               photos: photos,
               farmerId: user?.id || 'u_farmer_1',
               farmerName: user?.name || userName,
@@ -729,7 +729,7 @@ export default function FarmerDashboardPage() {
       quantity_available: parseInt(quantityKg) || 500,
       priceRupees: basePriceRupees || '34.00',
       pricePaise: Math.round((parseFloat(basePriceRupees) || 34) * 100),
-      grade: isOrganic ? '100% जैविक (Organic)' : grade,
+      grade: grade,
       location: location,
       status: 'सत्यापित फसल',
       imageUrl: photos[0],
@@ -737,7 +737,7 @@ export default function FarmerDashboardPage() {
       unit: unit,
       farmerId: user?.id || 'u_farmer_1',
       farmer_name: user?.name || userName || 'किसान (Farmer)',
-      isOrganic: isOrganic ? 1 : 0,
+      isOrganic: 0,
       harvestDate: new Date().toISOString().split('T')[0],
       cvTrustScore: 98,
       isCustom: isUnlistedNew,
@@ -753,7 +753,7 @@ export default function FarmerDashboardPage() {
           cropName: cropName || 'नयी फसल',
           quantityKg: quantityKg || '500',
           priceRupees: basePriceRupees || '34.00',
-          grade: isOrganic ? '100% जैविक (Organic)' : grade,
+          grade: grade,
           location: location,
           farmerId: user?.id || 'u_farmer_1',
           farmerName: user?.name || userName,
@@ -776,7 +776,7 @@ export default function FarmerDashboardPage() {
           quantity_available: data.crop.qty,
           priceRupees: data.crop.priceRupees,
           pricePaise: Math.round(parseFloat(data.crop.priceRupees) * 100),
-          grade: data.crop.grade,
+          grade: data.crop.grade || grade,
           location: data.crop.location,
           status: 'सत्यापित फसल',
           imageUrl: photos[0],
@@ -784,7 +784,7 @@ export default function FarmerDashboardPage() {
           unit: unit,
           farmerId: user?.id || 'u_farmer_1',
           farmer_name: user?.name || userName || 'किसान (Farmer)',
-          isOrganic: isOrganic ? 1 : 0,
+          isOrganic: 0,
           harvestDate: new Date().toISOString().split('T')[0],
           cvTrustScore: 98,
           isCustom: isUnlistedNew,
@@ -810,8 +810,8 @@ export default function FarmerDashboardPage() {
               variety: variety,
               priceRupees: parseFloat(basePriceRupees) || 34,
               unit: unit,
-              grade: isOrganic ? '100% जैविक (Organic)' : grade,
-              isOrganic: isOrganic ? 1 : 0,
+              grade: grade,
+              isOrganic: 0,
               photos: photos,
               farmerId: user?.id || 'u_farmer_1',
               farmerName: user?.name || userName,
@@ -1734,10 +1734,10 @@ export default function FarmerDashboardPage() {
                   onChange={(e) => setGrade(e.target.value)}
                   className="w-full px-3.5 py-2 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold"
                 >
-                  <option value="उच्चतम श्रेणी A+">उच्चतम श्रेणी A+ (Premium)</option>
-                  <option value="ग्रेड A">ग्रेड A (Standard Market)</option>
-                  <option value="ग्रेड B">ग्रेड B (Bulk Commercial)</option>
-                  <option value="100% जैविक (Organic Certified)">100% जैविक (Organic Certified)</option>
+                  <option value="A+">A+</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
                 </select>
               </div>
 
@@ -1755,66 +1755,46 @@ export default function FarmerDashboardPage() {
               </div>
             </div>
 
-            {/* Organic Checkbox & Submit */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2 border-t border-emerald-900/10">
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-emerald-950">
-                <input
-                  type="checkbox"
-                  checked={isOrganic}
-                  onChange={(e) => setIsOrganic(e.target.checked)}
-                  className="w-4 h-4 text-emerald-700 rounded focus:ring-amber-500"
-                />
-                <span>{language === 'hi' ? 'यह फसल 100% प्राकृतिक/जैविक प्रमाणित है' : '100% Certified Organic produce'}</span>
-              </label>
-
-              <div className="flex items-center gap-3">
-                {editingCropId && (
-                  <button
-                    type="button"
-                    onClick={handleCancelEdit}
-                    className="px-5 py-3.5 bg-gray-200 hover:bg-gray-300 text-emerald-950 font-bold rounded-2xl transition text-xs"
-                  >
-                    {language === 'hi' ? 'रद्द करें' : 'Cancel'}
-                  </button>
-                )}
+            {/* Action Buttons */}
+            <div className="flex items-center justify-end gap-3 pt-2 border-t border-emerald-900/10">
+              {editingCropId && (
                 <button
-                  type="submit"
-                  disabled={isSubmitting || !cropName.trim() || !quantityKg || !basePriceRupees}
-                  className={`px-8 py-3.5 font-extrabold rounded-2xl shadow-xl transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed ${editingCropId
-                      ? 'bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-emerald-950 shadow-amber-500/20'
-                      : 'bg-gradient-to-r from-emerald-800 via-[#0F3826] to-emerald-950 hover:from-emerald-700 hover:to-emerald-900 text-amber-50'
-                    }`}
+                  type="button"
+                  onClick={handleCancelEdit}
+                  className="px-5 py-3.5 bg-gray-200 hover:bg-gray-300 text-emerald-950 font-bold rounded-2xl transition text-xs"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
-                      <span>
-                        {editingCropId
-                          ? (language === 'hi' ? 'अपडेट हो रहा है...' : 'Updating...')
-                          : (language === 'hi' ? 'दर्ज हो रहा है...' : 'Publishing to Buyer...')}
-                      </span>
-                    </>
-                  ) : editingCropId ? (
-                    <>
-                      <Save className="w-4 h-4 text-emerald-950" />
-                      <span>
-                        {language === 'hi'
-                          ? `फसल अपडेट करें (${photos.length} फोटो) → खरीदार डेस्क पर अपडेट करें`
-                          : `Update Crop (${photos.length} Photos) → Refresh on Buyer Desk`}
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <Plus className="w-4 h-4 text-amber-400" />
-                      <span>
-                        {language === 'hi'
-                          ? `फसल दर्ज करें (${photos.length} फोटो) → खरीदार डेस्क भेजें`
-                          : `Publish Crop (${photos.length} Photos) → to Buyer Desk`}
-                      </span>
-                    </>
-                  )}
+                  {language === 'hi' ? 'रद्द करें' : 'Cancel'}
                 </button>
-              </div>
+              )}
+              <button
+                type="submit"
+                disabled={isSubmitting || !cropName.trim() || !quantityKg || !basePriceRupees}
+                className={`px-8 py-3.5 font-extrabold rounded-2xl shadow-xl transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed ${editingCropId
+                    ? 'bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-emerald-950 shadow-amber-500/20'
+                    : 'bg-gradient-to-r from-emerald-800 via-[#0F3826] to-emerald-950 hover:from-emerald-700 hover:to-emerald-900 text-amber-50'
+                  }`}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
+                    <span>
+                      {editingCropId
+                        ? (language === 'hi' ? 'अपडेट हो रहा है...' : 'Updating...')
+                        : (language === 'hi' ? 'दर्ज हो रहा है...' : 'Publishing...')}
+                    </span>
+                  </>
+                ) : editingCropId ? (
+                  <>
+                    <Save className="w-4 h-4 text-emerald-950" />
+                    <span>{language === 'hi' ? 'अपडेट करें' : 'Update'}</span>
+                  </>
+                ) : (
+                  <>
+                    <Plus className="w-4 h-4 text-amber-400" />
+                    <span>Publish</span>
+                  </>
+                )}
+              </button>
             </div>
           </form>
 
@@ -2319,34 +2299,20 @@ export default function FarmerDashboardPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold text-emerald-950 mb-1">
-                      {language === 'hi' ? 'गुणवत्ता ग्रेड (Grade)' : 'Quality Grade'}
-                    </label>
-                    <select
-                      value={grade}
-                      onChange={(e) => setGrade(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold"
-                    >
-                      <option value="उच्चतम श्रेणी A+">उच्चतम श्रेणी A+ (Premium)</option>
-                      <option value="ग्रेड A">ग्रेड A (Standard Market)</option>
-                      <option value="ग्रेड B">ग्रेड B (Bulk Commercial)</option>
-                      <option value="100% जैविक (Organic Certified)">100% जैविक (Organic Certified)</option>
-                    </select>
-                  </div>
-
-                  <div className="flex items-center pt-5">
-                    <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-emerald-950">
-                      <input
-                        type="checkbox"
-                        checked={isOrganic}
-                        onChange={(e) => setIsOrganic(e.target.checked)}
-                        className="w-4 h-4 text-emerald-700 rounded focus:ring-amber-500"
-                      />
-                      <span>{language === 'hi' ? '100% प्राकृतिक / जैविक प्रमाणित फसल' : '100% Certified Organic produce'}</span>
-                    </label>
-                  </div>
+                <div>
+                  <label className="block text-xs font-bold text-emerald-950 mb-1">
+                    {language === 'hi' ? 'गुणवत्ता ग्रेड (Grade)' : 'Quality Grade'}
+                  </label>
+                  <select
+                    value={grade}
+                    onChange={(e) => setGrade(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-white border border-emerald-900/20 rounded-xl text-xs text-emerald-950 font-bold"
+                  >
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                  </select>
                 </div>
 
                 <div className="flex items-center justify-end gap-3 pt-3 border-t border-emerald-900/10">
@@ -2375,18 +2341,18 @@ export default function FarmerDashboardPage() {
                         <span>
                           {editingCropId
                             ? (language === 'hi' ? 'अपडेट हो रहा है...' : 'Updating...')
-                            : (language === 'hi' ? 'दर्ज हो रहा है...' : 'Publishing to Buyer...')}
+                            : (language === 'hi' ? 'दर्ज हो रहा है...' : 'Publishing...')}
                         </span>
                       </>
                     ) : editingCropId ? (
                       <>
                         <Save className="w-4 h-4 text-emerald-950" />
-                        <span>{language === 'hi' ? 'फसल विवरण अपडेट करें' : 'Update Produce'}</span>
+                        <span>{language === 'hi' ? 'अपडेट करें' : 'Update'}</span>
                       </>
                     ) : (
                       <>
                         <Plus className="w-4 h-4 text-amber-400" />
-                        <span>{language === 'hi' ? 'फसल दर्ज करें → खरीदार डेस्क भेजें' : 'Publish Crop → to Buyer Desk'}</span>
+                        <span>Publish</span>
                       </>
                     )}
                   </button>

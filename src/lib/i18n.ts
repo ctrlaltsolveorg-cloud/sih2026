@@ -3377,16 +3377,22 @@ export const categoryTranslations: Record<string, { hi: string; en: string }> = 
 };
 
 export const gradeTranslations: Record<string, { hi: string; en: string }> = {
-  'उच्चतम श्रेणी A+': { hi: 'उच्चतम श्रेणी A+', en: 'Grade A+ Premium' },
+  'A+': { hi: 'A+', en: 'A+' },
+  'A': { hi: 'A', en: 'A' },
+  'B': { hi: 'B', en: 'B' },
+  'C': { hi: 'C', en: 'C' },
+  'Grade A+': { hi: 'Grade A+', en: 'Grade A+' },
+  'Grade A': { hi: 'Grade A', en: 'Grade A' },
+  'Grade B': { hi: 'Grade B', en: 'Grade B' },
+  'Grade C': { hi: 'Grade C', en: 'Grade C' },
+  'उच्चतम श्रेणी A+': { hi: 'उच्चतम श्रेणी A+', en: 'Grade A+' },
   'श्रेणी A': { hi: 'श्रेणी A', en: 'Grade A' },
   'ग्रेड A+': { hi: 'ग्रेड A+', en: 'Grade A+' },
   'ग्रेड A': { hi: 'ग्रेड A', en: 'Grade A' },
   'निर्यात श्रेणी': { hi: 'निर्यात श्रेणी', en: 'Export Grade' },
-  'Grade A Premium': { hi: 'ग्रेड A प्रीमियम', en: 'Grade A Premium' },
-  'Grade A': { hi: 'ग्रेड A', en: 'Grade A' },
-  'Grade A+ Export Quality': { hi: 'ग्रेड A+ निर्यात गुणवत्ता', en: 'Grade A+ Export Quality' },
-  'Grade A Ultra': { hi: 'ग्रेड A अल्ट्रा', en: 'Grade A Ultra' },
-  'Grade A+': { hi: 'ग्रेड A+', en: 'Grade A+' },
+  'Grade A Premium': { hi: 'Grade A', en: 'Grade A' },
+  'Grade A+ Export Quality': { hi: 'Grade A+', en: 'Grade A+' },
+  'Grade A Ultra': { hi: 'Grade A+', en: 'Grade A+' },
 };
 
 // AI Token Map for Word-by-Word Substring & Transliteration Translation

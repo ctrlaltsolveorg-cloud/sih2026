@@ -22,6 +22,8 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCategory, getLocalizedCropName, getLocalizedGrade, getLocalizedLocation, getLocalizedFarmer } from '@/lib/i18n';
+import VerifiedBadge from '@/components/VerifiedBadge';
+import { getProduceVerification, ProduceVerificationRecord } from '@/lib/verifiedStore';
 
 export interface BulmaProductCardProps {
   id: string | number;
@@ -106,6 +108,26 @@ export default function BulmaProductCard({
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [orderQty, setOrderQty] = useState(Math.min(100, quantity_kg || 100));
 
+  // Official Mandi & Lab Verification Registry sync
+  const [verification, setVerification] = useState<ProduceVerificationRecord>(() =>
+    getProduceVerification(id)
+  );
+
+  React.useEffect(() => {
+    setVerification(getProduceVerification(id));
+    const handleUpdate = (e: any) => {
+      if (e.detail && String(e.detail.id) === String(id)) {
+        setVerification(e.detail);
+      }
+    };
+    window.addEventListener('kb:produce-verified-change', handleUpdate);
+    return () => window.removeEventListener('kb:produce-verified-change', handleUpdate);
+  }, [id]);
+
+  const isOfficiallyVerified = Boolean(verification.isVerified || (is_organic === 1 && cv_trust_score >= 90));
+  const isOfficiallyOrganic = Boolean(verification.isVerified ? verification.isOrganic : (is_organic === 1));
+  const effectiveGrade = verification.isVerified ? verification.grade : (quality_grade || 'A+');
+
   const priceRupees = (price_paise_per_kg / 100).toFixed(2);
   const activePhoto = photoList[activePhotoIdx] || photoList[0] || '';
   const sideLogoUrl = (logo_url && logo_url.trim().length > 0)
@@ -177,6 +199,12 @@ export default function BulmaProductCard({
                     {variety}
                   </span>
                 )}
+                {isOfficiallyOrganic && (
+                  <span className="text-[10px] font-extrabold text-emerald-800 dark:text-emerald-300 bg-emerald-100/90 dark:bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-400/50 flex items-center gap-1 shadow-xs">
+                    <Leaf className="w-2.5 h-2.5 text-emerald-600 dark:text-emerald-400" />
+                    <span>{language === 'hi' ? '100% जैविक' : '100% Organic'}</span>
+                  </span>
+                )}
                 {badge && (
                   <span className="text-[10px] bg-red-600 text-white font-extrabold px-1.5 py-0.5 rounded">
                     {badge}
@@ -184,9 +212,19 @@ export default function BulmaProductCard({
                 )}
               </div>
 
-              <h3 className="font-extrabold text-base sm:text-lg text-emerald-950 dark:text-amber-100 mt-1 leading-snug truncate">
-                {getLocalizedCropName(crop_name, language)}
-              </h3>
+              <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+                <h3 className="font-extrabold text-base sm:text-lg text-emerald-950 dark:text-amber-100 leading-snug truncate">
+                  {getLocalizedCropName(crop_name, language)}
+                </h3>
+                {isOfficiallyVerified && (
+                  <VerifiedBadge
+                    size="sm"
+                    variant="whatsapp"
+                    showText={false}
+                    tooltip={language === 'hi' ? 'मंत्रालय एवं मंडी बोर्ड द्वारा आधिकारिक सत्यापित' : 'Officially Verified & Audited by Mandi Board'}
+                  />
+                )}
+              </div>
 
               {crop_name_hi && crop_name_hi !== crop_name && (
                 <p className="text-xs text-emerald-700/80 dark:text-emerald-300/80 font-medium truncate">
@@ -199,7 +237,7 @@ export default function BulmaProductCard({
             <div className="bulma-media-right flex flex-col items-end gap-1">
               <span className="bulma-tag is-warning-dark shadow-sm">
                 <Award className="w-3 h-3 text-amber-400 shrink-0" />
-                <span>{getLocalizedGrade(quality_grade, language)}</span>
+                <span>{getLocalizedGrade(effectiveGrade, language)}</span>
               </span>
               <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
                 <Sparkles className="w-2.5 h-2.5 text-amber-500" />
@@ -249,6 +287,14 @@ export default function BulmaProductCard({
                 <span className="font-bold truncate">
                   {getLocalizedFarmer(farmer_name, language)}
                 </span>
+                {isOfficiallyVerified && (
+                  <VerifiedBadge
+                    size="xs"
+                    variant="whatsapp"
+                    showText={false}
+                    tooltip={language === 'hi' ? 'सत्यापित किसान उत्पादक' : 'Verified Kisan Producer'}
+                  />
+                )}
               </div>
               <span className="text-[10px] font-extrabold text-emerald-800 dark:text-emerald-200 uppercase bg-emerald-200/60 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded">
                 {language === 'hi' ? 'किसान' : 'Farmer'}
