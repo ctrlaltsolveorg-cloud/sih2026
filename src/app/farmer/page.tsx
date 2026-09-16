@@ -387,26 +387,14 @@ export default function FarmerDashboardPage() {
       alert(language === 'hi' ? 'अधिकतम 6 तस्वीरें ही जोड़ी जा सकती हैं' : 'Maximum 6 photos allowed');
       return;
     }
-    setPhotos((prev) => {
-      const next = [...prev, urlInput.trim()];
-      if (next.length >= 2) setPhotoError(null);
-      return next;
-    });
+    setPhotos((prev) => [...prev, urlInput.trim()]);
     setUrlInput('');
+    setPhotoError(null);
   };
 
   const handleRemovePhoto = (idx: number) => {
-    const next = photos.filter((_, i) => i !== idx);
-    setPhotos(next);
-    if (next.length < 2) {
-      setPhotoError(
-        language === 'hi'
-          ? 'कम से कम 2 तस्वीरें अनिवार्य हैं! कृपया एक और तस्वीर जोड़ें।'
-          : 'At least 2 photos are mandatory! Please upload another photo.'
-      );
-    } else {
-      setPhotoError(null);
-    }
+    setPhotos(photos.filter((_, i) => i !== idx));
+    setPhotoError(null);
   };
 
   // Produce Submission (Farmer Desk to Buyer) - Handles Both New Registration & Existing Update
