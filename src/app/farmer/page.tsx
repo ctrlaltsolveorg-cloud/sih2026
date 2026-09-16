@@ -945,26 +945,6 @@ export default function FarmerDashboardPage() {
           </div>
         </div>
 
-        {/* Metrics Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-emerald-700">
-            <span className="text-xs font-bold text-emerald-800">{t.statEarnedIncome}</span>
-            <div className="text-2xl font-extrabold text-emerald-950">₹1,11,400.00</div>
-            <span className="text-[11px] text-emerald-700 font-mono">{t.statZeroCommission}</span>
-          </div>
-
-          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-amber-600">
-            <span className="text-xs font-bold text-emerald-800">{t.statActiveListings}</span>
-            <div className="text-2xl font-extrabold text-amber-800">{myListings.length} {language === 'hi' ? 'फसलें' : 'Crops'}</div>
-            <span className="text-[11px] text-amber-700 font-medium">{language === 'hi' ? 'सीधे खरीदार से कनेक्ट' : 'Connected to Buyer Desk'}</span>
-          </div>
-
-          <div className="glass-card p-5 rounded-2xl space-y-1 border-l-4 border-l-purple-600">
-            <span className="text-xs font-bold text-emerald-800">{language === 'hi' ? 'उपलब्ध कैटलॉग' : 'Catalog Ready'}</span>
-            <div className="text-2xl font-extrabold text-purple-900">{CATALOG_STATS.totalCount}+ {language === 'hi' ? 'किस्में' : 'Items'}</div>
-            <span className="text-[11px] text-purple-700 font-medium">100 सब्जियाँ • 100 फल • 100 दालें • 52 अनाज</span>
-          </div>
-        </div>
 
         {/* ===================================================
             2 MAIN SECTIONS SWITCHER: "MY PRODUCTS" vs "आया हुआ ORDERS"
