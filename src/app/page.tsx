@@ -9,15 +9,9 @@ import {
   Sparkles,
   ShoppingBag,
   TrendingUp,
-  ShieldCheck,
   PhoneCall,
   CheckCircle,
   MapPin,
-  Award,
-  Layers,
-  Truck,
-  Building2,
-  UserCheck,
   Search
 } from 'lucide-react';
 import Link from 'next/link';
@@ -221,120 +215,6 @@ export default function HomePage() {
       {/* Hero Banner Carousel Section with Agriculture Imagery & Navigation Controls */}
       <HeroCarousel />
 
-      {/* 6 Persona Dynamic Switcher Bar */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-emerald-950 dark:text-emerald-100 flex items-center gap-2">
-            <Layers className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-            <span>{t.selectDashboardTitle}</span>
-          </h2>
-          <span className="text-xs text-emerald-800/60 dark:text-emerald-300/70">{t.integratedRolesCount}</span>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          <Link
-            href="/farmer"
-            onClick={() => setRole('FARMER')}
-            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'FARMER'
-                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
-              }`}
-          >
-            <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-700">
-              <UserCheck className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-xs leading-tight">{t.roleFarmer}</p>
-              <p className="text-[10px] opacity-80">{t.roleFarmerSub}</p>
-            </div>
-          </Link>
-
-          <Link
-            href="/fpo"
-            onClick={() => setRole('FPO')}
-            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'FPO'
-                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
-              }`}
-          >
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-700">
-              <Building2 className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-xs leading-tight">{t.roleFPO}</p>
-              <p className="text-[10px] opacity-80">{t.roleFPOSub}</p>
-            </div>
-          </Link>
-
-          <Link
-            href="/buyer"
-            onClick={() => setRole('BUYER')}
-            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'BUYER'
-                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
-              }`}
-          >
-            <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-700">
-              <ShoppingBag className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-xs leading-tight">{t.roleBuyer}</p>
-              <p className="text-[10px] opacity-80">{t.roleBuyerSub}</p>
-            </div>
-          </Link>
-
-          <Link
-            href="/hub"
-            onClick={() => setRole('HUB_OPERATOR')}
-            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'HUB_OPERATOR'
-                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
-              }`}
-          >
-            <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-700">
-              <Award className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-xs leading-tight">{t.roleHub}</p>
-              <p className="text-[10px] opacity-80">{t.roleHubSub}</p>
-            </div>
-          </Link>
-
-          <Link
-            href="/transporter"
-            onClick={() => setRole('TRANSPORTER')}
-            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'TRANSPORTER'
-                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
-              }`}
-          >
-            <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-700">
-              <Truck className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-xs leading-tight">{t.roleTransporter}</p>
-              <p className="text-[10px] opacity-80">{t.roleTransporterSub}</p>
-            </div>
-          </Link>
-
-          <Link
-            href="/admin"
-            onClick={() => setRole('ADMIN')}
-            className={`p-4 rounded-2xl border transition text-left flex flex-col justify-between h-28 ${role === 'ADMIN'
-                ? 'bg-[#0F3826] dark:bg-[#13422e] text-amber-50 border-amber-500 shadow-md'
-                : 'glass-card hover:border-emerald-800/30 dark:hover:border-emerald-500/40 text-emerald-950 dark:text-emerald-100'
-              }`}
-          >
-            <div className="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center text-red-700">
-              <ShieldCheck className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-xs leading-tight">{t.roleAdmin}</p>
-              <p className="text-[10px] opacity-80">{t.roleAdminSub}</p>
-            </div>
-          </Link>
-        </div>
-      </div>
 
       {/* Main Produce Marketplace */}
       <div id="marketplace" className="space-y-6 pt-4">
