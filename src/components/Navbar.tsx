@@ -86,9 +86,14 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
     supportedLanguages[0];
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#FAF5EB]/95 dark:bg-[#07170f]/95 backdrop-blur-md border-b border-emerald-900/10 dark:border-emerald-500/20 shadow-sm transition-colors duration-200">
-      {/* Top Banner */}
-      <div className="bg-[#0F3826] dark:bg-[#040e09] text-amber-200 text-xs py-1 px-4 sm:px-8 border-b border-emerald-800/40 flex items-center justify-between">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-2xl backdrop-saturate-200 bg-[#FAF5EB]/75 dark:bg-[#07170f]/80 border-b border-emerald-900/15 dark:border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-200 relative overflow-hidden">
+      {/* Blurred colored background ambient glow lights shining through the frosted glass */}
+      <div className="absolute -top-12 left-[15%] w-72 h-28 bg-emerald-500/25 dark:bg-emerald-400/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-12 right-[15%] w-72 h-28 bg-amber-500/25 dark:bg-amber-400/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-96 h-16 bg-teal-500/20 dark:bg-teal-400/15 rounded-full blur-2xl pointer-events-none" />
+
+      {/* Top Banner with Frosted Glass */}
+      <div className="relative z-10 bg-[#0F3826]/85 dark:bg-[#040e09]/85 text-amber-200 text-xs py-1 px-4 sm:px-8 border-b border-emerald-500/20 backdrop-blur-md flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="px-2 py-0.5 bg-amber-500/20 text-amber-300 font-extrabold rounded-md text-[10px] border border-amber-400/30">
             SIH 2026 PS 26033
@@ -109,8 +114,8 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
         </div>
       </div>
 
-      {/* Main Navbar Row */}
-      <div className="w-full px-4 sm:px-8 lg:px-12 py-3 flex items-center justify-between gap-3">
+      {/* Main Navbar Row with Frosted Glass */}
+      <div className="relative z-10 w-full px-4 sm:px-8 lg:px-12 py-3 flex items-center justify-between gap-3 bg-white/35 dark:bg-black/20 backdrop-blur-md">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-amber-200 shadow-md group-hover:scale-105 transition">
@@ -127,7 +132,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
         </Link>
 
         {/* Desktop 6 Role Nav Links */}
-        <nav className="hidden xl:flex items-center gap-1 bg-emerald-900/5 dark:bg-emerald-950/60 p-1 rounded-2xl border border-emerald-900/10 dark:border-emerald-500/20 text-xs font-bold">
+        <nav className="hidden xl:flex items-center gap-1 bg-white/50 dark:bg-emerald-950/50 p-1 rounded-2xl border border-emerald-900/10 dark:border-white/10 text-xs font-bold backdrop-blur-lg shadow-xs">
           <Link
             href="/"
             className={`px-3 py-1.5 rounded-xl transition ${
@@ -226,7 +231,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
                 ? (language === 'hi' ? 'लाइट मोड' : 'Light Mode')
                 : (language === 'hi' ? 'डार्क मोड' : 'Dark Mode')
             }
-            className="w-9 h-9 sm:w-10 sm:h-10 bg-white/90 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 text-emerald-950 dark:text-amber-300 border border-emerald-900/15 dark:border-emerald-500/30 font-extrabold rounded-xl flex items-center justify-center shadow-sm transition transform active:scale-95 shrink-0"
+            className="w-9 h-9 sm:w-10 sm:h-10 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 text-emerald-950 dark:text-amber-300 border border-emerald-900/15 dark:border-white/15 backdrop-blur-lg font-extrabold rounded-xl flex items-center justify-center shadow-xs transition transform active:scale-95 shrink-0"
           >
             {resolvedTheme === 'dark' ? (
               <Sun className="w-4 h-4 text-amber-400 animate-pulse" />
@@ -238,7 +243,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
           {/* 2. India Translator Launch Button - Icon Only */}
           <button
             onClick={() => setIsTranslatorOpen(true)}
-            className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-emerald-800/10 hover:bg-amber-500/30 text-emerald-950 dark:text-amber-200 border border-amber-600/30 dark:border-amber-500/30 font-extrabold rounded-xl flex items-center justify-center shadow-xs transition shrink-0"
+            className="w-9 h-9 sm:w-10 sm:h-10 bg-amber-500/20 hover:bg-amber-500/30 text-emerald-950 dark:text-amber-200 border border-amber-500/30 dark:border-amber-400/30 backdrop-blur-lg font-extrabold rounded-xl flex items-center justify-center shadow-xs transition shrink-0"
             title={t.translatorTitle || 'India Multi-Language Translator'}
             aria-label="Translator"
           >
@@ -249,7 +254,7 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-              className="w-9 h-9 sm:w-10 sm:h-10 bg-white/90 dark:bg-emerald-950/80 hover:bg-white dark:hover:bg-emerald-900 text-emerald-950 dark:text-emerald-100 border border-emerald-900/15 dark:border-emerald-500/30 font-bold rounded-xl flex items-center justify-center shadow-sm transition shrink-0"
+              className="w-9 h-9 sm:w-10 sm:h-10 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 text-emerald-950 dark:text-emerald-100 border border-emerald-900/15 dark:border-white/15 backdrop-blur-lg font-bold rounded-xl flex items-center justify-center shadow-xs transition shrink-0"
               aria-label="Select Indian Language"
               title={`${currentLangMeta.flagEmoji} ${currentLangMeta.nativeName} (${currentLangMeta.name})`}
             >
