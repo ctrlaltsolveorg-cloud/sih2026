@@ -1579,7 +1579,7 @@ export default function FarmerDashboardPage() {
 
         {/* Security Verification Modal Before Deletion */}
         {cropToDelete && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fadeIn">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fadeIn">
             <div className="bg-[#FAF5EB] rounded-3xl p-6 w-full max-w-md shadow-2xl border border-red-900/20 space-y-4">
               <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
                 <div className="flex items-center gap-2 text-red-700">
@@ -1688,7 +1688,7 @@ export default function FarmerDashboardPage() {
 
         {/* Farmer-Driver Secure Handshake Modal */}
         {handshakeModalOrder && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
             <div className="bg-[#FAF5EB] max-w-md w-full rounded-3xl p-6 border border-emerald-900/20 shadow-2xl space-y-4">
               <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
                 <div className="flex items-center gap-2">

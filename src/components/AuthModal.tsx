@@ -114,7 +114,7 @@ export default function AuthModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-fadeIn">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-fadeIn">
       <div className="bg-[#FAF5EB] dark:bg-[#0c2217] w-full max-w-md rounded-3xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 overflow-hidden flex flex-col text-[#1A2E26] dark:text-[#E2E8F0] transition-colors duration-200">
         {/* Header Banner */}
         <div className="bg-[#0F3826] text-amber-50 p-5 flex items-center justify-between border-b border-amber-500/20">

@@ -737,7 +737,7 @@ export default function BuyerDashboardPage() {
 
         {/* Modal for Posting Bulk Requirement */}
         {showAddReqModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
             <div className="bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl p-6 w-full max-w-lg shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 text-[#1A2E26] dark:text-[#E2E8F0] space-y-4">
               <div className="flex items-center justify-between border-b border-emerald-900/10 dark:border-emerald-500/20 pb-3">
                 <h3 className="font-extrabold text-lg text-emerald-950 dark:text-emerald-50">
@@ -863,7 +863,7 @@ export default function BuyerDashboardPage() {
 
         {/* Delivery Handover OTP Verification Modal */}
         {activeVerifyOrder && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
             <div className="bg-[#FAF5EB] max-w-md w-full rounded-3xl p-6 border border-emerald-900/20 shadow-2xl space-y-4">
               <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
                 <div className="flex items-center gap-2">

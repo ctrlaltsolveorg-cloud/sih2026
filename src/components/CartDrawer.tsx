@@ -113,11 +113,16 @@ export default function CartDrawer() {
 
   if (!isCartOpen && !isCheckoutModalOpen) return null;
 
-  const subtotalPaise = cart.reduce(
-    (acc, item) => acc + Math.round(item.pricePaisePerKg * item.quantityKg),
-    0
-  );
-  const logisticsFeePaise = Math.round(subtotalPaise * 0.04);
+  const subtotalPaise = cart.reduce((acc, item: any) => {
+    const pricePaise =
+      Number(item.pricePaisePerKg) ||
+      (Number(item.price) ? Number(item.price) * 100 : 0) ||
+      (Number(item.priceRupees) ? Number(item.priceRupees) * 100 : 0) ||
+      0;
+    const qty = Number(item.quantityKg) || Number(item.quantity) || 0;
+    return acc + Math.round(pricePaise * qty);
+  }, 0) || 0;
+  const logisticsFeePaise = Math.round(subtotalPaise * 0.04) || 0;
   const totalPaise = subtotalPaise + logisticsFeePaise;
 
   const validateShippingForm = () => {
@@ -292,7 +297,7 @@ export default function CartDrawer() {
     <>
       {/* 1. SLIDE-OVER CART DRAWER */}
       {isCartOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm transition-opacity animate-fadeIn">
+        <div className="fixed inset-0 z-[9990] flex justify-end bg-black/60 backdrop-blur-sm transition-opacity animate-fadeIn">
           <div className="w-full max-w-md bg-[#FAF5EB] dark:bg-[#081710] text-[#1A2E26] dark:text-[#E2E8F0] h-full shadow-2xl flex flex-col border-l border-emerald-900/10 dark:border-emerald-500/20 transition-colors duration-200">
             {/* Header */}
             <div className="p-5 bg-[#0F3826] text-amber-50 flex items-center justify-between shadow-md shrink-0">
@@ -457,8 +462,8 @@ export default function CartDrawer() {
 
       {/* 2. DEDICATED FULL CHECKOUT & ADDRESS MODAL (FLIPKART / AMAZON STYLE POPUP) */}
       {isCheckoutModalOpen && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-md animate-fadeIn">
-          <div className="bg-[#FAF5EB] dark:bg-[#0c1f15] rounded-3xl max-w-2xl w-full shadow-2xl border-2 border-emerald-800/20 dark:border-emerald-600/30 text-emerald-950 dark:text-emerald-50 flex flex-col max-h-[92vh] overflow-hidden transition-colors">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-md animate-fadeIn">
+          <div className="bg-[#FAF5EB] dark:bg-[#0c1f15] rounded-3xl max-w-2xl w-full shadow-2xl border-2 border-emerald-800/20 dark:border-emerald-600/30 text-emerald-950 dark:text-emerald-50 flex flex-col max-h-[90vh] my-auto overflow-hidden transition-colors">
             {/* Modal Header */}
             <div className="p-4 sm:p-5 bg-[#0F3826] dark:bg-[#07170f] text-amber-50 flex items-center justify-between shrink-0 shadow-md">
               <div className="flex items-center gap-3">

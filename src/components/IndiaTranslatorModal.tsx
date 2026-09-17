@@ -212,7 +212,7 @@ export default function IndiaTranslatorModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-emerald-950/70 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-emerald-950/70 backdrop-blur-md animate-fadeIn">
       <div className="w-full max-w-2xl bg-[#FAF5EB] dark:bg-[#0c2217] rounded-3xl shadow-2xl border border-emerald-900/20 dark:border-emerald-500/30 overflow-hidden flex flex-col max-h-[90vh] text-[#1A2E26] dark:text-[#E2E8F0] transition-colors duration-200">
         {/* Modal Top Header */}
         <div className="bg-[#0F3826] text-amber-50 p-5 flex items-center justify-between shadow-md">
