@@ -1,12 +1,44 @@
 import { NextResponse } from 'next/server';
+import { predictFairPriceWithGemini } from '@/lib/gemini';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
   try {
-    const { cropName, baseMandiPriceRupees, grade, organic, distanceKm } = await request.json();
+    const { cropName, baseMandiPriceRupees, grade, organic, distanceKm, state } = await request.json();
 
     const basePrice = parseFloat(baseMandiPriceRupees || '35');
+
+    // Run real Google Gemini APMC & Fair Price Intelligence
+    const geminiPrice = await predictFairPriceWithGemini({
+      cropName: cropName || 'Produce Lot',
+      baseMandiPriceRupees: basePrice,
+      grade,
+      organic: !!organic,
+      distanceKm: parseFloat(distanceKm || '10'),
+      state,
+    });
+
+    if (geminiPrice) {
+      return NextResponse.json({
+        success: true,
+        aiEngine: `KisanBandhan Fair Price AI powered by Google Gemini (${geminiPrice.modelUsed})`,
+        provider: 'Google Gemini Generative AI',
+        cropName: geminiPrice.cropName,
+        inputs: { baseMandiPriceRupees: basePrice, grade, organic, distanceKm },
+        priceBand: {
+          minPricePaise: geminiPrice.minPricePaise,
+          recommendedPricePaise: geminiPrice.recommendedPricePaise,
+          maxPricePaise: geminiPrice.maxPricePaise,
+          recommendedPriceRupees: geminiPrice.recommendedPriceRupees,
+          mspBenchmarkRupees: geminiPrice.mspBenchmarkRupees,
+          marketTrend: geminiPrice.marketTrend,
+        },
+        fairnessExplanation: geminiPrice.fairnessExplanation,
+      });
+    }
+
+    // Deterministic fallback
     const qualityMultiplier = grade === 'Grade A+' || grade === 'Export Grade' ? 1.15 : (grade === 'Grade A' ? 1.08 : 0.95);
     const organicMultiplier = organic ? 1.25 : 1.0;
     const distanceCostAdjustment = Math.min((parseFloat(distanceKm || '10') * 0.15), 5.0);
@@ -18,7 +50,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      aiEngine: 'KisanBandhan Fair Price AI Model (Tier 1)',
+      aiEngine: 'KisanBandhan Agmarknet Baseline Index',
       cropName: cropName || 'Tomatoes',
       inputs: { baseMandiPriceRupees, grade, organic, distanceKm },
       priceBand: {
@@ -33,3 +65,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
+

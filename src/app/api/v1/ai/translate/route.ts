@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { AGRI_PHRASE_DICTIONARY, Language } from '@/lib/i18n';
+import { translateWithGemini } from '@/lib/gemini';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +17,24 @@ export async function POST(request: Request) {
 
     const trimmed = text.trim();
 
-    // 1. Fast path: check known agricultural dictionary
+    // 1. Primary Engine: Real Google Gemini Generative AI Model
+    try {
+      const geminiResult = await translateWithGemini(trimmed, targetLang, sourceLang);
+      if (geminiResult && geminiResult.translatedText) {
+        return NextResponse.json({
+          success: true,
+          translatedText: geminiResult.translatedText,
+          aiModel: geminiResult.modelUsed,
+          provider: geminiResult.provider,
+          source: 'gemini-ai',
+          targetLang,
+        });
+      }
+    } catch (geminiErr) {
+      console.warn('Google Gemini translation notice, trying fallbacks:', geminiErr);
+    }
+
+    // 2. Secondary Fast Path: Agricultural Glossary & Dictionary
     const lower = trimmed.toLowerCase();
     for (const [key, mapping] of Object.entries(AGRI_PHRASE_DICTIONARY)) {
       const matchedAny = Object.values(mapping).some(
@@ -28,6 +46,8 @@ export async function POST(request: Request) {
           return NextResponse.json({
             success: true,
             translatedText: dictMatch,
+            aiModel: 'Agri-Dictionary Fallback',
+            provider: 'KisanBandhan Native Rules',
             source: 'agri-dictionary',
             targetLang,
           });
@@ -35,7 +55,7 @@ export async function POST(request: Request) {
       }
     }
 
-    // 2. Online translation via Google Translate GTX API
+    // 3. Tertiary Fallback: Online Machine Translation
     const sl = sourceLang === targetLang ? 'auto' : (sourceLang || 'auto');
     const tl = targetLang || 'hi';
 
@@ -63,47 +83,27 @@ export async function POST(request: Request) {
               translatedText: translated.trim(),
               detectedSource,
               targetLang,
-              provider: 'google-gtx',
+              aiModel: 'Google GTX Fallback Engine',
+              provider: 'Web Translation Fallback',
+              source: 'web-fallback',
             });
           }
         }
       }
     } catch (gErr) {
-      console.warn('Google GTX translate fallback:', gErr);
+      console.warn('Web translation fallback notice:', gErr);
     }
 
-    // 3. Fallback: MyMemory Translation API
-    try {
-      const pair = `${sl === 'auto' ? 'en' : sl}|${tl}`;
-      const myMemUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(trimmed)}&langpair=${encodeURIComponent(pair)}`;
-      const memRes = await fetch(myMemUrl, { cache: 'no-store' });
-      if (memRes.ok) {
-        const memData = await memRes.json();
-        const memText = memData?.responseData?.translatedText;
-        if (memText && typeof memText === 'string' && !memText.includes('MYMEMORY WARNING')) {
-          return NextResponse.json({
-            success: true,
-            translatedText: memText,
-            targetLang,
-            provider: 'mymemory',
-          });
-        }
-      }
-    } catch (memErr) {
-      console.warn('MyMemory translate fallback:', memErr);
-    }
-
-    // 4. Offline fallback: return cleaned text
+    // 4. Clean text fallback
     return NextResponse.json({
       success: true,
       translatedText: trimmed,
       targetLang,
-      provider: 'offline-echo',
+      aiModel: 'Direct Pass-through',
+      provider: 'None',
+      source: 'offline-raw',
     });
   } catch (error: any) {
-    return NextResponse.json(
-      { success: false, message: error.message || 'Translation failed' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }

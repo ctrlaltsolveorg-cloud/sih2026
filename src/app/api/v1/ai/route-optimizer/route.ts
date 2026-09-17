@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
+import { optimizeRouteWithGemini } from '@/lib/gemini';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,8 +18,7 @@ export async function POST(request: Request) {
       WHERE d.status IN ('ASSIGNED', 'PICKED_UP')
     `).all() as any[];
 
-    const optimizedStops = deliveries.map((del, idx) => ({
-      stopIndex: idx + 1,
+    const rawStops = deliveries.map((del) => ({
       deliveryId: del.id,
       orderId: del.order_id,
       buyerName: del.buyer_name,
@@ -27,9 +27,33 @@ export async function POST(request: Request) {
       dropoff: del.drop_location,
       pickupOtp: del.pickup_otp || '4829',
       deliveryOtp: del.delivery_otp || '9103',
+      status: del.status,
+    }));
+
+    // Run Google Gemini Logistics & Route AI
+    const geminiRoute = await optimizeRouteWithGemini(rawStops);
+
+    if (geminiRoute) {
+      return NextResponse.json({
+        success: true,
+        aiEngine: `KisanBandhan Smart Logistics AI powered by Google Gemini (${geminiRoute.modelUsed})`,
+        provider: 'Google Gemini Generative AI',
+        metrics: {
+          totalDistanceKm: geminiRoute.totalDistanceKm,
+          estimatedEtaMinutes: geminiRoute.estimatedEtaMinutes,
+          fuelSavingsPercent: geminiRoute.fuelSavingsPercent,
+        },
+        dispatchRationale: geminiRoute.dispatchRationale,
+        optimizedStops: geminiRoute.optimizedStops,
+      });
+    }
+
+    // Fallback if no stops or AI offline
+    const optimizedStops = rawStops.map((del, idx) => ({
+      stopIndex: idx + 1,
+      ...del,
       distanceKm: (14.2 + idx * 3.8).toFixed(1),
       estimatedEtaMins: 30 + idx * 15,
-      status: del.status,
     }));
 
     const totalDistance = optimizedStops.reduce((sum, s) => sum + parseFloat(s.distanceKm), 0);
@@ -37,11 +61,11 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      aiEngine: 'KisanBandhan Logistics & Multi-Stop Route Optimizer (OSRM)',
+      aiEngine: 'KisanBandhan Logistics Standard Optimizer',
       metrics: {
         totalDistanceKm: totalDistance.toFixed(1),
         estimatedEtaMinutes: totalEta,
-        fuelSavingsPercent: 24,
+        fuelSavingsPercent: 22,
       },
       optimizedStops,
     });
@@ -49,3 +73,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
+

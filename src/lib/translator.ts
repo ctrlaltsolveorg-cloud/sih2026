@@ -1,6 +1,7 @@
 import { getDb } from './db';
 import { cropTranslations } from './i18n';
 import { findProbabilisticCropMatch } from './fuzzyMatcher';
+import { translateWithGemini } from './gemini';
 
 export interface TranslationResult {
   hi: string;
@@ -11,7 +12,7 @@ export interface TranslationResult {
 }
 
 /**
- * Live Google Translate GTX API with MyMemory fallback
+ * Live Google Gemini AI Translation with fallback
  */
 export async function translateOnline(text: string): Promise<{ hi: string; en: string }> {
   const trimmed = text.trim();
@@ -21,28 +22,48 @@ export async function translateOnline(text: string): Promise<{ hi: string; en: s
   let en = '';
   const isDevanagari = /[\u0900-\u097F]/.test(trimmed);
 
+  // 1. Try Google Gemini Generative AI first
   try {
     if (isDevanagari) {
       hi = trimmed;
-      const res = await fetch(
-        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=hi&tl=en&dt=t&q=${encodeURIComponent(trimmed)}`
-      );
-      const data = await res.json();
-      if (data?.[0]?.[0]?.[0]) {
-        en = data[0][0][0].trim();
+      const geminiRes = await translateWithGemini(trimmed, 'en', 'hi');
+      if (geminiRes?.translatedText) {
+        en = geminiRes.translatedText;
       }
     } else {
       en = trimmed;
-      const res = await fetch(
-        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURIComponent(trimmed)}`
-      );
-      const data = await res.json();
-      if (data?.[0]?.[0]?.[0]) {
-        hi = data[0][0][0].trim();
+      const geminiRes = await translateWithGemini(trimmed, 'hi', 'en');
+      if (geminiRes?.translatedText) {
+        hi = geminiRes.translatedText;
       }
     }
-  } catch (err) {
-    console.error('[AI Translator] Google Translate error:', err);
+  } catch (geminiErr) {
+    console.warn('Gemini translateOnline notice:', geminiErr);
+  }
+
+  // 2. Web fallback if Gemini did not return
+  if (!hi || !en) {
+    try {
+      if (isDevanagari && !en) {
+        const res = await fetch(
+          `https://translate.googleapis.com/translate_a/single?client=gtx&sl=hi&tl=en&dt=t&q=${encodeURIComponent(trimmed)}`
+        );
+        const data = await res.json();
+        if (data?.[0]?.[0]?.[0]) {
+          en = data[0][0][0].trim();
+        }
+      } else if (!hi) {
+        const res = await fetch(
+          `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURIComponent(trimmed)}`
+        );
+        const data = await res.json();
+        if (data?.[0]?.[0]?.[0]) {
+          hi = data[0][0][0].trim();
+        }
+      }
+    } catch (err) {
+      console.error('[AI Translator] Google Translate error:', err);
+    }
   }
 
   // Backup: MyMemory Translate API
