@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 /**
  * Clean IVR Order Status Formatter with Simple Multilingual Speech Synthesis Text
  */
-function formatIvrOrderResponse(orderRow: any, items: any[] = [], targetLang: Language = 'hi') {
+function formatIvrOrderResponse(orderRow: any, items: any[] = [], targetLang: Language = 'en') {
   const primaryItem = items.length > 0 ? items[0] : null;
   const rawProductName = primaryItem?.crop_name || 'Tomato';
   const productName = getLocalizedCropName(rawProductName, targetLang);
@@ -50,14 +50,14 @@ function formatIvrOrderResponse(orderRow: any, items: any[] = [], targetLang: La
 
 /**
  * Direct IVR Voice & Order Status Query Handler
- * Query params: ?phone=9823045678 OR ?order_id=ord_501 &lang=hi
+ * Query params: ?phone=9823045678 OR ?order_id=ord_501 &lang=en
  */
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const phone = searchParams.get('phone')?.replace(/\D/g, '');
     const orderId = searchParams.get('order_id') || searchParams.get('orderId');
-    const lang = (searchParams.get('lang') || 'hi') as Language;
+    const lang = (searchParams.get('lang') || 'en') as Language;
 
     const db = getDb();
 

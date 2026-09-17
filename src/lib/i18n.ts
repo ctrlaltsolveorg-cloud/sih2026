@@ -667,7 +667,7 @@ export const translations: Record<Language, TranslationSchema> = {
     cartButton: "Shopping Cart",
     checkout: "Proceed to Checkout",
     translatorTitle: "All-India Multi-Language Translator",
-    translatorBtn: "🇮🇳 Translator (अनुवादक)",
+    translatorBtn: "🇮🇳 Translator",
     selectLanguage: "Select Language",
     kisanPlatformBadge: "Kisan Diwas Agri-Tech Platform",
 
@@ -3744,66 +3744,89 @@ export function getLocalizedCropName(name: string, lang: Language): string {
 
 export function stripIndicParens(text: string): string {
   if (!text) return text;
+  // 1. If format is "Indic (English)" e.g. "नासिक संकलन केंद्र (Nashik Mandi Hub)", extract the English inside parentheses
+  const indicWithEng = text.match(/[\u0900-\u0D7F]+\s*\(([A-Za-z0-9\s\,\.\-\#]+)\)/);
+  if (indicWithEng && indicWithEng[1]) return indicWithEng[1].trim();
+
+  // 2. If format is "English (Indic)" e.g. "Nashik Hub (नासिक हब)", remove the Indic inside parentheses
+  const engWithIndic = text.replace(/\s*\([^\)]*[\u0900-\u0D7F][^\)]*\)/g, '').trim();
+  if (engWithIndic && !/[\u0900-\u0D7F]/.test(engWithIndic)) return engWithIndic;
+
   return text.replace(/\s*\([\u0900-\u0D7F\s\.\,\-]+\)/g, '').trim();
 }
 
 export function parseBilingualString(text: string, lang: Language): string {
   if (!text) return text;
-  const stripped = stripIndicParens(text);
   if (lang === 'en') {
-    return stripped;
+    // Check if dictionary has direct mapping
+    if (locationTranslations[text]?.en) return locationTranslations[text].en;
+    if (farmerTranslations[text]?.en) return farmerTranslations[text].en;
+    if (cropTranslations[text]?.en) return cropTranslations[text].en;
+
+    // Check if format is "Hindi (English)" or "English (Hindi)"
+    const stripped = stripIndicParens(text);
+    if (!/[\u0900-\u0D7F]/.test(stripped)) return stripped;
+
+    // Direct token substitutions if still has Devanagari
+    let cleaned = text;
+    for (const [k, v] of Object.entries(locationTranslations)) {
+      if (cleaned.includes(k)) cleaned = cleaned.replace(k, v.en);
+    }
+    for (const [k, v] of Object.entries(farmerTranslations)) {
+      if (cleaned.includes(k)) cleaned = cleaned.replace(k, v.en);
+    }
+    cleaned = stripIndicParens(cleaned);
+    return cleaned;
   }
+
+  // Non-English language: return native text or Indic parenthetical
   const trimmed = text.trim();
   const match = trimmed.match(/^([^(]+)\(([^)]+)\)$/);
   if (match) {
     const part1 = match[1].trim();
     const part2 = match[2].trim();
-    if (/[\u0900-\u0D7F]/.test(part2)) return part2;
     if (/[\u0900-\u0D7F]/.test(part1)) return part1;
+    if (/[\u0900-\u0D7F]/.test(part2)) return part2;
   }
-  return stripped;
+  return text;
 }
 
 export function getLocalizedLocation(loc: string, lang: Language): string {
   if (!loc) return loc;
-  const cleanKey = stripIndicParens(loc);
   if (lang === 'en') {
-    if (locationTranslations[cleanKey]?.en) return locationTranslations[cleanKey].en;
     if (locationTranslations[loc]?.en) return locationTranslations[loc].en;
-    return cleanKey;
+    const clean = stripIndicParens(loc);
+    if (locationTranslations[clean]?.en) return locationTranslations[clean].en;
+    if (!/[\u0900-\u0D7F]/.test(clean)) return clean;
+    return parseBilingualString(loc, 'en');
   }
+  if (locationTranslations[loc]) {
+    return (locationTranslations[loc] as any)[lang] || locationTranslations[loc].hi || loc;
+  }
+  const cleanKey = stripIndicParens(loc);
   if (locationTranslations[cleanKey]) {
     return (locationTranslations[cleanKey] as any)[lang] || locationTranslations[cleanKey].hi || cleanKey;
   }
-  if (locationTranslations[loc]) {
-    return (locationTranslations[loc] as any)[lang] || locationTranslations[loc].hi || cleanKey;
-  }
-  const parsed = parseBilingualString(loc, lang);
-  if (locationTranslations[parsed]) {
-    return (locationTranslations[parsed] as any)[lang] || locationTranslations[parsed].hi || parsed;
-  }
-  return parsed;
+  return parseBilingualString(loc, lang);
 }
 
 export function getLocalizedFarmer(farmer: string, lang: Language): string {
   if (!farmer) return farmer;
-  const cleanKey = stripIndicParens(farmer);
   if (lang === 'en') {
-    if (farmerTranslations[cleanKey]?.en) return farmerTranslations[cleanKey].en;
     if (farmerTranslations[farmer]?.en) return farmerTranslations[farmer].en;
-    return cleanKey;
+    const clean = stripIndicParens(farmer);
+    if (farmerTranslations[clean]?.en) return farmerTranslations[clean].en;
+    if (!/[\u0900-\u0D7F]/.test(clean)) return clean;
+    return parseBilingualString(farmer, 'en');
   }
+  if (farmerTranslations[farmer]) {
+    return (farmerTranslations[farmer] as any)[lang] || farmerTranslations[farmer].hi || farmer;
+  }
+  const cleanKey = stripIndicParens(farmer);
   if (farmerTranslations[cleanKey]) {
     return (farmerTranslations[cleanKey] as any)[lang] || farmerTranslations[cleanKey].hi || cleanKey;
   }
-  if (farmerTranslations[farmer]) {
-    return (farmerTranslations[farmer] as any)[lang] || farmerTranslations[farmer].hi || cleanKey;
-  }
-  const parsed = parseBilingualString(farmer, lang);
-  if (farmerTranslations[parsed]) {
-    return (farmerTranslations[parsed] as any)[lang] || farmerTranslations[parsed].hi || parsed;
-  }
-  return parsed;
+  return parseBilingualString(farmer, lang);
 }
 
 export function getLocalizedCategory(cat: string, lang: Language): string {

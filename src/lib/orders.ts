@@ -76,7 +76,7 @@ export async function createOrder(input: CreateOrderInput) {
     throw new Error('Order must contain at least one produce item.');
   }
   if (!canonicalAddress || canonicalAddress.trim().length === 0) {
-    throw new Error('पूर्ण डिलीवरी पता, पिन कोड, जिला, राज्य एवं मोबाइल नंबर अनिवार्य है।');
+    throw new Error('Full delivery address, PIN code, district, state, and phone number are required.');
   }
 
   const db = getDb();
@@ -125,7 +125,7 @@ export async function createOrder(input: CreateOrderInput) {
 
   // 2. Ensure farmer existence
   let actualFarmerId = input.farmerId || 'u_farmer_1';
-  let pickupLocation = 'नासिक संकलन केंद्र (Nashik Mandi Hub)';
+  let pickupLocation = 'Nashik Mandi Collection Hub';
   if (items[0]?.listingId) {
     try {
       const listing = db.prepare('SELECT farmer_id, location FROM product_listings WHERE id = ?').get(items[0].listingId) as any;
@@ -401,7 +401,7 @@ export async function createOrder(input: CreateOrderInput) {
     paymentStatus,
     deliveryOtp,
     pickupOtp,
-    message: 'ऑर्डर एवं स्मार्ट अनुबंध सुरक्षित रूप से निष्पादित! (Order placed with Escrow hold).',
+    message: 'Order and smart contract placed successfully with Escrow hold.',
     supabaseSynced,
   };
 }
@@ -529,7 +529,7 @@ export async function generateOrderOtp(orderId: string, otpType: 'pickup' | 'del
 
   const delivery = db.prepare('SELECT * FROM deliveries WHERE order_id = ?').get(orderId) as any;
   if (!delivery) {
-    throw new Error(`ऑर्डर #${orderId} का डिलीवरी रिकॉर्ड नहीं मिला।`);
+    throw new Error(`Delivery record not found for Order #${orderId}`);
   }
 
   if (otpType === 'pickup') {
@@ -545,7 +545,7 @@ export async function generateOrderOtp(orderId: string, otpType: 'pickup' | 'del
       otpType,
       otp: newOtp,
       generatedAt: new Date().toISOString(),
-      message: `नया पिकअप OTP: ${newOtp}। जब ड्राइवर माल वाहन में लोड कर ले, तभी यह OTP उसे बताएं।`,
+      message: `New Pickup OTP: ${newOtp}. Share this code with the driver once produce is loaded.`,
     };
   } else {
     db.prepare(`UPDATE deliveries SET delivery_otp = ? WHERE order_id = ?`).run(newOtp, orderId);
@@ -560,7 +560,7 @@ export async function generateOrderOtp(orderId: string, otpType: 'pickup' | 'del
       otpType,
       otp: newOtp,
       generatedAt: new Date().toISOString(),
-      message: `नया डिलीवरी OTP: ${newOtp}। माल प्राप्त होने पर ड्राइवर को यह OTP दें।`,
+      message: `New Delivery OTP: ${newOtp}. Provide this code to the driver upon receipt of produce.`,
     };
   }
 }
@@ -579,14 +579,14 @@ export async function acceptDelivery(input: {
   const {
     orderId,
     partnerId = 'u_partner_1',
-    driverName = 'विक्रम शिंदे (Vikram Shinde)',
+    driverName = 'Vikram Shinde (Tata Ace)',
     driverPhone = '+91 99000 11122',
     driverVehicle = 'MH-15-EG-8821 (Tata Ace Gold)',
   } = input;
 
   const delivery = db.prepare('SELECT * FROM deliveries WHERE order_id = ?').get(orderId) as any;
   if (!delivery) {
-    throw new Error(`ऑर्डर #${orderId} का डिलीवरी रिकॉर्ड नहीं मिला।`);
+    throw new Error(`Delivery record not found for Order #${orderId}`);
   }
 
   db.prepare(`
@@ -621,7 +621,7 @@ export async function acceptDelivery(input: {
     driverName,
     driverPhone,
     driverVehicle,
-    message: `डिलीवरी कार्य #${orderId} सफलतापूर्वक स्वीकार किया गया! किसान व खरीदार को ड्राइवर विवरण अपडेट कर दिया गया है।`,
+    message: `Delivery task #${orderId} accepted successfully! Farmer and buyer notified with driver details.`,
   };
 }
 
@@ -640,18 +640,18 @@ export async function verifyOrderOtp(input: VerifyOtpInput) {
   `).get(orderId) as any;
 
   if (!delivery) {
-    throw new Error(`ऑर्डर #${orderId} का डिलीवरी या ट्रैकिंग रिकॉर्ड नहीं मिला।`);
+    throw new Error(`Delivery or tracking record not found for Order #${orderId}`);
   }
 
   const cleanEntered = (enteredOtp || '').trim();
   if (!cleanEntered) {
-    throw new Error('कृपया सत्यापन हेतु 4-अंकीय OTP दर्ज करें।');
+    throw new Error('Please enter the 4-digit verification OTP.');
   }
 
   if (otpType === 'pickup') {
     // Strict comparison against Farmer Pickup OTP
     if (!delivery.pickup_otp || delivery.pickup_otp !== cleanEntered) {
-      throw new Error(`अमान्य पिकअप OTP! आपके द्वारा दर्ज कोड (${cleanEntered}) गलत है। कृपया किसान से सही 4-अंकीय कोड पूछें।`);
+      throw new Error(`Invalid Pickup OTP! The entered code (${cleanEntered}) is incorrect. Please verify with the farmer.`);
     }
 
     db.prepare(`
@@ -674,7 +674,7 @@ export async function verifyOrderOtp(input: VerifyOtpInput) {
       orderId,
       orderStatus: 'Out for Delivery',
       deliveryStatus: 'IN_TRANSIT',
-      message: '✅ पिकअप सफलतापूर्वक सत्यापित! माल वाहन में लोड हो चुका है और डिलीवरी के लिए रवाना है।',
+      message: 'Pickup verified successfully! Produce is loaded and in transit to destination.',
     };
   }
 
@@ -682,12 +682,12 @@ export async function verifyOrderOtp(input: VerifyOtpInput) {
     // Verify COD collection if payment method is COD
     if (delivery.payment_method === 'COD' && !codCollected && !delivery.cod_collected) {
       const amountRupees = (delivery.total_amount_paise / 100).toFixed(2);
-      throw new Error(`कैश ऑन डिलीवरी (COD) नकद संग्रह आवश्यक है! कृपया पहले खरीदार से ₹${amountRupees} नकद प्राप्त करने की पुष्टि (चेकबॉक्स) करें।`);
+      throw new Error(`Cash on Delivery (COD) cash collection required. Please confirm cash receipt of ₹${amountRupees} from buyer.`);
     }
 
     // Strict comparison against Buyer Delivery OTP
     if (!delivery.delivery_otp || delivery.delivery_otp !== cleanEntered) {
-      throw new Error(`अमान्य डिलीवरी OTP! आपके द्वारा दर्ज कोड (${cleanEntered}) गलत है। कृपया खरीदार से सही डिलीवरी कोड प्राप्त करें।`);
+      throw new Error(`Invalid Delivery OTP! The entered code (${cleanEntered}) is incorrect. Please obtain the correct code from the buyer.`);
     }
 
     // Mark delivery completed
@@ -725,9 +725,9 @@ export async function verifyOrderOtp(input: VerifyOtpInput) {
       orderStatus: 'Delivered',
       deliveryStatus: 'DELIVERED',
       paymentStatus: 'PAID',
-      message: '🎉 डिलीवरी एवं भुगतान सफलतापूर्वक संपन्न! एस्क्रो फंड किसान के बैंक खाते में ट्रांसफर कर दिया गया है।',
+      message: 'Delivery and payment completed successfully! Escrow funds released to farmer account.',
     };
   }
 
-  throw new Error('अमान्य otpType निर्दिष्ट किया गया है। केवल "pickup" या "delivery" मान्य हैं।');
+  throw new Error('Invalid otpType specified. Only "pickup" or "delivery" are permitted.');
 }

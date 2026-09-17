@@ -668,7 +668,7 @@ export default function CartDrawer() {
                         className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium cursor-pointer"
                       >
                         <option value="" disabled>
-                          {language === 'hi' ? '-- राज्य चुनें (Select State) --' : '-- Select State --'}
+                          {language === 'hi' ? '-- राज्य चुनें --' : '-- Select State --'}
                         </option>
                         {INDIAN_STATES.map((st) => (
                           <option key={st} value={st} className="dark:bg-[#132c1e] dark:text-emerald-100">

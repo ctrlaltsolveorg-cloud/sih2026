@@ -94,7 +94,7 @@ export default function FarmerDashboardPage() {
   const [unit, setUnit] = useState('kg');
   const [basePriceRupees, setBasePriceRupees] = useState('30');
   const [grade, setGrade] = useState('A+');
-  const [location, setLocation] = useState('नासिक मंडी संकलन हब');
+  const [location, setLocation] = useState('Nashik Mandi Collection Hub');
   const [isOrganic, setIsOrganic] = useState(false);
 
   // Photos State
@@ -147,9 +147,9 @@ export default function FarmerDashboardPage() {
             qty: c.quantity_available,
             priceRupees: (c.price_paise / 100).toFixed(2),
             pricePaise: c.price_paise,
-            grade: c.grade || 'उच्चतम श्रेणी A+',
-            location: c.location || 'नासिक मंडी संकलन हब',
-            status: 'सत्यापित फसल',
+            grade: c.grade || 'Grade A+',
+            location: c.location || 'Nashik Mandi Collection Hub',
+            status: 'VERIFIED',
             imageUrl: photoList[0],
             photos: photoList,
             farmerId: c.farmer_id,
@@ -212,7 +212,7 @@ export default function FarmerDashboardPage() {
       });
       const data = await res.json();
       if (!res.ok || !data.success) {
-        throw new Error(data.message || 'OTP जनरेट करने में विफल');
+        throw new Error(data.message || (language === 'hi' ? 'OTP जनरेट करने में विफल' : 'Failed to generate OTP'));
       }
       await loadFarmerOrders();
       const current = farmerOrders.find((o) => o.id === orderId) || {};
@@ -222,7 +222,7 @@ export default function FarmerDashboardPage() {
         pickup_otp: data.otp,
       });
     } catch (err: any) {
-      alert(err.message || 'OTP जनरेट करने में समस्या आई।');
+      alert(err.message || (language === 'hi' ? 'OTP जनरेट करने में समस्या आई।' : 'Error generating OTP.'));
     } finally {
       setGeneratingOtp((prev) => ({ ...prev, [orderId]: false }));
     }
@@ -272,7 +272,7 @@ export default function FarmerDashboardPage() {
         );
       }
     } catch (e) {
-      setIvrResponse('IVR वॉयस सेवा: "1 बटन दबाया गया — 500 किग्रा टमाटर सफलतापूर्वक दर्ज हो गए हैं।"');
+      setIvrResponse(language === 'hi' ? 'IVR वॉयस सेवा: "1 बटन दबाया गया — 500 किग्रा टमाटर सफलतापूर्वक दर्ज हो गए हैं।\"' : 'IVR Voice Service: "Pressed 1 — 500 kg Tomatoes registered successfully."');
     }
   };
 
@@ -318,7 +318,7 @@ export default function FarmerDashboardPage() {
     if (cat) setCategory(cat);
     setCropName('');
     setCropNameHi('');
-    setVariety('देसी / स्थानीय फसल (Local Harvest)');
+    setVariety('Local Harvest (Desi Variety)');
     setQuantityKg('500');
     setBasePriceRupees('40');
     setGrade('A+');
@@ -331,11 +331,11 @@ export default function FarmerDashboardPage() {
     setCropName(crop.crop || crop.crop_name || '');
     setCropNameHi(crop.crop_name_hi || '');
     setCategory(crop.category || 'Vegetables');
-    setVariety(crop.variety || 'देसी / स्थानीय फसल (Local Harvest)');
+    setVariety(crop.variety || 'Local Harvest (Desi Variety)');
     setQuantityKg(String(crop.qty || crop.quantity_available || '500'));
     setBasePriceRupees(String(crop.priceRupees || (crop.pricePaise ? (crop.pricePaise / 100).toFixed(2) : '34')));
     setGrade(crop.grade || 'A+');
-    setLocation(crop.location || 'नासिक मंडी संकलन हब');
+    setLocation(crop.location || 'Nashik Mandi Collection Hub');
     setUnit(crop.unit || 'kg');
     setIsOrganic(
       crop.isOrganic === 1 ||
@@ -368,7 +368,7 @@ export default function FarmerDashboardPage() {
     setEditingCropId(null);
     setCropName('');
     setCropNameHi('');
-    setVariety('देसी / स्थानीय फसल (Local Harvest)');
+    setVariety('Local Harvest (Desi Variety)');
     setQuantityKg('500');
     setBasePriceRupees('40');
     setGrade('A+');
@@ -419,8 +419,8 @@ export default function FarmerDashboardPage() {
     if (editingCropId) {
       const updatedCrop = {
         id: editingCropId,
-        crop: cropName || 'अद्यतन फसल',
-        crop_name: cropName || 'अद्यतन फसल',
+        crop: cropName || 'Updated Crop',
+        crop_name: cropName || 'Updated Crop',
         crop_name_hi: cropNameHi,
         category: category,
         variety: variety,
@@ -430,12 +430,12 @@ export default function FarmerDashboardPage() {
         pricePaise: Math.round((parseFloat(basePriceRupees) || 34) * 100),
         grade: grade,
         location: location,
-        status: 'सत्यापित फसल',
+        status: 'VERIFIED',
         imageUrl: photos[0],
         photos: photos,
         unit: unit,
         farmerId: user?.id || 'u_farmer_1',
-        farmer_name: user?.name || userName || 'किसान (Farmer)',
+        farmer_name: user?.name || userName || 'Farmer',
         isOrganic: 0,
         harvestDate: new Date().toISOString().split('T')[0],
         cvTrustScore: 98,
@@ -448,7 +448,7 @@ export default function FarmerDashboardPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             id: editingCropId,
-            cropName: cropName || 'अद्यतन फसल',
+            cropName: cropName || 'Updated Crop',
             quantityKg: quantityKg || '500',
             priceRupees: basePriceRupees || '34.00',
             grade: grade,
@@ -493,8 +493,8 @@ export default function FarmerDashboardPage() {
     // ============================================
     const fallbackCrop = {
       id: String(Date.now()),
-      crop: cropName || 'नयी फसल',
-      crop_name: cropName || 'नयी फसल',
+      crop: cropName || 'New Produce',
+      crop_name: cropName || 'New Produce',
       crop_name_hi: cropNameHi,
       category: category,
       variety: variety,
@@ -504,12 +504,12 @@ export default function FarmerDashboardPage() {
       pricePaise: Math.round((parseFloat(basePriceRupees) || 34) * 100),
       grade: grade,
       location: location,
-      status: 'सत्यापित फसल',
+      status: 'VERIFIED',
       imageUrl: photos[0] || getCropPhotosByName(cropName)[0],
       photos: photos.length > 0 ? photos : getCropPhotosByName(cropName),
       unit: unit,
       farmerId: user?.id || 'u_farmer_1',
-      farmer_name: user?.name || userName || 'किसान (Farmer)',
+      farmer_name: user?.name || userName || 'Farmer',
       isOrganic: isOrganic ? 1 : 0,
       harvestDate: new Date().toISOString().split('T')[0],
       cvTrustScore: 98,
@@ -523,7 +523,7 @@ export default function FarmerDashboardPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          cropName: cropName || 'नयी फसल',
+          cropName: cropName || 'New Produce',
           quantityKg: quantityKg || '500',
           priceRupees: basePriceRupees || '34.00',
           grade: grade,
@@ -551,12 +551,12 @@ export default function FarmerDashboardPage() {
           pricePaise: Math.round(parseFloat(data.crop.priceRupees) * 100),
           grade: data.crop.grade || grade,
           location: data.crop.location,
-          status: 'सत्यापित फसल',
+          status: 'VERIFIED',
           imageUrl: photos[0] || getCropPhotosByName(cropName)[0],
           photos: photos.length > 0 ? photos : getCropPhotosByName(cropName),
           unit: unit,
           farmerId: user?.id || 'u_farmer_1',
-          farmer_name: user?.name || userName || 'किसान (Farmer)',
+          farmer_name: user?.name || userName || 'Farmer',
           isOrganic: isOrganic ? 1 : 0,
           harvestDate: new Date().toISOString().split('T')[0],
           cvTrustScore: 98,
@@ -758,11 +758,11 @@ export default function FarmerDashboardPage() {
 
           {loadingOrders ? (
             <div className="p-6 text-center text-xs text-emerald-800 font-medium">
-              लोड हो रहा है... (Loading orders...)
+              {language === 'hi' ? 'लोड हो रहा है... (Loading orders...)' : 'Loading orders...'}
             </div>
           ) : farmerOrders.length === 0 ? (
             <div className="p-6 text-center text-xs text-emerald-800/70">
-              अभी कोई लंबित पिकअप ऑर्डर नहीं है। जैसे ही कोई खरीदार आपकी फसल खरीदेगा, उसका पिकअप OTP यहाँ दिखेगा।
+              {language === 'hi' ? 'अभी कोई लंबित पिकअप ऑर्डर नहीं है। जैसे ही कोई खरीदार आपकी फसल खरीदेगा, उसका पिकअप OTP यहाँ दिखेगा।' : 'No pending pickup orders. As soon as a buyer orders your produce, the pickup OTP will appear here.'}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -783,10 +783,10 @@ export default function FarmerDashboardPage() {
                           : 'bg-amber-100 text-amber-900 border border-amber-300 animate-pulse'
                       }`}>
                         {isDelivered 
-                          ? '✓ खरीदार को डिलीवर हुआ' 
+                          ? (language === 'hi' ? '✓ खरीदार को डिलीवर हुआ' : '✓ Delivered to Buyer')
                           : isPickedUp 
-                          ? '🚚 माल रास्ते में है (In Transit)' 
-                          : '⏳ खेत पिकअप प्रतीक्षारत'}
+                          ? (language === 'hi' ? '🚚 माल रास्ते में है (In Transit)' : '🚚 In Transit with Driver')
+                          : (language === 'hi' ? '⏳ खेत पिकअप प्रतीक्षारत' : '⏳ Awaiting Farm Pickup')}
                       </span>
                     </div>
 
@@ -795,15 +795,15 @@ export default function FarmerDashboardPage() {
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-bold text-emerald-950 flex items-center gap-1">
                           <Truck className="w-3.5 h-3.5 text-emerald-700" />
-                          <span>लॉजिस्टिक्स ड्राइवर:</span>
+                          <span>{language === 'hi' ? 'लॉजिस्टिक्स ड्राइवर:' : 'Logistics Driver:'}</span>
                         </span>
                         <span className="font-extrabold text-emerald-900">
-                          {hasDriver ? ord.driver_name : 'ड्राइवर खोज जारी...'}
+                          {hasDriver ? ord.driver_name : (language === 'hi' ? 'ड्राइवर खोज जारी...' : 'Searching for Driver...')}
                         </span>
                       </div>
                       {hasDriver && (
                         <div className="flex items-center justify-between text-[11px] text-emerald-800/90 pt-0.5">
-                          <span>वाहन: <strong>{ord.driver_vehicle || 'MH-15-EG-8821'}</strong></span>
+                          <span>{language === 'hi' ? 'वाहन:' : 'Vehicle:'} <strong>{ord.driver_vehicle || 'MH-15-EG-8821'}</strong></span>
                           {ord.driver_phone && (
                             <a
                               href={`tel:${ord.driver_phone}`}
@@ -822,10 +822,10 @@ export default function FarmerDashboardPage() {
                       <div className="flex items-center justify-between">
                         <span className="font-extrabold flex items-center gap-1.5 text-emerald-950">
                           <User className="w-3.5 h-3.5 text-emerald-700" />
-                          {ord.shipping?.fullName || ord.recipient_name || ord.buyer_name || 'क्रेता'}
+                          {ord.shipping?.fullName || ord.recipient_name || ord.buyer_name || (language === 'hi' ? 'क्रेता' : 'Buyer')}
                         </span>
                         <span className="text-[10px] px-2 py-0.5 bg-white border border-emerald-200 rounded-full font-bold text-emerald-800">
-                          {ord.shipping?.addressType === 'WORK' ? '🏢 दुकान/ऑफिस' : ord.shipping?.addressType === 'MANDI_SHOP' ? '🏪 थोक मंडी' : '🏠 घर (Home)'}
+                          {ord.shipping?.addressType === 'WORK' ? (language === 'hi' ? '🏢 दुकान/ऑफिस' : '🏢 Shop/Office') : ord.shipping?.addressType === 'MANDI_SHOP' ? (language === 'hi' ? '🏪 थोक मंडी' : '🏪 Wholesale Mandi') : (language === 'hi' ? '🏠 घर' : '🏠 Home')}
                         </span>
                       </div>
 
@@ -870,13 +870,13 @@ export default function FarmerDashboardPage() {
                     {!isPickedUp ? (
                       <div className="p-3 bg-amber-500/15 border border-amber-300 rounded-xl space-y-2">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-amber-950">ड्राइवर को देने वाला पिकअप OTP:</span>
+                          <span className="text-xs font-bold text-amber-950">{language === 'hi' ? 'ड्राइवर को देने वाला पिकअप OTP:' : 'Pickup OTP for Driver:'}</span>
                           <span className="font-mono text-base font-black text-emerald-950 bg-white px-2.5 py-0.5 rounded-lg border border-amber-300 tracking-widest shadow-xs">
                             {ord.pickup_otp || '----'}
                           </span>
                         </div>
                         <p className="text-[10px] text-amber-900 leading-tight">
-                          ⚠️ माल अपनी निगरानी में गाड़ी में चढ़ाने के बाद ही ड्राइवर को यह कोड दें।
+                          {language === 'hi' ? '⚠️ माल अपनी निगरानी में गाड़ी में चढ़ाने के बाद ही ड्राइवर को यह कोड दें।' : '⚠️ Share this OTP with the driver only after produce is fully loaded.'}
                         </p>
                         <button
                           onClick={() => handleGeneratePickupOtp(ord.id)}
@@ -884,7 +884,7 @@ export default function FarmerDashboardPage() {
                           className="w-full py-2 bg-[#0F3826] hover:bg-emerald-900 text-amber-300 font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow"
                         >
                           <Key className="w-3.5 h-3.5 text-amber-400" />
-                          <span>{generatingOtp[ord.id] ? 'OTP जनरेट हो रहा...' : '🤝 हैंडशेक करें / OTP जनरेट करें'}</span>
+                          <span>{generatingOtp[ord.id] ? (language === 'hi' ? 'OTP जनरेट हो रहा...' : 'Generating OTP...') : (language === 'hi' ? '🤝 हैंडशेक करें / OTP जनरेट करें' : '🤝 Generate Handshake Pickup OTP')}</span>
                         </button>
                       </div>
                     ) : (
@@ -892,18 +892,18 @@ export default function FarmerDashboardPage() {
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                         <span>
                           {isDelivered 
-                            ? 'खरीदार को सुपुर्द • भुगतान खाते में सुरक्षित' 
-                            : 'खेत से माल लोड हो चुका है • ड्राइवर रास्ते में है'}
+                            ? (language === 'hi' ? 'खरीदार को सुपुर्द • भुगतान खाते में सुरक्षित' : 'Delivered to Buyer • Payment Secured in Escrow')
+                            : (language === 'hi' ? 'खेत से माल लोड हो चुका है • ड्राइवर रास्ते में है' : 'Loaded from Farm • In Transit with Driver')}
                         </span>
                       </div>
                     )}
 
                     <div className="pt-2 border-t border-emerald-900/10 flex items-center justify-between text-xs">
                       <span className="font-extrabold text-amber-800">
-                        कुल राशि: ₹{(ord.total_amount_paise / 100).toFixed(2)}
+                        {language === 'hi' ? 'कुल राशि:' : 'Total Amount:'} ₹{(ord.total_amount_paise / 100).toFixed(2)}
                       </span>
                       <span className="text-[11px] text-emerald-800 font-bold">
-                        {ord.payment_method === 'COD' ? 'कैश ऑन डिलीवरी (COD)' : 'एस्क्रो सुरक्षित'}
+                        {ord.payment_method === 'COD' ? (language === 'hi' ? 'कैश ऑन डिलीवरी (COD)' : 'Cash on Delivery (COD)') : (language === 'hi' ? 'एस्क्रो सुरक्षित' : 'Escrow Protected')}
                       </span>
                     </div>
                   </div>
@@ -1416,7 +1416,7 @@ export default function FarmerDashboardPage() {
                     cv_trust_score={crop.cvTrustScore || 98}
                     harvest_date={crop.harvestDate || '2026-09-08'}
                     is_organic={crop.isOrganic || 0}
-                    farmer_name={crop.farmer_name || userName || 'किसान (Farmer)'}
+                    farmer_name={crop.farmer_name || userName || 'Farmer'}
                     location={crop.location}
                     images={crop.photos || [crop.imageUrl]}
                     unit={crop.unit || 'kg'}
@@ -1469,8 +1469,8 @@ export default function FarmerDashboardPage() {
                       <div className="text-lg font-extrabold text-amber-800">
                         ₹{crop.priceRupees} <span className="text-xs font-normal text-emerald-900">/ {crop.unit || 'kg'}</span>
                       </div>
-                      <span className="text-[10px] px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-full">
-                        {crop.status || 'सत्यापित फसल'}
+                      <span className="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold">
+                        {crop.status || 'VERIFIED'}
                       </span>
                     </div>
 
@@ -1693,7 +1693,9 @@ export default function FarmerDashboardPage() {
               <div className="flex items-center justify-between border-b border-emerald-900/10 pb-3">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-5 h-5 text-emerald-700" />
-                  <h3 className="font-extrabold text-base text-emerald-950">🤝 खेत गेट सुरक्षित हैंडशेक</h3>
+                  <h3 className="font-extrabold text-base text-emerald-950">
+                    {language === 'hi' ? '🤝 खेत गेट सुरक्षित हैंडशेक' : '🤝 Farm-Gate Secure Handshake'}
+                  </h3>
                 </div>
                 <button
                   onClick={() => setHandshakeModalOrder(null)}
@@ -1706,19 +1708,21 @@ export default function FarmerDashboardPage() {
               {/* Driver Details Card */}
               <div className="p-3 bg-white rounded-2xl border border-emerald-900/15 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-gray-500">असाइन किया गया चालक:</span>
+                  <span className="text-xs font-bold text-gray-500">
+                    {language === 'hi' ? 'असाइन किया गया चालक:' : 'Assigned Driver:'}
+                  </span>
                   <span className="text-xs font-extrabold text-emerald-950">
-                    {handshakeModalOrder.driver_name || 'विक्रम शिंदे (Vikram Shinde)'}
+                    {handshakeModalOrder.driver_name || 'Vikram Shinde'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-gray-500">गाड़ी नंबर:</span>
+                  <span className="text-gray-500">{language === 'hi' ? 'गाड़ी नंबर:' : 'Vehicle Number:'}</span>
                   <span className="font-mono font-bold text-emerald-900">
                     {handshakeModalOrder.driver_vehicle || 'MH-15-EG-8821 (Tata Ace)'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-xs pt-1 border-t border-gray-100">
-                  <span className="text-gray-500">ड्राइवर मोबाइल:</span>
+                  <span className="text-gray-500">{language === 'hi' ? 'ड्राइवर मोबाइल:' : 'Driver Mobile:'}</span>
                   <a
                     href={`tel:${handshakeModalOrder.driver_phone || '+919900011122'}`}
                     className="inline-flex items-center gap-1 font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-lg hover:bg-emerald-100"
@@ -1732,7 +1736,7 @@ export default function FarmerDashboardPage() {
               {/* Giant OTP Display */}
               <div className="p-5 bg-gradient-to-b from-amber-500/20 to-amber-500/10 rounded-2xl border-2 border-amber-400 text-center space-y-2">
                 <span className="text-xs font-bold text-amber-950 block">
-                  🔒 ड्राइवर को देने हेतु आपका गुप्त पिकअप OTP:
+                  {language === 'hi' ? '🔒 ड्राइवर को देने हेतु आपका गुप्त पिकअप OTP:' : '🔒 Your Secure Pickup OTP for Driver:'}
                 </span>
                 <div className="text-4xl font-mono font-black tracking-[0.3em] text-emerald-950 bg-white py-3 px-4 rounded-xl border border-amber-300 shadow-inner">
                   {handshakeModalOrder.pickup_otp || '----'}
@@ -1743,14 +1747,16 @@ export default function FarmerDashboardPage() {
                   disabled={generatingOtp[handshakeModalOrder.id]}
                   className="px-3 py-1 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-bold text-xs rounded-lg transition shadow-xs"
                 >
-                  {generatingOtp[handshakeModalOrder.id] ? 'नया कोड बन रहा...' : '🔄 नया OTP जनरेट करें'}
+                  {generatingOtp[handshakeModalOrder.id] ? (language === 'hi' ? 'नया कोड बन रहा...' : 'Generating Code...') : (language === 'hi' ? '🔄 नया OTP जनरेट करें' : '🔄 Generate New OTP')}
                 </button>
               </div>
 
               <div className="p-3 bg-amber-50 rounded-xl border border-amber-200/80 text-[11px] text-amber-950 space-y-1">
-                <p className="font-bold">⚠️ किसान सुरक्षा नियम:</p>
+                <p className="font-bold">{language === 'hi' ? '⚠️ किसान सुरक्षा नियम:' : '⚠️ Farmer Security Rule:'}</p>
                 <p>
-                  जब ड्राइवर आपकी पूरी फसल अपनी गाड़ी में ठीक से लोड कर ले, केवल तभी यह 4-अंकीय कोड उसे बताएं। ड्राइवर यह कोड अपने ऐप में दर्ज करेगा तभी हैंडशेक पूरा होगा।
+                  {language === 'hi'
+                    ? 'जब ड्राइवर आपकी पूरी फसल अपनी गाड़ी में ठीक से लोड कर ले, केवल तभी यह 4-अंकीय कोड उसे बताएं। ड्राइवर यह कोड अपने ऐप में दर्ज करेगा तभी हैंडशेक पूरा होगा।'
+                    : 'Only reveal this 4-digit code to the driver after your entire produce is safely loaded onto their vehicle. The driver will verify this code in their app to complete the handover.'}
                 </p>
               </div>
 
@@ -1760,7 +1766,7 @@ export default function FarmerDashboardPage() {
                   onClick={() => setHandshakeModalOrder(null)}
                   className="w-full py-3 bg-[#0F3826] text-amber-300 font-bold rounded-xl text-xs hover:bg-emerald-900 transition shadow-md"
                 >
-                  समझ गया (Close Window)
+                  {language === 'hi' ? 'समझ गया (बंद करें)' : 'Understood (Close Window)'}
                 </button>
               </div>
             </div>

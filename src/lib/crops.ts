@@ -140,8 +140,8 @@ export async function createCropListing(input: CropListingInput) {
   const mandiPricePaise = Math.round(pricePaise * 1.25);
   const qty = parseInt(String(quantityKg)) || 500;
   const cat = category || 'Vegetables';
-  const loc = location || 'नासिक एग्रो-हब #04';
-  const gradeVal = grade || 'उच्चतम श्रेणी A+';
+  const loc = location || 'Nashik Agro-Hub #04';
+  const gradeVal = grade || 'Grade A+ Export Quality';
   const harvestDate = new Date().toISOString().split('T')[0];
   const actualFarmerId = farmerId || 'u_farmer_1';
   // Format images: prioritize images array (2 to 6 photos), serialize to JSON or fallback to name-matched crop photos
@@ -172,7 +172,7 @@ export async function createCropListing(input: CropListingInput) {
     mandi_retail_price_paise: mandiPricePaise,
     grade: gradeVal,
     harvest_date: harvestDate,
-    organic_certified: gradeVal.includes('ऑर्गेनिक') || gradeVal.includes('Organic') ? 1 : 0,
+    organic_certified: gradeVal.includes('Organic') || gradeVal.includes('जैविक') ? 1 : 0,
     image_url: cropImage,
     logo_url: input.logoUrl || (finalImageList.length > 0 ? finalImageList[0] : ''),
     location: loc,
@@ -189,7 +189,7 @@ export async function createCropListing(input: CropListingInput) {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       actualFarmerId,
-      farmerName || 'किसान (Farmer)',
+      farmerName || 'Verified Farmer',
       '+91 98765 43210',
       `${actualFarmerId}@kisanbandhan.ai`,
       'FARMER',
@@ -263,7 +263,7 @@ export async function createCropListing(input: CropListingInput) {
     try {
       await supabase.from('users').upsert({
         id: actualFarmerId,
-        name: farmerName || 'किसान (Farmer)',
+        name: farmerName || 'Verified Farmer',
         phone: '+91 98765 43210',
         role: 'FARMER',
         district: 'Nashik',
@@ -278,7 +278,7 @@ export async function createCropListing(input: CropListingInput) {
     const supaListing = {
       id,
       farmer_id: actualFarmerId,
-      farmer_name: farmerName || 'किसान (Farmer)',
+      farmer_name: farmerName || 'Verified Farmer',
       farmer_phone: '+91 98765 43210',
       crop_name: newListing.crop_name,
       category: newListing.category,
@@ -317,8 +317,8 @@ export async function createCropListing(input: CropListingInput) {
     priceRupees: (newListing.price_paise / 100).toFixed(2),
     grade: newListing.grade,
     location: newListing.location,
-    farmer_name: farmerName || 'Kisan Member',
-    status: 'सत्यापित फसल',
+    farmer_name: farmerName || 'Verified Farmer',
+    status: 'VERIFIED',
     imageUrl: cropImage,
     images: finalImageList,
     supabaseStatus,
@@ -467,7 +467,7 @@ export const DEFAULT_REGISTERED_FARMERS = [
     district: 'Nashik',
     state: 'Maharashtra',
     address: 'Pimplgaon Baswant, Nashik, MH 422209',
-    location: 'नासिक संकलन केंद्र (Nashik Mandi Hub)',
+    location: 'Nashik Mandi Hub',
     fpoId: 'fpo_nashik_1',
   },
   {
@@ -478,7 +478,7 @@ export const DEFAULT_REGISTERED_FARMERS = [
     district: 'Ludhiana',
     state: 'Punjab',
     address: 'G.T. Road, Khanna, Ludhiana, PB 141401',
-    location: 'खन्ना अनाज मंडी (Khanna Grain Mandi, PB)',
+    location: 'Khanna Grain Mandi, Punjab',
     fpoId: null,
   },
   {
@@ -489,7 +489,7 @@ export const DEFAULT_REGISTERED_FARMERS = [
     district: 'Pune',
     state: 'Maharashtra',
     address: 'Baramati Agro Hub, Pune, MH 413102',
-    location: 'बारामती एग्रो-हब (Baramati Agro Hub, Pune)',
+    location: 'Baramati Agro Hub, Pune',
     fpoId: null,
   },
   {
@@ -500,7 +500,7 @@ export const DEFAULT_REGISTERED_FARMERS = [
     district: 'Hooghly',
     state: 'West Bengal',
     address: 'Singur Krishi Mandi, Hooghly, WB 712409',
-    location: 'सिंगूर कृषि संकलन केंद्र (Singur Hub, WB)',
+    location: 'Singur Agro Collection Hub, West Bengal',
     fpoId: null,
   },
   {
@@ -511,40 +511,40 @@ export const DEFAULT_REGISTERED_FARMERS = [
     district: 'Jaipur',
     state: 'Rajasthan',
     address: 'Chomu Mandi Link Road, Jaipur, RJ 303702',
-    location: 'चोमू कृषि मंडी हब (Chomu Mandi, Jaipur)',
+    location: 'Chomu Mandi Hub, Jaipur',
     fpoId: null,
   },
   {
     id: 'u_farmer_ramkishan',
-    name: 'Ramkishan Maurya (रामकिशन मौर्य)',
+    name: 'Ramkishan Maurya',
     phone: '9839122334',
     email: 'ramkishan.farmer@kisanbandhan.ai',
     district: 'Farrukhabad',
     state: 'Uttar Pradesh',
     address: 'Kaimganj Cold Storage Mandi Road, Farrukhabad, UP 209502',
-    location: 'कायमगंज आलू कोल्ड स्टोरेज (Farrukhabad Mandi Hub)',
+    location: 'Farrukhabad Mandi Hub, UP',
     fpoId: null,
   },
   {
     id: 'u_farmer_gurpreet',
-    name: 'Gurpreet Singh Sandhu (गुरप्रीत सिंह)',
+    name: 'Gurpreet Singh Sandhu',
     phone: '9814033445',
     email: 'gurpreet.sandhu@kisanbandhan.ai',
     district: 'Ludhiana',
     state: 'Punjab',
     address: 'G.T. Road, Asia Largest Grain Mandi, Khanna, Punjab 141401',
-    location: 'खन्ना थोक अनाज मंडी (Khanna Grain Mandi Yard #14)',
+    location: 'Khanna Grain Mandi Yard #14, Punjab',
     fpoId: null,
   },
   {
     id: 'u_farmer_shivaji',
-    name: 'Shivaji Rao Jadhav (शिवाजी राव जाधव)',
+    name: 'Shivaji Rao Jadhav',
     phone: '9822044556',
     email: 'shivaji.jadhav@kisanbandhan.ai',
     district: 'Pune',
     state: 'Maharashtra',
     address: 'Pune-Nashik Highway, Narayangaon Krishi Upaj Mandi, Pune, MH 410504',
-    location: 'नारायणगांव टमाटर व सब्जी यार्ड (Narayangaon Hub, Pune)',
+    location: 'Narayangaon Hub, Pune',
     fpoId: null,
   },
 ];

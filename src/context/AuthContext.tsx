@@ -149,7 +149,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (cloudUser) {
           if (cloudUser.password && cloudUser.password !== pass) {
-            return { success: false, error: 'गलत पासवर्ड! (Incorrect password. Please try again.)' };
+            return { success: false, error: 'Incorrect password. Please try again.' };
           }
           const loggedUser: AuthUser = {
             id: cloudUser.id,
@@ -254,7 +254,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (cloudUser) {
           if (cloudUser.password && cloudUser.password !== pass) {
-            return { success: false, error: 'गलत पासवर्ड! (Incorrect Password)' };
+            return { success: false, error: 'Incorrect Password. Please try again.' };
           }
           return { success: true };
         }
@@ -269,7 +269,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (!match.password || match.password === pass) {
           return { success: true };
         }
-        return { success: false, error: 'Incorrect Password' };
+        return { success: false, error: 'Incorrect Password. Please try again.' };
       }
 
       // 4. Check demo seed accounts
@@ -329,7 +329,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (cloudUser?.id) {
         return {
           success: false,
-          error: 'यह ईमेल खाता पहले से पंजीकृत है! कृपया इस ईमेल से लॉगिन करें।',
+          error: 'This email account is already registered! Please log in with this email.',
         };
       }
     } catch (e) {}

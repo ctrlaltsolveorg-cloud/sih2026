@@ -22,3 +22,4 @@ export const ALL_AGRICULTURAL_CATEGORIES: { value: CropCategory; labelHi: string
   { value: 'Cash Crops', labelHi: 'नकदी फसलें (Cash Crops)', labelEn: 'Cash Crops' },
   { value: 'Flowers', labelHi: 'पुष्प एवं बागवानी (Flowers & Floriculture)', labelEn: 'Flowers' },
 ];
+

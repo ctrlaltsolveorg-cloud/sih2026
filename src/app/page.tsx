@@ -267,7 +267,7 @@ export default function HomePage() {
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
-                +100 {language === 'hi' ? 'सब्जियाँ' : 'Vegetables'}
+                +100 {getLocalizedCategory('Vegetables', language)}
               </button>
 
               <button
@@ -278,7 +278,7 @@ export default function HomePage() {
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
-                +100 {language === 'hi' ? 'फल' : 'Fruits'}
+                +100 {getLocalizedCategory('Fruits', language)}
               </button>
 
               <button
@@ -289,7 +289,7 @@ export default function HomePage() {
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
-                +100 {language === 'hi' ? 'दालें' : 'Pulses'}
+                +100 {getLocalizedCategory('Pulses', language)}
               </button>
 
               <button
@@ -300,7 +300,7 @@ export default function HomePage() {
                     : 'text-emerald-950 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}
               >
-                +50 {language === 'hi' ? 'अनाज' : 'Grains'}
+                +50 {getLocalizedCategory('Grains', language)}
               </button>
             </div>
 
