@@ -20,8 +20,6 @@ import {
   Check,
   Sun,
   Moon,
-  Sunrise,
-  Droplets,
   ShieldCheck,
   Package,
   Sprout,
@@ -225,54 +223,19 @@ export default function Navbar({ onOpenCart }: NavbarProps) {
 
         {/* Right Buttons: Theme Toggle + India Translator + 11-Language Dropdown + Cart + User Profile / Login */}
         <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-          {/* 1. Theme Toggle Button (Bhor Pre-Dawn / Light / Dark) */}
+          {/* 1. Theme Toggle Button (Sun / Moon) */}
           <button
             type="button"
             onClick={toggleTheme}
             id="theme-toggle-btn"
-            aria-label={
-              resolvedTheme === 'bhor'
-                ? 'Bhor Pre-Dawn Theme (Click for Day Mode)'
-                : resolvedTheme === 'dark'
-                ? 'Dark Theme (Click for Bhor Pre-Dawn Mode)'
-                : 'Light Theme (Click for Bhor Pre-Dawn Mode)'
-            }
-            title={
-              resolvedTheme === 'bhor'
-                ? '🌅 Bhor Theme (भोर - Pre-Dawn Kisan Mandi & Morning Dew)'
-                : resolvedTheme === 'dark'
-                ? '🌙 Night Mode'
-                : '☀️ Day Mode'
-            }
-            className={`h-8 sm:h-10 px-2 sm:px-2.5 font-extrabold rounded-xl flex items-center gap-1.5 shadow-xs transition transform active:scale-95 shrink-0 border backdrop-blur-lg ${
-              resolvedTheme === 'bhor'
-                ? 'bg-gradient-to-r from-sky-950/90 via-teal-950/80 to-blue-950/90 text-cyan-200 border-cyan-400/40 shadow-[0_0_15px_rgba(94,234,212,0.35)]'
-                : resolvedTheme === 'dark'
-                ? 'bg-white/10 hover:bg-white/20 text-amber-300 border-white/15'
-                : 'bg-white/60 hover:bg-white/80 text-emerald-950 border-emerald-900/15'
-            }`}
+            aria-label={resolvedTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            title={resolvedTheme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+            className="w-8 h-8 sm:w-10 sm:h-10 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 text-emerald-950 dark:text-amber-300 border border-emerald-900/15 dark:border-white/15 backdrop-blur-lg font-extrabold rounded-xl flex items-center justify-center shadow-xs transition transform active:scale-95 shrink-0"
           >
-            {resolvedTheme === 'bhor' ? (
-              <>
-                <Sunrise className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300 animate-pulse" />
-                <span className="text-[10px] sm:text-xs font-black tracking-wide bg-gradient-to-r from-cyan-200 to-amber-300 bg-clip-text text-transparent hidden sm:inline">
-                  भोर (Bhor)
-                </span>
-              </>
-            ) : resolvedTheme === 'dark' ? (
-              <>
-                <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
-                <span className="text-[10px] sm:text-xs font-bold text-amber-200/80 hidden sm:inline">
-                  Night
-                </span>
-              </>
+            {resolvedTheme === 'dark' ? (
+              <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 animate-pulse" />
             ) : (
-              <>
-                <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500" />
-                <span className="text-[10px] sm:text-xs font-bold text-emerald-950 hidden sm:inline">
-                  Day
-                </span>
-              </>
+              <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-800 dark:text-amber-400" />
             )}
           </button>
 
