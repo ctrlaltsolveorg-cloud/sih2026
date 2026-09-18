@@ -28,6 +28,30 @@
   --text-main: #F3F4F6;
 }
 
+/* ========================================================
+   BHOR THEME (भोर - Pre-Dawn Kisan Mandi / Dew-Kissed Morning)
+   Deep indigo pre-dawn blue sky, glistening morning dew drops,
+   village breeze, and soft golden horizon glow
+   ======================================================== */
+.bhor {
+  --bg-sand: #06111f;
+  --forest-green: #0b2742;
+  --forest-green-light: #143e66;
+  --wheat-gold: #f4a261;
+  --wheat-light: #e0f2fe;
+  --emerald-fresh: #2ec4b6;
+  --card-glass-bg: rgba(10, 26, 46, 0.86);
+  --card-glass-border: rgba(94, 234, 212, 0.24);
+  --text-main: #f0f9ff;
+  --dew-drop: #5eead4;
+  --dew-glow: rgba(94, 234, 212, 0.35);
+  --dawn-amber: #fde047;
+  --dawn-rose: #fda4af;
+  --bhor-sky-top: #06111f;
+  --bhor-sky-mid: #0b223a;
+  --bhor-horizon: #193a5e;
+}
+
 html, body {
   width: 100% !important;
   max-width: 100% !important;
@@ -63,6 +87,20 @@ html.dark body {
   color: #E2E8F0;
 }
 
+.bhor body,
+html.bhor body {
+  background-color: #06111f;
+  /* Pre-dawn deep sapphire blue sky with faint golden-rose horizon glow & morning dew mist */
+  background-image: 
+    radial-gradient(ellipse at 50% -15%, rgba(30, 80, 140, 0.45), transparent 70%),
+    radial-gradient(circle at 10% 25%, rgba(94, 234, 212, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 90% 15%, rgba(253, 224, 71, 0.07) 0%, transparent 40%),
+    radial-gradient(circle at 50% 95%, rgba(16, 185, 129, 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #06111f 0%, #0a1f35 45%, #050d18 100%);
+  background-attachment: fixed;
+  color: #f0f9ff;
+}
+
 h1, h2, h3, h4, h5, h6, .font-heading {
   font-family: 'Outfit', sans-serif;
 }
@@ -86,6 +124,20 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   color: #E2E8F0;
 }
 
+.bhor .glass-card {
+  background: rgba(10, 26, 46, 0.84);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(94, 234, 212, 0.24);
+  box-shadow: 0 10px 32px -4px rgba(2, 8, 16, 0.65), 0 0 15px -2px rgba(94, 234, 212, 0.06), inset 0 1px 1px rgba(224, 242, 254, 0.15);
+  color: #f0f9ff;
+}
+
+.bhor .glass-card:hover {
+  border-color: rgba(94, 234, 212, 0.45);
+  box-shadow: 0 14px 40px -4px rgba(2, 8, 16, 0.8), 0 0 20px -2px rgba(94, 234, 212, 0.18);
+}
+
 .glass-card-dark {
   background: rgba(15, 56, 38, 0.92);
   backdrop-filter: blur(16px);
@@ -99,6 +151,14 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   border-color: rgba(245, 158, 11, 0.35);
 }
 
+.bhor .glass-card-dark {
+  background: rgba(7, 20, 36, 0.94);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(244, 162, 97, 0.35);
+  box-shadow: 0 12px 36px -6px rgba(0, 0, 0, 0.7);
+}
+
 .dark input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
 .dark select,
 .dark textarea {
@@ -108,9 +168,83 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   color-scheme: dark;
 }
 
+.bhor input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+.bhor select,
+.bhor textarea {
+  background-color: #081a2e !important;
+  color: #f0f9ff !important;
+  border-color: rgba(94, 234, 212, 0.28) !important;
+  color-scheme: dark;
+}
+
 .dark input::placeholder,
 .dark textarea::placeholder {
   color: rgba(203, 213, 225, 0.5) !important;
+}
+
+.bhor input::placeholder,
+.bhor textarea::placeholder {
+  color: rgba(148, 210, 189, 0.6) !important;
+}
+
+/* Bhor Theme Navbar & Component Accents */
+.bhor header {
+  background-color: rgba(6, 17, 31, 0.9) !important;
+  border-bottom: 1px solid rgba(94, 234, 212, 0.2) !important;
+  box-shadow: 0 4px 30px rgba(2, 8, 16, 0.8), 0 1px 0 rgba(253, 224, 71, 0.15) !important;
+}
+
+.bhor .text-emerald-950,
+.bhor .text-emerald-900,
+.bhor .text-emerald-800 {
+  color: #f0f9ff !important;
+}
+
+.bhor .text-emerald-950\/70,
+.bhor .text-emerald-900\/70,
+.bhor .text-emerald-800\/70 {
+  color: #94d2bd !important;
+}
+
+.bhor .bg-emerald-900\/5,
+.bhor .bg-emerald-950\/5 {
+  background-color: rgba(94, 234, 212, 0.08) !important;
+}
+
+.bhor .border-emerald-900\/10,
+.bhor .border-emerald-900\/15,
+.bhor .border-emerald-900\/20 {
+  border-color: rgba(94, 234, 212, 0.22) !important;
+}
+
+.bhor .bg-emerald-50,
+.bhor .bg-emerald-50\/70,
+.bhor .bg-emerald-100 {
+  background-color: rgba(11, 37, 64, 0.75) !important;
+  color: #f0f9ff !important;
+}
+
+.bhor .bg-white {
+  background-color: rgba(10, 26, 46, 0.88) !important;
+  color: #f0f9ff !important;
+}
+
+/* Dewdrop Micro-Interactions */
+@keyframes dewSparkle {
+  0%, 100% {
+    opacity: 0.85;
+    filter: drop-shadow(0 0 3px rgba(94, 234, 212, 0.5));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(94, 234, 212, 0.95)) drop-shadow(0 0 16px rgba(253, 224, 71, 0.4));
+  }
+}
+
+.bhor .dew-badge {
+  background: linear-gradient(135deg, rgba(14, 46, 74, 0.85) 0%, rgba(10, 26, 46, 0.9) 100%);
+  border: 1px solid rgba(94, 234, 212, 0.35);
+  box-shadow: 0 4px 15px rgba(2, 12, 27, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* ===================================================

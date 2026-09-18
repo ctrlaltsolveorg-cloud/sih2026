@@ -26,10 +26,24 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
-  // 4 high-quality local static images stored in public/images
+  // 5 high-quality local static images stored in public/images
   const slides = [
     {
       id: 1,
+      image: '/images/bhor_village_mandi.jpg',
+      badgeHi: '🌅 भोर विशेष • 5:00 AM Direct Pre-Dawn Mandi Trade',
+      badgeEn: '🌅 Pre-Dawn Mandi • 5:00 AM Direct Farm-to-Buyer Trade',
+      titleHi: 'Dew-Fresh Morning Harvest. Direct from Village Mandi.',
+      titleEn: 'Dew-Fresh Morning Harvest. Direct from Village Mandi.',
+      descHi: 'Experience the pre-dawn mandi atmosphere: freshly harvested produce with glistening morning dew, direct farmer auctions before the city wakes up.',
+      descEn: 'Experience the pre-dawn mandi atmosphere: freshly harvested produce with glistening morning dew, direct farmer auctions before the city wakes up.',
+      ctaPrimaryEn: 'Explore Products',
+      ctaPrimaryHi: 'Explore Products',
+      ctaSecondaryEn: 'Register as Farmer',
+      ctaSecondaryHi: 'Register as Farmer',
+    },
+    {
+      id: 2,
       image: '/images/farmer2.jpg',
       badgeHi: 'SIH 2026 PS 26033 • Farmer-First Direct Agri Platform',
       badgeEn: 'SIH 2026 PS 26033 • Farmer-First Direct Agri Platform',

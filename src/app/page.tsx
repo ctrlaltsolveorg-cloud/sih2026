@@ -5,6 +5,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCropName, getLocalizedCategory, getLocalizedGrade, getLocalizedLocation, getLocalizedFarmer } from '@/lib/i18n';
 import { useRole } from '@/context/RoleContext';
 import { useCart } from '@/context/CartContext';
+import { useTheme } from '@/context/ThemeContext';
 import {
   Sparkles,
   ShoppingBag,
@@ -12,7 +13,9 @@ import {
   PhoneCall,
   CheckCircle,
   MapPin,
-  Search
+  Search,
+  Droplets,
+  Sunrise
 } from 'lucide-react';
 import Link from 'next/link';
 import BulmaProductCard from '@/components/BulmaProductCard';
@@ -45,6 +48,7 @@ export default function HomePage() {
   const { t, language } = useLanguage();
   const { role, setRole } = useRole();
   const { addToCart } = useCart();
+  const { theme } = useTheme();
 
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
@@ -222,10 +226,17 @@ export default function HomePage() {
               <span className="px-2.5 py-0.5 bg-amber-500/20 text-amber-900 dark:text-amber-300 font-extrabold text-[11px] rounded-full border border-amber-500/30">
                 Direct from Farmer Desk
               </span>
-              <span className="text-xs text-emerald-700 dark:text-emerald-300 font-bold flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                <span>2-6 Photos Verified</span>
-              </span>
+              {theme === 'bhor' ? (
+                <span className="px-2.5 py-0.5 bg-teal-500/20 text-cyan-200 font-extrabold text-[11px] rounded-full border border-cyan-400/40 flex items-center gap-1 shadow-[0_0_12px_rgba(94,234,212,0.35)] animate-pulse">
+                  <Droplets className="w-3.5 h-3.5 text-cyan-300" />
+                  <span>Bhor Dew Fresh (भोर की ओस भरी ताज़ी फसलें)</span>
+                </span>
+              ) : (
+                <span className="text-xs text-emerald-700 dark:text-emerald-300 font-bold flex items-center gap-1">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                  <span>2-6 Photos Verified</span>
+                </span>
+              )}
             </div>
             <h2 className="text-2xl font-extrabold text-emerald-950 dark:text-emerald-50 flex items-center gap-2 mt-1">
               <ShoppingBag className="w-6 h-6 text-amber-600 dark:text-amber-400" />

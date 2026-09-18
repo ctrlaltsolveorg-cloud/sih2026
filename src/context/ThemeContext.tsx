@@ -2,8 +2,8 @@
 
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
 
-export type Theme = 'light' | 'dark';
-export type ResolvedTheme = 'light' | 'dark';
+export type Theme = 'light' | 'dark' | 'bhor';
+export type ResolvedTheme = 'light' | 'dark' | 'bhor';
 
 interface ThemeContextType {
   theme: Theme;
@@ -17,40 +17,47 @@ const THEME_STORAGE_KEY = 'kb_theme';
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Default theme is ALWAYS 'light' in any case
-  const [theme, setThemeState] = useState<Theme>('light');
-  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>('light');
+  // Default theme is 'bhor' (pre-dawn mandi) or 'light'
+  const [theme, setThemeState] = useState<Theme>('bhor');
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>('bhor');
   const [mounted, setMounted] = useState(false);
 
-  // Initialize theme: only 'dark' if explicitly chosen by user, otherwise strictly 'light'
+  // Initialize theme from localStorage
   useEffect(() => {
     setMounted(true);
     try {
       const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
-      if (savedTheme === 'dark') {
-        setThemeState('dark');
-        setResolvedTheme('dark');
+      if (savedTheme === 'dark' || savedTheme === 'bhor' || savedTheme === 'light') {
+        setThemeState(savedTheme);
+        setResolvedTheme(savedTheme);
       } else {
-        setThemeState('light');
-        setResolvedTheme('light');
+        setThemeState('bhor');
+        setResolvedTheme('bhor');
       }
     } catch {
-      setThemeState('light');
-      setResolvedTheme('light');
+      setThemeState('bhor');
+      setResolvedTheme('bhor');
     }
   }, []);
 
   // Sync resolved theme and document classes whenever theme changes
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === 'dark') {
+    root.classList.remove('dark', 'light', 'bhor');
+
+    if (theme === 'bhor') {
+      setResolvedTheme('bhor');
+      root.classList.add('bhor');
+      root.setAttribute('data-theme', 'bhor');
+      root.style.colorScheme = 'dark';
+    } else if (theme === 'dark') {
       setResolvedTheme('dark');
       root.classList.add('dark');
       root.setAttribute('data-theme', 'dark');
       root.style.colorScheme = 'dark';
     } else {
       setResolvedTheme('light');
-      root.classList.remove('dark');
+      root.classList.add('light');
       root.setAttribute('data-theme', 'light');
       root.style.colorScheme = 'light';
     }
@@ -66,8 +73,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const toggleTheme = () => {
-    // Switch between light and dark
-    const nextTheme: Theme = resolvedTheme === 'dark' ? 'light' : 'dark';
+    // Cycle between: 'bhor' -> 'light' -> 'dark' -> 'bhor'
+    let nextTheme: Theme = 'bhor';
+    if (resolvedTheme === 'bhor') nextTheme = 'light';
+    else if (resolvedTheme === 'light') nextTheme = 'dark';
+    else if (resolvedTheme === 'dark') nextTheme = 'bhor';
     setTheme(nextTheme);
   };
 
