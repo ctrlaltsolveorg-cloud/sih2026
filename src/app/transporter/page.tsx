@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { useLanguage } from '@/context/LanguageContext';
 import { useRole } from '@/context/RoleContext';
 import { getLocalizedFarmer, getLocalizedLocation, stripIndicParens } from '@/lib/i18n';
@@ -24,6 +25,16 @@ import {
   UserCheck,
   Fuel
 } from 'lucide-react';
+
+const RouteOptimizerMap = dynamic(() => import('@/components/RouteOptimizerMap'), {
+  ssr: false,
+  loading: () => (
+    <div className="bg-[#0b271a] p-12 rounded-3xl border border-emerald-500/20 text-center text-amber-200 space-y-3">
+      <div className="w-10 h-10 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mx-auto" />
+      <p className="font-bold text-sm">Initializing AI Multi-Stop Route Optimizer & Leaflet GIS Engine...</p>
+    </div>
+  ),
+});
 
 interface OrderItem {
   id: number;
@@ -419,6 +430,14 @@ export default function TransporterDashboardPage() {
                         </div>
 
                         <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => setActiveTab('route')}
+                            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-800/80 hover:bg-emerald-700 text-amber-200 text-xs font-bold rounded-lg transition border border-emerald-600/50"
+                            title="Open AI Route Optimizer"
+                          >
+                            <Navigation className="w-3.5 h-3.5 text-amber-400" />
+                            <span>AI Route</span>
+                          </button>
                           <span className={`px-3 py-1 rounded-full text-xs font-extrabold flex items-center gap-1.5 ${
                             isPickedUp
                               ? 'bg-blue-500/20 text-blue-300 border border-blue-400/30'
@@ -839,61 +858,20 @@ export default function TransporterDashboardPage() {
           </div>
         )}
 
-        {/* TAB 4: ROUTE OPTIMIZER */}
+        {/* TAB 4: AI ROUTE OPTIMIZER */}
         {activeTab === 'route' && (
-          <div className="bg-[#0F3826] text-amber-50 p-6 rounded-3xl shadow-xl space-y-6 border border-amber-500/20">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-emerald-800/60 pb-4">
-              <div className="flex items-center gap-3">
-                <Navigation className="w-6 h-6 text-amber-400" />
-                <div>
-                  <h2 className="text-lg font-bold">
-                    AI Multi-Stop Route Optimizer Engine
-                  </h2>
-                  <p className="text-xs text-amber-200/70">
-                    Minimal transit distance, zero spoilage & optimal fuel rate
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4 text-xs font-bold bg-emerald-950/80 px-4 py-2 rounded-2xl border border-emerald-800">
-                <div>Distance: <span className="text-amber-400">42.5 km</span></div>
-                <div>ETA: <span className="text-amber-400">55 mins</span></div>
-                <div>Fuel Saved: <span className="text-emerald-400">+24.0%</span></div>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <div className="bg-emerald-950/80 p-4 rounded-2xl border border-emerald-800 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="w-8 h-8 rounded-full bg-amber-500 text-emerald-950 font-black flex items-center justify-center text-xs">
-                    #1
-                  </span>
-                  <div>
-                    <h4 className="font-bold text-sm text-white">Stop 1: Nashik Collection Center (Nashik Mandi Hub)</h4>
-                    <p className="text-xs text-amber-200/70">Pickup • Farmer: Ramesh Patil (Tomatoes 500 kg)</p>
-                  </div>
-                </div>
-                <span className="px-2.5 py-1 bg-amber-500/20 text-amber-300 text-xs font-mono font-bold rounded-lg">
-                  Pickup OTP Handshake
-                </span>
-              </div>
-
-              <div className="bg-emerald-950/80 p-4 rounded-2xl border border-emerald-800 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="w-8 h-8 rounded-full bg-emerald-500 text-emerald-950 font-black flex items-center justify-center text-xs">
-                    #2
-                  </span>
-                  <div>
-                    <h4 className="font-bold text-sm text-white">Stop 2: Hotel Annapurna (Swargate, Pune)</h4>
-                    <p className="text-xs text-amber-200/70">Drop • Buyer: Rohan Sharma (Delivery & Escrow Release)</p>
-                  </div>
-                </div>
-                <span className="px-2.5 py-1 bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold rounded-lg">
-                  Delivery OTP Handshake
-                </span>
-              </div>
-            </div>
-          </div>
+          <RouteOptimizerMap
+            initialVehicle="REEFER_VAN"
+            initialGoal="COLD_CHAIN_PRIORITY"
+            onVerifyPickup={async (orderId, otp) => {
+              setPickupInputs((prev) => ({ ...prev, [orderId]: otp }));
+              await handleVerifyPickup(orderId);
+            }}
+            onVerifyDelivery={async (orderId, otp) => {
+              setDeliveryInputs((prev) => ({ ...prev, [orderId]: otp }));
+              await handleVerifyDelivery(orderId, 'UPI');
+            }}
+          />
         )}
 
       </div>
