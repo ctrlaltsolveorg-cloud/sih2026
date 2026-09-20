@@ -102,6 +102,12 @@ export default function FarmerDashboardPage() {
   const [urlInput, setUrlInput] = useState('');
   const [photoError, setPhotoError] = useState<string | null>(null);
 
+  // AI Crop Quality Verification State
+  const [isInspectingQuality, setIsInspectingQuality] = useState(false);
+  const [qualityInspection, setQualityInspection] = useState<any | null>(null);
+  const [hfTokenInput, setHfTokenInput] = useState('');
+  const [showHfTokenField, setShowHfTokenField] = useState(false);
+
   // User-isolated active listings
   const [myListings, setMyListings] = useState<any[]>([]);
   const [isSeedingAll, setIsSeedingAll] = useState(false);
@@ -308,9 +314,61 @@ export default function FarmerDashboardPage() {
     });
 
     Promise.all(readPromises).then((newPhotos) => {
-      setPhotos((prev) => [...prev, ...newPhotos]);
+      setPhotos((prev) => {
+        const updated = [...prev, ...newPhotos];
+        if (prev.length === 0 && updated.length > 0) {
+          setTimeout(() => handleRunQualityInspection(updated[0]), 300);
+        }
+        return updated;
+      });
     });
     e.target.value = '';
+  };
+
+  const handleRunQualityInspection = async (specificPhoto?: string) => {
+    const photoToAnalyze = specificPhoto || photos[0] || urlInput;
+    if (!photoToAnalyze) {
+      alert(
+        language === 'hi'
+          ? 'कृपया गुणवत्ता जांचने के लिए पहले फसल की फोटो अपलोड करें या URL डालें!'
+          : 'Please upload a photo or paste an image URL first to verify crop quality!'
+      );
+      return;
+    }
+
+    setIsInspectingQuality(true);
+    try {
+      const res = await fetch('/api/v1/ai/quality-grade', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(hfTokenInput ? { 'x-hf-token': hfTokenInput } : {}),
+        },
+        body: JSON.stringify({
+          cropName: cropName || cropNameHi || 'Fresh Farm Produce',
+          category,
+          imageUrl: photoToAnalyze,
+          variety,
+          hfToken: hfTokenInput || undefined,
+        }),
+      });
+      const data = await res.json();
+      if (data.success && data.inspectionResult) {
+        setQualityInspection(data.inspectionResult);
+        if (data.inspectionResult.gradeShort) {
+          setGrade(data.inspectionResult.gradeShort);
+        }
+        triggerSuccessSignal(
+          language === 'hi'
+            ? `✨ AI गुणवत्ता प्रमाणित: ${data.inspectionResult.grade} (${data.inspectionResult.confidenceScore}%)`
+            : `✨ AI Certified: ${data.inspectionResult.grade} (${data.inspectionResult.confidenceScore}% confidence)`
+        );
+      }
+    } catch (err) {
+      console.error('AI inspection failed:', err);
+    } finally {
+      setIsInspectingQuality(false);
+    }
   };
 
   const handleStartAddProduce = (cat?: CropCategory) => {
@@ -322,6 +380,9 @@ export default function FarmerDashboardPage() {
     setQuantityKg('500');
     setBasePriceRupees('40');
     setGrade('A+');
+    setPhotos([]);
+    setQualityInspection(null);
+    setIsInspectingQuality(false);
     setShowInlineAddForm(true);
     setTimeout(() => formContainerRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
   };
@@ -350,6 +411,7 @@ export default function FarmerDashboardPage() {
       cropPhotos = [crop.imageUrl];
     }
     setPhotos(cropPhotos);
+    setQualityInspection(crop.qualityInspection || null);
     setPhotoError(null);
     setShowInlineAddForm(true);
 
@@ -373,6 +435,7 @@ export default function FarmerDashboardPage() {
     setBasePriceRupees('40');
     setGrade('A+');
     setPhotos([]);
+    setQualityInspection(null);
     setPhotoError(null);
     triggerSuccessSignal(
       language === 'hi'
@@ -387,7 +450,14 @@ export default function FarmerDashboardPage() {
       alert(language === 'hi' ? 'अधिकतम 6 तस्वीरें ही जोड़ी जा सकती हैं' : 'Maximum 6 photos allowed');
       return;
     }
-    setPhotos((prev) => [...prev, urlInput.trim()]);
+    const newUrl = urlInput.trim();
+    setPhotos((prev) => {
+      const updated = [...prev, newUrl];
+      if (prev.length === 0) {
+        setTimeout(() => handleRunQualityInspection(newUrl), 300);
+      }
+      return updated;
+    });
     setUrlInput('');
     setPhotoError(null);
   };
@@ -438,7 +508,8 @@ export default function FarmerDashboardPage() {
         farmer_name: user?.name || userName || 'Farmer',
         isOrganic: 0,
         harvestDate: new Date().toISOString().split('T')[0],
-        cvTrustScore: 98,
+        cvTrustScore: qualityInspection?.confidenceScore ? Math.round(qualityInspection.confidenceScore) : 98,
+        qualityInspection: qualityInspection || undefined,
         isCustom: true,
       };
 
@@ -512,7 +583,8 @@ export default function FarmerDashboardPage() {
       farmer_name: user?.name || userName || 'Farmer',
       isOrganic: isOrganic ? 1 : 0,
       harvestDate: new Date().toISOString().split('T')[0],
-      cvTrustScore: 98,
+      cvTrustScore: qualityInspection?.confidenceScore ? Math.round(qualityInspection.confidenceScore) : 98,
+      qualityInspection: qualityInspection || undefined,
       isCustom: true,
     };
 
@@ -559,7 +631,8 @@ export default function FarmerDashboardPage() {
           farmer_name: user?.name || userName || 'Farmer',
           isOrganic: isOrganic ? 1 : 0,
           harvestDate: new Date().toISOString().split('T')[0],
-          cvTrustScore: 98,
+          cvTrustScore: qualityInspection?.confidenceScore ? Math.round(qualityInspection.confidenceScore) : 98,
+          qualityInspection: qualityInspection || undefined,
           isCustom: true,
         };
       }
@@ -1206,6 +1279,252 @@ export default function FarmerDashboardPage() {
                   </button>
                 </div>
               )}
+
+              {/* ===================================================
+                  AI QUALITY VERIFICATION ACTION BAR & HF TOGGLE
+                  =================================================== */}
+              <div className="pt-2 border-t border-emerald-900/10 flex flex-col gap-2.5">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleRunQualityInspection()}
+                    disabled={isInspectingQuality || (photos.length === 0 && !urlInput)}
+                    className={`px-4 py-2.5 rounded-xl font-black text-xs flex items-center gap-2 shadow-md transition-all ${
+                      isInspectingQuality
+                        ? 'bg-amber-100 text-amber-900 cursor-wait border border-amber-300'
+                        : (photos.length > 0 || urlInput)
+                        ? 'bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-800 hover:from-emerald-700 hover:to-teal-900 text-white shadow-emerald-900/20 hover:scale-[1.01] active:scale-[0.99]'
+                        : 'bg-emerald-950/10 text-emerald-900/40 cursor-not-allowed border border-emerald-900/10'
+                    }`}
+                  >
+                    {isInspectingQuality ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin text-amber-700" />
+                        <span>{language === 'hi' ? 'AI फसल गुणवत्ता जांच जारी है...' : 'AI Computer Vision Quality Inspection in Progress...'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
+                        <span>{language === 'hi' ? '✨ AI से फसल गुणवत्ता जांचें (Hugging Face / Gemini)' : '✨ Verify Crop Quality (AI Vision / Hugging Face)'}</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setShowHfTokenField(!showHfTokenField)}
+                    className="text-[11px] font-bold text-emerald-800 hover:text-emerald-950 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-emerald-900/5 transition border border-emerald-900/10"
+                  >
+                    <Key className="w-3.5 h-3.5 text-amber-600" />
+                    <span>{showHfTokenField ? (language === 'hi' ? 'टोकन छुपाएं' : 'Hide HF Token') : (language === 'hi' ? 'हगिंग फेस टोकन (वैकल्पिक)' : 'Hugging Face Key (Optional)')}</span>
+                  </button>
+                </div>
+
+                {/* Optional Hugging Face Token Input Accordion */}
+                {showHfTokenField && (
+                  <div className="p-3 bg-amber-50/70 border border-amber-300/60 rounded-xl space-y-1.5 animate-fadeIn">
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="font-bold text-emerald-950">
+                        {language === 'hi' ? 'हगिंग फेस एक्सेस टोकन (hf_...):' : 'Hugging Face Access Token (hf_...):'}
+                      </span>
+                      <span className="text-[10px] text-amber-800 font-semibold">
+                        {language === 'hi' ? 'ब्राउज़र टैब से पेस्ट करें या खाली छोड़ें' : 'Paste from open HF tab or leave blank for Gemini Vision'}
+                      </span>
+                    </div>
+                    <input
+                      type="password"
+                      placeholder="hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                      value={hfTokenInput}
+                      onChange={(e) => setHfTokenInput(e.target.value)}
+                      className="w-full px-3 py-1.5 bg-white border border-amber-300 rounded-lg text-xs font-mono text-emerald-950 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                  </div>
+                )}
+
+                {/* Scanning Animation Feedback when running */}
+                {isInspectingQuality && (
+                  <div className="p-3.5 bg-emerald-900/5 border border-emerald-500/30 rounded-xl flex items-center gap-3 animate-pulse">
+                    <div className="relative w-7 h-7 flex items-center justify-center">
+                      <div className="absolute inset-0 rounded-full border-2 border-emerald-600 border-t-transparent animate-spin" />
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                    </div>
+                    <div className="text-xs">
+                      <div className="font-black text-emerald-950">
+                        {language === 'hi' ? 'AI विज़न मॉडल फोटो का विश्लेषण कर रहा है...' : 'AI Vision analyzing crop texture, skin blemish & ripeness...'}
+                      </div>
+                      <div className="text-[11px] text-emerald-800/80">
+                        {language === 'hi' ? 'FSSAI और AGMARKNET मानकों के अनुसार ग्रेड निर्धारित हो रहा है' : 'Evaluating against AGMARKNET & FSSAI certified grade standards'}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* ===================================================
+                    AI COMPUTER VISION QUALITY CERTIFICATE CARD
+                    =================================================== */}
+                {qualityInspection && !isInspectingQuality && (
+                  <div className="p-4 bg-gradient-to-br from-emerald-950 via-[#0B3322] to-emerald-900 text-white rounded-2xl border-2 border-amber-400/40 shadow-xl space-y-3.5 animate-fadeIn">
+                    {/* Header */}
+                    <div className="flex items-start justify-between flex-wrap gap-2 pb-2.5 border-b border-emerald-700/50">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-xl bg-amber-400/20 border border-amber-300/40 flex items-center justify-center text-amber-300">
+                          <ShieldCheck className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-black tracking-wider uppercase text-amber-300">
+                              {language === 'hi' ? 'AI प्रमाणित गुणवत्ता रिपोर्ट' : 'AI Certified Quality Report'}
+                            </span>
+                            <span className="px-2 py-0.5 rounded-full text-[9px] font-black bg-amber-400 text-emerald-950 shadow-sm">
+                              {qualityInspection.confidenceScore}% {language === 'hi' ? 'सटीकता' : 'Confidence'}
+                            </span>
+                          </div>
+                          <p className="text-[10px] text-emerald-200/80">
+                            {qualityInspection.modelEnsemble?.ensembleSummary || qualityInspection.modelUsed || qualityInspection.provider}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Verified Grade Badge */}
+                      <div className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-emerald-950 font-black text-xs shadow-lg flex items-center gap-1.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-950" />
+                        <span>{qualityInspection.grade || `Grade ${grade}`}</span>
+                      </div>
+                    </div>
+
+                    {/* Multi-Model Ensemble Consensus Bar */}
+                    {qualityInspection.modelEnsemble && (
+                      <div className="p-2.5 bg-black/25 rounded-xl border border-emerald-700/40 space-y-1 text-[11px]">
+                        <div className="text-[10px] uppercase font-bold text-amber-300 tracking-wider">
+                          {language === 'hi' ? 'विश्लेषण में शामिल AI मॉडल्स (Multi-Model Pipeline):' : 'Models in Consensus Pipeline:'}
+                        </div>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[10px] text-emerald-200">
+                          <span className="flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                            <strong>Primary:</strong> {qualityInspection.modelEnsemble.primaryVisionModel}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                            <strong>Specialized:</strong> {qualityInspection.modelEnsemble.specializedCropModel}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Metrics 4-Box Grid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                      <div className="p-2.5 bg-emerald-900/50 border border-emerald-700/40 rounded-xl">
+                        <div className="text-[10px] text-emerald-300 font-bold uppercase">
+                          {language === 'hi' ? 'रंग और परिपक्वता' : 'Color & Ripeness'}
+                        </div>
+                        <div className="text-sm font-black text-amber-300 mt-0.5">
+                          {qualityInspection.colorRipenessPercent}%
+                        </div>
+                        <div className="w-full bg-emerald-950/70 h-1.5 rounded-full mt-1.5 overflow-hidden">
+                          <div
+                            className="bg-gradient-to-r from-amber-400 to-emerald-400 h-full rounded-full transition-all duration-1000"
+                            style={{ width: `${Math.min(100, qualityInspection.colorRipenessPercent)}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="p-2.5 bg-emerald-900/50 border border-emerald-700/40 rounded-xl">
+                        <div className="text-[10px] text-emerald-300 font-bold uppercase">
+                          {language === 'hi' ? 'दोष / दाग दर' : 'Defect Rate'}
+                        </div>
+                        <div className="text-sm font-black text-emerald-200 mt-0.5">
+                          {qualityInspection.defectScorePercent}%
+                        </div>
+                        <div className="text-[10px] text-emerald-300/80 mt-0.5">
+                          {qualityInspection.defectScorePercent <= 3.0 ? (language === 'hi' ? 'नगण्य (स्वच्छ)' : 'Negligible (Clean)') : (language === 'hi' ? 'स्वीकार्य सीमा' : 'Acceptable')}
+                        </div>
+                      </div>
+
+                      <div className="p-2.5 bg-emerald-900/50 border border-emerald-700/40 rounded-xl">
+                        <div className="text-[10px] text-emerald-300 font-bold uppercase">
+                          {language === 'hi' ? 'अनुमानित शेल्फ लाइफ' : 'Est. Shelf Life'}
+                        </div>
+                        <div className="text-sm font-black text-amber-300 mt-0.5">
+                          {qualityInspection.shelfLifeEstDays} {language === 'hi' ? 'दिन' : 'Days'}
+                        </div>
+                        <div className="text-[10px] text-emerald-300/80 mt-0.5">
+                          {qualityInspection.suggestedHubStorageTemp}
+                        </div>
+                      </div>
+
+                      <div className="p-2.5 bg-emerald-900/50 border border-emerald-700/40 rounded-xl">
+                        <div className="text-[10px] text-emerald-300 font-bold uppercase">
+                          {language === 'hi' ? 'FSSAI मानक' : 'FSSAI Standard'}
+                        </div>
+                        <div className="text-xs font-black text-emerald-200 mt-0.5 flex items-center gap-1">
+                          <Check className="w-3.5 h-3.5 text-amber-400" />
+                          <span>{qualityInspection.fssaiCompliance === 'PASS_FSSAI_EXPORT_COMPLIANT' ? (language === 'hi' ? 'निर्यात मानक' : 'Export Grade') : (language === 'hi' ? 'घरेलू मानक' : 'Domestic Pass')}</span>
+                        </div>
+                        <div className="text-[10px] text-amber-400/90 font-semibold mt-0.5">
+                          AGMARKNET Compliant
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Crop-Specific Specialized Metrics if available */}
+                    {qualityInspection.cropSpecificMetrics && Object.keys(qualityInspection.cropSpecificMetrics).length > 0 && (
+                      <div className="p-2.5 bg-emerald-900/30 rounded-xl border border-emerald-700/30 space-y-1.5">
+                        <div className="text-[10px] uppercase font-bold text-amber-300 tracking-wider">
+                          {language === 'hi' ? 'फसल-विशिष्ट गुणवत्ता पैरामीटर्स (Crop Specific Metrics):' : 'Crop-Specific Parameters:'}
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[10px]">
+                          {Object.entries(qualityInspection.cropSpecificMetrics).map(([key, val]) => (
+                            <div key={key} className="bg-black/20 p-1.5 rounded-lg border border-emerald-600/20">
+                              <span className="text-emerald-300/80 capitalize block">{key.replace(/([A-Z])/g, ' $1')}:</span>
+                              <span className="font-bold text-amber-200">{String(val)}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Detected Visual Features Pills */}
+                    {Array.isArray(qualityInspection.defectsDetected) && qualityInspection.defectsDetected.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {qualityInspection.defectsDetected.map((feat: string, fIdx: number) => (
+                          <span
+                            key={fIdx}
+                            className="px-2.5 py-1 rounded-lg bg-emerald-900/80 border border-emerald-600/40 text-[10px] text-emerald-200 font-medium flex items-center gap-1"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                            {feat}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* AI Assessment Summary Text */}
+                    {qualityInspection.aiAssessmentSummary && (
+                      <div className="p-2.5 bg-black/20 border border-emerald-700/30 rounded-xl text-[11px] text-emerald-100/90 italic leading-relaxed">
+                        &ldquo;{qualityInspection.aiAssessmentSummary}&rdquo;
+                      </div>
+                    )}
+
+                    {/* Sync Confirmation */}
+                    <div className="flex items-center justify-between text-[11px] text-amber-300/90 font-bold pt-1 border-t border-emerald-800/60">
+                      <span className="flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
+                        {language === 'hi'
+                          ? `गुणवत्ता ग्रेड "${grade}" फॉर्म में स्वतः दर्ज कर दिया गया है`
+                          : `Quality Grade "${grade}" has been automatically synchronized to the form`}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleRunQualityInspection()}
+                        className="text-[10px] text-emerald-300 hover:text-white underline flex items-center gap-1"
+                      >
+                        <RefreshCw className="w-2.5 h-2.5" />
+                        <span>{language === 'hi' ? 'पुनः जांचें' : 'Re-scan'}</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* ===================================================
@@ -1420,6 +1739,7 @@ export default function FarmerDashboardPage() {
                     location={crop.location}
                     images={crop.photos || [crop.imageUrl]}
                     unit={crop.unit || 'kg'}
+                    quality_inspection={crop.qualityInspection || crop.quality_inspection}
                     badge={language === 'hi' ? 'मेरी फसल' : 'My Crop'}
                   />
 

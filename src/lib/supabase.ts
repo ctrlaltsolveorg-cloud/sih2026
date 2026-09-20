@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qtldwcgzzroapkepttti.supabase.co';
 const rawAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0bGR3Y2d6enJvYXBrZXB0dHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5MDUxNjUsImV4cCI6MjEwMjQ4MTE2NX0.uVNqZRQ0QJJxl0DyonU16XQ0oxlIjYQl0MgjL5DN85Q';
@@ -8,23 +8,36 @@ const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const isServiceKeyValid = serviceKey && !serviceKey.includes('_OpjQyjuMO2oS9B41BHT1sPlhPU9rtOWIpFu-UgghCk');
 const activeKey = isServiceKeyValid ? serviceKey : rawAnonKey;
 
-export const supabase = createClient(rawUrl, activeKey, {
-  auth: {
-    persistSession: typeof window !== 'undefined',
-    autoRefreshToken: typeof window !== 'undefined',
-  },
-});
+const globalForSupabase = globalThis as unknown as {
+  supabase: SupabaseClient<any, 'public', any> | undefined;
+  supabaseAdmin: SupabaseClient<any, 'public', any> | undefined;
+};
 
-export const supabaseAdmin = createClient(
-  rawUrl,
-  activeKey,
-  {
+export const supabase: SupabaseClient<any, 'public', any> =
+  globalForSupabase.supabase ??
+  createClient<any>(rawUrl, activeKey, {
+    auth: {
+      persistSession: typeof window !== 'undefined',
+      autoRefreshToken: typeof window !== 'undefined',
+      storageKey: 'kisanbandhan-auth-token',
+    },
+  });
+
+export const supabaseAdmin: SupabaseClient<any, 'public', any> =
+  globalForSupabase.supabaseAdmin ??
+  createClient<any>(rawUrl, activeKey, {
     auth: {
       persistSession: false,
       autoRefreshToken: false,
+      detectSessionInUrl: false,
+      storageKey: 'kisanbandhan-admin-token',
     },
-  }
-);
+  });
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForSupabase.supabase = supabase;
+  globalForSupabase.supabaseAdmin = supabaseAdmin;
+}
 
 /**
  * Generate semantic vector embedding for crop description / query

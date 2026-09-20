@@ -10,6 +10,7 @@ import CartDrawer from '@/components/CartDrawer';
 import FloatingCartButton from '@/components/FloatingCartButton';
 import AuthModal from '@/components/AuthModal';
 import IndiaTranslatorModal from '@/components/IndiaTranslatorModal';
+import VoiceAgent from '@/components/VoiceAgent';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
@@ -75,6 +76,7 @@ export default function RootLayout({
                     </main>
                     <CartDrawer />
                     <FloatingCartButton />
+                    <VoiceAgent />
                     <AuthModal />
                     <IndiaTranslatorModal />
                     <Footer />

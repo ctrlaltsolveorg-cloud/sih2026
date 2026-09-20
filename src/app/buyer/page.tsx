@@ -513,6 +513,7 @@ export default function BuyerDashboardPage() {
                   images={crop.images}
                   unit={crop.unit}
                   description={crop.description}
+                  quality_inspection={crop.quality_inspection || crop.qualityInspection}
                   badge={crop.isDirectFromFarmer ? 'Farmer Direct' : undefined}
                   onAddToCart={handleAddToCart}
                 />

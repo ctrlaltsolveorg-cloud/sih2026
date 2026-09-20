@@ -1,50 +1,39 @@
 import { NextResponse } from 'next/server';
-import { inspectProduceWithGemini } from '@/lib/gemini';
+import { verifyCropQuality } from '@/lib/crop-quality';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
   try {
-    const { cropName, imageUrl, moisture, harvestAgeDays, variety } = await request.json();
+    const body = await request.json();
+    const { cropName, category, imageUrl, image, hfToken, hfModel, moisture, harvestAgeDays, variety } = body;
 
-    // Run real Google Gemini Computer Vision & Agronomic AI Grading
-    const geminiResult = await inspectProduceWithGemini(cropName, imageUrl, {
-      moisture,
-      harvestAgeDays,
-      variety,
-    });
+    const headerHfToken = request.headers.get('x-hf-token') || undefined;
+    const finalHfToken = hfToken || headerHfToken || process.env.HUGGINGFACE_API_KEY || process.env.HF_TOKEN;
 
-    if (geminiResult) {
-      return NextResponse.json({
-        success: true,
-        aiEngine: `KisanBandhan Vision AI powered by Google Gemini (${geminiResult.modelUsed})`,
-        provider: 'Google Gemini Generative AI',
-        inspectionResult: geminiResult,
-      });
-    }
+    const targetImage = image || imageUrl;
 
-    // High quality deterministic fallback if API limit reached
-    return NextResponse.json({
-      success: true,
-      aiEngine: 'KisanBandhan Vision Standard AI',
-      provider: 'KisanBandhan Agmarknet Baseline',
-      inspectionResult: {
-        cropName: cropName || 'Produce Lot',
-        grade: 'Grade A Premium',
-        confidenceScore: 95.2,
-        colorRipenessPercent: 94.0,
-        defectScorePercent: 1.8,
-        fssaiCompliance: 'PASS_FSSAI_EXPORT_COMPLIANT',
-        shelfLifeEstDays: 14,
-        suggestedHubStorageTemp: '12°C - 15°C',
-        defectsDetected: ['Uniform shape and density', 'Negligible surface variations'],
-        aiAssessmentSummary: 'Lot meets FSSAI and AGMARKNET standards for premium market placement.',
-        inspectionTimestamp: new Date().toISOString(),
-        modelUsed: 'heuristic-fallback',
+    const inspectionResult = await verifyCropQuality({
+      cropName: cropName || 'Produce Lot',
+      category,
+      imageUrl: targetImage,
+      hfToken: finalHfToken,
+      hfModel,
+      extraDetails: {
+        moisture,
+        harvestAgeDays,
+        variety,
       },
     });
+
+    return NextResponse.json({
+      success: true,
+      aiEngine: inspectionResult.provider,
+      provider: inspectionResult.provider,
+      inspectionResult,
+    });
   } catch (error: any) {
+    console.error('Error in quality-grade API:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
-

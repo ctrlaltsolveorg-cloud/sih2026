@@ -57,7 +57,7 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
       ctaSecondaryHi: 'Register as Farmer',
     },
     {
-      id: 2,
+      id: 3,
       image: '/images/fresh_farm_produce.jpg',
       badgeHi: '100% Farm-Fresh • Direct Harvest from Fields',
       badgeEn: '100% Farm-Fresh • Direct Harvest from Fields',
@@ -71,7 +71,7 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
       ctaSecondaryHi: 'Register as Farmer',
     },
     {
-      id: 3,
+      id: 4,
       image: '/images/farmer1.jpg',
       badgeHi: 'Mandi Agro-Hub • Quality Grains, Pulses & Agro Commodities',
       badgeEn: 'Mandi Agro-Hub • Quality Grains, Pulses & Agro Commodities',
@@ -85,7 +85,7 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
       ctaSecondaryHi: 'Register as Farmer',
     },
     {
-      id: 4,
+      id: 5,
       image: '/images/farmer4.jpg',
       badgeHi: 'Fair Price Assured • Direct Farmer-to-Buyer Contracts',
       badgeEn: 'Fair Price Assured • Direct Farmer-to-Buyer Contracts',
