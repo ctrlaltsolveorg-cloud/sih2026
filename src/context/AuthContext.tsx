@@ -88,7 +88,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (session?.user) {
         const email = session.user.email || 'user@kisanbandhan.ai';
         const metaName = session.user.user_metadata?.full_name || session.user.user_metadata?.name || email.split('@')[0];
-        const role = (session.user.user_metadata?.role as UserRole) || 'FARMER';
+        const pendingRole = (localStorage.getItem('kisanbandhan_pending_role') as UserRole) || null;
+        const role = (session.user.user_metadata?.role as UserRole) || pendingRole || 'FARMER';
 
         const updatedUser: AuthUser = {
           id: session.user.id,
@@ -99,6 +100,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(updatedUser);
         localStorage.setItem('kisanbandhan_manual_login', 'true');
         localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(updatedUser));
+        localStorage.removeItem('kisanbandhan_pending_role');
+
+        // Upsert to Supabase cloud users table
+        try {
+          await supabase.from('users').upsert([
+            {
+              id: updatedUser.id,
+              name: updatedUser.name,
+              email: updatedUser.email,
+              role: updatedUser.role,
+              phone: updatedUser.phone || '9876543210',
+              district: 'Nashik',
+              state: 'Maharashtra',
+              address: 'Maharashtra, India',
+            },
+          ]);
+        } catch (e) {}
+
+        syncUserToBackendDB(updatedUser);
       }
     });
 
@@ -489,10 +509,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async (selectedRole: UserRole = 'FARMER') => {
     try {
+      if (typeof window !== 'undefined' && selectedRole) {
+        localStorage.setItem('kisanbandhan_pending_role', selectedRole);
+      }
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/`,
+          redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/` : undefined,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
