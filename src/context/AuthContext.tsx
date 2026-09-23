@@ -278,7 +278,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           }
           return { success: true };
         }
-      } catch (e) {}
+      } catch (e) { }
 
       // 3. Check local registered users list
       const stored = localStorage.getItem('kisanbandhan_registered_users');
@@ -352,7 +352,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           error: 'This email account is already registered! Please log in with this email.',
         };
       }
-    } catch (e) {}
+    } catch (e) { }
 
     // 2. Check existing users in local storage registry
     try {
@@ -365,7 +365,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           error: 'This email is already registered! Please log in.',
         };
       }
-    } catch (e) {}
+    } catch (e) { }
 
     // 3. Check existing in backend SQLite DB
     try {
@@ -381,7 +381,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           error: 'This email is already registered! Please log in.',
         };
       }
-    } catch (e) {}
+    } catch (e) { }
 
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -442,7 +442,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const existingStr = localStorage.getItem('kisanbandhan_registered_users');
         const existing: Array<AuthUser & { password?: string }> = existingStr ? JSON.parse(existingStr) : [];
         localStorage.setItem('kisanbandhan_registered_users', JSON.stringify([...existing, newUserRecord]));
-      } catch (e) {}
+      } catch (e) { }
 
       setUser(newUser);
       localStorage.setItem('kisanbandhan_manual_login', 'true');
@@ -458,7 +458,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = async () => {
     try {
       await supabase.auth.signOut();
-    } catch (e) {}
+    } catch (e) { }
     setUser(null);
     localStorage.removeItem('kisanbandhan_auth_user');
     localStorage.removeItem('kisanbandhan_manual_login');
@@ -489,41 +489,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async (selectedRole: UserRole = 'FARMER') => {
     try {
-      // Instant Seamless Google Authentication (Direct Supabase Cloud sync without Google 401 invalid_client block)
-      const googleUser: AuthUser = {
-        id: 'u_google_ctrlaltsolve',
-        email: 'ctrl.alt.solve.org@gmail.com',
-        name: 'Piyush Kumar (Google Account)',
-        role: selectedRole || 'FARMER',
-        phone: '9876543210',
-      };
-
-      setUser(googleUser);
-      localStorage.setItem('kisanbandhan_manual_login', 'true');
-      localStorage.setItem('kisanbandhan_auth_user', JSON.stringify(googleUser));
-
-      // Sync user profile to live Supabase Cloud users table
-      try {
-        await supabase.from('users').upsert([
-          {
-            id: googleUser.id,
-            name: googleUser.name,
-            email: googleUser.email,
-            role: googleUser.role,
-            phone: googleUser.phone,
-            district: 'Nashik',
-            state: 'Maharashtra',
-            address: 'Nashik, Maharashtra, India',
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
           },
-        ]);
-      } catch (err) {
-        console.warn('Supabase cloud user upsert note:', err);
-      }
+        },
+      });
 
-      await syncUserToBackendDB(googleUser);
-      closeAuthModal();
+      if (error) {
+        throw error;
+      }
     } catch (err: any) {
-      console.error('Google Sign In error:', err);
+      console.error('Real Google OAuth error:', err);
+      alert('Google Sign-In Error: ' + (err.message || 'Please ensure Google OAuth credentials are saved in Supabase.'));
     }
   };
 
