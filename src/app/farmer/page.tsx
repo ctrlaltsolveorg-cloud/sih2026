@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedCropName, getLocalizedGrade, getLocalizedLocation } from '@/lib/i18n';
@@ -41,16 +42,22 @@ import {
   ExternalLink,
   Edit3,
   Save,
-  RefreshCw,
-  User,
   Phone,
-  MapPin,
+  Sparkle,
   Truck,
-  Key
+  MapPin,
+  RefreshCw,
+  Key,
+  User
 } from 'lucide-react';
+
+const LiveGpsTrackingModal = dynamic(() => import('@/components/LiveGpsTrackingModal'), {
+  ssr: false,
+});
 
 export default function FarmerDashboardPage() {
   const { t, language } = useLanguage();
+  const [trackingModalOrderId, setTrackingModalOrderId] = useState<string | null>(null);
   const { userName } = useRole();
   const { user, verifyCredentials } = useAuth();
 
@@ -875,18 +882,33 @@ export default function FarmerDashboardPage() {
                         </span>
                       </div>
                       {hasDriver && (
-                        <div className="flex items-center justify-between text-[11px] text-emerald-800/90 pt-0.5">
-                          <span>{language === 'hi' ? 'वाहन:' : 'Vehicle:'} <strong>{ord.driver_vehicle || 'MH-15-EG-8821'}</strong></span>
-                          {ord.driver_phone && (
-                            <a
-                              href={`tel:${ord.driver_phone}`}
-                              className="inline-flex items-center gap-1 font-bold text-emerald-800 hover:underline bg-emerald-100 px-2 py-0.5 rounded"
+                        <>
+                          <div className="flex items-center justify-between text-[11px] text-emerald-800/90 pt-0.5">
+                            <span>{language === 'hi' ? 'वाहन:' : 'Vehicle:'} <strong>{ord.driver_vehicle || 'MH-15-EG-8821'}</strong></span>
+                            {ord.driver_phone && (
+                              <a
+                                href={`tel:${ord.driver_phone}`}
+                                className="inline-flex items-center gap-1 font-bold text-emerald-800 hover:underline bg-emerald-100 px-2 py-0.5 rounded"
+                              >
+                                <Phone className="w-3 h-3 text-emerald-600" />
+                                <span>{ord.driver_phone}</span>
+                              </a>
+                            )}
+                          </div>
+
+                          {/* Live GPS Track Button for Farmer */}
+                          <div className="pt-1.5 border-t border-emerald-900/10">
+                            <button
+                              type="button"
+                              onClick={() => setTrackingModalOrderId(ord.id)}
+                              className="w-full py-1.5 px-3 bg-emerald-700 hover:bg-emerald-800 text-amber-300 font-extrabold text-xs rounded-xl shadow transition flex items-center justify-center gap-1.5 border border-emerald-600 animate-pulse"
+                              title="Track Driver's Real-Time GPS Location on Map"
                             >
-                              <Phone className="w-3 h-3 text-emerald-600" />
-                              <span>{ord.driver_phone}</span>
-                            </a>
-                          )}
-                        </div>
+                              <MapPin className="w-3.5 h-3.5 text-amber-400" />
+                              <span>{language === 'hi' ? '📍 चालक का लाइव GPS ट्रैक देखें' : '📍 Track Driver GPS on Map'}</span>
+                            </button>
+                          </div>
+                        </>
                       )}
                     </div>
 
@@ -2091,6 +2113,16 @@ export default function FarmerDashboardPage() {
               </div>
             </div>
           </div>
+        )}
+
+        {/* Real-Time Driver GPS Tracking Modal */}
+        {trackingModalOrderId && (
+          <LiveGpsTrackingModal
+            orderId={trackingModalOrderId}
+            isOpen={Boolean(trackingModalOrderId)}
+            onClose={() => setTrackingModalOrderId(null)}
+            userRole="FARMER"
+          />
         )}
       </div>
     </PortalGuard>

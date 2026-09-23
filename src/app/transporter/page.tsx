@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { useLanguage } from '@/context/LanguageContext';
 import { useRole } from '@/context/RoleContext';
@@ -34,6 +34,10 @@ const RouteOptimizerMap = dynamic(() => import('@/components/RouteOptimizerMap')
       <p className="font-bold text-sm">Initializing AI Multi-Stop Route Optimizer & Leaflet GIS Engine...</p>
     </div>
   ),
+});
+
+const LiveGpsTrackingModal = dynamic(() => import('@/components/LiveGpsTrackingModal'), {
+  ssr: false,
 });
 
 interface OrderItem {
@@ -92,6 +96,73 @@ export default function TransporterDashboardPage() {
   const [actionLoading, setActionLoading] = useState<Record<string, boolean>>({});
   const [feedback, setFeedback] = useState<Record<string, { type: 'success' | 'error'; message: string } | null>>({});
 
+  // GPS Tracking & Broadcaster states
+  const [trackingModalOrderId, setTrackingModalOrderId] = useState<string | null>(null);
+  const [activeGpsOrderId, setActiveGpsOrderId] = useState<string | null>(null);
+  const [currentGpsCoords, setCurrentGpsCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [gpsBroadcastCount, setGpsBroadcastCount] = useState<number>(0);
+  const watchIdRef = useRef<number | null>(null);
+
+  // Continuous driver GPS watcher & backend broadcaster
+  const startGpsTracking = (orderId: string, initialLat?: number, initialLng?: number) => {
+    setActiveGpsOrderId(orderId);
+    if (initialLat !== undefined && initialLng !== undefined) {
+      setCurrentGpsCoords({ lat: initialLat, lng: initialLng });
+    }
+
+    if (typeof window === 'undefined' || !navigator.geolocation) {
+      return;
+    }
+
+    if (watchIdRef.current !== null) {
+      navigator.geolocation.clearWatch(watchIdRef.current);
+    }
+
+    const id = navigator.geolocation.watchPosition(
+      async (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        const speed = pos.coords.speed ? Math.round(pos.coords.speed * 3.6) : 34;
+        const heading = pos.coords.heading || 45;
+        setCurrentGpsCoords({ lat, lng });
+
+        try {
+          await fetch('/api/v1/logistics/location', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              orderId,
+              latitude: lat,
+              longitude: lng,
+              speed,
+              heading,
+            }),
+          });
+          setGpsBroadcastCount((c) => c + 1);
+        } catch (err) {
+          console.warn('GPS broadcast sync notice:', err);
+        }
+      },
+      (err) => {
+        console.warn('Geolocation notice / fallback:', err.message);
+        if (!currentGpsCoords) {
+          setCurrentGpsCoords({ lat: 20.0059, lng: 73.7898 });
+        }
+      },
+      { enableHighAccuracy: true, maximumAge: 3000, timeout: 10000 }
+    );
+
+    watchIdRef.current = id;
+  };
+
+  useEffect(() => {
+    return () => {
+      if (watchIdRef.current !== null && typeof window !== 'undefined' && navigator.geolocation) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
+      }
+    };
+  }, []);
+
   const loadOrders = async () => {
     try {
       setLoading(true);
@@ -124,10 +195,29 @@ export default function TransporterDashboardPage() {
 
   const deliveredOrders = orders.filter((o) => o.status === 'Delivered');
 
-  // Accept an available delivery job
+  // Accept an available delivery job with instant GPS tracking request
   const handleAcceptDelivery = async (orderId: string) => {
     setActionLoading((prev) => ({ ...prev, [orderId]: true }));
     setFeedback((prev) => ({ ...prev, [orderId]: null }));
+
+    // Request browser Geolocation permission immediately
+    let initialLat: number | undefined;
+    let initialLng: number | undefined;
+
+    if (typeof window !== 'undefined' && navigator.geolocation) {
+      try {
+        const pos = await new Promise<GeolocationPosition>((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true,
+            timeout: 5000,
+          });
+        });
+        initialLat = pos.coords.latitude;
+        initialLng = pos.coords.longitude;
+      } catch (geoErr: any) {
+        console.warn('Driver GPS prompt result:', geoErr.message);
+      }
+    }
 
     try {
       const res = await fetch('/api/v1/orders/accept-delivery', {
@@ -139,6 +229,8 @@ export default function TransporterDashboardPage() {
           driverName: userName || 'Vikram Shinde',
           driverPhone: '+91 99000 11122',
           driverVehicle: 'MH-15-EG-8821 (Tata Ace Gold)',
+          initialLatitude: initialLat,
+          initialLongitude: initialLng,
         }),
       });
 
@@ -147,10 +239,17 @@ export default function TransporterDashboardPage() {
         throw new Error(data.message || 'Failed to accept delivery task.');
       }
 
+      // Start continuous background GPS broadcaster
+      startGpsTracking(orderId, initialLat, initialLng);
+
       setFeedback((prev) => ({
         ...prev,
-        [orderId]: { type: 'success', message: 'Delivery task accepted! Added to active trips.' },
+        [orderId]: { 
+          type: 'success', 
+          message: '✅ कार्य स्वीकृत! GPS ट्रैकिंग शुरू हो गई है और क्रेता व किसान के पोर्टल पर लाइव दिख रही है।' 
+        },
       }));
+
       await loadOrders();
       setActiveTab('active');
     } catch (err: any) {
@@ -431,6 +530,14 @@ export default function TransporterDashboardPage() {
 
                         <div className="flex items-center gap-3">
                           <button
+                            onClick={() => setTrackingModalOrderId(ord.id)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 text-xs font-black rounded-lg transition shadow border border-emerald-300 animate-pulse"
+                            title="Open Real-Time GPS Tracking Map"
+                          >
+                            <MapPin className="w-3.5 h-3.5" />
+                            <span>📍 {language === 'hi' ? 'लाइव GPS ट्रैक' : 'Live GPS'}</span>
+                          </button>
+                          <button
                             onClick={() => setActiveTab('route')}
                             className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-800/80 hover:bg-emerald-700 text-amber-200 text-xs font-bold rounded-lg transition border border-emerald-600/50"
                             title="Open AI Route Optimizer"
@@ -449,6 +556,32 @@ export default function TransporterDashboardPage() {
                           <span className="text-base font-black text-amber-400">
                             ₹{ord.total_rupees}
                           </span>
+                        </div>
+                      </div>
+
+                      {/* Live GPS Telemetry Broadcaster Status Banner */}
+                      <div className="bg-emerald-950/40 dark:bg-black/30 px-5 py-2.5 border-b border-emerald-900/30 flex flex-wrap items-center justify-between gap-3 text-xs">
+                        <div className="flex items-center gap-2">
+                          <span className="relative flex h-3 w-3">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                          </span>
+                          <span className="font-extrabold text-emerald-300">
+                            {language === 'hi' ? 'चालक लाइव GPS ब्रॉडकास्टर चालू' : 'Driver Live GPS Broadcaster Active'}
+                          </span>
+                          <span className="text-amber-300 font-mono text-[11px] bg-emerald-900/80 px-2 py-0.5 rounded border border-emerald-700">
+                            {currentGpsCoords ? `Lat: ${currentGpsCoords.lat.toFixed(4)}, Lng: ${currentGpsCoords.lng.toFixed(4)}` : 'Broadcasting Live Telemetry'}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => setTrackingModalOrderId(ord.id)}
+                            className="px-3 py-1 bg-amber-400 hover:bg-amber-300 text-emerald-950 font-black text-xs rounded-lg transition shadow flex items-center gap-1.5"
+                          >
+                            <MapPin className="w-3.5 h-3.5" />
+                            <span>{language === 'hi' ? 'मानचित्र पर देखें' : 'View Live Map'}</span>
+                          </button>
                         </div>
                       </div>
 
@@ -871,6 +1004,16 @@ export default function TransporterDashboardPage() {
               setDeliveryInputs((prev) => ({ ...prev, [orderId]: otp }));
               await handleVerifyDelivery(orderId, 'UPI');
             }}
+          />
+        )}
+
+        {/* Real-Time Driver GPS Tracking Modal */}
+        {trackingModalOrderId && (
+          <LiveGpsTrackingModal
+            orderId={trackingModalOrderId}
+            isOpen={Boolean(trackingModalOrderId)}
+            onClose={() => setTrackingModalOrderId(null)}
+            userRole="TRANSPORTER"
           />
         )}
 

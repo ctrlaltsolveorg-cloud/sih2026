@@ -351,7 +351,7 @@ export default function AuthModal() {
               {/* Google OAuth Button */}
               <button
                 type="button"
-                onClick={signInWithGoogle}
+                onClick={() => signInWithGoogle('FARMER')}
                 className="w-full py-2.5 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-900/40 text-emerald-950 dark:text-emerald-100 font-bold rounded-xl text-xs shadow-sm transition flex items-center justify-center gap-2"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -503,7 +503,7 @@ export default function AuthModal() {
 
               <button
                 type="button"
-                onClick={signInWithGoogle}
+                onClick={() => signInWithGoogle(role)}
                 className="w-full py-2.5 bg-white dark:bg-[#07170f] border border-emerald-900/20 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-900/40 text-emerald-950 dark:text-emerald-100 font-bold rounded-xl text-xs shadow-sm transition flex items-center justify-center gap-2"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">

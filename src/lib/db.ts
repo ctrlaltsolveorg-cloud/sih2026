@@ -175,6 +175,16 @@ function initTables(db: Database.Database) {
       driver_phone TEXT DEFAULT '+91 99000 11122',
       driver_vehicle TEXT DEFAULT 'MH-15-EG-8821 (Tata Ace Gold)',
       cod_collected INTEGER DEFAULT 0,
+      current_latitude REAL,
+      current_longitude REAL,
+      heading REAL DEFAULT 0,
+      speed_kmh REAL DEFAULT 0,
+      pickup_lat REAL,
+      pickup_lng REAL,
+      drop_lat REAL,
+      drop_lng REAL,
+      last_location_updated_at DATETIME,
+      location_history_json TEXT,
       assigned_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -276,6 +286,36 @@ function initTables(db: Database.Database) {
   } catch (e) {}
   try {
     db.exec('ALTER TABLE deliveries ADD COLUMN cod_collected INTEGER DEFAULT 0;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN current_latitude REAL;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN current_longitude REAL;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN heading REAL DEFAULT 0;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN speed_kmh REAL DEFAULT 0;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN pickup_lat REAL;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN pickup_lng REAL;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN drop_lat REAL;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN drop_lng REAL;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN last_location_updated_at DATETIME;');
+  } catch (e) {}
+  try {
+    db.exec('ALTER TABLE deliveries ADD COLUMN location_history_json TEXT;');
   } catch (e) {}
 
   const orderColumns = [

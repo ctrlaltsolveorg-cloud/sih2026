@@ -1,5 +1,6 @@
 import { getDb } from './db';
 import { supabase, supabaseAdmin } from './supabase';
+import { geocodeLocation } from './geocoding';
 
 export interface CreateOrderItemInput {
   listingId?: string;
@@ -433,6 +434,16 @@ export function getOrders(filter: { userId?: string; role?: string; orderId?: st
       d.driver_phone,
       d.driver_vehicle,
       d.cod_collected,
+      d.current_latitude,
+      d.current_longitude,
+      d.heading,
+      d.speed_kmh,
+      d.pickup_lat,
+      d.pickup_lng,
+      d.drop_lat,
+      d.drop_lng,
+      d.last_location_updated_at,
+      d.location_history_json,
       p.name as partner_user_name,
       p.phone as partner_user_phone
     FROM orders o
@@ -516,6 +527,18 @@ export function getOrders(filter: { userId?: string; role?: string; orderId?: st
       driver_name: cleanIndic(r.driver_name || r.partner_user_name || 'Vikram Shinde'),
       driver_phone: r.driver_phone || r.partner_user_phone || '+91 99000 11122',
       driver_vehicle: r.driver_vehicle || 'MH-15-EG-8821 (Tata Ace Gold)',
+      current_latitude: r.current_latitude,
+      current_longitude: r.current_longitude,
+      heading: r.heading || 0,
+      speed_kmh: r.speed_kmh || 0,
+      pickup_lat: r.pickup_lat,
+      pickup_lng: r.pickup_lng,
+      drop_lat: r.drop_lat,
+      drop_lng: r.drop_lng,
+      last_location_updated_at: r.last_location_updated_at,
+      location_history: r.location_history_json ? (() => {
+        try { return JSON.parse(r.location_history_json); } catch(e) { return []; }
+      })() : [],
     };
   });
 }
@@ -574,6 +597,8 @@ export async function acceptDelivery(input: {
   driverName?: string;
   driverPhone?: string;
   driverVehicle?: string;
+  initialLatitude?: number;
+  initialLongitude?: number;
 }) {
   const db = getDb();
   const {
@@ -582,6 +607,8 @@ export async function acceptDelivery(input: {
     driverName = 'Vikram Shinde (Tata Ace)',
     driverPhone = '+91 99000 11122',
     driverVehicle = 'MH-15-EG-8821 (Tata Ace Gold)',
+    initialLatitude,
+    initialLongitude,
   } = input;
 
   const delivery = db.prepare('SELECT * FROM deliveries WHERE order_id = ?').get(orderId) as any;
@@ -589,11 +616,72 @@ export async function acceptDelivery(input: {
     throw new Error(`Delivery record not found for Order #${orderId}`);
   }
 
+  // Geocode pickup and drop coordinates
+  let pickupLat = delivery.pickup_lat;
+  let pickupLng = delivery.pickup_lng;
+  let dropLat = delivery.drop_lat;
+  let dropLng = delivery.drop_lng;
+
+  try {
+    if (!pickupLat || !pickupLng) {
+      const geoPickup = await geocodeLocation(delivery.pickup_location || 'Nashik APMC Mandi Hub');
+      pickupLat = geoPickup.lat;
+      pickupLng = geoPickup.lng;
+    }
+  } catch (e) {
+    pickupLat = 20.0059;
+    pickupLng = 73.7898;
+  }
+
+  try {
+    if (!dropLat || !dropLng) {
+      const geoDrop = await geocodeLocation(delivery.drop_location || 'Pune APMC Market Yard');
+      dropLat = geoDrop.lat;
+      dropLng = geoDrop.lng;
+    }
+  } catch (e) {
+    dropLat = 18.5204;
+    dropLng = 73.8567;
+  }
+
+  // Set initial driver position:
+  // If driver provided real browser coordinates, use them!
+  // Otherwise place driver slightly away from pickup farm to simulate approaching
+  const startLat = initialLatitude !== undefined ? initialLatitude : Number((pickupLat - 0.015).toFixed(6));
+  const startLng = initialLongitude !== undefined ? initialLongitude : Number((pickupLng - 0.012).toFixed(6));
+
+  const initialBreadcrumb = JSON.stringify([
+    {
+      lat: startLat,
+      lng: startLng,
+      timestamp: new Date().toISOString(),
+      speed: 25,
+      heading: 45,
+      status: 'ASSIGNED',
+    }
+  ]);
+
   db.prepare(`
     UPDATE deliveries 
-    SET partner_id = ?, driver_name = ?, driver_phone = ?, driver_vehicle = ?, status = 'ASSIGNED'
+    SET partner_id = ?, driver_name = ?, driver_phone = ?, driver_vehicle = ?, status = 'ASSIGNED',
+        pickup_lat = ?, pickup_lng = ?, drop_lat = ?, drop_lng = ?,
+        current_latitude = ?, current_longitude = ?, speed_kmh = 0, heading = 0,
+        last_location_updated_at = CURRENT_TIMESTAMP, location_history_json = ?
     WHERE order_id = ?
-  `).run(partnerId, driverName, driverPhone, driverVehicle, orderId);
+  `).run(
+    partnerId,
+    driverName,
+    driverPhone,
+    driverVehicle,
+    pickupLat,
+    pickupLng,
+    dropLat,
+    dropLng,
+    startLat,
+    startLng,
+    initialBreadcrumb,
+    orderId
+  );
 
   db.prepare(`
     UPDATE orders 
@@ -621,7 +709,13 @@ export async function acceptDelivery(input: {
     driverName,
     driverPhone,
     driverVehicle,
-    message: `Delivery task #${orderId} accepted successfully! Farmer and buyer notified with driver details.`,
+    initialLocation: {
+      lat: startLat,
+      lng: startLng,
+    },
+    pickupCoords: { lat: pickupLat, lng: pickupLng },
+    dropCoords: { lat: dropLat, lng: dropLng },
+    message: `Delivery task #${orderId} accepted successfully! GPS live broadcaster activated.`,
   };
 }
 
@@ -730,4 +824,255 @@ export async function verifyOrderOtp(input: VerifyOtpInput) {
   }
 
   throw new Error('Invalid otpType specified. Only "pickup" or "delivery" are permitted.');
+}
+
+/**
+ * Haversine formula to compute great circle distance in KM
+ */
+function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 6371; // Earth's radius in km
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+/**
+ * Update Driver Real-Time GPS Location & append to breadcrumb history trail
+ */
+export async function updateDeliveryLocation(input: {
+  orderId: string;
+  latitude: number;
+  longitude: number;
+  speed?: number;
+  heading?: number;
+  accuracy?: number;
+}) {
+  const { orderId, latitude, longitude, speed = 0, heading = 0 } = input;
+  const db = getDb();
+
+  const delivery = db.prepare('SELECT * FROM deliveries WHERE order_id = ?').get(orderId) as any;
+  if (!delivery) {
+    throw new Error(`Delivery record not found for Order #${orderId}`);
+  }
+
+  // Parse existing breadcrumbs trail
+  let history: Array<{ lat: number; lng: number; timestamp: string; speed?: number; heading?: number }> = [];
+  if (delivery.location_history_json) {
+    try {
+      history = JSON.parse(delivery.location_history_json);
+      if (!Array.isArray(history)) history = [];
+    } catch (e) {
+      history = [];
+    }
+  }
+
+  // Add new breadcrumb point
+  history.push({
+    lat: Number(latitude.toFixed(6)),
+    lng: Number(longitude.toFixed(6)),
+    speed: Math.round(speed),
+    heading: Math.round(heading),
+    timestamp: new Date().toISOString(),
+  });
+
+  // Keep last 150 points for optimal memory & render performance
+  if (history.length > 150) {
+    history = history.slice(history.length - 150);
+  }
+
+  // Calculate distance remaining to destination
+  let destLat = delivery.drop_lat;
+  let destLng = delivery.drop_lng;
+  if (delivery.status === 'ASSIGNED' && delivery.pickup_lat && delivery.pickup_lng) {
+    // Before pickup, distance is to pickup farm
+    destLat = delivery.pickup_lat;
+    destLng = delivery.pickup_lng;
+  }
+
+  let remainingKm = delivery.estimated_distance_km || 15;
+  let remainingMins = delivery.estimated_eta_minutes || 30;
+
+  if (destLat && destLng) {
+    remainingKm = Math.round(haversineDistance(latitude, longitude, destLat, destLng) * 10) / 10;
+    // Assume average speed of 35 km/h for agri transport
+    const calculatedMinutes = Math.round((remainingKm / 35) * 60);
+    remainingMins = Math.max(2, calculatedMinutes);
+  }
+
+  const updatedHistoryJson = JSON.stringify(history);
+
+  db.prepare(`
+    UPDATE deliveries 
+    SET current_latitude = ?, current_longitude = ?, speed_kmh = ?, heading = ?,
+        estimated_distance_km = ?, estimated_eta_minutes = ?,
+        last_location_updated_at = CURRENT_TIMESTAMP, location_history_json = ?
+    WHERE order_id = ?
+  `).run(
+    latitude,
+    longitude,
+    speed,
+    heading,
+    remainingKm,
+    remainingMins,
+    updatedHistoryJson,
+    orderId
+  );
+
+  return {
+    success: true,
+    orderId,
+    latitude,
+    longitude,
+    speed,
+    heading,
+    estimatedDistanceKm: remainingKm,
+    estimatedEtaMinutes: remainingMins,
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+/**
+ * Fetch Comprehensive Real-Time Driver Tracking Payload for an Order
+ * (For Transporter, Buyer, and Farmer Portals)
+ */
+export async function getDeliveryTracking(orderId: string) {
+  const db = getDb();
+
+  const row = db.prepare(`
+    SELECT 
+      o.id as order_id,
+      o.status as order_status,
+      o.subtotal_paise,
+      o.delivery_fee_paise,
+      o.total_amount_paise,
+      o.delivery_address,
+      o.created_at as order_created_at,
+      b.name as buyer_name,
+      b.phone as buyer_phone,
+      f.name as farmer_name,
+      f.phone as farmer_phone,
+      d.id as delivery_id,
+      d.status as delivery_status,
+      d.pickup_location,
+      d.drop_location,
+      d.pickup_otp,
+      d.delivery_otp,
+      d.pickup_lat,
+      d.pickup_lng,
+      d.drop_lat,
+      d.drop_lng,
+      d.current_latitude,
+      d.current_longitude,
+      d.speed_kmh,
+      d.heading,
+      d.estimated_distance_km,
+      d.estimated_eta_minutes,
+      d.driver_name,
+      d.driver_phone,
+      d.driver_vehicle,
+      d.cod_collected,
+      d.last_location_updated_at,
+      d.location_history_json
+    FROM orders o
+    LEFT JOIN users b ON o.buyer_id = b.id
+    LEFT JOIN users f ON o.farmer_id = f.id
+    LEFT JOIN deliveries d ON o.id = d.order_id
+    WHERE o.id = ?
+  `).get(orderId) as any;
+
+  if (!row) {
+    throw new Error(`Order #${orderId} not found`);
+  }
+
+  // Fetch items
+  const items = db.prepare('SELECT * FROM order_items WHERE order_id = ?').all(orderId);
+
+  // If pickup or drop coords are missing, dynamically resolve them
+  let pickupLat = row.pickup_lat;
+  let pickupLng = row.pickup_lng;
+  let dropLat = row.drop_lat;
+  let dropLng = row.drop_lng;
+
+  if (!pickupLat || !pickupLng) {
+    const geoPickup = await geocodeLocation(row.pickup_location || 'Nashik APMC Mandi Hub');
+    pickupLat = geoPickup.lat;
+    pickupLng = geoPickup.lng;
+  }
+  if (!dropLat || !dropLng) {
+    const geoDrop = await geocodeLocation(row.drop_location || 'Pune APMC Market Yard');
+    dropLat = geoDrop.lat;
+    dropLng = geoDrop.lng;
+  }
+
+  // Default driver position if not yet set
+  let currentLat = row.current_latitude;
+  let currentLng = row.current_longitude;
+  if (!currentLat || !currentLng) {
+    currentLat = pickupLat - 0.015;
+    currentLng = pickupLng - 0.012;
+  }
+
+  let locationHistory: Array<{ lat: number; lng: number; timestamp: string; speed?: number; heading?: number }> = [];
+  if (row.location_history_json) {
+    try {
+      locationHistory = JSON.parse(row.location_history_json);
+      if (!Array.isArray(locationHistory)) locationHistory = [];
+    } catch (e) {
+      locationHistory = [];
+    }
+  }
+
+  if (locationHistory.length === 0) {
+    locationHistory = [
+      {
+        lat: currentLat,
+        lng: currentLng,
+        timestamp: row.last_location_updated_at || new Date().toISOString(),
+        speed: row.speed_kmh || 0,
+        heading: row.heading || 0,
+      }
+    ];
+  }
+
+  return {
+    success: true,
+    orderId: row.order_id,
+    orderStatus: row.order_status,
+    deliveryStatus: row.delivery_status || 'ASSIGNED',
+    driver: {
+      name: row.driver_name || 'Vikram Shinde',
+      phone: row.driver_phone || '+91 99000 11122',
+      vehicle: row.driver_vehicle || 'MH-15-EG-8821 (Tata Ace Gold)',
+      currentLocation: {
+        lat: currentLat,
+        lng: currentLng,
+        speedKmh: row.speed_kmh || 0,
+        heading: row.heading || 0,
+        lastUpdated: row.last_location_updated_at || new Date().toISOString(),
+      },
+    },
+    pickup: {
+      locationName: row.pickup_location || 'Nashik Mandi Hub',
+      lat: pickupLat,
+      lng: pickupLng,
+      farmerName: row.farmer_name || 'Ramesh Patil',
+      farmerPhone: row.farmer_phone || '+91 98765 43210',
+    },
+    drop: {
+      address: row.delivery_address || row.drop_location || 'Pune, Maharashtra',
+      lat: dropLat,
+      lng: dropLng,
+      buyerName: row.buyer_name || 'Buyer',
+      buyerPhone: row.buyer_phone || '+91 98111 22233',
+    },
+    locationHistory,
+    estimatedDistanceKm: row.estimated_distance_km || 14.5,
+    estimatedEtaMinutes: row.estimated_eta_minutes || 35,
+    totalRupees: (row.total_amount_paise / 100).toFixed(2),
+    items,
+  };
 }
