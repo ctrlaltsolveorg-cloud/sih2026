@@ -27,10 +27,12 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
   const touchEndX = useRef<number | null>(null);
 
   // 5 high-quality local static images stored in public/images
+  // First slide uses a video background from public/videos/hero-video.mp4
   const slides = [
     {
       id: 1,
       image: '/images/bhor_village_mandi.jpg',
+      video: '/videos/hero.mp4',
       badgeHi: '🌅 भोर विशेष • 5:00 AM Direct Pre-Dawn Mandi Trade',
       badgeEn: '🌅 Pre-Dawn Mandi • 5:00 AM Direct Farm-to-Buyer Trade',
       titleHi: 'Dew-Fresh Morning Harvest. Direct from Village Mandi.',
@@ -165,7 +167,7 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
         onTouchEnd={handleTouchEnd}
         role="region"
         aria-roledescription="carousel"
-        aria-label="KissanBandhan Agriculture Hero Carousel"
+        aria-label="KisanBandhan Agriculture Hero Carousel"
       >
         {/* Floating Live Mandi Ticker positioned at top over background image */}
         {tickerSlot && (
@@ -186,27 +188,59 @@ export default function HeroCarousel({ onExploreClick, tickerSlot }: HeroCarouse
                 isActive ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none z-0'
               }`}
             >
-              {/* Photo directly in background spanning full width and full height */}
+              {/* Photo/Video directly in background spanning full width and full height */}
               <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-                <img
-                  src={slide.image}
-                  alt={slide.titleEn}
-                  className={`w-full h-full object-cover object-center transform transition-transform duration-1000 ease-out ${
-                    isActive ? 'scale-105' : 'scale-100'
-                  }`}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    minWidth: '100%',
-                    minHeight: '100%',
-                    objectFit: 'cover',
-                    objectPosition: 'center',
-                  }}
-                  loading={idx === 0 ? 'eager' : 'lazy'}
-                />
+                {slide.video ? (
+                  <video
+                    key={slide.video}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className={`w-full h-full object-cover object-center transform transition-transform duration-1000 ease-out ${
+                      isActive ? 'scale-105' : 'scale-100'
+                    }`}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      minWidth: '100%',
+                      minHeight: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center',
+                    }}
+                  >
+                    <source src={slide.video} type="video/mp4" />
+                    {/* Fallback image if video not supported */}
+                    <img
+                      src={slide.image}
+                      alt={slide.titleEn}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </video>
+                ) : (
+                  <img
+                    src={slide.image}
+                    alt={slide.titleEn}
+                    className={`w-full h-full object-cover object-center transform transition-transform duration-1000 ease-out ${
+                      isActive ? 'scale-105' : 'scale-100'
+                    }`}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      minWidth: '100%',
+                      minHeight: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center',
+                    }}
+                    loading={idx === 0 ? 'eager' : 'lazy'}
+                  />
+                )}
               </div>
 
               {/* Clean, clear overlay with natural contrast - zero light flair, zero white flare */}

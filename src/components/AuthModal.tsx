@@ -124,7 +124,7 @@ export default function AuthModal() {
             </div>
             <div>
               <h2 className="font-extrabold text-lg leading-tight">
-                KissanBandhan Secure Auth Portal
+                KisanBandhan Secure Auth Portal
               </h2>
               <p className="text-xs text-amber-200/80">
                 4-Layer RLS Security & Authentication

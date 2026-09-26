@@ -15,7 +15,7 @@ import VoiceAgent from '@/components/VoiceAgent';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'KissanBandhan — Kisan Diwas Direct Farm-to-Buyer Platform (SIH 2026)',
+  title: 'KisanBandhan — Kisan Diwas Direct Farm-to-Buyer Platform (SIH 2026)',
   description: 'Direct Agriculture Trading & Logistics Platform for SIH 2026 Problem Statement 26033. Computer Vision Grading, Fair Price calculation, and Demand Forecasting.',
 };
 
