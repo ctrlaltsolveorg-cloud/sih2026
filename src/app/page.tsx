@@ -32,6 +32,7 @@ interface Listing {
   harvest_date: string;
   is_organic: number;
   farmer_name: string;
+  farmer_id?: string;
   location: string;
   hub_location: string;
   image_url?: string;
@@ -89,6 +90,7 @@ export default function HomePage() {
               harvest_date: item.harvestDate || '2026-09-08',
               is_organic: item.isOrganic || 1,
               farmer_name: item.farmer_name || 'Verified Farmer',
+              farmer_id: item.farmerId || item.farmer_id || 'u_farmer_1',
               location: item.location || 'Nashik Mandi Hub (Maharashtra)',
               hub_location: 'Nashik Agro-Hub #04',
               image_url: photos[0],
@@ -132,6 +134,7 @@ export default function HomePage() {
                 harvest_date: c.harvest_date || '2026-09-08',
                 is_organic: c.organic_certified || 0,
                 farmer_name: c.farmer_name || 'Verified Farmer',
+                farmer_id: c.farmer_id || 'u_farmer_1',
                 location: c.location || 'Nashik Mandi Hub (Maharashtra)',
                 hub_location: c.district ? `${c.district} Agro-Hub` : 'Nashik Agro-Hub #04',
                 image_url: photoList[0],
@@ -400,12 +403,13 @@ export default function HomePage() {
                 category={item.category}
                 variety={item.variety}
                 quantity_kg={item.quantity_kg}
-                price_paise_per_kg={item.price_paise_per_kg}
+                price_paise_per_kg={item.price_paise_per_kg || (item as any).price_paise || 3000}
                 quality_grade={item.quality_grade}
                 cv_trust_score={item.cv_trust_score}
                 harvest_date={item.harvest_date}
                 is_organic={item.is_organic}
                 farmer_name={item.farmer_name}
+                farmer_id={item.farmer_id}
                 location={item.location}
                 images={item.images || (item.image_url ? [item.image_url] : undefined)}
                 logo_url={item.logo_url}
@@ -414,6 +418,7 @@ export default function HomePage() {
                 onAddToCart={(c) =>
                   addToCart({
                     listingId: c.listingId,
+                    farmerId: c.farmerId || item.farmer_id || 'u_farmer_1',
                     cropName: c.cropName,
                     pricePaisePerKg: c.pricePaisePerKg,
                     quantityKg: c.quantityKg,

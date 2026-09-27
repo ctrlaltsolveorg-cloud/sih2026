@@ -246,9 +246,11 @@ export default function FarmerDashboardPage() {
     loadFarmerOrders();
     const handleOrderUpdate = () => loadFarmerOrders();
     window.addEventListener('kb_order_updated', handleOrderUpdate);
+    window.addEventListener('storage', handleOrderUpdate);
     const interval = setInterval(loadFarmerOrders, 6000);
     return () => {
       window.removeEventListener('kb_order_updated', handleOrderUpdate);
+      window.removeEventListener('storage', handleOrderUpdate);
       clearInterval(interval);
     };
   }, [user?.id]);
@@ -505,6 +507,8 @@ export default function FarmerDashboardPage() {
         quantity_available: parseInt(quantityKg) || 500,
         priceRupees: basePriceRupees || '34.00',
         pricePaise: Math.round((parseFloat(basePriceRupees) || 34) * 100),
+      price_paise: Math.round((parseFloat(basePriceRupees) || 34) * 100),
+      price_paise_per_kg: Math.round((parseFloat(basePriceRupees) || 34) * 100),
         grade: grade,
         location: location,
         status: 'VERIFIED',
@@ -971,7 +975,11 @@ export default function FarmerDashboardPage() {
                           </span>
                         </div>
                         <p className="text-[10px] text-amber-900 leading-tight">
-                          {language === 'hi' ? '⚠️ माल अपनी निगरानी में गाड़ी में चढ़ाने के बाद ही ड्राइवर को यह कोड दें।' : '⚠️ Share this OTP with the driver only after produce is fully loaded.'}
+                          ord.payment_method === 'PAY_ON_PICKUP' ? (
+                          language === 'hi' ? '💰 माल उठाते समय नकद भुगतान: माल उठाने आने वाला व्यक्ति आपको ₹' + (((ord.total_amount_paise || 0) / 100).toFixed(2)) + ' नकद तुरंत देगा। पूरा नकद मिलने के बाद ही ड्राइवर को यह OTP बताएं।' : '💰 Pay on Pickup: The driver will pay you ₹' + (((ord.total_amount_paise || 0) / 100).toFixed(2)) + ' cash right upon loading. Share this OTP only after collecting cash.'
+                        ) : (
+                          language === 'hi' ? '⚠️ माल अपनी निगरानी में गाड़ी में चढ़ाने के बाद ही ड्राइवर को यह कोड दें।' : '⚠️ Share this OTP with the driver only after produce is fully loaded.'
+                        )
                         </p>
                         <button
                           onClick={() => handleGeneratePickupOtp(ord.id)}
@@ -995,12 +1003,26 @@ export default function FarmerDashboardPage() {
 
                     <div className="pt-2 border-t border-emerald-900/10 flex items-center justify-between text-xs">
                       <span className="font-extrabold text-amber-800">
-                        {language === 'hi' ? 'कुल राशि:' : 'Total Amount:'} ₹{(ord.total_amount_paise / 100).toFixed(2)}
+                        {language === 'hi' ? 'कुल राशि:' : 'Total Amount:'} ₹{((ord.total_amount_paise || 0) / 100).toFixed(2)}
                       </span>
-                      <span className="text-[11px] text-emerald-800 font-bold">
-                        {ord.payment_method === 'COD' ? (language === 'hi' ? 'कैश ऑन डिलीवरी (COD)' : 'Cash on Delivery (COD)') : (language === 'hi' ? 'एस्क्रो सुरक्षित' : 'Escrow Protected')}
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${
+                        ord.payment_status === 'PAID'
+                          ? 'bg-emerald-100 text-emerald-900 border-emerald-300'
+                          : 'bg-amber-100 text-amber-900 border-amber-300'
+                      }`}>
+                        {ord.payment_status === 'PAID'
+                          ? (language === 'hi' ? '✓ भुगतान हो गया' : '✓ Paid')
+                          : (language === 'hi' ? '⏳ भुगतान बाकी' : '⏳ Pending')}
                       </span>
                     </div>
+                    <div className="text-[10px] text-emerald-700 font-semibold">
+                      {ord.payment_method === 'PAY_ON_PICKUP'
+                        ? (language === 'hi' ? '💰 माल उठाते समय नकद भुगतान (Pay on Pickup)' : '💰 Cash collected when goods are picked up')
+                        : ord.payment_method === 'COD'
+                        ? (language === 'hi' ? 'कैश ऑन डिलीवरी (COD)' : 'Cash on Delivery (COD)')
+                        : (language === 'hi' ? 'एस्क्रो / UPI सुरक्षित' : 'Escrow / UPI Protected')}
+                    </div>
+
                   </div>
                 );
               })}

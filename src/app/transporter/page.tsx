@@ -659,6 +659,19 @@ export default function TransporterDashboardPage() {
                           </div>
 
                           {/* Pickup OTP Action Area */}
+                          {ord.payment_method === 'PAY_ON_PICKUP' && !isPickedUp && (
+                            <div className="mt-3 p-3 bg-amber-500/20 dark:bg-amber-950/60 rounded-xl border-2 border-amber-500 dark:border-amber-400 text-xs text-amber-950 dark:text-amber-100 space-y-1 shadow-sm">
+                              <div className="flex items-center justify-between font-extrabold text-amber-900 dark:text-amber-200">
+                                <span>💰 Pay on Pickup (खेत पर नकद भुगतान)</span>
+                                <span className="px-2 py-0.5 bg-amber-600 text-white font-black rounded-lg text-xs">
+                                  ₹{((ord.total_amount_paise || 0) / 100).toFixed(2)} CASH
+                                </span>
+                              </div>
+                              <p className="text-[11px] text-amber-900/90 dark:text-amber-200/90 leading-tight">
+                                ⚠️ <strong>निर्देश:</strong> गाड़ी में माल लोड करते समय किसान को मौके पर तुरंत <strong>₹{((ord.total_amount_paise || 0) / 100).toFixed(2)} नकद</strong> अदा करें। नकद भुगतान के बाद किसान आपको 4-अंकों का पिकअप OTP देंगे।
+                              </p>
+                            </div>
+                          )}
                           {!isPickedUp ? (
                             <div className="mt-5 pt-4 border-t border-emerald-900/10 dark:border-emerald-500/20 space-y-3">
                               <div className="p-3 bg-amber-500/15 dark:bg-amber-950/40 rounded-xl border border-amber-300 dark:border-amber-700/50 text-[11px] text-amber-950 dark:text-amber-200 space-y-1">

@@ -207,6 +207,7 @@ export default function BuyerDashboardPage() {
               harvest_date: item.harvestDate || '2026-09-08',
               is_organic: item.isOrganic || 0,
               farmer_name: item.farmer_name || 'Farmer',
+              farmer_id: item.farmerId || item.farmer_id || 'u_farmer_1',
               location: item.location || 'Nashik Mandi Collection Hub',
               images: photos,
               unit: item.unit || 'kg',
@@ -245,12 +246,14 @@ export default function BuyerDashboardPage() {
                 category: c.category || 'Vegetables',
                 variety: 'Verified Farmer Lot',
                 quantity_kg: c.quantity_available,
-                price_paise: c.price_paise,
+                price_paise: c.price_paise || c.price_paise_per_kg || Math.round((parseFloat(c.priceRupees) || 30) * 100),
+                price_paise_per_kg: c.price_paise || c.price_paise_per_kg || Math.round((parseFloat(c.priceRupees) || 30) * 100),
                 quality_grade: c.grade || 'Grade A+',
                 cv_trust_score: 97,
                 harvest_date: c.harvest_date || '2026-09-08',
                 is_organic: c.organic_certified || 0,
                 farmer_name: c.farmer_name || 'Farmer',
+                farmer_id: c.farmer_id || 'u_farmer_1',
                 location: c.location || 'Nashik Mandi Collection Hub',
                 images: effectivePhotoList,
                 image_url: effectiveLogoUrl || effectivePhotoList[0],
@@ -312,6 +315,7 @@ export default function BuyerDashboardPage() {
   const handleAddToCart = (item: any) => {
     addToCart({
       listingId: item.listingId || item.id,
+      farmerId: item.farmerId || item.farmer_id || 'u_farmer_1',
       cropName: item.cropName || item.crop_name,
       pricePaisePerKg: item.pricePaisePerKg || item.price_paise_per_kg,
       quantityKg: item.quantityKg || 100,
@@ -509,12 +513,13 @@ export default function BuyerDashboardPage() {
                   category={crop.category}
                   variety={crop.variety}
                   quantity_kg={crop.quantity_kg}
-                  price_paise_per_kg={crop.price_paise_per_kg}
+                  price_paise_per_kg={crop.price_paise_per_kg || crop.price_paise || 3000}
                   quality_grade={crop.quality_grade}
                   cv_trust_score={crop.cv_trust_score}
                   harvest_date={crop.harvest_date}
                   is_organic={crop.is_organic}
                   farmer_name={crop.farmer_name}
+                  farmer_id={crop.farmer_id}
                   location={crop.location}
                   images={crop.images}
                   unit={crop.unit}

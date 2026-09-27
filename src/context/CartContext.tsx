@@ -12,6 +12,7 @@ export interface CartItem {
   farmerName: string;
   location: string;
   imageUrl?: string;
+  farmerId?: string;
 }
 
 interface CartContextType {

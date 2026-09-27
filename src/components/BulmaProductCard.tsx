@@ -33,12 +33,14 @@ export interface BulmaProductCardProps {
   category: string;
   variety?: string;
   quantity_kg?: number;
-  price_paise_per_kg: number;
+  price_paise_per_kg?: number;
+  price_paise?: number;
   quality_grade?: string;
   cv_trust_score?: number;
   harvest_date?: string;
   is_organic?: number;
   farmer_name?: string;
+  farmer_id?: string;
   location?: string;
   hub_location?: string;
   image_url?: string;
@@ -61,11 +63,13 @@ export default function BulmaProductCard({
   variety,
   quantity_kg = 500,
   price_paise_per_kg,
+  price_paise,
   quality_grade = 'Premium Grade A+',
   cv_trust_score = 96,
   harvest_date = '2026-09-08',
   is_organic = 0,
   farmer_name = 'Farmer',
+  farmer_id,
   location = 'Nashik Mandi Collection Hub',
   hub_location,
   image_url,
@@ -138,7 +142,14 @@ export default function BulmaProductCard({
   const isOfficiallyOrganic = Boolean(verification.isVerified ? verification.isOrganic : (is_organic === 1));
   const effectiveGrade = verification.isVerified ? verification.grade : (quality_grade || 'A+');
 
-  const priceRupees = (price_paise_per_kg / 100).toFixed(2);
+  const rawPaise = price_paise_per_kg ?? price_paise;
+  const safePaise = 
+    typeof rawPaise === 'number' && !isNaN(rawPaise) && rawPaise > 0
+      ? rawPaise
+      : !isNaN(parseFloat(String(rawPaise))) && parseFloat(String(rawPaise)) > 0
+      ? Math.round(parseFloat(String(rawPaise)))
+      : 3000;
+  const priceRupees = (safePaise / 100).toFixed(2);
   const activePhoto = effectivePhotos[activePhotoIdx] || effectivePhotos[0] || effectiveLogo || '';
 
   const renderCategoryBadgeIcon = (cat: string) => {
@@ -155,10 +166,11 @@ export default function BulmaProductCard({
       onAddToCart({
         listingId: id,
         cropName: crop_name,
-        pricePaisePerKg: price_paise_per_kg,
+        pricePaisePerKg: safePaise,
         quantityKg: orderQty,
         grade: quality_grade,
         farmerName: farmer_name,
+        farmerId: farmer_id || 'u_farmer_1',
         location: location,
         imageUrl: activePhoto,
         photos: effectivePhotos,
@@ -309,7 +321,7 @@ export default function BulmaProductCard({
                 <span className="text-xs font-semibold text-emerald-950 dark:text-emerald-200">/ {unit}</span>
               </div>
               <span className="text-[10px] font-mono text-emerald-800 dark:text-emerald-300/80 block">
-                ({price_paise_per_kg} {language === 'hi' ? 'पैसे' : 'paise'})
+                ({safePaise} {language === 'hi' ? 'पैसे' : 'paise'})
               </span>
             </div>
 

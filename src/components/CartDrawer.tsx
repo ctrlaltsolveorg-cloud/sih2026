@@ -65,7 +65,7 @@ export default function CartDrawer() {
   const [contractId, setContractId] = useState<string | null>(null);
   const [placedOrderId, setPlacedOrderId] = useState<string | null>(null);
   const [deliveryOtpCode, setDeliveryOtpCode] = useState<string | null>(null);
-  const [paymentMethod, setPaymentMethod] = useState<'UPI' | 'COD'>('UPI');
+  const [paymentMethod, setPaymentMethod] = useState<'UPI' | 'COD' | 'PAY_ON_PICKUP'>('PAY_ON_PICKUP');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
@@ -217,12 +217,14 @@ export default function CartDrawer() {
         shipping: shippingForm,
         deliveryAddress: canonicalAddress,
         deliveryType: 'EXPRESS',
+        farmerId: cart.find((it) => it.farmerId)?.farmerId || undefined,
         paymentMethod,
         notes: `Direct Farm Purchase by ${shippingForm.fullName} (ID: ${
           user?.id || 'u_buyer_1'
         }) | ${shippingForm.deliveryInstructions}`,
         items: cart.map((it) => ({
           listingId: it.listingId,
+          farmerId: it.farmerId,
           cropName: it.cropName,
           quantity: it.quantityKg,
           unitPricePaise: it.pricePaisePerKg,
@@ -275,6 +277,10 @@ export default function CartDrawer() {
         );
       } catch (e) {}
 
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('kb_order_updated', { detail: data }));
+        localStorage.setItem('kb_order_updated', Date.now().toString());
+      }
       setCheckoutStep('SUCCESS');
     } catch (err: any) {
       setCheckoutError(err.message || 'Error: Failed to process order.');
@@ -729,6 +735,17 @@ export default function CartDrawer() {
                         <span>Wholesale Mandi</span>
                       </button>
                     </div>
+                    {paymentMethod === 'PAY_ON_PICKUP' && (
+                      <div className="mt-2.5 p-2.5 bg-amber-500/15 border border-amber-300 dark:border-amber-700/60 rounded-xl text-xs text-amber-950 dark:text-amber-200">
+                        <p className="font-bold flex items-center gap-1.5">
+                          <span>💰</span>
+                          <span>माल उठाते समय भुगतान (Pay on Pickup):</span>
+                        </p>
+                        <p className="text-[11px] text-amber-900/90 dark:text-amber-300/90 mt-0.5 leading-tight">
+                          गाड़ी/ट्रांसपोर्टर खेत से माल लोड करते समय किसान को तुरंत पूरा नकद भुगतान करेगा। किसान द्वारा नकद प्राप्त होने पर ही पिकअप OTP दिया जाएगा।
+                        </p>
+                      </div>
+                    )}
                   </div>
 
                   {/* Row 7: Special Delivery Instructions */}
@@ -741,7 +758,7 @@ export default function CartDrawer() {
                       value={shippingForm.deliveryInstructions}
                       onChange={(e) => setShippingForm({ ...shippingForm, deliveryInstructions: e.target.value })}
                       placeholder="e.g. Call 10 mins before arrival; deliver at gate"
-                      className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-700 text-emerald-950 dark:text-emerald-100 font-medium placeholder:text-gray-400 dark:placeholder:text-emerald-400/40"
+                      className="w-full text-xs sm:text-sm p-2.5 rounded-xl border border-emerald-900/20 dark:border-emerald-500/30 bg-white dark:bg-[#132c1e] focus:outline-none focus:ring-2 focus:ring-emerald-600"
                     />
                   </div>
 
@@ -750,7 +767,26 @@ export default function CartDrawer() {
                     <label className="block text-xs font-bold text-emerald-900 dark:text-emerald-200 mb-1.5">
                       Payment Method:
                     </label>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-3 gap-2">
+                      {/* Option 1: Pay on Pickup (DEFAULT - recommended) */}
+                      <button
+                        type="button"
+                        onClick={() => setPaymentMethod('PAY_ON_PICKUP')}
+                        className={`p-3 rounded-xl border text-left flex flex-col transition ${
+                          paymentMethod === 'PAY_ON_PICKUP'
+                            ? 'bg-emerald-800 dark:bg-emerald-700 text-amber-50 border-emerald-900 shadow-sm ring-2 ring-amber-400'
+                            : 'bg-white dark:bg-[#132c1e] text-emerald-900 dark:text-emerald-200 border-emerald-900/20 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
+                        }`}
+                      >
+                        <span className="font-extrabold text-[11px] sm:text-xs">
+                          💰 Pay on Pickup
+                        </span>
+                        <span className={`text-[10px] ${paymentMethod === 'PAY_ON_PICKUP' ? 'text-amber-200' : 'text-emerald-700/80 dark:text-emerald-400/80'}`}>
+                          Cash when goods collected
+                        </span>
+                      </button>
+
+                      {/* Option 2: Escrow UPI */}
                       <button
                         type="button"
                         onClick={() => setPaymentMethod('UPI')}
@@ -760,14 +796,15 @@ export default function CartDrawer() {
                             : 'bg-white dark:bg-[#132c1e] text-emerald-900 dark:text-emerald-200 border-emerald-900/20 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                         }`}
                       >
-                        <span className="font-extrabold text-xs sm:text-sm">
-                          Escrow UPI (Zero-Risk)
+                        <span className="font-extrabold text-[11px] sm:text-xs">
+                          🔒 Escrow UPI
                         </span>
-                        <span className={`text-[11px] ${paymentMethod === 'UPI' ? 'text-amber-200' : 'text-emerald-700/80 dark:text-emerald-400/80'}`}>
-                          Released only upon Delivery OTP verification
+                        <span className={`text-[10px] ${paymentMethod === 'UPI' ? 'text-amber-200' : 'text-emerald-700/80 dark:text-emerald-400/80'}`}>
+                          Released on delivery OTP
                         </span>
                       </button>
 
+                      {/* Option 3: COD */}
                       <button
                         type="button"
                         onClick={() => setPaymentMethod('COD')}
@@ -777,11 +814,11 @@ export default function CartDrawer() {
                             : 'bg-white dark:bg-[#132c1e] text-emerald-900 dark:text-emerald-200 border-emerald-900/20 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                         }`}
                       >
-                        <span className="font-extrabold text-xs sm:text-sm">
-                          Cash on Delivery (COD)
+                        <span className="font-extrabold text-[11px] sm:text-xs">
+                          🚚 COD
                         </span>
-                        <span className={`text-[11px] ${paymentMethod === 'COD' ? 'text-amber-200' : 'text-emerald-700/80 dark:text-emerald-400/80'}`}>
-                          Pay on Delivery + OTP verification
+                        <span className={`text-[10px] ${paymentMethod === 'COD' ? 'text-amber-200' : 'text-emerald-700/80 dark:text-emerald-400/80'}`}>
+                          Pay on Delivery
                         </span>
                       </button>
                     </div>

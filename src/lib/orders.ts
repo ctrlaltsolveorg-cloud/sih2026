@@ -35,7 +35,7 @@ export interface CreateOrderInput {
   fpoId?: string;
   deliveryAddress?: string;
   deliveryType?: 'EXPRESS' | 'BULK_HUB';
-  paymentMethod?: 'COD' | 'UPI' | 'BANK_TRANSFER' | 'ESCROW';
+  paymentMethod?: 'COD' | 'UPI' | 'BANK_TRANSFER' | 'ESCROW' | 'PAY_ON_PICKUP';
   notes?: string;
   items: CreateOrderItemInput[];
 }
@@ -167,7 +167,7 @@ export async function createOrder(input: CreateOrderInput) {
   const deliveryOtp = generate4DigitOtp();
   const smartContractHash = `KB-ESCROW-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
 
-  const validPaymentMethod = ['COD', 'UPI', 'BANK_TRANSFER'].includes(paymentMethod) ? paymentMethod : 'UPI';
+  const validPaymentMethod = ['COD', 'UPI', 'BANK_TRANSFER', 'PAY_ON_PICKUP'].includes(paymentMethod) ? paymentMethod : 'UPI';
   const paymentStatus = 'PENDING';
 
   let validFpoId = input.fpoId || null;
@@ -309,7 +309,7 @@ export async function createOrder(input: CreateOrderInput) {
   // 7. Sync with Supabase (Best effort with foreign key safety)
   let supabaseSynced = false;
   try {
-    // Ensure buyer, farmer, and partner in Supabase public.users
+    // Ensure buyer and partner exist in Supabase public.users (farmer already exists via registration)
     await supabase.from('users').upsert([
       {
         id: actualBuyerId,
@@ -320,16 +320,6 @@ export async function createOrder(input: CreateOrderInput) {
         district: shipping?.district || 'Pune',
         state: shipping?.state || 'Maharashtra',
         address: canonicalAddress.trim()
-      },
-      {
-        id: actualFarmerId,
-        name: 'Ramesh Patil (Verified Farmer)',
-        email: 'ramesh.patil@kisanbandhan.ai',
-        phone: '9876543210',
-        role: 'FARMER',
-        district: 'Nashik',
-        state: 'Maharashtra',
-        address: 'Pimplgaon, Nashik, Maharashtra'
       },
       {
         id: 'u_partner_1',
@@ -346,16 +336,21 @@ export async function createOrder(input: CreateOrderInput) {
     const { error: ordErr } = await supabase.from('orders').upsert({
       id: orderId,
       buyer_id: actualBuyerId,
-      farmer_id: actualFarmerId,
+      farmer_id: actualFarmerId,           // ✅ Actual farmer_id (not hardcoded)
       status: 'Placed',
       subtotal_paise: subtotalPaise,
       delivery_fee_paise: deliveryFeePaise,
       total_amount_paise: totalAmountPaise,
       delivery_address: canonicalAddress.trim(),
       delivery_type: deliveryType,
-      payment_method: paymentMethod,
+      payment_method: validPaymentMethod,  // ✅ Validated method including PAY_ON_PICKUP
       payment_status: paymentStatus,
-      notes: smartContractHash,
+      notes: notes ? `${notes} | Contract: ${smartContractHash}` : `Contract: ${smartContractHash}`,
+      recipient_name: shipping?.fullName || input.buyerName || 'Buyer',
+      recipient_phone: shipping?.mobileNumber || input.buyerPhone || '',
+      district: shipping?.district || 'Pune',
+      state: shipping?.state || 'Maharashtra',
+      pin_code: shipping?.pincode || '',
     }, { onConflict: 'id' });
 
     if (!ordErr) {
@@ -752,13 +747,23 @@ export async function verifyOrderOtp(input: VerifyOtpInput) {
       UPDATE deliveries SET status = 'IN_TRANSIT' WHERE order_id = ?
     `).run(orderId);
 
+    // PAY_ON_PICKUP: Mark payment as PAID when transporter picks up goods
+    const isPayOnPickup = delivery.payment_method === 'PAY_ON_PICKUP';
+    const newOrderStatus = 'Out for Delivery';
+    const newPaymentStatus = isPayOnPickup ? 'PAID' : delivery.payment_status;
+
     db.prepare(`
-      UPDATE orders SET status = 'Out for Delivery', updated_at = CURRENT_TIMESTAMP WHERE id = ?
-    `).run(orderId);
+      UPDATE orders 
+      SET status = ?, payment_status = ?, updated_at = CURRENT_TIMESTAMP 
+      WHERE id = ?
+    `).run(newOrderStatus, newPaymentStatus, orderId);
 
     try {
       await supabase.from('deliveries').update({ status: 'IN_TRANSIT' }).eq('order_id', orderId);
-      await supabase.from('orders').update({ status: 'Out for Delivery' }).eq('id', orderId);
+      await supabase.from('orders').update({
+        status: newOrderStatus,
+        payment_status: newPaymentStatus,
+      }).eq('id', orderId);
     } catch (err: any) {
       console.warn('Supabase pickup sync notice:', err.message);
     }
@@ -766,9 +771,13 @@ export async function verifyOrderOtp(input: VerifyOtpInput) {
     return {
       success: true,
       orderId,
-      orderStatus: 'Out for Delivery',
+      orderStatus: newOrderStatus,
       deliveryStatus: 'IN_TRANSIT',
-      message: 'Pickup verified successfully! Produce is loaded and in transit to destination.',
+      paymentStatus: newPaymentStatus,
+      paymentCollectedAtPickup: isPayOnPickup,
+      message: isPayOnPickup
+        ? `Pickup verified & ₹${(delivery.total_amount_paise / 100).toFixed(2)} payment collected! Produce is in transit.`
+        : 'Pickup verified successfully! Produce is loaded and in transit to destination.',
     };
   }
 
